@@ -11,7 +11,7 @@ A LEMP Stack with PHP 5.6+ is needed to run this project, if you do not know how
 **Clone the repo**
 
 ```
-git clone git@github.com:Virket/MDcharts.git MDcharts
+git clone git@github.com:fabricadesoluciones/dreamz.git dreamz
 ```
 
 **Install Composer**
