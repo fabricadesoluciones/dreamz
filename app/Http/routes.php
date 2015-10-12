@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/','WelcomeController@index');
+Route::group(['prefix' => 'api/v0.1'], function ()
+{
+	Route::resource('users', 'UsersController');
 });
