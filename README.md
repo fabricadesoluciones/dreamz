@@ -29,4 +29,12 @@ composer install
 
 **Run migrations**
 
-TBD
+```
+php artisan migrate
+```
+
+**Run DB seeding**
+
+```
+php db:seed
+```
