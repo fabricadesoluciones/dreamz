@@ -20,7 +20,7 @@ class UsersController extends Controller
         if (!$data) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
         }
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transform($data)], 200);
+        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
 
     /**
@@ -56,7 +56,7 @@ class UsersController extends Controller
         if (!$data) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
         }
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transform($data)], 200);
+        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
 
     /**
@@ -93,14 +93,16 @@ class UsersController extends Controller
         //
     }
 
-    public function transform($users)
+    public function transformCollection($users)
     {
-        return array_map(function ($users)
-        {
-            return [
-                'name' => $users['name'],
-                'email' => $users['email']
-            ];
-        }, $users->toArray());
+        return array_map([$this, 'transform'] , $users->toArray());
+    }
+
+    private function transform ($user)
+    {
+        return [
+            'name' => $user['name'],
+            'email' => $user['email']
+        ];
     }
 }
