@@ -38,7 +38,8 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">Dreamz</div>
+                <h3><a href="/logout">logout</a></h3>
             </div>
         </div>
     </body>

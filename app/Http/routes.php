@@ -11,10 +11,31 @@
 |
 */
 
+/* HOME */
 
+Route::get('/', function(){return Redirect::route('home'); } );
+Route::get('/home', ['middleware' => 'auth', 'uses' => 'HomeController@index'])->name('home');
 
-Route::get('/','WelcomeController@index');
-Route::group(['prefix' => 'api/v0.1'], function ()
+/* HOME */
+
+/* API */
+
+Route::group(['middleware' => 'auth','prefix' => 'api/v0.1'], function ()
 {
 	Route::resource('users', 'UsersController');
 });
+
+/* API */
+
+/* LOGIN ROUTES */
+
+// Authentication
+Route::get('login', 'Auth\AuthController@getLogin')->name('login');
+Route::post('login', 'Auth\AuthController@postLogin');
+Route::get('logout', 'Auth\AuthController@getLogout');
+
+// Registration
+Route::get('register', 'Auth\AuthController@getRegister');
+Route::post('register', 'Auth\AuthController@postRegister');	
+
+/* LOGIN ROUTES */

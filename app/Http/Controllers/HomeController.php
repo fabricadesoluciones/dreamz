@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class WelcomeController extends Controller
+class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -58,28 +59,6 @@ class WelcomeController extends Controller
     public function edit($id)
     {
         //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function contact()
-    {
-        return view('pages.contact');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function about()
-    {
-        return view('pages.about');
     }
 
     /**
