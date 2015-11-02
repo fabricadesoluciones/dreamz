@@ -16,24 +16,33 @@ class UserTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 50) as $user) {
         	User::create([
-        		'name' => $faker->name,
+        		'name' => 'Alejandro Tapia',
+        		'email' => 'ageofzetta@gmail.com',
+        		'password' => Hash::make('admin'),
+				'active' => 1,
+
+        	]);
+
+        foreach (range(1, 30) as $user) {
+        	User::create([
+        		'name' => $faker->firstName($gender = null|'male'|'female'),
         		'email' => $faker->freeEmail,
         		'password' => Hash::make($faker->word),
 				'lastname' => $faker->lastName,
 				'active' => $faker->boolean(70),
-				'user_id' => $faker->md5,
-				'birth_date' => $faker->dateTime($max = 'now'),
-				'education' => $faker->numberBetween($min = 0, $max = 20),
+				'company' => $faker->uuid,
+				'user_id' => $faker->uuid,
+				'birth_date' => $faker->dateTimeBetween($startDate = '-60 years', $startDate = '-20 years'), 
+				'education' => $faker->uuid,
 				'mobile' => $faker->phoneNumber,
-				'blood_type' => $faker->name,
-				'alergies' => $faker->randomElement($array = array ('A-', 'A+', 'B-', 'B+', 'AB-', 'A+B', 'O-', 'O+')),
+				'alergies' => $faker->realText($maxNbChars = 200, $indexSize = 2),
+				'blood_type' => $faker->randomElement($array = array ('A-', 'A+', 'B-', 'B+', 'AB-', 'A+B', 'O-', 'O+')),
 				'emergency_contact' => $faker->name." ".$faker->phoneNumber,
 				'phone' => $faker->phoneNumber,
-				'position' => $faker->word,
-				'boss' => $faker->md5,
-				'admission_date' => $faker->dateTime($max = 'now'),
+				'position' => $faker->uuid,
+				'boss' => $faker->uuid,
+				'admission_date' => $faker->dateTimeBetween($startDate = '-15 years', $startDate = '-1 years'), 
 				'facebook' => "facebook.com/".$faker->userName,
 				'twitter' => "twitter.com/@".$faker->userName,
 				'instagram' => "instagram.com/".$faker->userName,

@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class DatabaseSeeder extends Seeder
 {
     public $tables = [
-        'users'
+        'users',
+        'positions',
+        'education_levels'
     ];
     /**
      * Run the database seeds.
@@ -24,6 +26,10 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call(UserTableSeeder::class);
+        $this->call(PositionTableSeeder::class);
+        $this->call(Education_levelsTableSeeder::class);
+        $this->call(CountriesTableSeeder::class);
+        $this->call(IndustriesTableSeeder::class);
 
         Model::reguard();
     }

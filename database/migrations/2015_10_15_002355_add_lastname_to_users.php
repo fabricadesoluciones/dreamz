@@ -16,15 +16,16 @@ class AddLastnameToUsers extends Migration
             $table->string('lastname');
             $table->boolean('active');
             $table->string('user_id');
-            $table->date('birth_date');
-            $table->string('education',4);
+            $table->string('company');
+            $table->string('boss');
+            $table->string('position');
             $table->string('mobile');
+            $table->string('phone', 45);
+            $table->date('birth_date');
+            $table->string('education');
             $table->string('blood_type');
             $table->text('alergies');
             $table->text('emergency_contact');
-            $table->string('phone', 45);
-            $table->string('position');
-            $table->string('boss');
             $table->date('admission_date');
             $table->string('facebook');
             $table->string('twitter');
@@ -57,7 +58,7 @@ class AddLastnameToUsers extends Migration
     public function down()
     {
         Schema::table('users', function ($table) {
-            $table->dropColumn(['lastname', 'active', 'user_id','birth_date', 'education', 'mobile', 'blood_type', 'alergies', 'emergency_contact','phone', 'position', 'boss', 'admission_date', 'facebook', 'twitter', 'instagram', 'linkedin', 'googlep', 'd_s', 'i_s', 's_s', 'c_s', 'd_a', 'i_a', 's_a', 'c_a', 'welth_dynamics', 'stengths_finder_1', 'stengths_finder_2', 'stengths_finder_3', 'stengths_finder_4', 'stengths_finder_5']);
+            $table->dropColumn(['lastname', 'active', 'user_id', 'company','birth_date', 'education', 'mobile', 'blood_type', 'alergies', 'emergency_contact','phone', 'position', 'boss', 'admission_date', 'facebook', 'twitter', 'instagram', 'linkedin', 'googlep', 'd_s', 'i_s', 's_s', 'c_s', 'd_a', 'i_a', 's_a', 'c_a', 'welth_dynamics', 'stengths_finder_1', 'stengths_finder_2', 'stengths_finder_3', 'stengths_finder_4', 'stengths_finder_5']);
 
         });
     }
