@@ -1,13 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+use App\Company;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
 use App\Http\Controllers\Controller;
 
-class UsersController extends Controller
+class CompaniesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $data = User::all();
+        $data = Company::all();
         if (!$data) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
         }
@@ -52,7 +52,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $data = User::where('user_id', '=', $id)->firstOrFail();
+        $data = Company::where('company_id', '=', $id)->firstOrFail();
         if (!$data) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
         }
@@ -93,16 +93,13 @@ class UsersController extends Controller
         //
     }
 
-    public function transformCollection($users)
+    public function transformCollection($companys)
     {
-        return array_map([$this, 'transform'] , $users->toArray());
+        return array_map([$this, 'transform'] , $companys->toArray());
     }
 
-    private function transform ($user)
+    private function transform ($company)
     {
-        return [
-            'name' => $user['name'],
-            'email' => $user['email']
-        ];
+        return $company;
     }
 }
