@@ -16,10 +16,10 @@ class Education_levelsTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 30) as $user) {
+        foreach (range(1, 5) as $user) {
         	Education_level::create([
 				'education_level_id' => $faker->uuid,
-				'company_id' => $faker->uuid,
+				'company' => $faker->uuid,
 				'name' => $faker->word,
 				'active' => $faker->boolean(70),
         	]);

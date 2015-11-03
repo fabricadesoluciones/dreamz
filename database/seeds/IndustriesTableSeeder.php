@@ -1,5 +1,6 @@
 <?php
 
+use App\Company;
 use App\Industry;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,7 @@ class IndustriesTableSeeder extends Seeder
         foreach (range(1, 30) as $user) {
         	Industry::create([
 				'industry_id' => $faker->uuid,
-				'company_id' => $faker->uuid,
+				'company' => Company::find($faker->numberBetween($min = 1, $max = 10))->company_id,
 				'name' => $faker->word,
 				'active' => $faker->boolean(70),
         	]);
