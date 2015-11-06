@@ -31,20 +31,24 @@
 </div>
 <script>
 $(document).on('click','.delete_item', function(){
-    $.ajax({
-        url: '/api/v0.1/'+$(this).attr('data-type')+'/'+$(this).attr('data-id'),
-        type: 'post',
-        data: {_method: 'delete', _token :'{{ csrf_token() }}'},
-        success: function(result) {
-            if (result.code == "10") {
-                $.Notify({
-                    caption: 'Success!',
-                    content: 'Item deleted',
-                    type: 'success'
-                });
-                setTimeout(function(){location.reload();},500)
+    var doDelete = window.confirm('Do you really want to delete that record?');
+    if (doDelete) {
+
+        $.ajax({
+            url: '/api/v0.1/'+$(this).attr('data-type')+'/'+$(this).attr('data-id'),
+            type: 'post',
+            data: {_method: 'delete', _token :'{{ csrf_token() }}'},
+            success: function(result) {
+                if (result.code == "10") {
+                    $.Notify({
+                        caption: 'Success!',
+                        content: 'Item deleted',
+                        type: 'success'
+                    });
+                    setTimeout(function(){location.reload();},500)
+                }
             }
-        }
-    }); 
+        }); 
+    }
 })
 </script>
