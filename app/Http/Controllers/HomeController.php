@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use App\Company;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -16,6 +19,16 @@ class HomeController extends Controller
     public function index()
     {
         return view('welcome');
+    }
+
+    public function users()
+    {
+        return view('pages.show_users');
+    }
+
+    public function companies()
+    {
+        return view('pages.show_companies');
     }
 
     /**

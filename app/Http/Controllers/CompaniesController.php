@@ -90,7 +90,16 @@ class CompaniesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $company = Company::where('company_id', '=', $id)->firstOrFail();
+        if (!$company) {
+            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            exit;
+        }
+
+        $company->delete();
+
+        return Response::json(['code'=>'10','message' => 'OK' , 'data' => "$id DELETED"] , 200);
+        
     }
 
     public function transformCollection($companys)

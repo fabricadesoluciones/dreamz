@@ -24,7 +24,7 @@ class CompanyTableSeeder extends Seeder
 				'commercial_name' => $faker->company,
 				'country' => Country::find($faker->numberBetween($min = 1, $max = 249))->country_id,
 				'language' => $faker->locale,
-				'logo' => $faker->imageUrl($width = 640, $height = 480),
+				'logo' => "https://logo.clearbit.com/".$faker->freeEmailDomain,
 				'slogan' => $faker->catchPhrase,
 				'web_site' => $faker->safeEmailDomain,
 				'rfc' => $faker->swiftBicNumber,

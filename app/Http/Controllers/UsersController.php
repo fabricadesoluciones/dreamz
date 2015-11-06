@@ -90,7 +90,16 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::where('user_id', '=', $id)->firstOrFail();
+        if (!$user) {
+            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            exit;
+        }
+
+        $user->delete();
+
+        return Response::json(['code'=>'10','message' => 'OK' , 'data' => "$id DELETED"] , 200);
+        
     }
 
     public function transformCollection($users)
@@ -100,9 +109,6 @@ class UsersController extends Controller
 
     private function transform ($user)
     {
-        return [
-            'name' => $user['name'],
-            'email' => $user['email']
-        ];
+        return $user;
     }
 }
