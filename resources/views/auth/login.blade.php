@@ -1,14 +1,12 @@
 @extends('layouts.master')
 
-@section('title', 'Page Title')
+@section('title', 'Login')
 
 @section('content')
 
                 
 <div class="row flex-align-center flex-just-center loginForm">
     <div class="cell size6">
-        <img src="/img/logo.svg" width="500">
-        <hr>
         <form method="POST" action="/login">
             {!! csrf_field() !!}
 <br>
@@ -23,7 +21,7 @@
 
             <div class="input-control text" data-role="input">
                 <label>Password</label>
-                <input type="password" name="password" id="password" value="attamadness">
+                <input type="password" name="password" id="password" value="admin">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
 
@@ -39,5 +37,7 @@
         </form>
     </div>
 </div>
-
+<script type="text/javascript">
+    $('#logout').detach()
+</script>
 @stop
