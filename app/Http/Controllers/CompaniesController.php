@@ -52,7 +52,22 @@ class CompaniesController extends Controller
      */
     public function show($id)
     {
-        $data = Company::where('company_id', '=', $id)->firstOrFail();
+        $data = Company::where('company_id', '=', $id)->first();
+        if (!$data) {
+            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+        }
+        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
+    }
+
+     /**
+     * Display the users for the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function users($id)
+    {
+        $data = Company::where('company_id', '=', $id)->first()->users;
         if (!$data) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
         }
@@ -90,7 +105,7 @@ class CompaniesController extends Controller
      */
     public function destroy($id)
     {
-        $company = Company::where('company_id', '=', $id)->firstOrFail();
+        $company = Company::where('company_id', '=', $id)->first();
         if (!$company) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
             exit;

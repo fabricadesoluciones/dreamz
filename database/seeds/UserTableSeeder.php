@@ -30,7 +30,7 @@ class UserTableSeeder extends Seeder
         $i = 0;
 
 
-        foreach (range(1, 30) as $user) {
+        foreach (range(1, 100) as $user) {
     		$i++;
         	User::create([
         		'name' => $faker->firstName($gender = null|'male'|'female'),
@@ -38,7 +38,7 @@ class UserTableSeeder extends Seeder
         		'password' => Hash::make($faker->word),
 				'lastname' => $faker->lastName,
 				'active' => $faker->boolean(70),
-				'company' => Company::find($faker->numberBetween($min = 1, $max = 10))->company_id,
+				'company' => Company::find($faker->numberBetween($min = 1, $max = 4))->company_id,
 				'user_id' => $faker->uuid,
 				'birth_date' => $faker->dateTimeBetween($startDate = '-60 years', $startDate = '-20 years'), 
 				'education' => Education_level::find($faker->randomElement([1,2,3,4,5]))->education_level_id,

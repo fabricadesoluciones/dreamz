@@ -32,6 +32,8 @@ var Tr = React.createClass({
                     <button className="button small-button success">Modify</button>
                     &nbsp;
                     <button className="button small-button danger delete_item" data-type="companies" data-id={this.props.data.company_id}>Delete</button>
+                    &nbsp;
+                    <a href={"/companies/"+this.props.data.company_id+"/users"} className="button" data-type="companies" data-id={this.props.data.company_id}>Users</a>
                 </td>
 
             </tr>

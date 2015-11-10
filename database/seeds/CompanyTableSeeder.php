@@ -17,7 +17,7 @@ class CompanyTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 10) as $user) {
+        foreach (range(1, 4) as $user) {
         	Company::create([
 				'company_id' => $faker->uuid,
 				'active' => $faker->boolean(70),

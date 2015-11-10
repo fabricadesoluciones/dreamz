@@ -21,4 +21,12 @@ class Company extends Model
      */
     protected $guarded = array('id');
 
+    /**
+     * Get the users for belonging to this company.
+     */
+    public function users()
+    {
+        return $this->hasMany('App\User','company','company_id');
+    }
+
 }

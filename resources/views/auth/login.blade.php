@@ -28,11 +28,16 @@
             <div>
             <br>
                 <input type="checkbox" name="remember"> Remember Me
+            <br>
+                <a href="{{ URL::to('password/email') }}"> Forgot my password </a>
+            <br>
+            <br>
             </div>
 
             <div>
-            <br>
                 <button type="submit">Login</button>
+            <br>
+
             </div>
         </form>
     </div>

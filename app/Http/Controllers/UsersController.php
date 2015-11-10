@@ -52,7 +52,7 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $data = User::where('user_id', '=', $id)->firstOrFail();
+        $data = User::where('user_id', '=', $id)->first();
         if (!$data) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
         }
@@ -90,7 +90,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::where('user_id', '=', $id)->firstOrFail();
+        $user = User::where('user_id', '=', $id)->first();
         if (!$user) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
             exit;

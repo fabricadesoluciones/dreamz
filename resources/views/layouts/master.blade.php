@@ -18,7 +18,9 @@
     <div class="row flex-align-center flex-just-center loginForm">
         <div class="cell size6">
             <a href="/"><img src="/img/logo.svg" width="500"></a>
+@if(Auth::check())
             <a id="logout" href="/logout">Salir <span class="mif-icon_name"></span></a>
+@endif
             <hr>
 
 

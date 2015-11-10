@@ -20,7 +20,7 @@ class PositionTableSeeder extends Seeder
         foreach (range(1, 5) as $user) {
         	Position::create([
 				'position_id' => $faker->uuid,
-				'company' => Company::find($faker->numberBetween($min = 1, $max = 10))->company_id,
+				'company' => Company::find($faker->numberBetween($min = 1, $max = 4))->company_id,
 				'name' => $faker->word,
 				'area_id' => $faker->uuid,
 				'active' => $faker->boolean(70),
