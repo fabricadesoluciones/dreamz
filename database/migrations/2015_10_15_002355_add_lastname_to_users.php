@@ -19,6 +19,11 @@ class AddLastnameToUsers extends Migration
             $table->string('company');
             $table->string('boss');
             $table->string('position');
+            $table->string('employee_number');
+            /*
+
+            TODO: Move to User Details
+
             $table->string('mobile');
             $table->string('phone', 45);
             $table->date('birth_date');
@@ -32,6 +37,11 @@ class AddLastnameToUsers extends Migration
             $table->string('instagram');
             $table->string('linkedin');
             $table->string('googlep');
+            */
+            /*
+
+            TODO: Move to User Assesments
+
             $table->integer('d_s');
             $table->integer('i_s');
             $table->integer('s_s');
@@ -46,6 +56,7 @@ class AddLastnameToUsers extends Migration
             $table->string('stengths_finder_3', 150);
             $table->string('stengths_finder_4', 150);
             $table->string('stengths_finder_5', 150);
+            */
 
         });
     }
@@ -58,7 +69,50 @@ class AddLastnameToUsers extends Migration
     public function down()
     {
         Schema::table('users', function ($table) {
-            $table->dropColumn(['lastname', 'active', 'user_id', 'company','birth_date', 'education', 'mobile', 'blood_type', 'alergies', 'emergency_contact','phone', 'position', 'boss', 'admission_date', 'facebook', 'twitter', 'instagram', 'linkedin', 'googlep', 'd_s', 'i_s', 's_s', 'c_s', 'd_a', 'i_a', 's_a', 'c_a', 'welth_dynamics', 'stengths_finder_1', 'stengths_finder_2', 'stengths_finder_3', 'stengths_finder_4', 'stengths_finder_5']);
+            $table->dropColumn([
+                'lastname',
+                'active',
+                'user_id',
+                'company',
+                'boss',
+                'position',
+                'employee_number',
+
+                /*
+                TODO: Move to User Details
+
+                'mobile',
+                'phone',
+                'birth_date',
+                'education',
+                'blood_type',
+                'alergies',
+                'emergency_contact',
+                'admission_date',
+                'facebook',
+                'twitter',
+                'instagram',
+                'linkedin',
+                'googlep',
+                */
+                /*
+                TODO: Move to User Details
+                'd_s',
+                'i_s',
+                's_s',
+                'c_s',
+                'd_a',
+                'i_a',
+                's_a',
+                'c_a',
+                'welth_dynamics',
+                'stengths_finder_1',
+                'stengths_finder_2',
+                'stengths_finder_3',
+                'stengths_finder_4',
+                'stengths_finder_5',
+                */          
+                ]);
 
         });
     }

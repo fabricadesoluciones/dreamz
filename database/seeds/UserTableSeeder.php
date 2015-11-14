@@ -20,7 +20,8 @@ class UserTableSeeder extends Seeder
         $faker = Faker::create();
 
     	User::create([
-    		'name' => 'Alejandro Tapia',
+    		'name' => 'Alejandro',
+			'lastname' => 'Tapia',
     		'email' => 'ageofzetta@gmail.com',
     		'password' => Hash::make('admin'),
 			'active' => 1,
@@ -30,7 +31,7 @@ class UserTableSeeder extends Seeder
         $i = 0;
 
 
-        foreach (range(1, 100) as $user) {
+        foreach (range(1, 300) as $user) {
     		$i++;
         	User::create([
         		'name' => $faker->firstName($gender = null|'male'|'female'),
@@ -40,6 +41,13 @@ class UserTableSeeder extends Seeder
 				'active' => $faker->boolean(70),
 				'company' => Company::find($faker->numberBetween($min = 1, $max = 4))->company_id,
 				'user_id' => $faker->uuid,
+				'employee_number' => $faker->uuid,
+				'boss' => $faker->uuid,
+				'position' => Position::find($faker->randomElement([1,2,3,4,5]))->position_id,
+
+				/*
+	             TODO: Move to User Details
+
 				'birth_date' => $faker->dateTimeBetween($startDate = '-60 years', $startDate = '-20 years'), 
 				'education' => Education_level::find($faker->randomElement([1,2,3,4,5]))->education_level_id,
 				'mobile' => $faker->phoneNumber,
@@ -47,14 +55,17 @@ class UserTableSeeder extends Seeder
 				'blood_type' => $faker->randomElement($array = array ('A-', 'A+', 'B-', 'B+', 'AB-', 'A+B', 'O-', 'O+')),
 				'emergency_contact' => $faker->name." ".$faker->phoneNumber,
 				'phone' => $faker->phoneNumber,
-				'position' => Position::find($faker->randomElement([1,2,3,4,5]))->position_id,
-				'boss' => $faker->uuid,
 				'admission_date' => $faker->dateTimeBetween($startDate = '-15 years', $startDate = '-1 years'), 
 				'facebook' => "facebook.com/".$faker->userName,
 				'twitter' => "twitter.com/@".$faker->userName,
 				'instagram' => "instagram.com/".$faker->userName,
 				'linkedin' => "linkedin.com/".$faker->userName,
 				'googlep' => "googlep.com/".$faker->userName,
+
+				*/
+				/*
+	             TODO: Move to User Assesments
+
 				'd_s' => $faker->randomDigitNotNull,
 				'i_s' => $faker->randomDigitNotNull,
 				's_s' => $faker->randomDigitNotNull,
@@ -69,6 +80,7 @@ class UserTableSeeder extends Seeder
 				'stengths_finder_3' => $faker->word,
 				'stengths_finder_4' => $faker->word,
 				'stengths_finder_5' => $faker->word
+				*/
         	]);
         }
     }
