@@ -12,7 +12,8 @@ class DatabaseSeeder extends Seeder
         'education_levels',
         'industries',
         'countries',
-        'companies'
+        'companies',
+        'departments',
     ];
     /**
      * Run the database seeds.
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(CountriesTableSeeder::class);
         $this->call(CompanyTableSeeder::class);
+        $this->call(DepartmentsTableSeeder::class);
         $this->call(PositionTableSeeder::class);
         $this->call(Education_levelsTableSeeder::class);
         $this->call(IndustriesTableSeeder::class);
