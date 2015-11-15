@@ -30,9 +30,9 @@ var UserTr = React.createClass({
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox"checked={this.props.data.active} /> <span className="check"></span> </label> </td> 
                 <td>{this.props.data.position}</td>
                 <td> 
-                    <button className="button small-button success">Modify</button>
+                    <a href={"/users/"+this.props.data.user_id+"/edit"} className="button success">Modify</a>
                     &nbsp;
-                    <button className="button small-button danger delete_item" data-type="users" data-id={this.props.data.user_id}>Delete</button>
+                    <button className="button danger delete_item" data-type="users" data-id={this.props.data.user_id}>Delete</button>
                 </td>
 
 
@@ -66,7 +66,9 @@ var UserTable = React.createClass({
                 </thead>
                 <tbody>
                     {this.props.list.map(function(data, i) {
-                        return (<UserTr data={data} key={i} />)
+                        if (data.user_id) {
+                            return (<UserTr data={data} key={i} />)
+                        }
 
                     })}
                 </tbody>

@@ -2,6 +2,7 @@
 
 use App\Position;
 use App\Company;
+use App\Department;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Faker\Factory as Faker;
@@ -17,14 +18,26 @@ class PositionTableSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 5) as $user) {
-        	Position::create([
-				'position_id' => $faker->uuid,
-				'company' => Company::find($faker->numberBetween($min = 1, $max = 4))->company_id,
-				'name' => $faker->word,
-				'area_id' => $faker->uuid,
-				'active' => $faker->boolean(70),
-        	]);
+        $companies = Company::all();
+
+        foreach ($companies as $company) {
+            
+            $departments = Department::where('company','=', $company->company_id)->get();
+            foreach ($departments as $department) {
+                foreach (range(1, 5) as $user) {
+
+                    Position::create([
+                        'position_id' => $faker->uuid,
+                        'company' => $company->company_id,
+                        'department' => $department->department_id,
+                        'name' => $faker->word,
+                        'area_id' => $faker->uuid,
+                        'active' => $faker->boolean(70),
+                    ]);
+            
+                }
+            }
         }
+
     }
 }

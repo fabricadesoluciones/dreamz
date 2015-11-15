@@ -42,4 +42,14 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    public function position()
+    {
+        return $this->belongsTo('App\Position','position_id','position');
+
+    }
+    public function company()
+    {
+        return $this->belongsTo('App\Company','company_id','company');
+    }
 }

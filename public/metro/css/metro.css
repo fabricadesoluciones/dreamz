@@ -2740,6 +2740,7 @@ a {
 .after-fg-blue:after {
   color: #00aff0 !important;
 }
+/*
 @font-face {
   font-family: "PT Serif Caption";
   font-style: normal;
@@ -2764,6 +2765,7 @@ a {
   font-weight: 700;
   src: local("Segoe UI Bold"), local("Open Sans Bold"), local("OpenSans-Bold"), url(https://themes.googleusercontent.com/static/fonts/opensans/v8/k3k702ZOKiLJc3WVjuplzJ1r3JsPcQLi8jytr04NNhU.woff) format('woff');
 }
+*/
 .dropdown-toggle {
   position: relative;
   cursor: pointer;

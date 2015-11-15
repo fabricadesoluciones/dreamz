@@ -22,7 +22,7 @@ class DepartmentsTableSeeder extends Seeder
 
 	        foreach (range(1, 2) as $user) {
 	        	Department::create([
-					'area_id' => $faker->uuid,
+					'department_id' => $faker->uuid,
 					'company' => $company->company_id,
 					'parent' => 0,
 					'name' => $faker->word,
@@ -31,9 +31,9 @@ class DepartmentsTableSeeder extends Seeder
 	        }
 	        foreach (range(1, 4) as $user) {
 	        	Department::create([
-					'area_id' => $faker->uuid,
+					'department_id' => $faker->uuid,
 					'company' => $company->company_id,
-					'parent' => Department::find($faker->numberBetween($min = 1, $max = 2))->area_id,
+					'parent' => Department::find($faker->numberBetween($min = 1, $max = 2))->department_id,
 					'name' => $faker->word,
 					'active' => $faker->boolean(70),
 	        	]);
