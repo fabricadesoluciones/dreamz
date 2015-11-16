@@ -51,6 +51,7 @@ class UserTableSeeder extends Seeder
 		        		'password' => Hash::make($faker->word),
 						'lastname' => $faker->lastName,
 						'active' => $faker->boolean(70),
+						'high_potential' => $faker->boolean(30),
 						'company' => $company->company_id,
 						'user_id' => $faker->uuid,
 						'employee_number' => $faker->uuid,

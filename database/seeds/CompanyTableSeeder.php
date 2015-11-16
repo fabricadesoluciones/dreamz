@@ -26,7 +26,6 @@ class CompanyTableSeeder extends Seeder
 				'language' => $faker->locale,
 				'logo' => "https://logo.clearbit.com/".$faker->freeEmailDomain,
 				'slogan' => $faker->catchPhrase,
-				'web_site' => $faker->safeEmailDomain,
 				'rfc' => $faker->swiftBicNumber,
         	]);
         }

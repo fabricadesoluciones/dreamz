@@ -21,7 +21,6 @@ class CreateCompaniesTable extends Migration
             $table->string('commercial_name');
             $table->string('logo');
             $table->string('slogan');
-            $table->string('web_site');
             $table->string('rfc');
             
             $table->timestamps();

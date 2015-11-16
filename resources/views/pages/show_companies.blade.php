@@ -11,7 +11,7 @@
 <button class="button success">Add Company</button>
 <script type="text/babel">
 
-    $.get('api/v0.1/companies/', function(){},'json')
+    $.get('{!! route('companies.index') !!}', function(){},'json')
     .done(function(d){
         React.render(
             <CompanyTable list={d.data} />,
@@ -29,7 +29,7 @@ var Tr = React.createClass({
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox"checked={this.props.data.active} /> <span className="check"></span> </label> </td> 
                 <td className="center"><img src="http://placehold.it/200x50" /></td>
                 <td> 
-                    <button className="button small-button success">Modify</button>
+                    <a href={"/companies/"+this.props.data.company_id+"/edit"} className="button success">Modify</a>
                     &nbsp;
                     <button className="button small-button danger delete_item" data-type="companies" data-id={this.props.data.company_id}>Delete</button>
                     &nbsp;

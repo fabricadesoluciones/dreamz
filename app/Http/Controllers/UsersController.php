@@ -7,7 +7,7 @@ use App\Http\Requests;
 use Response;
 use App\Http\Controllers\Controller;
 use DB;
-
+use Session; 
 class UsersController extends Controller
 {
     /**
@@ -17,7 +17,6 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $data = User::all();
         $data = DB::table('users')
             ->join('positions', 'users.position', '=', 'positions.position_id')
             ->join('departments', 'users.department', '=', 'departments.department_id')
@@ -58,11 +57,16 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $data = User::where('user_id', '=', $id)->first();
+        $data = DB::table('users')
+            ->join('positions', 'users.position', '=', 'positions.position_id')
+            ->join('departments', 'users.department', '=', 'departments.department_id')
+            ->select('users.*', 'positions.position_id AS pst_id','departments.department_id AS dpt_id', 'positions.name AS position_name', 'departments.name AS department_name')
+            ->where('user_id', '=', $id)
+            ->first();
         if (!$data) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
         }
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
+        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transform($data)], 200);
     }
 
     /**
@@ -73,7 +77,12 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $data = User::where('user_id', '=', $id)->first();
+        $data = DB::table('users')
+            ->join('positions', 'users.position', '=', 'positions.position_id')
+            ->join('departments', 'users.department', '=', 'departments.department_id')
+            ->select('users.*', 'positions.name AS position_name', 'departments.name AS department_name')
+            ->where('user_id', '=', $id)
+            ->first();
         return view('pages.edit_user', ['user' => $data]);
     }
 
@@ -86,10 +95,18 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $attributes = $request->all();
+        $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
+        $attributes["high_potential"] = (array_key_exists('high_potential', $attributes)) ? intval($attributes["high_potential"]) : 0;
+        
         $user = User::where('user_id', '=', $id)->first();
-        $user->fill($request->all());
+        $user->fill($attributes);
         $user->save();
-        return json_encode($user);
+
+        Session::flash('update', 200);
+        // return back();
+        return redirect("/users/$id/edit");
+
         
     }
 

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
 use App\Http\Controllers\Controller;
+use DB;
+use Session; 
 
 class CompaniesController extends Controller
 {
@@ -82,7 +84,8 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Company::where('company_id', '=', $id)->first();
+        return view('pages.edit_company', ['company' => $data]);
     }
 
     /**
@@ -94,7 +97,20 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $attributes = $request->all();
+        $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
+        
+        $company = Company::where('company_id', '=', $id)->first();
+        $company->fill($attributes);
+        $company->save();
+
+        Session::flash('update', 200);
+        // return back();
+        return redirect("/companies/$id/edit");
+
+        
+    
     }
 
     /**

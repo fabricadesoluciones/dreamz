@@ -19,6 +19,7 @@ Route::get('/users', ['middleware' => 'auth', 'uses' => 'HomeController@users'])
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/users/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@edit']);
+Route::get('/companies/{id}/edit', ['middleware' => 'auth', 'uses' => 'CompaniesController@edit']);
 
 /* HOME */
 
