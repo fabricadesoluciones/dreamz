@@ -22,21 +22,19 @@ class PositionTableSeeder extends Seeder
 
         foreach ($companies as $company) {
             
-            $departments = Department::where('company','=', $company->company_id)->get();
-            foreach ($departments as $department) {
-                foreach (range(1, 5) as $user) {
-
-                    Position::create([
-                        'position_id' => $faker->uuid,
-                        'company' => $company->company_id,
-                        'department' => $department->department_id,
-                        'name' => $faker->word,
-                        'area_id' => $faker->uuid,
-                        'active' => $faker->boolean(70),
-                    ]);
-            
-                }
-            }
+            Position::create([
+                'position_id' => $faker->uuid,
+                'company' => $company->company_id,
+                'name' => 'boss',
+                'active' => $faker->boolean(70),
+            ]);
+            Position::create([
+                'position_id' => $faker->uuid,
+                'company' => $company->company_id,
+                'name' => 'employee',
+                'active' => $faker->boolean(70),
+            ]);
+        
         }
 
     }

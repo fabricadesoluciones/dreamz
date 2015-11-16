@@ -151,6 +151,9 @@ return [
 
         Zizaco\Entrust\EntrustServiceProvider::class,
 
+        Collective\Html\HtmlServiceProvider::class,
+
+
 
     ],
 
@@ -203,6 +206,8 @@ return [
         'role'          => Zizaco\Entrust\Middleware\EntrustRole::class,
         'permission'    => Zizaco\Entrust\Middleware\EntrustPermission::class,
         'ability'       => Zizaco\Entrust\Middleware\EntrustAbility::class,
+        'Form'          => Collective\Html\FormFacade::class,
+        'Html'          => Collective\Html\HtmlFacade::class,
 
     ],
 

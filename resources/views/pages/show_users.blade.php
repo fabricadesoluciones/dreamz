@@ -11,7 +11,7 @@
 <button class="button success">Add User</button>
 <script type="text/babel">
 
-    $.get('api/v0.1/users/', function(){},'json')
+    $.get('{!! route('users.index') !!}', function(){},'json')
     .done(function(d){
         React.render(
             <UserTable list={d.data} />,
@@ -26,14 +26,14 @@ var UserTr = React.createClass({
             <tr>
                 <td>{this.props.data.name}</td>
                 <td>{this.props.data.lastname}</td>
-                <td>{this.props.data.email}</td>
-                <td className="center"> <label className="input-control checkbox"> <input type="checkbox"checked={this.props.data.active} /> <span className="check"></span> </label> </td> 
-                <td>{this.props.data.position}</td>
+                <td>{this.props.data.position_name}</td>
+                <td>{this.props.data.department_name}</td>
                 <td> 
                     <a href={"/users/"+this.props.data.user_id+"/edit"} className="button success">Modify</a>
                     &nbsp;
                     <button className="button danger delete_item" data-type="users" data-id={this.props.data.user_id}>Delete</button>
                 </td>
+                <td className="center"> <label className="input-control checkbox"> <input type="checkbox"checked={this.props.data.active} /> <span className="check"></span> </label> </td> 
 
 
             </tr>
@@ -57,10 +57,10 @@ var UserTable = React.createClass({
                     <tr>
                         <th>name</th>
                         <th>lastname</th>
-                        <th>email</th>
-                        <th>active</th>
                         <th>position</th>
+                        <th>area</th>
                         <th>actions</th>
+                        <th>active</th>
 
                     </tr>
                 </thead>

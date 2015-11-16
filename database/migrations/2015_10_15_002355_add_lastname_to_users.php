@@ -17,7 +17,7 @@ class AddLastnameToUsers extends Migration
             $table->boolean('active');
             $table->string('user_id');
             $table->string('company');
-            $table->string('boss');
+            $table->string('department');
             $table->string('position');
             $table->string('employee_number');
             /*
@@ -74,7 +74,7 @@ class AddLastnameToUsers extends Migration
                 'active',
                 'user_id',
                 'company',
-                'boss',
+                'department',
                 'position',
                 'employee_number',
 
