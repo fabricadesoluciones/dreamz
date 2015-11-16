@@ -5,7 +5,7 @@
 @section('content')
 
                 
-
+<h2>Users</h2>
 <div id="table"></div>
 <hr>
 <button class="button success">Add User</button>

@@ -31,6 +31,11 @@ class HomeController extends Controller
         return view('pages.show_companies');
     }
 
+    public function departments()
+    {
+        return view('pages.show_departments');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

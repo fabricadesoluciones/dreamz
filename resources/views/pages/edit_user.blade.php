@@ -91,7 +91,7 @@
                         <div class="input-control select">
                         <label for="department">Department</label>
                             <select name="department">
-                                <option value="{{$user->department}}">{{$user->department_name}} </option>
+                                <option value="{{$user->name}}">{{$user->name}} </option>
                             </select>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                         <div class="input-control select">
                         <label for="position">Position</label>
                             <select name="position">
-                                <option value="{{$user->position}}">{{$user->position_name}} </option>
+                                <option value="{{$user->name}}">{{$user->name}} </option>
                             </select>
                         </div>
                     </div>

@@ -17,9 +17,11 @@ Route::get('/', function(){return Redirect::route('home'); } );
 Route::get('/home', ['middleware' => 'auth', 'uses' => 'HomeController@index'])->name('home');
 Route::get('/users', ['middleware' => 'auth', 'uses' => 'HomeController@users'])->name('users');
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
+Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/users/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@edit']);
 Route::get('/companies/{id}/edit', ['middleware' => 'auth', 'uses' => 'CompaniesController@edit']);
+Route::get('/departments/{id}/edit', ['middleware' => 'auth', 'uses' => 'DepartmentsController@edit']);
 
 /* HOME */
 
@@ -39,6 +41,7 @@ Route::group(['middleware' => 'auth','prefix' => 'api/v1.0'], function ()
 'edit' => 'users.edit',
         
     ]]);
+
 	Route::resource('companies', 'CompaniesController', ['names' => [
 
 'store' => 'companies.store',
@@ -48,6 +51,18 @@ Route::group(['middleware' => 'auth','prefix' => 'api/v1.0'], function ()
 'update' => 'companies.update',
 'show' => 'companies.show',
 'edit' => 'companies.edit',
+        
+    ]]);
+
+    Route::resource('departments', 'DepartmentsController', ['names' => [
+
+'store' => 'departments.store',
+'index' => 'departments.index',
+'create' => 'departments.create',
+'destroy' => 'departments.destroy',
+'update' => 'departments.update',
+'show' => 'departments.show',
+'edit' => 'departments.edit',
         
     ]]);
 });

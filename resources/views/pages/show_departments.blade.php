@@ -1,17 +1,17 @@
 @extends('layouts.master')
 
-@section('title', '- Companies')
+@section('title', '- Departments')
 
 @section('content')
 
                 
-<h2>Companies</h2>
+<h2>Departments</h2>
 <div id="table"></div>
 <hr>
-<button class="button success">Add Company</button>
+<button class="button success">Add Department</button>
 <script type="text/babel">
 
-    $.get('{!! route('companies.index') !!}', function(){},'json')
+    $.get('{!! route('departments.index') !!}', function(){},'json')
     .done(function(d){
         React.render(
             <CompanyTable list={d.data} />,
@@ -24,16 +24,14 @@ var Tr = React.createClass({
     render: function(){
         return (
             <tr>
-                <td>{this.props.index + 1}</td>
-                <td>{this.props.data.commercial_name}</td>
+                <td>{this.props.data.name}</td>
+                <td>{this.props.data.company_name}</td>
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox"checked={this.props.data.active} /> <span className="check"></span> </label> </td> 
-                <td className="center"><img src="http://placehold.it/200x50" /></td>
                 <td> 
-                    <a href={"/companies/"+this.props.data.company_id+"/edit"} className="button success">Modify</a>
+                    <a href={"/departments/"+this.props.data.department_id+"/edit"} className="button success">Modify</a>
                     &nbsp;
-                    <button className="button small-button danger delete_item" data-type="companies" data-id={this.props.data.company_id}>Delete</button>
-                    &nbsp;
-                    <a href={"/companies/"+this.props.data.company_id+"/users"} className="button" data-type="companies" data-id={this.props.data.company_id}>Users</a>
+                    <button className="button warning delete_item" data-type="departments" data-id={this.props.data.department_id}>Disable</button>
+                    
                 </td>
 
             </tr>
@@ -55,9 +53,8 @@ var CompanyTable = React.createClass({
                 <thead>
                     <tr>
                         <th>name</th>
-                        <th>commercial_name</th>
+                        <th>company</th>
                         <th>active</th>
-                        <th>logo</th>
                         <th>actions</th>
                     </tr>
                 </thead>

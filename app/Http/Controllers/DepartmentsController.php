@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Company;
+
+use App\Department;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
@@ -9,7 +10,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Session; 
 
-class CompaniesController extends Controller
+class DepartmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +19,10 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        $data = Company::all();
+        $data = DB::table('departments')
+            ->join('companies', 'departments.company', '=', 'companies.company_id')
+            ->select('departments.*', 'companies.commercial_name AS company_name')
+            ->get();
         if (!$data) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
         }
@@ -54,7 +58,7 @@ class CompaniesController extends Controller
      */
     public function show($id)
     {
-        $data = Company::where('company_id', '=', $id)->first();
+        $data = Department::where('Department_id', '=', $id)->first();
         if (!$data) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
         }
@@ -69,7 +73,7 @@ class CompaniesController extends Controller
      */
     public function users($id)
     {
-        $data = Company::where('company_id', '=', $id)->first()->users;
+        $data = Department::where('Department_id', '=', $id)->first()->users;
         if (!$data) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
         }
@@ -84,8 +88,8 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        $data = Company::where('company_id', '=', $id)->first();
-        return view('pages.edit_company', ['company' => $data]);
+        $data = Department::where('Department_id', '=', $id)->first();
+        return view('pages.edit_department', ['department' => $data]);
     }
 
     /**
@@ -96,18 +100,19 @@ class CompaniesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
+
     {
         
         $attributes = $request->all();
         $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
         
-        $company = Company::where('company_id', '=', $id)->first();
-        $company->fill($attributes);
-        $company->save();
+        $department = Department::where('Department_id', '=', $id)->first();
+        $department->fill($attributes);
+        $department->save();
 
         Session::flash('update', 200);
         // return back();
-        return redirect("/companies/$id/edit");
+        return redirect("/departments/$id/edit");
 
         
     
@@ -121,26 +126,29 @@ class CompaniesController extends Controller
      */
     public function destroy($id)
     {
-        $company = Company::where('company_id', '=', $id)->first();
-        if (!$company) {
+        $department = Department::where('Department_id', '=', $id)->first();
+        if (!$department) {
             return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
             exit;
         }
 
-        $company->active = 0;
-        $company->save();
+        $department->active = 0;
+        $department->save();
 
         return Response::json(['code'=>'10','message' => 'OK' , 'data' => "$id DISABLED"] , 200);
         
     }
 
-    public function transformCollection($companys)
+    public function transformCollection($departments)
     {
-        return array_map([$this, 'transform'] , $companys->toArray());
+        if(is_array($departments)){
+            return $departments;
+        }
+        return array_map([$this, 'transform'] , $departments->toArray());
     }
 
-    private function transform ($company)
+    private function transform ($department)
     {
-        return $company;
+        return $department;
     }
 }

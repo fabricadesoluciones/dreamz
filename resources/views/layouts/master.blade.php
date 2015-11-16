@@ -23,6 +23,7 @@
 <a class="button" href="/home">Home</a>
 <a class="button" href="/users">Users</a>
 <a class="button" href="/companies">Companies</a>
+<a class="button" href="/departments">Departments</a>
 <a class="button btn-primary" id="logout" href="/logout">Logout <span class="mif-icon_name"></span></a>
 @endif
             <hr>
@@ -41,7 +42,7 @@ $(document).on('click','.delete_item', function(){
     if (doDelete) {
 
         $.ajax({
-            url: '/api/v0.1/'+$(this).attr('data-type')+'/'+$(this).attr('data-id'),
+            url: '/api/v1.0/'+$(this).attr('data-type')+'/'+$(this).attr('data-id'),
             type: 'post',
             data: {_method: 'delete', _token :'{{ csrf_token() }}'},
             success: function(result) {
