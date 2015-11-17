@@ -33,7 +33,7 @@ var UserTr = React.createClass({
                     &nbsp;
                     <button className="button danger delete_item" data-type="users" data-id={this.props.data.user_id}>Delete</button>
                 </td>
-                <td className="center"> <label className="input-control checkbox"> <input type="checkbox"    checked={this.props.data.active} /> <span className="check"></span> </label> </td> 
+                <td className="center"> <label className="input-control checkbox"> <input type="checkbox" checked={Boolean(JSON.parse(this.props.data.active))} /> <span className="check"></span> </label> </td> 
 
 
             </tr>
