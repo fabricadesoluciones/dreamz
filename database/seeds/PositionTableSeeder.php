@@ -26,12 +26,14 @@ class PositionTableSeeder extends Seeder
                 'position_id' => $faker->uuid,
                 'company' => $company->company_id,
                 'name' => 'boss',
+                'boss' => 1,
                 'active' => $faker->boolean(70),
             ]);
             Position::create([
                 'position_id' => $faker->uuid,
                 'company' => $company->company_id,
                 'name' => 'employee',
+                'boss' => 0,
                 'active' => $faker->boolean(70),
             ]);
         

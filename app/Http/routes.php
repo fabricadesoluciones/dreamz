@@ -18,12 +18,14 @@ Route::get('/home', ['middleware' => 'auth', 'uses' => 'HomeController@index'])-
 Route::get('/users', ['middleware' => 'auth', 'uses' => 'HomeController@users'])->name('users');
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
+Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/companies/{id}/departments', ['middleware' => 'auth', 'uses' => 'CompaniesController@departments']);
 Route::get('/companies/{id}/positions', ['middleware' => 'auth', 'uses' => 'CompaniesController@positions']);
 Route::get('/users/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@edit']);
 Route::get('/companies/{id}/edit', ['middleware' => 'auth', 'uses' => 'CompaniesController@edit']);
 Route::get('/departments/{id}/edit', ['middleware' => 'auth', 'uses' => 'DepartmentsController@edit']);
+Route::get('/positions/{id}/edit', ['middleware' => 'auth', 'uses' => 'PositionsController@edit']);
 
 /* HOME */
 
@@ -65,6 +67,18 @@ Route::group(['middleware' => 'auth','prefix' => 'api/v1.0'], function ()
 'update' => 'departments.update',
 'show' => 'departments.show',
 'edit' => 'departments.edit',
+        
+    ]]);
+
+	Route::resource('positions', 'PositionsController', ['names' => [
+
+'store' => 'positions.store',
+'index' => 'positions.index',
+'create' => 'positions.create',
+'destroy' => 'positions.destroy',
+'update' => 'positions.update',
+'show' => 'positions.show',
+'edit' => 'positions.edit',
         
     ]]);
 });

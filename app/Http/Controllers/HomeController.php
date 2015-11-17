@@ -36,6 +36,11 @@ class HomeController extends Controller
         return view('pages.show_departments');
     }
 
+    public function positions()
+    {
+        return view('pages.show_positions');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

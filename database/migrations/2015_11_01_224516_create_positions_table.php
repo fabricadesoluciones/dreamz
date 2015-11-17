@@ -18,6 +18,7 @@ class CreatePositionsTable extends Migration
             $table->string('company');
             $table->string('name');
             $table->boolean('active');
+            $table->boolean('boss');
             $table->timestamps();
         });
     }
