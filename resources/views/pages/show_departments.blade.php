@@ -26,7 +26,7 @@ var Tr = React.createClass({
             <tr>
                 <td>{this.props.data.name}</td>
                 <td>{this.props.data.company_name}</td>
-                <td className="center"> <label className="input-control checkbox"> <input type="checkbox"checked={this.props.data.active} /> <span className="check"></span> </label> </td> 
+                <td className="center"> <label className="input-control checkbox"> <input type="checkbox"   checked={this.props.data.active} /> <span className="check"></span> </label> </td> 
                 <td> 
                     <a href={"/departments/"+this.props.data.department_id+"/edit"} className="button success">Modify</a>
                     &nbsp;

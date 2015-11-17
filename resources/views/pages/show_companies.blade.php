@@ -31,7 +31,7 @@ var Tr = React.createClass({
             <tr>
                 <td>{this.props.index + 1}</td>
                 <td>{this.props.data.commercial_name}</td>
-                <td className="center"> <label className="input-control checkbox"> <input type="checkbox"checked={this.props.data.active} /> <span className="check"></span> </label> </td> 
+                <td className="center"> <label className="input-control checkbox"> <input type="checkbox"   checked={this.props.data.active} /> <span className="check"></span> </label> </td> 
                 <td className="center"><img className="company_logo" src={this.props.data.logo} /></td>
                 <td> 
                     <a href={"/companies/"+this.props.data.company_id+"/edit"} className="button success">Modify</a>
