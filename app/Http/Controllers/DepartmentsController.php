@@ -24,9 +24,9 @@ class DepartmentsController extends Controller
             ->select('departments.*', 'companies.commercial_name AS company_name')
             ->get();
         if (!$data) {
-            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
         }
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
 
     /**
@@ -60,9 +60,9 @@ class DepartmentsController extends Controller
     {
         $data = Department::where('Department_id', '=', $id)->first();
         if (!$data) {
-            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
         }
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
 
      /**
@@ -75,9 +75,9 @@ class DepartmentsController extends Controller
     {
         $data = Department::where('Department_id', '=', $id)->first()->users;
         if (!$data) {
-            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
         }
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
 
     /**
@@ -128,14 +128,14 @@ class DepartmentsController extends Controller
     {
         $department = Department::where('Department_id', '=', $id)->first();
         if (!$department) {
-            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
             exit;
         }
 
         $department->active = 0;
         $department->save();
 
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => "$id DISABLED"] , 200);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => "$id DISABLED"] , 200);
         
     }
 

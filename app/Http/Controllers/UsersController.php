@@ -23,9 +23,9 @@ class UsersController extends Controller
             ->select('users.*', 'positions.name AS position_name', 'departments.name AS department_name')
             ->get();
         if (!$data) {
-            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
         }
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
 
     /**
@@ -64,9 +64,9 @@ class UsersController extends Controller
             ->where('user_id', '=', $id)
             ->first();
         if (!$data) {
-            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
         }
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transform($data)], 200);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data)], 200);
     }
 
     /**
@@ -120,13 +120,13 @@ class UsersController extends Controller
     {
         $user = User::where('user_id', '=', $id)->first();
         if (!$user) {
-            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
             exit;
         }
 
         $user->delete();
 
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => "$id DELETED"] , 200);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => "$id DELETED"] , 200);
         
     }
 

@@ -42,7 +42,9 @@
                     <div class="cell">
                         <label>Parent</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="parent" type="text" value="{!! $department->parent !!}" >
+                            <select name="parent" id="parent">
+                                <option value="0">-- ROOT --</option>
+                            </select>
                         </div>
                     </div>
                     <div class="cell">
@@ -71,11 +73,24 @@
 </div>
 
 <script>
-function isChecked(input){
-    debugger;
+$.getJSON( "/companies/{{$department->company}}/departments", function( response ) {
+        if (response.code == 200) {
+            var records = response.data;
 
-}
-    
+            records.forEach(function(d,i,a){
+                if (d.department_id != '{{$department->department_id}}') {
+                    $('select#parent').append('<option value="'+d.department_id+'">'+d.name+'</option>')
+                }
+            });
+            if ("{!! $department->parent !!}") {
+
+                $('select#parent').val("{{$department->parent}}");
+            }
+
+
+        }
+        
+    });    
 </script>
 
 @stop

@@ -24,6 +24,7 @@
 <a class="button" href="/users">Users</a>
 <a class="button" href="/companies">Companies</a>
 <a class="button" href="/departments">Departments</a>
+<a class="button" href="/positions">Positions</a>
 <a class="button btn-primary" id="logout" href="/logout">Logout <span class="mif-icon_name"></span></a>
 @endif
             <hr>

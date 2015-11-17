@@ -3,7 +3,12 @@
 @section('title', '- Companies')
 
 @section('content')
-
+<style>
+    .company_logo{
+     display:block; max-height:50px;
+     margin: auto;
+    }
+</style>
                 
 <h2>Companies</h2>
 <div id="table"></div>
@@ -27,11 +32,11 @@ var Tr = React.createClass({
                 <td>{this.props.index + 1}</td>
                 <td>{this.props.data.commercial_name}</td>
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox"checked={this.props.data.active} /> <span className="check"></span> </label> </td> 
-                <td className="center"><img src="http://placehold.it/200x50" /></td>
+                <td className="center"><img className="company_logo" src={this.props.data.logo} /></td>
                 <td> 
                     <a href={"/companies/"+this.props.data.company_id+"/edit"} className="button success">Modify</a>
                     &nbsp;
-                    <button className="button small-button danger delete_item" data-type="companies" data-id={this.props.data.company_id}>Delete</button>
+                    <button className="button warning delete_item" data-type="companies" data-id={this.props.data.company_id}>Disable</button>
                     &nbsp;
                     <a href={"/companies/"+this.props.data.company_id+"/users"} className="button" data-type="companies" data-id={this.props.data.company_id}>Users</a>
                 </td>

@@ -52,8 +52,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="row cells3">
-                    
+                <div class="row cells2">
+                    <div class="cell">
+                        <label>Logo (url)</label>
+                        <div class="input-control text full-size">
+                            <input size="65" name="logo" type="text" value="{!! $company->logo !!}" >
+                        </div>
+                    </div>
                     <div class="cell">
                         <label>Active</label>
                         <br>

@@ -90,16 +90,14 @@
                     <div class="cell">
                         <div class="input-control select">
                         <label for="department">Department</label>
-                            <select name="department">
-                                <option value="{{$user->name}}">{{$user->name}} </option>
+                            <select name="department" id="department">
                             </select>
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control select">
                         <label for="position">Position</label>
-                            <select name="position">
-                                <option value="{{$user->name}}">{{$user->name}} </option>
+                            <select name="position" id="position">
                             </select>
                         </div>
                     </div>
@@ -110,15 +108,38 @@
         <a href="" onclick="window.history.back();" class="button danger">Cancel</a>
            
 {!! Form::close() !!}
+{!! Form::model($user, array('route' => array('password.email'), 'method' => 'POST')) !!}
+<input size="65" name="email" type="hidden" value="{!! $user->email !!}" >
+<input type="submit" value="Reset password" class="info">
+{!! Form::close() !!}
 </div>
 
 <script>
-function isChecked(input){
-    debugger;
+    $.getJSON( "/companies/{{$user->company}}/departments", function( response ) {
+        if (response.code == 200) {
+            var records = response.data;
 
-}
-    $.getJSON( "{!! route('users.index') !!}", function( data ) {
+            records.forEach(function(d,i,a){
+                $('select#department').append('<option value="'+d.department_id+'">'+d.name+'</option>')
+            });
+            $('select#department').val("{{$user->department}}");
 
+
+        }
+        
+    });
+
+    $.getJSON( "/companies/{{$user->company}}/positions", function( response ) {
+        if (response.code == 200) {
+            var records = response.data;
+
+            records.forEach(function(d,i,a){
+                $('select#position').append('<option value="'+d.position_id+'">'+d.name+'</option>')
+            });
+            $('select#position').val("{{$user->position}}");
+
+
+        }
 
     });
 </script>

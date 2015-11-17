@@ -20,9 +20,9 @@ class CompaniesController extends Controller
     {
         $data = Company::all();
         if (!$data) {
-            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
         }
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
 
     /**
@@ -56,9 +56,9 @@ class CompaniesController extends Controller
     {
         $data = Company::where('company_id', '=', $id)->first();
         if (!$data) {
-            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
         }
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
 
      /**
@@ -71,9 +71,39 @@ class CompaniesController extends Controller
     {
         $data = Company::where('company_id', '=', $id)->first()->users;
         if (!$data) {
-            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
         }
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
+    }
+
+    /**
+     * Display the departments for the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function departments($id)
+    {
+        $data = Company::where('company_id', '=', $id)->first()->departments;
+        if (!$data) {
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+        }
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
+    }
+
+    /**
+     * Display the positions for the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function positions($id)
+    {
+        $data = Company::where('company_id', '=', $id)->first()->positions;
+        if (!$data) {
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+        }
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
 
     /**
@@ -123,14 +153,14 @@ class CompaniesController extends Controller
     {
         $company = Company::where('company_id', '=', $id)->first();
         if (!$company) {
-            return Response::json(['code'=>'13','message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
             exit;
         }
 
         $company->active = 0;
         $company->save();
 
-        return Response::json(['code'=>'10','message' => 'OK' , 'data' => "$id DISABLED"] , 200);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => "$id DISABLED"] , 200);
         
     }
 
