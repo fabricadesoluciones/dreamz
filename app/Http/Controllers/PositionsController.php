@@ -107,7 +107,7 @@ class PositionsController extends Controller
         $attributes = $request->all();
         $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
         $attributes["boss"] = (array_key_exists('boss', $attributes)) ? intval($attributes["boss"]) : 0;
-        return json_encode($attributes);
+        
         $position = Position::where('position_id', '=', $id)->first();
         $position->fill($attributes);
         $position->save();
