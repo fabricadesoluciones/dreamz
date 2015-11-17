@@ -43,7 +43,7 @@
                         <label>Boss</label>
                         <br>
                         <label class="switch" style="padding: 1.2ex 0; ">
-                            <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="active" value="{{$position->boss}}" 
+                            <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="boss" value="{{$position->boss}}" 
                             @if ($position->boss)
                                 checked="true"
                             @endif
