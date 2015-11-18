@@ -12,6 +12,14 @@ use Session;
 
 class PositionsController extends Controller
 {
+    private $company;
+    function __construct() {
+        $this->company = '';
+        if ( session('company')) {
+            $this->company = session('company');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +30,7 @@ class PositionsController extends Controller
         $data = DB::table('positions')
             ->join('companies', 'positions.company', '=', 'companies.company_id')
             ->select('positions.*', 'companies.commercial_name AS company_name')
+            ->where('positions.company','LIKE',"%".$this->company."%")
             ->get();
 
         if (!$data) {
@@ -112,7 +121,7 @@ class PositionsController extends Controller
         $position->fill($attributes);
         $position->save();
 
-        Session::flash('update', 200);
+        Session::flash('update', ['code' => 200, 'message' => 'Position info was updated']);
         // return back();
         return redirect("/positions/$id/edit");
 

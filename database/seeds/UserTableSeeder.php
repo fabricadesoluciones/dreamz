@@ -28,6 +28,17 @@ class UserTableSeeder extends Seeder
 			'active' => 1,
 
     	]);
+
+        $karla_company = Company::first();
+    	User::create([
+    		'name' => 'Karla',
+			'lastname' => 'Reyes',
+    		'email' => 'kreyes@fabricadesoluciones.com',
+    		'password' => Hash::make('admin'),
+			'active' => 1,
+			'company' => $karla_company->company_id,
+
+    	]);
         $i = 0;
 
 

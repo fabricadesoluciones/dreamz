@@ -12,6 +12,14 @@ use Session;
 
 class DepartmentsController extends Controller
 {
+    private $company;
+    function __construct() {
+        $this->company = '';
+        if ( session('company')) {
+            $this->company = session('company');
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +30,7 @@ class DepartmentsController extends Controller
         $data = DB::table('departments')
             ->join('companies', 'departments.company', '=', 'companies.company_id')
             ->select('departments.*', 'companies.commercial_name AS company_name')
+            ->where('departments.company','LIKE',"%".$this->company."%")
             ->get();
         if (!$data) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
@@ -110,7 +119,7 @@ class DepartmentsController extends Controller
         $department->fill($attributes);
         $department->save();
 
-        Session::flash('update', 200);
+        Session::flash('update', ['code' => 200, 'message' => 'Department info was updated']);
         // return back();
         return redirect("/departments/$id/edit");
 

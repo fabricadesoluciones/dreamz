@@ -5,10 +5,10 @@
 @section('content')
 
                 
-<h2>Users</h2>
+<h2>Users <a href="/users/create" class="button success">Add new</a></h2>
 <div id="table"></div>
 <hr>
-<button class="button success">Add User</button>
+
 <script type="text/babel">
 
     $.get('{!! route('users.index') !!}', function(){},'json')

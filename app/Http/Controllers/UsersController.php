@@ -8,8 +8,18 @@ use Response;
 use App\Http\Controllers\Controller;
 use DB;
 use Session; 
+use Uuid; 
+use Hash; 
+use Auth; 
 class UsersController extends Controller
 {
+    private $company;
+    function __construct() {
+        $this->company = '';
+        if ( session('company')) {
+            $this->company = session('company');
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +31,7 @@ class UsersController extends Controller
             ->join('positions', 'users.position', '=', 'positions.position_id')
             ->join('departments', 'users.department', '=', 'departments.department_id')
             ->select('users.*', 'positions.name AS position_name', 'departments.name AS department_name')
+            ->where('users.company','LIKE',"%".$this->company."%")
             ->get();
         if (!$data) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
@@ -35,7 +46,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.create_user', ['id' => Uuid::generate(4), 'user' => Auth::user() ]);
+        
     }
 
     /**
@@ -96,14 +108,22 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $attributes = $request->all();
+        $attributes["user_id"] = $id;
         $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
         $attributes["high_potential"] = (array_key_exists('high_potential', $attributes)) ? intval($attributes["high_potential"]) : 0;
         
         $user = User::where('user_id', '=', $id)->first();
-        $user->fill($attributes);
+        if ($user) {
+            unset($attributes["user_id"]);
+            $user->fill($attributes);
+            Session::flash('update', ['code' => 200, 'message' => 'User info was updated']);
+        }else{
+            $attributes['password'] = Hash::make(rand());
+            $user = User::create($attributes);
+            Session::flash('update', ['code' => 200, 'message' => 'User was added, please reset password']);
+        }
         $user->save();
 
-        Session::flash('update', 200);
         // return back();
         return redirect("/users/$id/edit");
 

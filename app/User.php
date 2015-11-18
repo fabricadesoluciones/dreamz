@@ -34,7 +34,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $guarded = array('id', 'user_id','remember_token','created_at','updated_at');
+    protected $guarded = array('id','remember_token','created_at','updated_at');
 
     /**
      * The attributes excluded from the model's JSON form.

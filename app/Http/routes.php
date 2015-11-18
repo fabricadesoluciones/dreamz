@@ -16,6 +16,7 @@
 Route::get('/', function(){return Redirect::route('home'); } );
 Route::get('/home', ['middleware' => 'auth', 'uses' => 'HomeController@index'])->name('home');
 Route::get('/users', ['middleware' => 'auth', 'uses' => 'HomeController@users'])->name('users');
+Route::get('/users/create', ['middleware' => 'auth', 'uses' => 'UsersController@create']);
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');

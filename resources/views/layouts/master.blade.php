@@ -22,7 +22,11 @@
 <br>
 <a class="button" href="/home">Home</a>
 <a class="button" href="/users">Users</a>
+
+@if( ! Session::has('company') )
 <a class="button" href="/companies">Companies</a>
+@endif
+
 <a class="button" href="/departments">Departments</a>
 <a class="button" href="/positions">Positions</a>
 <a class="button btn-primary" id="logout" href="/logout">Logout <span class="mif-icon_name"></span></a>
@@ -59,4 +63,20 @@ $(document).on('click','.delete_item', function(){
         }); 
     }
 })
+@if( Session::has('update') )
+console.log('has update;')
+        $.Notify({
+        
+        @if(Session::get('update')['code'] == 200)
+            caption: 'Success!',
+            type: 'success',
+                
+        @else
+            caption: 'An error ocurred',
+            type: 'alert',
+        @endif
+        content: '{{ Session::get('update')['message']  }}',
+        keepOpen: true,
+        }); 
+@endif
 </script>

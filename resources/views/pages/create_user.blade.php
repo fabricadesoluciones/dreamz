@@ -1,26 +1,25 @@
 @extends('layouts.master')
 
-@section('title', '- Edit User')
+@section('title', '- New User')
 
 @section('content')
-<h2>Edit User </h2>
+<h2>New User </h2>
 <hr>
 </div>
 <div class="container">
-    
-{!! Form::model($user, array('route' => array('users.update', $user->user_id), 'method' => 'PUT')) !!}
+    {!! Form::model($user, array('route' => array('users.update', $id), 'method' => 'PUT')) !!}
     <div class="grid">
                 <div class="row cells2">
                     <div class="cell">
                         <label>User ID</label>
                         <div class="input-control text full-size">
-                            <input size="65" type="text" value="{!! $user->user_id !!}" disabled="disabled">
+                            <input size="65" type="text" name="user_id" value="{!! $id !!}" disabled="disabled">
                         </div>
                     </div>
                     <div class="cell">
                         <label>Employee Number</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="employee_number" type="text" value="{!! $user->employee_number !!}" >
+                            <input size="65" name="employee_number" type="text" value="" >
                         </div>
                     </div>
                 </div>
@@ -28,13 +27,13 @@
                     <div class="cell">
                         <label>Name</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="name" type="text" value="{!! $user->name !!}" >
+                            <input size="65" name="name" type="text" value="" >
                         </div>
                     </div>
                     <div class="cell">
                         <label>Email</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="email" type="text" value="{!! $user->email !!}" >
+                            <input size="65" name="email" type="text" value="" >
                         </div>
                     </div>
                 </div>
@@ -42,18 +41,14 @@
                     <div class="cell">
                         <label>Lastname</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="lastname" type="text" value="{!! $user->lastname !!}" >
+                            <input size="65" name="lastname" type="text" value="" >
                         </div>
                     </div>
                     <div class="cell">
                         <label>Active</label>
                         <br>
                         <label class="switch" style="padding: 1.2ex 0; ">
-                            <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="active" value="{{$user->active}}" 
-                            @if ($user->active)
-                                checked="true"
-                            @endif
-                            >
+                            <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="active" value="" />
                             <span class="check"></span>
                         </label>
                         
@@ -62,11 +57,7 @@
                         <label>High Potential</label>
                         <br>
                         <label class="switch" style="padding: 1.2ex 0; ">
-                            <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="high_potential" value="{{$user->high_potential}}" 
-                            @if ($user->high_potential)
-                                checked="true"
-                            @endif
-                            >
+                            <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="high_potential" value="" />
                             <span class="check"></span>
                         </label>
                         
@@ -90,15 +81,12 @@
                     </div>
                 </div>
             </div>
-
+        <input type="hidden" name="company" value="{{$user->company}}">
         <input type="submit" class="success">
         <a href="" onclick="window.history.back();" class="button danger">Cancel</a>
            
 {!! Form::close() !!}
-{!! Form::model($user, array('route' => array('password.email'), 'method' => 'POST')) !!}
-<input size="65" name="email" type="hidden" value="{!! $user->email !!}" >
-<input type="submit" value="Reset password" class="info">
-{!! Form::close() !!}
+
 </div>
 
 <script>
@@ -109,7 +97,6 @@
             records.forEach(function(d,i,a){
                 $('select#department').append('<option value="'+d.department_id+'">'+d.name+'</option>')
             });
-            $('select#department').val("{{$user->department}}");
 
 
         }
@@ -123,7 +110,6 @@
             records.forEach(function(d,i,a){
                 $('select#position').append('<option value="'+d.position_id+'">'+d.name+'</option>')
             });
-            $('select#position').val("{{$user->position}}");
 
 
         }

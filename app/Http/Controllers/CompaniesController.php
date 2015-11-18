@@ -135,7 +135,7 @@ class CompaniesController extends Controller
         $company->fill($attributes);
         $company->save();
 
-        Session::flash('update', 200);
+        Session::flash('update', ['code' => 200, 'message' => 'Company info was updated']);
         // return back();
         return redirect("/companies/$id/edit");
 

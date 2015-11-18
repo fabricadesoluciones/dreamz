@@ -3,20 +3,7 @@
 @section('title', '- Edit Company')
 
 @section('content')
-<h2>Edit Company 
-    @if( Session::has('update') )
-        - 
-        @if(Session::get('update') == 200)
-            <span class="button success">
-                Success
-            </span>
-        @else
-            <span class="button danger">
-                Error
-            </span>
-        @endif
-    @endif
-</h2>
+<h2>Edit Company </h2>
 <hr>
 </div>
 <div class="container">

@@ -13,7 +13,7 @@
             <div class="input-control text" data-role="input">
                 <label>Email</label>
                 {{-- <input type="email" name="email" value="{{ old('email') }}"> --}}
-                <input type="email" name="email" value="ageofzetta@gmail.com">
+                <input type="email" name="email" value="kreyes@fabricadesoluciones.com">
                 <button class="button helper-button clear"><span class="mif-cross"></span></button>
             </div>
             <br>
@@ -26,8 +26,6 @@
             </div>
 
             <div>
-            <br>
-                <input type="checkbox" name="remember"> Remember Me
             <br>
                 <a href="{{ URL::to('password/email') }}"> Forgot my password </a>
             <br>
