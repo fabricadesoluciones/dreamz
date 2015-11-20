@@ -19,7 +19,7 @@
                     <div class="cell">
                         <label>Employee Number</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="employee_number" type="text" value="" >
+                            <input size="65" name="employee_number" type="text" value=""  required="required" />
                         </div>
                     </div>
                 </div>
@@ -27,13 +27,13 @@
                     <div class="cell">
                         <label>Name</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="name" type="text" value="" >
+                            <input size="65" name="name" type="text" value=""  required="required" />
                         </div>
                     </div>
                     <div class="cell">
                         <label>Email</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="email" type="text" value="" >
+                            <input size="65" name="email" type="text" value=""  required="required" />
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                     <div class="cell">
                         <label>Lastname</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="lastname" type="text" value="" >
+                            <input size="65" name="lastname" type="text" value=""  required="required" />
                         </div>
                     </div>
                     <div class="cell">

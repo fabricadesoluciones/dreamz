@@ -21,6 +21,7 @@ Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@comp
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
+Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@set']);
 Route::get('/companies/{id}/departments', ['middleware' => 'auth', 'uses' => 'CompaniesController@departments']);
 Route::get('/companies/{id}/positions', ['middleware' => 'auth', 'uses' => 'CompaniesController@positions']);
 Route::get('/users/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@edit']);

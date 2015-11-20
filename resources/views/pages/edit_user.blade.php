@@ -20,7 +20,7 @@
                     <div class="cell">
                         <label>Employee Number</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="employee_number" type="text" value="{!! $user->employee_number !!}" >
+                            <input size="65" name="employee_number" type="text" value="{!! $user->employee_number !!}"  required="required">
                         </div>
                     </div>
                 </div>
@@ -28,13 +28,13 @@
                     <div class="cell">
                         <label>Name</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="name" type="text" value="{!! $user->name !!}" >
+                            <input size="65" name="name" type="text" value="{!! $user->name !!}"  required="required">
                         </div>
                     </div>
                     <div class="cell">
                         <label>Email</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="email" type="text" value="{!! $user->email !!}" >
+                            <input size="65" name="email" type="text" value="{!! $user->email !!}"  required="required">
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     <div class="cell">
                         <label>Lastname</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="lastname" type="text" value="{!! $user->lastname !!}" >
+                            <input size="65" name="lastname" type="text" value="{!! $user->lastname !!}"  required="required">
                         </div>
                     </div>
                     <div class="cell">
