@@ -22,6 +22,9 @@
     </style>
 </head>
 <body>
+<div class="loader" style="display:none;">
+    <img src="https://thomas.vanhoutte.be/miniblog/wp-content/uploads/light_blue_material_design_loading.gif" alt="">
+</div>
 <div class="container flex-grid">
     <div class="row flex-align-center flex-just-center loginForm">
         <div class="cell size12">
@@ -49,6 +52,7 @@
 <a class="button" href="/positions">Positions</a>
 @endif
 <a class="button btn-primary" id="logout" href="/logout">Logout <span class="mif-icon_name"></span></a>
+<a class="button danger restore" href="/regenerate">Restore</a>
 @endif
             <hr>
 
@@ -71,6 +75,9 @@
       }
     });
 
+$(document).on('click','.restore', function(){
+    $('.loader').attr('style','display:block;text-align:center')
+});
 $(document).on('click','.delete_item', function(){
     var doDelete = window.confirm('Do you really want to delete that record?');
     if (doDelete) {

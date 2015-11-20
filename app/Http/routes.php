@@ -107,3 +107,15 @@ Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 /* LOGIN ROUTES */
+
+
+
+// ARTISAN
+
+Route::get('/regenerate', function () {
+    $exitCode = Artisan::call('db:seed', []);
+    return redirect('/logout');
+
+    //
+});
+
