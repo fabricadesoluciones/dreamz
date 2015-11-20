@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\UserDetail;
+use App\Education_level;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
@@ -92,7 +94,8 @@ class UsersController extends Controller
         $data = DB::table('users')
             ->join('positions', 'users.position', '=', 'positions.position_id')
             ->join('departments', 'users.department', '=', 'departments.department_id')
-            ->select('users.*', 'positions.name AS position_name', 'departments.name AS department_name')
+            ->join('user_details', 'users.user_id', '=', 'user_details.user')
+            ->select('users.*', 'user_details.*', 'positions.name AS position_name', 'departments.name AS department_name')
             ->where('user_id', '=', $id)
             ->first();
         return view('pages.edit_user', ['user' => $data]);
@@ -108,21 +111,66 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $attributes = $request->all();
-        $attributes["user_id"] = $id;
-        $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
-        $attributes["high_potential"] = (array_key_exists('high_potential', $attributes)) ? intval($attributes["high_potential"]) : 0;
-        
+        $user_attributes = $attributes;
+
+        unset($user_attributes['user']);
+        unset($user_attributes['mobile']);
+        unset($user_attributes['phone']);
+        unset($user_attributes['birth_date']);
+        unset($user_attributes['education']);
+        unset($user_attributes['blood_type']);
+        unset($user_attributes['alergies']);
+        unset($user_attributes['emergency_contact']);
+        unset($user_attributes['admission_date']);
+        unset($user_attributes['facebook']);
+        unset($user_attributes['twitter']);
+        unset($user_attributes['instagram']);
+        unset($user_attributes['linkedin']);
+        unset($user_attributes['googlep']);
+
+        $user_attributes["user_id"] = $id;
+        $user_attributes["active"] = (array_key_exists('active', $user_attributes)) ? intval($user_attributes["active"]) : 0;
+        $user_attributes["high_potential"] = (array_key_exists('high_potential', $user_attributes)) ? intval($user_attributes["high_potential"]) : 0;
+        $user_details_attributes = array_diff($attributes, $user_attributes);
+
         $user = User::where('user_id', '=', $id)->first();
         if ($user) {
-            unset($attributes["user_id"]);
-            $user->fill($attributes);
+            unset($user_attributes["user_id"]);
+            $user->fill($user_attributes);
             Session::flash('update', ['code' => 200, 'message' => 'User info was updated']);
         }else{
-            $attributes['password'] = Hash::make(rand());
-            $user = User::create($attributes);
+            $user_attributes['password'] = Hash::make(rand());
+            $user = User::create($user_attributes);
             Session::flash('update', ['code' => 200, 'message' => 'User was added, please reset password']);
         }
         $user->save();
+
+        $user_details2 = UserDetail::first();
+        $user_details = UserDetail::where('user', '=', $id)->first();
+        if ($user_details) {
+            $user_details->fill($user_details_attributes);
+            Session::flash('update', ['code' => 200, 'message' => 'User info was updated']);
+            $user_details->save();
+        }else{
+            UserDetail::create([
+                'user_details_id' => Uuid::generate(4),
+                'user' => $id,
+                'birth_date' => '1988-05-30', 
+                'education' => Education_level::find(1)->education_level_id,
+                'mobile' => '',
+                'alergies' => '',
+                'blood_type' => '',
+                'emergency_contact' => '',
+                'phone' => '',
+                'admission_date' => '1988-05-30', 
+                'facebook' => "facebook.com/",
+                'twitter' => "twitter.com/@",
+                'instagram' => "instagram.com/",
+                'linkedin' => "linkedin.com/",
+                'googlep' => "googlep.com/"
+
+            ]);
+        }
 
         // return back();
         return redirect("/users/$id/edit");

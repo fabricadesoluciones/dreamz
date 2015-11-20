@@ -4,11 +4,12 @@
 
 @section('content')
 <h2>Edit User </h2>
-<hr>
 </div>
 <div class="container">
-    
+
 {!! Form::model($user, array('route' => array('users.update', $user->user_id), 'method' => 'PUT')) !!}
+<h3>Basic Info</h3>
+<hr>
     <div class="grid">
                 <div class="row cells2">
                     <div class="cell">
@@ -32,19 +33,20 @@
                         </div>
                     </div>
                     <div class="cell">
-                        <label>Email</label>
-                        <div class="input-control text full-size">
-                            <input size="65" name="email" type="text" value="{!! $user->email !!}"  required="required">
-                        </div>
-                    </div>
-                </div>
-                <div class="row cells3">
-                    <div class="cell">
+                    
                         <label>Lastname</label>
                         <div class="input-control text full-size">
                             <input size="65" name="lastname" type="text" value="{!! $user->lastname !!}"  required="required">
                         </div>
+                    
                     </div>
+                </div>
+                <div class="row cells3">
+                    <div class="cell">
+                        <label>Email</label>
+                        <div class="input-control text full-size">
+                            <input size="65" name="email" type="text" value="{!! $user->email !!}"  required="required">
+                        </div></div>
                     <div class="cell">
                         <label>Active</label>
                         <br>
@@ -91,8 +93,117 @@
                 </div>
             </div>
 
+            <h3>User Details</h3>
+            <hr>
+<div class="grid">
+        <div class="row cells2">
+
+            <div class="row cells2">
+                <div class="cell">
+                    <label for="mobile">mobile</label>
+                    <div class="input-control text full-size">
+                        <input name='mobile' type="text" value="{{$user->mobile}}" />
+                    </div>
+                </div>
+                <div class="cell">
+                    <label for="phone">phone</label>
+                    <div class="input-control text full-size">
+                        <input name='phone' type="text" value="{{$user->phone}}" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row cells2">
+                <div class="cell">
+                    <label for="education">education</label>
+                    <div class="input-control text full-size">
+                        <input name='education' type="text" value="{{$user->education}}" />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row cells3">
+                <div class="cell">
+                    <label for="blood_type">blood_type</label>
+                    <div class="input-control text full-size">
+                        <input name='blood_type' type="text" value="{{$user->blood_type}}" />
+                    </div>
+                </div>
+                <div class="cell">
+                    <label for="birth_date">birth_date</label>
+                    <div class="input-control text full-size">
+                        <input name='birth_date' type="date" value="{{$user->birth_date}}" />
+                    </div>
+                </div>
+                <div class="cell">
+                    <label for="admission_date">admission_date</label>
+                    <div class="input-control text full-size">
+                        <input name='admission_date' type="date" value="{{$user->admission_date}}" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row cells2">
+                <div class="cell">
+                    <label for="alergies">alergies</label> <br>
+                    <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
+                        <textarea cols="80" name="alergies">{{$user->alergies}}</textarea>
+                    </div>
+                </div>
+                <div class="cell">
+                    <label for="emergency_contact">emergency_contact</label> <br>
+                    <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
+                        <textarea cols="80" name="emergency_contact">{{$user->emergency_contact}}</textarea>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="row cells2">
+                <div class="cell">
+                    <label for="facebook">facebook</label>
+                    <div class="input-control text full-size">
+                        <input name='facebook' type="text" value="{{$user->facebook}}" />
+                    </div>
+                </div>
+                <div class="cell">
+                    <label for="twitter">twitter</label>
+                    <div class="input-control text full-size">
+                        <input name='twitter' type="text" value="{{$user->twitter}}" />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row cells2">
+                <div class="cell">
+                    <label for="instagram">instagram</label>
+                    <div class="input-control text full-size">
+                        <input name='instagram' type="text" value="{{$user->instagram}}" />
+                    </div>
+                </div>
+                <div class="cell">
+                    <label for="linkedin">linkedin</label>
+                    <div class="input-control text full-size">
+                        <input name='linkedin' type="text" value="{{$user->linkedin}}" />
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row cells2">
+                <div class="cell">
+                    <label for="googlep">googlep</label>
+                    <div class="input-control text full-size">
+                        <input name='googlep' type="text" value="{{$user->googlep}}" />
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
         <input type="submit" class="success">
-        <a href="" onclick="window.history.back();" class="button danger">Cancel</a>
+        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">Cancel</a>
            
 {!! Form::close() !!}
 {!! Form::model($user, array('route' => array('password.email'), 'method' => 'POST')) !!}

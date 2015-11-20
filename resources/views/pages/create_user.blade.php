@@ -83,7 +83,7 @@
             </div>
         <input type="hidden" name="company" value="{{$user->company}}">
         <input type="submit" class="success">
-        <a href="" onclick="window.history.back();" class="button danger">Cancel</a>
+        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">Cancel</a>
            
 {!! Form::close() !!}
 
