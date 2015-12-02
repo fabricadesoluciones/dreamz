@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         'companies',
         'departments',
         'periods',
+        'priorities',
     ];
     /**
      * Run the database seeds.
@@ -40,6 +41,7 @@ class DatabaseSeeder extends Seeder
         $this->call(IndustriesTableSeeder::class);
         $this->call(UserTableSeeder::class);
         $this->call(UserDetailsTableSeeder::class);
+        $this->call(PrioritiesTableSeeder::class);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         Model::reguard();
