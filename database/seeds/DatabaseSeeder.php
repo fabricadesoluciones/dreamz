@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         'countries',
         'companies',
         'departments',
+        'periods',
     ];
     /**
      * Run the database seeds.
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CountriesTableSeeder::class);
         $this->call(CompanyTableSeeder::class);
         $this->call(DepartmentsTableSeeder::class);
+        $this->call(PeriodsTableSeeder::class);
         $this->call(PositionTableSeeder::class);
         $this->call(Education_levelsTableSeeder::class);
         $this->call(IndustriesTableSeeder::class);
