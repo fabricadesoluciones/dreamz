@@ -26,6 +26,7 @@ class UserTableSeeder extends Seeder
     		'email' => 'ageofzetta@gmail.com',
     		'password' => Hash::make('admin'),
 			'active' => 1,
+			'user_id' => $faker->uuid,
 
     	]);
 
@@ -37,6 +38,7 @@ class UserTableSeeder extends Seeder
     		'password' => Hash::make('admin'),
 			'active' => 1,
 			'company' => $karla_company->company_id,
+			'user_id' => $faker->uuid,
 
     	]);
         $i = 0;

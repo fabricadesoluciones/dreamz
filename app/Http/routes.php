@@ -20,6 +20,7 @@ Route::get('/users/create', ['middleware' => 'auth', 'uses' => 'UsersController@
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');
+Route::get('/priorities', ['middleware' => 'auth', 'uses' => 'HomeController@priorities'])->name('priorities');
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@set']);
 Route::get('/companies/{id}/departments', ['middleware' => 'auth', 'uses' => 'CompaniesController@departments']);
@@ -83,6 +84,22 @@ Route::group(['middleware' => 'auth','prefix' => 'api/v1.0'], function ()
 'edit' => 'positions.edit',
         
     ]]);
+
+    Route::resource('priorities', 'PrioritiesController', ['names' => [
+
+'store' => 'priorities.store',
+'index' => 'priorities.index',
+'create' => 'priorities.create',
+'destroy' => 'priorities.destroy',
+'update' => 'priorities.update',
+'show' => 'priorities.show',
+'edit' => 'priorities.edit',
+        
+    ]]);
+
+
+
+    /* API ROUTES END */
 });
 
 /* API */

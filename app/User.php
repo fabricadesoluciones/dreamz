@@ -60,7 +60,7 @@ class User extends Model implements AuthenticatableContract,
 
     public function priorities()
     {
-        return $this->hasMany('App\Priority','priority','priority_id');
+        return $this->hasMany('App\Priority','user','user_id');
     }
 
 }

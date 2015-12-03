@@ -21,4 +21,13 @@ class Department extends Model
      */
     protected $guarded = array('id');
 
+
+    /**
+     * Get the users for belonging to this department.
+     */
+    public function users()
+    {
+        return $this->hasMany('App\User','department','department_id');
+    }
+
 }

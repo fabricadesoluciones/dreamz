@@ -50,6 +50,11 @@ class HomeController extends Controller
         return view('pages.show_positions');
     }
 
+    public function priorities()
+    {
+        return view('pages.show_priorities');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

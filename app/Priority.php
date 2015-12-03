@@ -21,4 +21,13 @@ class Priority extends Model
      */
     protected $guarded = array('id');
 
+    /**
+     * Get the period.
+     */
+    
+    public function get_period()
+    {
+        return $this->belongsTo('App\Period','period','period_id');
+
+    }
 }
