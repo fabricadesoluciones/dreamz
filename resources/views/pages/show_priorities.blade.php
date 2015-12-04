@@ -136,12 +136,14 @@ var Tr = React.createClass({
                 <td>{this.props.index + 1}</td>
                 <td><span className="period">{this.props.data.period_name}</span></td>
                 <td><span className="name">{this.props.data.name}</span></td>
-                <td>{this.props.data.description}</td>
+                <td width="150">{this.props.data.description}</td>
                 <td>{this.props.data.status}</td>
                 <td>{this.props.data.user_name} {this.props.data.user_lastname}</td>
                 <td> 
                     <a href='#' className="button success register_progress" data-id={this.props.data.priority_id}>Register progress</a>&nbsp;
                     <a href={"/priorities/"+this.props.data.priority_id+"/edit"} className="button success" data-id={this.props.data.priority_id}>Edit</a>
+                    &nbsp;
+                    <button className="button danger delete_item" data-type="priorities" data-id={this.props.data.priority_id}>Delete</button>
                     
                 </td>
 

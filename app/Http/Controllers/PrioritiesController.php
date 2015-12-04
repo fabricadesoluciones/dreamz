@@ -126,9 +126,14 @@ class PrioritiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        //
+        $data = Priority::where('priority_id', '=', $id)->first();
+
+        if (!$data) {
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+        }
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
 
     /**
@@ -210,16 +215,15 @@ class PrioritiesController extends Controller
      */
     public function destroy($id)
     {
-        $position = Position::where('position_id', '=', $id)->first();
-        if (!$position) {
+        $priority = Priority::where('priority_id', '=', $id);
+        if (!$priority) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
             exit;
         }
 
-        $position->active = 0;
-        $position->save();
+        $priority->delete();
 
-        return Response::json(['code'=>200,'message' => 'OK' , 'data' => "$id DISABLED"] , 200);
+        return Response::json(['code'=>10,'message' => 'OK' , 'data' => "$id DELETED"] , 200);
         
     }
 
