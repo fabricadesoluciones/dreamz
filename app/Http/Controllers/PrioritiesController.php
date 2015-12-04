@@ -53,6 +53,42 @@ class PrioritiesController extends Controller
             ['priorities' => $this->transform($data->toArray()), 'subordinates' => $users]
             ], 200);
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function team()
+    {
+
+        $user = Auth::user();
+        
+        $data = $user->priorities;
+         if (!$data) {
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+        }
+        
+        $position = Position::where('position_id', '=', $user->position)->first();
+
+        $users = [];
+
+        if (!empty($position) && $position->boss) {
+            $users = User::where('department', '=', $user->department)->get(['user_id']);
+
+            $data = DB::table('priorities')
+                ->join('users', 'priorities.user', '=', 'users.user_id')
+                ->join('periods', 'priorities.period', '=', 'periods.period_id')
+                ->select('priorities.*', 'users.name AS user_name','periods.name AS period_name', 'users.lastname AS user_lastname')
+                ->where('users.department','=', $user->department)
+                ->get();
+
+        }
+
+        if (!$data) {
+            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+        }
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
+    }
 
     /**
      * Show the form for creating a new resource.

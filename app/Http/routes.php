@@ -31,6 +31,7 @@ Route::get('/companies/{id}/edit', ['middleware' => 'auth', 'uses' => 'Companies
 Route::get('/departments/{id}/edit', ['middleware' => 'auth', 'uses' => 'DepartmentsController@edit']);
 Route::get('/positions/{id}/edit', ['middleware' => 'auth', 'uses' => 'PositionsController@edit']);
 Route::get('/priorities/{id}/edit', ['middleware' => 'auth', 'uses' => 'PrioritiesController@edit']);
+Route::get('/priorities/team', ['middleware' => 'auth', 'uses' => 'PrioritiesController@team'])->name('priorities.team');
 
 /* HOME */
 

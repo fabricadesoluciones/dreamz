@@ -68,6 +68,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="row cells2">
+                    <div class="cell2">
+                        <label for="alergies">description</label> <br>
+                        <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
+                            <textarea cols="80" name="description"></textarea>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
         <input type="hidden" name="company" value="{{$user->company}}">
         <input type="submit" class="success">

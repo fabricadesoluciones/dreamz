@@ -7,6 +7,9 @@
                 
 <h2>Priorities</h2>
 <div id="table"></div>
+<br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
+<br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
+
 <hr>
 <a href="/priorities/create" class="button success">Add Priority</a>
 <div data-role="dialog" data-type="info" id="dialog" data-close-button="true" data-overlay="true" data-overlay-color="black" class="padding10">
@@ -116,26 +119,14 @@
 </script>
 <script type="text/babel">
 
-    $.get('{!! route('priorities.index') !!}', function(){},'json')
+    $.get('{!! route('priorities.team') !!}', function(){},'json')
     .done(function(d){
-        debugger;
         React.render(
-            <PrioritiesTable list={d.data.priorities} />,
+            <PrioritiesTable list={d.data} />,
             document.getElementById('table')
         );
-        setTimeout( getPeriods  ,300)
     });
-    function getPeriods(){
-        $('.period').each(function(d){
-            var this_EL = $(this);
-            var this_id = $(this).text();
-
-            $.get('{!! route('periods.index') !!}/'+this_id, function(){},'json')
-            .done(function(d){
-                this_EL.text(d.data.name);
-            });
-        });
-    }
+    
 
 var Tr = React.createClass({
 
@@ -143,11 +134,11 @@ var Tr = React.createClass({
         return (
             <tr>
                 <td>{this.props.index + 1}</td>
-                <td><span className="period">{this.props.data.period}</span></td>
+                <td><span className="period">{this.props.data.period_name}</span></td>
                 <td><span className="name">{this.props.data.name}</span></td>
                 <td>{this.props.data.description}</td>
                 <td>{this.props.data.status}</td>
-                <td>me</td>
+                <td>{this.props.data.user_name} {this.props.data.user_lastname}</td>
                 <td> 
                     <a href='#' className="button success register_progress" data-id={this.props.data.priority_id}>Register progress</a>&nbsp;
                     <a href={"/priorities/"+this.props.data.priority_id+"/edit"} className="button success" data-id={this.props.data.priority_id}>Edit</a>
@@ -167,9 +158,13 @@ var PrioritiesTable = React.createClass({
             data: this.props.data
         };
     },
+    componentDidMount: function() {
+    
+        $('#datatable').DataTable();
+    },
     render: function() {
         return (
-            <table className="table striped hovered cell-hovered border bordered">
+            <table id="datatable" className="table striped hovered cell-hovered border bordered">
                 <thead>
                     <tr>
                         <th>#</th>
