@@ -121,7 +121,5 @@ console.log('has update;')
         keepOpen: true,
         }); 
 @endif
-$('select').each(function(d){
-    $(this).select2();
-})
+$('select').select2();
 </script>
