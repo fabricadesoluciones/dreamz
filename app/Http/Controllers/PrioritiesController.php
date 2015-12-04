@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Priority;
+use App\Period;
 use App\Position;
 use App\User;
 use Illuminate\Http\Request;
@@ -11,8 +12,9 @@ use Response;
 use App\Http\Controllers\Controller;
 use DB;
 use Session; 
+use Uuid; 
+use Hash; 
 use Auth; 
-
 
 class PrioritiesController extends Controller
 {
@@ -39,8 +41,6 @@ class PrioritiesController extends Controller
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
         }
         
-        $user->position = 'dd21bddc-141e-3ca7-b9d3-9b330561b7a1';
-        $user->department = '1a861e62-9905-38d6-987e-40d5593f643f';
         $position = Position::where('position_id', '=', $user->position)->first();
 
         $users = [];
@@ -61,7 +61,16 @@ class PrioritiesController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $position = Position::where('position_id', '=', $user->position)->first();
+        $periods = Period::where('company','LIKE',"%".$this->company."%")->get();
+        if($position->boss){
+            $users = User::where('department', '=', $user->department)->get();
+        }else{
+            $users = [$user];
+        }
+        return view('pages.create_priority', ['id' => Uuid::generate(4), 'user' => Auth::user(), 'periods' => $periods, 'users' => $users ]);
+
     }
 
     /**
@@ -83,23 +92,7 @@ class PrioritiesController extends Controller
      */
     public function show()
     {
-        $user = Auth::user();
-        echo $user->user_id;
-    }
-
-     /**
-     * Display the users for the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function users($id)
-    {
-        $data = Position::where('position_id', '=', $id)->first()->users;
-        if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
-        }
-        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
+        //
     }
 
     /**
@@ -110,8 +103,18 @@ class PrioritiesController extends Controller
      */
     public function edit($id)
     {
-        $data = Position::where('position_id', '=', $id)->first();
-        return view('pages.edit_position', ['position' => $data]);
+        $user = Auth::user();
+        $position = Position::where('position_id', '=', $user->position)->first();
+        $periods = Period::where('company','LIKE',"%".$this->company."%")->get();
+        if($position->boss){
+            $users = User::where('department', '=', $user->department)->get();
+        }else{
+            $users = [$user];
+        }
+
+        $data = Priority::where('priority_id', '=', $id)->first();
+
+        return view('pages.edit_priority', ['id' => $id, 'priority' => $data, 'user' => $user, 'periods' => $periods, 'users' => $users]);
     }
 
     /**
@@ -126,16 +129,38 @@ class PrioritiesController extends Controller
     {
         
         $attributes = $request->all();
-        $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
-        $attributes["boss"] = (array_key_exists('boss', $attributes)) ? intval($attributes["boss"]) : 0;
-        
-        $position = Position::where('position_id', '=', $id)->first();
-        $position->fill($attributes);
-        $position->save();
 
-        Session::flash('update', ['code' => 200, 'message' => 'Position info was updated']);
-        // return back();
-        return redirect("/positions/$id/edit");
+        $priority = Priority::where('priority_id', '=', $id)->first();
+        if (array_key_exists('progress', $attributes) && $priority) {
+            unset($attributes['progress']);
+
+            $attributes = $attributes['data'];
+            $attributes["progress"] = (array_key_exists('progress', $attributes)) ? intval($attributes["progress"]) : 0;
+            $attributes = [$attributes['week'] => $attributes['progress']];
+            
+            $priority->fill($attributes);
+            $priority->save();
+
+            // Session::flash('update', ['code' => 200, 'message' => 'Position info was updated']);
+            return Response::json(['code'=>200,'message' => 'OK' , 'data' => 'Saved'], 200);
+        }else{
+            if ($priority) {
+                $priority->fill($attributes);
+                Session::flash('update', ['code' => 200, 'message' => 'Priority info was updated']);
+            }else{
+                $attributes["priority_id"] = $id;
+                $priority = Priority::create($attributes);
+                Session::flash('update', ['code' => 200, 'message' => 'Priority was added']);
+            }
+            $priority->save();
+
+
+            // return redirect("/priorities/$id/edit");
+
+            return redirect("/priorities/");
+        }
+
+
 
         
     

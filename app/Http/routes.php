@@ -17,6 +17,7 @@ Route::get('/', function(){return Redirect::route('home'); } );
 Route::get('/home', ['middleware' => 'auth', 'uses' => 'HomeController@index'])->name('home');
 Route::get('/users', ['middleware' => 'auth', 'uses' => 'HomeController@users'])->name('users');
 Route::get('/users/create', ['middleware' => 'auth', 'uses' => 'UsersController@create']);
+Route::get('/priorities/create', ['middleware' => 'auth', 'uses' => 'PrioritiesController@create']);
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');
@@ -29,6 +30,7 @@ Route::get('/users/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersControll
 Route::get('/companies/{id}/edit', ['middleware' => 'auth', 'uses' => 'CompaniesController@edit']);
 Route::get('/departments/{id}/edit', ['middleware' => 'auth', 'uses' => 'DepartmentsController@edit']);
 Route::get('/positions/{id}/edit', ['middleware' => 'auth', 'uses' => 'PositionsController@edit']);
+Route::get('/priorities/{id}/edit', ['middleware' => 'auth', 'uses' => 'PrioritiesController@edit']);
 
 /* HOME */
 
@@ -94,6 +96,18 @@ Route::group(['middleware' => 'auth','prefix' => 'api/v1.0'], function ()
 'update' => 'priorities.update',
 'show' => 'priorities.show',
 'edit' => 'priorities.edit',
+        
+    ]]);
+
+    Route::resource('periods', 'PeriodsController', ['names' => [
+
+'store' => 'periods.store',
+'index' => 'periods.index',
+'create' => 'periods.create',
+'destroy' => 'periods.destroy',
+'update' => 'periods.update',
+'show' => 'periods.show',
+'edit' => 'periods.edit',
         
     ]]);
 

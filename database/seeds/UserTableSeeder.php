@@ -19,11 +19,20 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
+        $department1 = Department::find(1);
+        $where1 = ['company' => $department1->company, 'boss' => 1];
+        $position1 = Position::where($where1)->first();
+        $department2 = Department::find(2);
+        $where2 = ['company' => $department2->company, 'boss' => 1];
+        $position2 = Position::where($where2)->first();
 
     	User::create([
     		'name' => 'Alejandro',
 			'lastname' => 'Tapia',
     		'email' => 'ageofzetta@gmail.com',
+    		'company' => $department1->company,
+    		'department' => $department1->department_id,
+    		'position' => $position1->position_id,
     		'password' => Hash::make('admin'),
 			'active' => 1,
 			'user_id' => $faker->uuid,
@@ -35,6 +44,9 @@ class UserTableSeeder extends Seeder
     		'name' => 'Karla',
 			'lastname' => 'Reyes',
     		'email' => 'kreyes@fabricadesoluciones.com',
+    		'company' => $department2->company,
+    		'department' => $department2->department_id,
+    		'position' => $position2->position_id,
     		'password' => Hash::make('admin'),
 			'active' => 1,
 			'company' => $karla_company->company_id,

@@ -18,6 +18,7 @@ elixir(function(mix) {
 		'vendor/react.min.js',
 		'vendor/react-dom.min.js',
 		'vendor/browser.min.js',
-		'vendor/jquery.min.js'
+		'vendor/jquery.min.js',
+		'vendor/select2.min.js'
     ]);
 });

@@ -8,7 +8,112 @@
 <h2>Priorities</h2>
 <div id="table"></div>
 <hr>
-<button class="button success">Add Priority</button>
+<a href="/priorities/create" class="button success">Add Priority</a>
+<div data-role="dialog" data-type="info" id="dialog" data-close-button="true" data-overlay="true" data-overlay-color="black" class="padding10">
+    <h1>Register Progress for: </h1>
+    <h4 id="priority_name"></h4>
+    <div class="grid">
+        <div class="row ">
+                    <div class="margin10">
+                        <label>Priority ID</label>
+                        <div class="input-control text full-size">
+                            <input id="priority_id" size="65" type="text" value="" disabled="disabled">
+                        </div>
+                    </div>
+                    </div>
+        <div class="row ">
+                    <div class="margin10">
+                        <div class="input-control select">
+                        <label for="department">Select Week</label>
+                            <select name="week" id="week">
+                                <option value="w1">Week 1</option>
+                                <option value="w2">Week 2</option>
+                                <option value="w3">Week 3</option>
+                                <option value="w4">Week 4</option>
+                                <option value="w5">Week 5</option>
+                                <option value="w6">Week 6</option>
+                                <option value="w7">Week 7</option>
+                                <option value="w8">Week 8</option>
+                                <option value="w9">Week 9</option>
+                                <option value="w10">Week 10</option>
+                                <option value="w11">Week 11</option>
+                                <option value="w12">Week 12</option>
+                                <option value="w13">Week 13</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="margin10">
+                        <div class="input-control select">
+                        <label for="department">Select Progress</label>
+                            <select name="progress" id="progress">
+                                <option value="0">Reset</option>
+                                <option value="3">No Progress</option>
+                                <option value="2">Some Progress</option>
+                                <option value="1">Completed</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                {{ csrf_field() }}
+                <button class="button success save_progress margin10" style="display: inline-block; margin:  0 1em; ">Save</button>
+                <button class="button danger cancel_progress">Cancel</button>
+    </div>
+</div>
+<script>
+    function showDialog(id){
+        var dialog = $(id).data('dialog');
+        dialog.open();
+    }
+    $(document).on("click",".register_progress",function(event) {
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+        $('#progress option:eq(1)').attr('selected','selected');
+        $('#priority_id').val($(this).attr('data-id'));
+        var name = $(this).parent().parent().find('.name').text();
+        $('#priority_name').text(name);
+        showDialog('#dialog');
+    });
+
+    $(document).on("click",".cancel_progress",function(event) {
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+        $('.dialog-close-button').click();
+    });
+
+    $(document).on("click",".save_progress",function(event) {
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+        var data = {};
+        var priority_id = $('#priority_id').val();
+        var token = $('input[name="_token"]').val();
+        data.week = $('#week').val();
+        data.progress = $('#progress').val();
+        $.ajax({
+            type: 'PUT',
+            url: '{!! route('priorities.index') !!}/'+priority_id,
+            data: {
+                "_token": token,
+                "data": data,
+                "progress": true,
+            },
+            success: function(data) {
+                $.Notify({
+                    caption: data.message,
+                    type: 'success',
+                    content: data.data,
+                    keepOpen: false,
+                }); 
+                $('.dialog-close-button').click();
+
+            },
+            error: function() {
+
+            }
+        });
+
+
+
+
+
+    });
+</script>
 <script type="text/babel">
 
     $.get('{!! route('priorities.index') !!}', function(){},'json')
@@ -18,7 +123,19 @@
             <PrioritiesTable list={d.data.priorities} />,
             document.getElementById('table')
         );
+        setTimeout( getPeriods  ,300)
     });
+    function getPeriods(){
+        $('.period').each(function(d){
+            var this_EL = $(this);
+            var this_id = $(this).text();
+
+            $.get('{!! route('periods.index') !!}/'+this_id, function(){},'json')
+            .done(function(d){
+                this_EL.text(d.data.name);
+            });
+        });
+    }
 
 var Tr = React.createClass({
 
@@ -26,12 +143,14 @@ var Tr = React.createClass({
         return (
             <tr>
                 <td>{this.props.index + 1}</td>
-                <td>{this.props.data.period}</td>
-                <td>{this.props.data.name}</td>
+                <td><span className="period">{this.props.data.period}</span></td>
+                <td><span className="name">{this.props.data.name}</span></td>
                 <td>{this.props.data.description}</td>
                 <td>{this.props.data.status}</td>
+                <td>me</td>
                 <td> 
-                    <a href={"/priority/"+this.props.data.priority_id+"/edit"} className="button success">Modify</a>
+                    <a href='#' className="button success register_progress" data-id={this.props.data.priority_id}>Register progress</a>&nbsp;
+                    <a href={"/priorities/"+this.props.data.priority_id+"/edit"} className="button success" data-id={this.props.data.priority_id}>Edit</a>
                     
                 </td>
 
@@ -58,6 +177,7 @@ var PrioritiesTable = React.createClass({
                         <th>name</th>
                         <th>description</th>
                         <th>status</th>
+                        <th>asigned to</th>
                         <th>actions</th>
                     </tr>
                 </thead>

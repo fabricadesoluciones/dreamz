@@ -19,6 +19,11 @@
     font-weight: bolder;
     text-align: right
 }
+.dialog-overlay{
+    opacity: 0.5;
+    background-color: #000;
+}
+
     </style>
 </head>
 <body>
@@ -115,4 +120,7 @@ console.log('has update;')
         keepOpen: true,
         }); 
 @endif
+$('select').each(function(d){
+    $(this).select2();
+})
 </script>
