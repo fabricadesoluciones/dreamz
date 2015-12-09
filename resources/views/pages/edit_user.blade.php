@@ -15,13 +15,13 @@
                     <div class="cell">
                         <label>User ID</label>
                         <div class="input-control text full-size">
-                            <input size="65" type="text" value="{!! $user->user_id !!}" disabled="disabled">
+                            <input size="65" type="text" value="{!! $user->user_id !!}" name="user_id" disabled="" ="disabled="" ">
                         </div>
                     </div>
                     <div class="cell">
                         <label>Employee Number</label>
                         <div class="input-control text full-size">
-                            <input size="65" name="employee_number" type="text" value="{!! $user->employee_number !!}"  required="required">
+                            <input size="65" name="employee_number" type="text" value="{!! $user->employee_number !!}" required="required">
                         </div>
                     </div>
                 </div>
@@ -240,6 +240,8 @@
         }
 
     });
+    $("#department").attr("data-selected", "{{$user->department}}");
+    $("#position").attr("data-selected", "{{$user->position}}");
 </script>
 
 @stop

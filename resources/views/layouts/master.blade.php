@@ -35,7 +35,7 @@
         <div class="cell size12">
             <div class="greeting">
                 @if(Session::get('name'))
-                    <img id="profile_pic"  style="border-radius: 50%; width: 2em; ">
+                    <img id="profile_pic" src="{{Auth::user()->thumbnail}}" style="border-radius: 50%; width: 2em; ">
                 @endif
                 {{ Session::get('name')}}
                 @if(Session::get('company_name'))
@@ -67,19 +67,20 @@
     </div>
 </div>
 <div class="container flex-grid">
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+    <h3>Please fix the following:</h3>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     @yield('content')
 
 </div>
 <script>
-    $.ajax({
-      url: 'https://randomuser.me/api/',
-      dataType: 'json',
-      success: function(data){
-        var pic_src = data.results[0].user.picture.thumbnail;
-        $('#profile_pic').attr('src', pic_src)
-
-      }
-    });
 
 $(document).on('click','.restore', function(){
     $('.loader').attr('style','display:block;text-align:center')
@@ -107,19 +108,33 @@ $(document).on('click','.delete_item', function(){
 })
 @if( Session::has('update') )
 console.log('has update;')
-        $.Notify({
-        
         @if(Session::get('update')['code'] == 200)
-            caption: 'Success!',
-            type: 'success',
+            var default_title = 'Success!';
+            var type = 'success';
                 
         @else
-            caption: 'An error ocurred',
-            type: 'alert',
+            var default_title = 'An error ocurred';
+            var type = 'alert';
         @endif
+        var title = default_title;
+        @if(isset(Session::get('update')['title']))
+            var title = '{{ Session::get('update')['title']  }}';
+        @endif
+        $.Notify({
+        caption:title,
+        type:type,
         content: '{{ Session::get('update')['message']  }}',
         keepOpen: true,
         }); 
 @endif
+
 $('select').select2();
+
+setTimeout(function(){
+    $('select').each(function(d){
+        if ($(this).attr("data-selected")) {
+            $(this).select2("val", $(this).attr("data-selected"));
+        }
+    });
+},500)
 </script>

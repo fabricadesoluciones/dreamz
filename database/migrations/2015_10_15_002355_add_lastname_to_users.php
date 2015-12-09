@@ -21,6 +21,7 @@ class AddLastnameToUsers extends Migration
             $table->string('position');
             $table->string('employee_number');
             $table->boolean('high_potential');
+            $table->string('thumbnail');
             /*
 
             TODO: Move to User Details
@@ -79,6 +80,7 @@ class AddLastnameToUsers extends Migration
                 'position',
                 'employee_number',
                 'high_potential',
+                'thumbnail',
 
                 /*
                 TODO: Move to User Details

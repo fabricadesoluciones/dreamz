@@ -22,6 +22,7 @@ class UsersController extends Controller
             $this->company = session('company');
         }
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -110,8 +111,17 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'user_id' => 'required',
+            'employee_number' => 'required',
+            'email' => 'required',
+            'lastname' => 'required',
+            'department' => 'required',
+        ]);
+
         $attributes = $request->all();
         $user_attributes = $attributes;
+
 
         unset($user_attributes['user']);
         unset($user_attributes['mobile']);

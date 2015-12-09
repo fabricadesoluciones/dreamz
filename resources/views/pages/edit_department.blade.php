@@ -71,7 +71,7 @@ $.getJSON( "/companies/{{$department->company}}/departments", function( response
             });
             if ("{!! $department->parent !!}") {
 
-                $('select#parent').val("{{$department->parent}}");
+                $('select#parent').attr("data-selected" ,"{{$department->parent}}");
             }
 
 

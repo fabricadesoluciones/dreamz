@@ -36,6 +36,7 @@ class UserTableSeeder extends Seeder
     		'password' => Hash::make('admin'),
 			'active' => 1,
 			'user_id' => $faker->uuid,
+			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/96.jpg'
 
     	]);
 
@@ -51,6 +52,7 @@ class UserTableSeeder extends Seeder
 			'active' => 1,
 			'company' => $karla_company->company_id,
 			'user_id' => $faker->uuid,
+			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/women/96.jpg'
 
     	]);
         $i = 0;
@@ -82,6 +84,9 @@ class UserTableSeeder extends Seeder
 						'employee_number' => $faker->uuid,
 						'department' => $department->department_id,
 						'position' => $position,
+						'thumbnail' => 'https://randomuser.me/api/portraits/thumb/'.$faker->randomElement(['women','men']).'/'. $faker->numberBetween($min = 1, $max = 95) .'.jpg'
+
+
 
 						/*
 			             TODO: Move to User Details

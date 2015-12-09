@@ -67,7 +67,7 @@ class DepartmentsController extends Controller
      */
     public function show($id)
     {
-        $data = Department::where('Department_id', '=', $id)->first();
+        $data = Department::where('department_id', '=', $id)->first();
         if (!$data) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
         }
@@ -82,7 +82,7 @@ class DepartmentsController extends Controller
      */
     public function users($id)
     {
-        $data = Department::where('Department_id', '=', $id)->first()->users;
+        $data = Department::where('department_id', '=', $id)->first()->users;
         if (!$data) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
         }
@@ -97,7 +97,7 @@ class DepartmentsController extends Controller
      */
     public function edit($id)
     {
-        $data = Department::where('Department_id', '=', $id)->first();
+        $data = Department::where('department_id', '=', $id)->first();
         return view('pages.edit_department', ['department' => $data]);
     }
 
@@ -115,15 +115,53 @@ class DepartmentsController extends Controller
         $attributes = $request->all();
         $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
         
-        $department = Department::where('Department_id', '=', $id)->first();
+        $parent = Department::where('department_id', '=', $attributes['parent'])->first();
+        // $parents_objs = [$parent, $grandfather, $grand_grandfather, $grand_grand_grandfather, $grand_grand_grand_grandfather];
+        $parents_objs = [];
+        $parents = [];
+
+        if ($parent) {
+            $grandfather = Department::where('department_id', '=', $parent->parent)->first();
+            array_push($parents,$parent->department_id);
+            array_push($parents_objs,$parent);
+        }
+        if (isset($grandfather) && $grandfather) {
+            $grand_grandfather = Department::where('department_id', '=', $grandfather->parent)->first();
+            array_push($parents,$grandfather->department_id);
+            array_push($parents_objs,$grandfather);
+        }
+        if (isset($grand_grandfather) && $grand_grandfather) {
+            $grand_grand_grandfather = Department::where('department_id', '=', $grand_grandfather->parent)->first();
+            array_push($parents,$grand_grandfather->department_id);
+            array_push($parents_objs,$grand_grandfather);
+        }
+        if (isset($grand_grand_grandfather) && $grand_grand_grandfather) {
+            $grand_grand_grand_grandfather = Department::where('department_id', '=', $grand_grand_grandfather->parent)->first();
+            array_push($parents,$grand_grand_grandfather->department_id);
+            array_push($parents_objs,$grand_grand_grandfather);
+        }
+        if (isset($grand_grand_grand_grandfather) && $grand_grand_grand_grandfather) {
+            
+            Session::flash('update', ['code' => 500, 'title' => 'Hierarchy constraint violation', 'message' => "Trying to add too many children, max level is 5"]);
+            return redirect("/departments/$id/edit");
+
+        }
+
+        if (in_array($id, $parents)) {
+            echo $parents_objs[array_search($id, $parents)]->name;
+
+            Session::flash('update', ['code' => 500, 'title' => 'Hierarchy constraint violation', 'message' => "Parent pointing to child as parent, change ".$parents_objs[array_search($id, $parents) -1]->name."'s parent first"]);
+
+            return redirect("/departments/$id/edit");
+
+        }
+        $department = Department::where('department_id', '=', $id)->first();
         $department->fill($attributes);
         $department->save();
 
         Session::flash('update', ['code' => 200, 'message' => 'Department info was updated']);
         // return back();
         return redirect("/departments/$id/edit");
-
-        
     
     }
 
@@ -135,7 +173,7 @@ class DepartmentsController extends Controller
      */
     public function destroy($id)
     {
-        $department = Department::where('Department_id', '=', $id)->first();
+        $department = Department::where('department_id', '=', $id)->first();
         if (!$department) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
             exit;

@@ -40,7 +40,7 @@
                             <select name="type" id="type">
                                 <option value="EMPRESA">EMPRESA</option>
                                 <option value="DEPARTAMENTO">DEPARTAMENTO</option>
-                                <option value="PERSONAL">PENDIENTE</option>
+                                <option value="PERSONAL">PERSONAL</option>
                             </select>
                         </div>
                     </div>
