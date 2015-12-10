@@ -8,6 +8,7 @@ use App\Company;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Faker\Factory as Faker;
+use App\Role;
 
 class UserTableSeeder extends Seeder
 {
@@ -18,6 +19,20 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+    	$champion = new Role();
+		$champion->name         = 'champion';
+		$champion->display_name = 'Project Owner'; // optional
+		$champion->description  = 'User is the owner of a given project'; // optional
+		$champion->save();
+		$champion = Role::where('name','=','champion')->first();
+
+		$admin = new Role();
+		$admin->name         = 'admin';
+		$admin->display_name = 'System Administrator'; // optional
+		$admin->description  = 'User is allowed to manage and edit other users'; // optional
+		$admin->save();
+		$admin = Role::where('name','=','admin')->first();
+
         $faker = Faker::create();
         $department1 = Department::find(1);
         $where1 = ['company' => $department1->company, 'boss' => 1];
@@ -26,7 +41,7 @@ class UserTableSeeder extends Seeder
         $where2 = ['company' => $department2->company, 'boss' => 1];
         $position2 = Position::where($where2)->first();
 
-    	User::create([
+    	$alex = User::create([
     		'name' => 'Alejandro',
 			'lastname' => 'Tapia',
     		'email' => 'ageofzetta@gmail.com',
@@ -39,9 +54,11 @@ class UserTableSeeder extends Seeder
 			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/96.jpg'
 
     	]);
+		$alex = User::where('email','=','ageofzetta@gmail.com')->first();
+    	$alex->attachRole($admin);
 
         $karla_company = Company::first();
-    	User::create([
+    	$karla = User::create([
     		'name' => 'Karla',
 			'lastname' => 'Reyes',
     		'email' => 'kreyes@fabricadesoluciones.com',
@@ -55,6 +72,8 @@ class UserTableSeeder extends Seeder
 			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/women/96.jpg'
 
     	]);
+		$karla = User::where('email','=','kreyes@fabricadesoluciones.com')->first();
+    	$karla->attachRole($champion->id);
         $i = 0;
 
 

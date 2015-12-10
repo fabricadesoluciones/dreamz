@@ -15,7 +15,6 @@ class AddLastnameToUsers extends Migration
         Schema::table('users', function ($table) {
             $table->string('lastname');
             $table->boolean('active');
-            $table->string('user_id');
             $table->string('company');
             $table->string('department');
             $table->string('position');

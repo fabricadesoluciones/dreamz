@@ -16,6 +16,10 @@ class DatabaseSeeder extends Seeder
         'departments',
         'periods',
         'priorities',
+        'roles',
+        'role_user',
+        'permissions',
+        'permission_role',
     ];
     /**
      * Run the database seeds.

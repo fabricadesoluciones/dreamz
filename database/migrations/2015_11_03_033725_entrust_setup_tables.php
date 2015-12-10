@@ -22,16 +22,19 @@ class EntrustSetupTables extends Migration
 
         // Create table for associating roles to users (Many-to-Many)
         Schema::create('role_user', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
+            $table->string('user_id');
             $table->integer('role_id')->unsigned();
+            $table->primary(['user_id', 'role_id']);
 
-            $table->foreign('user_id')->references('id')->on('users')
+        });
+
+        Schema::table('role_user', function($table) {
+            $table->foreign('user_id')->references('user_id')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
 
-            $table->primary(['user_id', 'role_id']);
-        });
+       });
 
         // Create table for storing permissions
         Schema::create('permissions', function (Blueprint $table) {
@@ -47,13 +50,15 @@ class EntrustSetupTables extends Migration
             $table->integer('permission_id')->unsigned();
             $table->integer('role_id')->unsigned();
 
+
+            $table->primary(['permission_id', 'role_id']);
+        });
+        Schema::table('permission_role', function($table) {
             $table->foreign('permission_id')->references('id')->on('permissions')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
-
-            $table->primary(['permission_id', 'role_id']);
-        });
+       });
     }
 
     /**

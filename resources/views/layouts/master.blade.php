@@ -27,6 +27,7 @@
     </style>
 </head>
 <body>
+
 <div class="loader" style="display:none;">
     <img src="https://thomas.vanhoutte.be/miniblog/wp-content/uploads/light_blue_material_design_loading.gif" alt="">
 </div>
@@ -46,6 +47,9 @@
             </div>
             <a href="/"><img src="/img/logo.svg" width="500"></a>
 @if(Auth::check())
+    @if(Auth::user()->hasRole('champion'))
+        <h1>champion</h1>
+    @endif
 <br>
 <a class="button" href="/home">Home</a>
 @if( ! Session::has('company') )
