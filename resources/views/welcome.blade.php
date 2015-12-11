@@ -3,11 +3,14 @@
 @section('title', '- Inicio')
 
 @section('content')
-<h2>Pick a company</h2>
-<div class="companies">
-    
-</div>
 
+@if(Auth::check())
+    @if(Auth::user()->hasRole('champion'))
+
+    <h2>Pick a company</h2>
+    <div class="companies">
+        
+    </div>
 
 <script type="text/javascript">
 
@@ -45,4 +48,9 @@
     
     });
 </script>
+    @else
+        <h2>Dashboard</h2>
+    @endif
+
+@endif
 @stop
