@@ -30,6 +30,10 @@ class UsersController extends Controller
      */
     public function index()
     {
+        if ( ! Auth::user()->can("list-users")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         $data = DB::table('users')
             ->join('positions', 'users.position', '=', 'positions.position_id')
             ->join('departments', 'users.department', '=', 'departments.department_id')
@@ -49,6 +53,10 @@ class UsersController extends Controller
      */
     public function create()
     {
+        if ( ! Auth::user()->can("edit-users")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         return view('pages.create_user', ['id' => Uuid::generate(4), 'user' => Auth::user() ]);
         
     }
@@ -92,6 +100,10 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
+        if ( ! Auth::user()->can("edit-users")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         $data = DB::table('users')
             ->join('positions', 'users.position', '=', 'positions.position_id')
             ->join('departments', 'users.department', '=', 'departments.department_id')
@@ -111,6 +123,10 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if ( ! Auth::user()->can("edit-users")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         $this->validate($request, [
             'user_id' => 'required',
             'employee_number' => 'required',
@@ -196,6 +212,11 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        if ( ! Auth::user()->can("edit-users")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $user = User::where('user_id', '=', $id)->first();
         if (!$user) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);

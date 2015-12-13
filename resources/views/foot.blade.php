@@ -60,5 +60,16 @@ setTimeout(function(){
         }
     });
 },500)
+$( document ).ajaxComplete(function( event,request, settings ) {
+  if ( request.status != 200) {
+
+    $.Notify({
+        caption:'An error ocurred: Error ' + request.responseJSON.code,
+        type:'alert',
+        content: request.responseJSON.message,
+        keepOpen: true,
+        }); 
+  }
+});
 </script>
 <!-- FOOTER -->
