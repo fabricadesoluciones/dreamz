@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Dreamz @yield('title')</title>
     <link href="/metro/css/metro.min.css" rel="stylesheet">
+    <link href="/metro/css/metro-icons.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
     <script src="/js/all.js"></script>
     <script src="/metro/js/metro.min.js"></script>

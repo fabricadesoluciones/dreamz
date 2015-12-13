@@ -9,6 +9,9 @@ use Response;
 use App\Http\Controllers\Controller;
 use DB;
 use Session; 
+use Uuid; 
+use Hash; 
+use Auth; 
 
 class PeriodsController extends Controller
 {
@@ -42,7 +45,7 @@ class PeriodsController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.create_period', ['id' => Uuid::generate(4), 'user' => Auth::user()]);
     }
 
     /**
@@ -53,7 +56,23 @@ class PeriodsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'period_id' => 'required',
+            'name' => 'required',
+            'start' => 'required',
+            'end' => 'required',
+        ]);
+
+
+        $attributes = $request->all();
+        $period_attributes = [ 'period_id' => $attributes['period_id'], 'name' => $attributes['name'], 'start' => $attributes['start'], 'end' => $attributes['end'], 'company' => Auth::user()->company ];
+
+        $user = Period::create($period_attributes);
+        Session::flash('update', ['code' => 200, 'message' => 'Period was added']);
+        // return redirect("/users/$id/edit");
+        return redirect("/periods/");
+
+
     }
 
     /**
@@ -81,7 +100,7 @@ class PeriodsController extends Controller
     public function edit($id)
     {
         $data = Period::where('period_id', '=', $id)->first();
-        return view('pages.edit_department', ['department' => $data]);
+        return view('pages.edit_period', ['period' => $data]);
     }
 
     /**
@@ -98,13 +117,13 @@ class PeriodsController extends Controller
         $attributes = $request->all();
         $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
         
-        $department = Period::where('period_id', '=', $id)->first();
-        $department->fill($attributes);
-        $department->save();
+        $period = Period::where('period_id', '=', $id)->first();
+        $period->fill($attributes);
+        $period->save();
 
         Session::flash('update', ['code' => 200, 'message' => 'Department info was updated']);
         // return back();
-        return redirect("/departments/$id/edit");
+        return redirect("/periods/$id/edit");
 
         
     
@@ -118,29 +137,28 @@ class PeriodsController extends Controller
      */
     public function destroy($id)
     {
-        $department = Period::where('period_id', '=', $id)->first();
-        if (!$department) {
+        $period = Period::where('period_id', '=', $id)->first();
+        if (!$period) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
             exit;
         }
 
-        $department->active = 0;
-        $department->save();
+        $period->delete();
 
-        return Response::json(['code'=>200,'message' => 'OK' , 'data' => "$id DISABLED"] , 200);
+        return Response::json(['code'=>10,'message' => 'OK' , 'data' => "$id DELETED"] , 200);
         
     }
 
-    public function transformCollection($departments)
+    public function transformCollection($periods)
     {
-        if(is_array($departments)){
-            return $departments;
+        if(is_array($periods)){
+            return $periods;
         }
-        return array_map([$this, 'transform'] , $departments->toArray());
+        return array_map([$this, 'transform'] , $periods->toArray());
     }
 
-    private function transform ($department)
+    private function transform ($period)
     {
-        return $department;
+        return $period;
     }
 }

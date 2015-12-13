@@ -18,10 +18,12 @@ Route::get('/home', ['middleware' => 'auth', 'uses' => 'HomeController@index'])-
 Route::get('/users', ['middleware' => 'auth', 'uses' => 'HomeController@users'])->name('users');
 Route::get('/users/create', ['middleware' => 'auth', 'uses' => 'UsersController@create']);
 Route::get('/priorities/create', ['middleware' => 'auth', 'uses' => 'PrioritiesController@create']);
+Route::get('/periods/create', ['middleware' => 'auth', 'uses' => 'PeriodsController@create']);
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');
 Route::get('/priorities', ['middleware' => 'auth', 'uses' => 'HomeController@priorities'])->name('priorities');
+Route::get('/periods', ['middleware' => 'auth', 'uses' => 'HomeController@periods'])->name('periods');
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@set']);
 Route::get('/companies/{id}/departments', ['middleware' => 'auth', 'uses' => 'CompaniesController@departments']);
@@ -31,6 +33,7 @@ Route::get('/companies/{id}/edit', ['middleware' => 'auth', 'uses' => 'Companies
 Route::get('/departments/{id}/edit', ['middleware' => 'auth', 'uses' => 'DepartmentsController@edit']);
 Route::get('/positions/{id}/edit', ['middleware' => 'auth', 'uses' => 'PositionsController@edit']);
 Route::get('/priorities/{id}/edit', ['middleware' => 'auth', 'uses' => 'PrioritiesController@edit']);
+Route::get('/periods/{id}/edit', ['middleware' => 'auth', 'uses' => 'PeriodsController@edit']);
 Route::get('/priorities/team', ['middleware' => 'auth', 'uses' => 'PrioritiesController@team'])->name('priorities.team');
 
 /* HOME */
