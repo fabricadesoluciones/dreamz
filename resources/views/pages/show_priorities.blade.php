@@ -20,7 +20,7 @@
                     <div class="margin10">
                         <label>Priority ID</label>
                         <div class="input-control text full-size">
-                            <input id="priority_id" size="65" type="text" value="" disabled="disabled">
+                            <input id="priority_id" size="65" type="text" value="" readonly="readonly">
                         </div>
                     </div>
                     </div>

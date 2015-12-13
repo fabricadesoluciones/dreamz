@@ -146,7 +146,7 @@ class PositionsController extends Controller
         $position->active = 0;
         $position->save();
 
-        return Response::json(['code'=>200,'message' => 'OK' , 'data' => "$id DISABLED"] , 200);
+        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id DISABLED"] , 204);
         
     }
 

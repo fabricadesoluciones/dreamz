@@ -22,26 +22,31 @@ class EntrustTablesSeeder extends Seeder
     {
 		$super_admin = new Role();
 		$super_admin->name         = 'super-admin';
+		$super_admin->display_name = 'Super Admin';
 		$super_admin->save();
 		$super_admin = Role::where('name','=','super-admin')->first();
 
 		$ceo = new Role();
 		$ceo->name         = 'ceo';
+		$ceo->display_name = 'Ceo';
 		$ceo->save();
 		$ceo = Role::where('name','=','ceo')->first();
 
         $champion = new Role();
 		$champion->name         = 'champion';
+		$champion->display_name = 'Champion';
 		$champion->save();
 		$champion = Role::where('name','=','champion')->first();
 
         $coach = new Role();
 		$coach->name         = 'coach';
+		$coach->display_name = 'Coach';
 		$coach->save();
 		$coach = Role::where('name','=','coach')->first();
 
 		$employee = new Role();
 		$employee->name         = 'employee';
+		$employee->display_name = 'Employee';
 		$employee->save();
 		$employee = Role::where('name','=','employee')->first();
 

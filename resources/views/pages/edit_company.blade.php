@@ -15,7 +15,7 @@
                     <div class="cell">
                         <label>Company ID</label>
                         <div class="input-control text full-size">
-                            <input size="65" type="text" value="{!! $company->company_id !!}" disabled="disabled">
+                            <input size="65" type="text" value="{!! $company->company_id !!}" readonly="readonly">
                         </div>
                     </div>
                     <div class="cell">

@@ -145,7 +145,7 @@ class PeriodsController extends Controller
 
         $period->delete();
 
-        return Response::json(['code'=>10,'message' => 'OK' , 'data' => "$id DELETED"] , 200);
+        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id DELETED"] , 204);
         
     }
 

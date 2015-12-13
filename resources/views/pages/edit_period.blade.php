@@ -15,7 +15,7 @@
                     <div class="cell">
                         <label>Period ID</label>
                         <div class="input-control text full-size">
-                            <input size="65" type="text" value="{!! $period->period_id !!}" disabled="disabled">
+                            <input size="65" type="text" value="{!! $period->period_id !!}" readonly="readonly">
                         </div>
                     </div>
                     <div class="cell">

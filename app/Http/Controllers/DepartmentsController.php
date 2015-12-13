@@ -182,7 +182,7 @@ class DepartmentsController extends Controller
         $department->active = 0;
         $department->save();
 
-        return Response::json(['code'=>200,'message' => 'OK' , 'data' => "$id DISABLED"] , 200);
+        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id DISABLED"] , 204);
         
     }
 

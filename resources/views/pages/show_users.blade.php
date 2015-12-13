@@ -50,9 +50,13 @@ var UserTable = React.createClass({
             data: this.props.data
         };
     },
+    componentDidMount: function() {
+    
+        $('#datatable').DataTable();
+    },
     render: function() {
         return (
-            <table className="table striped hovered cell-hovered border bordered">
+            <table id="datatable" className="table striped hovered cell-hovered border bordered">
                 <thead>
                     <tr>
                         <th>name</th>

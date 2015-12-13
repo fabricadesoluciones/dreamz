@@ -130,9 +130,10 @@ class UsersController extends Controller
         $this->validate($request, [
             'user_id' => 'required',
             'employee_number' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique:users',
             'lastname' => 'required',
             'department' => 'required',
+
         ]);
 
         $attributes = $request->all();
@@ -225,7 +226,7 @@ class UsersController extends Controller
 
         $user->delete();
 
-        return Response::json(['code'=>200,'message' => 'OK' , 'data' => "$id DELETED"] , 200);
+        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id DELETED"] , 204);
         
     }
 

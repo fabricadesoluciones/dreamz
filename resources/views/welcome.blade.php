@@ -5,7 +5,7 @@
 @section('content')
 
 @if(Auth::check())
-    @if(Auth::user()->hasRole('champion'))
+    @if(Auth::user()->can('list-companies'))
 
     <h2>Pick a company</h2>
     <div class="companies">

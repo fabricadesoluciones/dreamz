@@ -192,7 +192,7 @@ class CompaniesController extends Controller
         $company->active = 0;
         $company->save();
 
-        return Response::json(['code'=>200,'message' => 'OK' , 'data' => "$id DISABLED"] , 200);
+        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id DISABLED"] , 204);
         
     }
 

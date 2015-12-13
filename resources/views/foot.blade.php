@@ -18,14 +18,7 @@ $(document).on('click','.delete_item', function(){
             type: 'post',
             data: {_method: 'delete', _token :'{{ csrf_token() }}'},
             success: function(result) {
-                if (result.code == "10") {
-                    $.Notify({
-                        caption: 'Success!',
-                        content: 'Item deleted',
-                        type: 'success'
-                    });
-                    setTimeout(function(){location.reload();},500)
-                }
+                
             }
         }); 
     }
@@ -61,7 +54,25 @@ setTimeout(function(){
     });
 },500)
 $( document ).ajaxComplete(function( event,request, settings ) {
-  if ( request.status != 200) {
+    if (request.status == 200) {
+        return;
+    }
+    if (request.status == 204) {
+        $.Notify({
+            caption: 'Success!',
+            content: 'Item deleted',
+            type: 'success'
+        });
+        setTimeout(function(){location.reload();},500)
+    }else if(request.status == 403) {
+        $.Notify({
+            caption:'Forbidden',
+            type:'alert',
+            content: request.responseJSON.message,
+            keepOpen: true,
+        }); 
+
+    } else {
 
     $.Notify({
         caption:'An error ocurred: Error ' + request.responseJSON.code,

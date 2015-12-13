@@ -13,7 +13,7 @@
                     <div class="cell">
                         <label>User ID</label>
                         <div class="input-control text full-size">
-                            <input size="65" type="text" name="user_id" value="{!! $id !!}" disabled="disabled">
+                            <input size="65" type="text" name="user_id" value="{!! $id !!}" readonly="readonly">
                         </div>
                     </div>
                     <div class="cell">
