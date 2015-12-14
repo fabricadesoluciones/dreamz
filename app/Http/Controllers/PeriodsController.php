@@ -20,6 +20,8 @@ class PeriodsController extends Controller
         $this->company = '';
         if ( session('company')) {
             $this->company = session('company');
+        }else{
+            $this->company = Auth::user()->company;
         }
     }
 
@@ -30,6 +32,11 @@ class PeriodsController extends Controller
      */
     public function index()
     {
+        if ( ! Auth::user()->can("list-periods")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $data = Period::where('company','LIKE',"%".$this->company."%")->get();
         
         if (!$data) {
@@ -45,6 +52,11 @@ class PeriodsController extends Controller
      */
     public function create()
     {
+        if ( ! Auth::user()->can("edit-periods")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         return view('pages.create_period', ['id' => Uuid::generate(4), 'user' => Auth::user()]);
     }
 
@@ -56,6 +68,11 @@ class PeriodsController extends Controller
      */
     public function store(Request $request)
     {
+        if ( ! Auth::user()->can("edit-periods")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $this->validate($request, [
             'period_id' => 'required',
             'name' => 'required',
@@ -83,6 +100,11 @@ class PeriodsController extends Controller
      */
     public function show($id)
     {
+        if ( ! Auth::user()->can("edit-periods")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $data = Period::where('period_id', '=', $id)->first();
         if (!$data) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
@@ -99,6 +121,11 @@ class PeriodsController extends Controller
      */
     public function edit($id)
     {
+        if ( ! Auth::user()->can("edit-periods")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $data = Period::where('period_id', '=', $id)->first();
         return view('pages.edit_period', ['period' => $data]);
     }
@@ -111,9 +138,12 @@ class PeriodsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-
     {
-        
+    if ( ! Auth::user()->can("edit-periods")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $attributes = $request->all();
         $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
         
@@ -137,6 +167,11 @@ class PeriodsController extends Controller
      */
     public function destroy($id)
     {
+        if ( ! Auth::user()->can("edit-periods")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $period = Period::where('period_id', '=', $id)->first();
         if (!$period) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);

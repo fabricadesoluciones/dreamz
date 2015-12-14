@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth; 
 use Session; 
+use Response;
 
 class HomeController extends Controller
 {
@@ -21,42 +22,63 @@ class HomeController extends Controller
      */
     public function index()
     {
-            Session::set('name', Auth::user()->name ." ".Auth::user()->lastname);
-
-            
-
-            
+        Session::set('name', Auth::user()->name ." ".Auth::user()->lastname);
 
         return view('welcome');
     }
 
     public function users()
     {
+        if ( ! Auth::user()->can("list-users")){
+            return $this->returnForbidden();
+        }
+
         return view('pages.show_users');
     }
 
     public function companies()
     {
+        if ( ! Auth::user()->can("list-companies")){
+            return $this->returnForbidden();
+        }
+
         return view('pages.show_companies');
     }
 
     public function departments()
     {
+        if ( ! Auth::user()->can("list-departments")){
+            return $this->returnForbidden();
+        }
+
         return view('pages.show_departments');
     }
 
     public function positions()
     {
+        if ( ! Auth::user()->can("list-positions")){
+            return $this->returnForbidden();
+        }
+
         return view('pages.show_positions');
     }
 
     public function priorities()
     {
+        if ( ! Auth::user()->can("list-priorities")){
+            return $this->returnForbidden();
+        }
+
         return view('pages.show_priorities');
     }
 
     public function periods()
     {
+        if ( ! Auth::user()->can("list-periods")){
+            return $this->returnForbidden();
+
+        }
+
         return view('pages.show_periods');
     }
 
@@ -145,5 +167,12 @@ class HomeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function returnForbidden()
+    {
+        Session::flash('update', ['code'=>403,'message' => 'User can not access this resource' ]);
+        return view('pages.generic_error');
+
     }
 }

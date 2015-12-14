@@ -8,6 +8,7 @@ use App\Http\Requests;
 use Response;
 use App\Http\Controllers\Controller;
 use DB;
+use Auth; 
 use Session; 
 
 class PositionsController extends Controller
@@ -27,6 +28,10 @@ class PositionsController extends Controller
      */
     public function index()
     {
+        if ( ! Auth::user()->can("list-positions")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         $data = DB::table('positions')
             ->join('companies', 'positions.company', '=', 'companies.company_id')
             ->select('positions.*', 'companies.commercial_name AS company_name')
@@ -46,6 +51,11 @@ class PositionsController extends Controller
      */
     public function create()
     {
+        if ( ! Auth::user()->can("edit-positions")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         //
     }
 
@@ -57,6 +67,11 @@ class PositionsController extends Controller
      */
     public function store(Request $request)
     {
+        if ( ! Auth::user()->can("edit-positions")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         //
     }
 
@@ -68,6 +83,11 @@ class PositionsController extends Controller
      */
     public function show($id)
     {
+        if ( ! Auth::user()->can("edit-positions")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $data = Position::where('position_id', '=', $id)->first();
         if (!$data) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
@@ -83,6 +103,11 @@ class PositionsController extends Controller
      */
     public function users($id)
     {
+        if ( ! Auth::user()->can("edit-positions")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $data = Position::where('position_id', '=', $id)->first()->users;
         if (!$data) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
@@ -98,6 +123,11 @@ class PositionsController extends Controller
      */
     public function edit($id)
     {
+        if ( ! Auth::user()->can("edit-positions")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $data = Position::where('position_id', '=', $id)->first();
         return view('pages.edit_position', ['position' => $data]);
     }
@@ -110,8 +140,13 @@ class PositionsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-
     {
+
+        if ( ! Auth::user()->can("edit-positions")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         
         $attributes = $request->all();
         $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
@@ -137,6 +172,11 @@ class PositionsController extends Controller
      */
     public function destroy($id)
     {
+        if ( ! Auth::user()->can("edit-positions")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $position = Position::where('position_id', '=', $id)->first();
         if (!$position) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);

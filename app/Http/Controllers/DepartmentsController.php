@@ -9,6 +9,7 @@ use Response;
 use App\Http\Controllers\Controller;
 use DB;
 use Session; 
+use Auth; 
 
 class DepartmentsController extends Controller
 {
@@ -27,6 +28,10 @@ class DepartmentsController extends Controller
      */
     public function index()
     {
+        if ( ! Auth::user()->can("list-departments")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         $data = DB::table('departments')
             ->join('companies', 'departments.company', '=', 'companies.company_id')
             ->select('departments.*', 'companies.commercial_name AS company_name')
@@ -45,6 +50,10 @@ class DepartmentsController extends Controller
      */
     public function create()
     {
+        if ( ! Auth::user()->can("edit-departments")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         //
     }
 
@@ -56,6 +65,10 @@ class DepartmentsController extends Controller
      */
     public function store(Request $request)
     {
+        if ( ! Auth::user()->can("edit-departments")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         //
     }
 
@@ -67,6 +80,10 @@ class DepartmentsController extends Controller
      */
     public function show($id)
     {
+        if ( ! Auth::user()->can("edit-departments")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         $data = Department::where('department_id', '=', $id)->first();
         if (!$data) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
@@ -82,6 +99,10 @@ class DepartmentsController extends Controller
      */
     public function users($id)
     {
+        if ( ! Auth::user()->can("edit-departments")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         $data = Department::where('department_id', '=', $id)->first()->users;
         if (!$data) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
@@ -97,6 +118,10 @@ class DepartmentsController extends Controller
      */
     public function edit($id)
     {
+        if ( ! Auth::user()->can("edit-departments")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         $data = Department::where('department_id', '=', $id)->first();
         return view('pages.edit_department', ['department' => $data]);
     }
@@ -109,8 +134,11 @@ class DepartmentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-
     {
+        if ( ! Auth::user()->can("edit-departments")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         
         $attributes = $request->all();
         $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
@@ -173,6 +201,10 @@ class DepartmentsController extends Controller
      */
     public function destroy($id)
     {
+        if ( ! Auth::user()->can("edit-departments")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
         $department = Department::where('department_id', '=', $id)->first();
         if (!$department) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);

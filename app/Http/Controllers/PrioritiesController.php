@@ -33,6 +33,11 @@ class PrioritiesController extends Controller
      */
     public function index()
     {
+        if ( ! Auth::user()->can("list-priorities")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
 
         $user = Auth::user();
         
@@ -60,6 +65,11 @@ class PrioritiesController extends Controller
      */
     public function team()
     {
+        if ( ! Auth::user()->can("edit-priorities")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
 
         $user = Auth::user();
         
@@ -97,6 +107,11 @@ class PrioritiesController extends Controller
      */
     public function create()
     {
+        if ( ! Auth::user()->can("edit-priorities")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $user = Auth::user();
         $position = Position::where('position_id', '=', $user->position)->first();
         $periods = Period::where('company','LIKE',"%".$this->company."%")->get();
@@ -117,6 +132,11 @@ class PrioritiesController extends Controller
      */
     public function store(Request $request)
     {
+        if ( ! Auth::user()->can("edit-priorities")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         //
     }
 
@@ -128,6 +148,11 @@ class PrioritiesController extends Controller
      */
     public function show($id)
     {
+        if ( ! Auth::user()->can("edit-priorities")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $data = Priority::where('priority_id', '=', $id)->first();
 
         if (!$data) {
@@ -144,6 +169,11 @@ class PrioritiesController extends Controller
      */
     public function edit($id)
     {
+        if ( ! Auth::user()->can("edit-priorities")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $user = Auth::user();
         $position = Position::where('position_id', '=', $user->position)->first();
         $periods = Period::where('company','LIKE',"%".$this->company."%")->get();
@@ -166,8 +196,12 @@ class PrioritiesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-
     {
+        if ( ! Auth::user()->can("edit-priorities")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         
         $attributes = $request->all();
 
@@ -215,6 +249,11 @@ class PrioritiesController extends Controller
      */
     public function destroy($id)
     {
+        if ( ! Auth::user()->can("edit-priorities")){
+            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            exit;
+        }
+
         $priority = Priority::where('priority_id', '=', $id);
         if (!$priority) {
             return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
