@@ -9,28 +9,36 @@
     <script src="/js/all.js"></script>
     <script src="/metro/js/metro.min.js"></script>
     <style>
-    .center{
-        text-align: center;
+    html,body,section{
+        height: 100%;
     }
-    .greeting{
-    display: inline-block;
-    float: right;
-    margin: 1em;
-    font-size: 1.7em;
-    font-weight: bolder;
-    text-align: right
-}
-.dialog-overlay{
-    opacity: 0.5;
-    background-color: #000;
-}
+    
 
     </style>
 </head>
 <body>
-@include('menu')
 
-<div class="container flex-grid">
+    <header>
+        @include('header')
+    </header>
+    <section>
+            <nav class="main_navigation">
+                <ul>
+                    <li>item 1</li>
+                    <li>item 1</li>
+                    <li>item 1</li>
+                    <li>item 1</li>
+                </ul>
+            </nav>
+            <article>
+                @yield('content')
+            <br class="clear">
+            </article>
+    </section>
+
+
+
+{{-- <div class="container flex-grid">
 @if (count($errors) > 0)
     <div class="alert alert-danger">
     <h3>Please fix the following:</h3>
@@ -41,7 +49,7 @@
         </ul>
     </div>
 @endif
-    @yield('content')
 
-</div>
+</div> --}}
+
 @include('foot')

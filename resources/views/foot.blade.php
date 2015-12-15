@@ -82,5 +82,6 @@ $( document ).ajaxComplete(function( event,request, settings ) {
         }); 
   }
 });
+
 </script>
 <!-- FOOTER -->

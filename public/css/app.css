@@ -1,3 +1,58 @@
+.center {
+  text-align: center; }
+
+.greeting {
+  display: inline-block;
+  float: right;
+  margin: 1em;
+  font-size: 1.7em;
+  font-weight: bolder;
+  text-align: right; }
+
+.dialog-overlay {
+  opacity: 0.5;
+  background-color: #000; }
+
+section {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  height: 100px; }
+  section nav.main_navigation {
+    background-color: #1283AB;
+    -webkit-flex-basis: 4em;
+    -ms-flex-preferred-size: 4em;
+    flex-basis: 4em; }
+    section nav.main_navigation ul {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      list-style-type: none;
+      margin: 0;
+      padding: 0; }
+      section nav.main_navigation ul li {
+        width: 2em;
+        margin: 1em;
+        height: 2em;
+        overflow: hidden;
+        background: red; }
+  section article {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 1em; }
+
+.nop {
+  padding: 0; }
 
 /*! ptb2.me/flexgrid | (c) 2014 Peter T Bosse II | Apache license */
 /*! Inspired by Bootstrap 3.2 | License: http://bit.ly/WzvaP8 */

@@ -1,0 +1,52 @@
+.center {
+    text-align: center;
+}
+
+.greeting {
+    display: inline-block;
+    float: right;
+    margin: 1em;
+    font-size: 1.7em;
+    font-weight: bolder;
+    text-align: right
+}
+
+.dialog-overlay {
+    opacity: 0.5;
+    background-color: #000;
+}
+
+section {
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    nav.main_navigation {
+        background-color: #1283AB;
+        flex-basis: 4em;
+        ul {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            li {
+                width: 2em;
+                margin: 1em;
+                height: 2em;
+                overflow: hidden;
+                background: red;
+            }
+        }
+    }
+    article {
+        flex: 1;
+        padding: 1em;
+    }
+}
+
+
+
+.nop {
+    padding: 0;
+}
