@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title', '- New User')
+@section('title', trans('general.new').' '.trans_choice('general.menu.users', 1))
 
 @section('content')
-<h2>New User </h2>
+<h2>{{ trans('general.new')}} {{trans_choice('general.menu.users', 1) }}</h2>
 <hr>
 </div>
 <div class="container">
@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="cell">
-                        <label>Employee Number</label>
+                        <label>{{trans('general.forms.employee_number')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="employee_number" type="text" value=""  required="required" />
                         </div>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="row cells2">
                     <div class="cell">
-                        <label>Name</label>
+                        <label>{{trans('general.forms.name')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="name" type="text" value=""  required="required" />
                         </div>
@@ -39,13 +39,13 @@
                 </div>
                 <div class="row cells3">
                     <div class="cell">
-                        <label>Lastname</label>
+                        <label>{{trans('general.forms.lastname')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="lastname" type="text" value=""  required="required" />
                         </div>
                     </div>
                     <div class="cell">
-                        <label>Active</label>
+                        <label>{{trans('general.active')}}</label>
                         <br>
                         <label class="switch" style="padding: 1.2ex 0; ">
                             <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="active" value="" />
@@ -67,14 +67,14 @@
                 <div class="row cells2">
                     <div class="cell">
                         <div class="input-control select">
-                        <label for="department">Department</label>
+                        <label for="department">{{trans_choice('general.menu.departments',1)}}</label>
                             <select name="department" id="department">
                             </select>
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control select">
-                        <label for="position">Position</label>
+                        <label for="position">{{trans_choice('general.menu.positions',1)}}</label>
                             <select name="position" id="position">
                             </select>
                         </div>
@@ -82,8 +82,8 @@
                 </div>
             </div>
         <input type="hidden" name="company" value="{{$user->company}}">
-        <input type="submit" class="success">
-        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">Cancel</a>
+        <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
+        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">{{trans('general.forms.cancel')}}</a>
            
 {!! Form::close() !!}
 

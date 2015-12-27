@@ -27,13 +27,13 @@
 
             <div>
             <br>
-                <a href="{{ URL::to('password/email') }}"> Forgot my password </a>
+                <a href="{{ URL::to('password/email') }}">{{ trans('general.forms.forgot_my_password') }}</a>
             <br>
             <br>
             </div>
 
             <div>
-                <button type="submit">Login</button>
+                <button type="submit">{{ trans('general.login') }}</button>
             <br>
 
             </div>

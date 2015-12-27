@@ -10,7 +10,7 @@ $(document).on('click','.restore', function(){
     $('.loader').attr('style','display:block;text-align:center')
 });
 $(document).on('click','.delete_item', function(){
-    var doDelete = window.confirm('Do you really want to delete that record?');
+    var doDelete = window.confirm('{{trans('general.confirm_delete')}}');
     if (doDelete) {
 
         $.ajax({
@@ -25,7 +25,7 @@ $(document).on('click','.delete_item', function(){
 })
 @if( Session::has('update') )
         @if(Session::get('update')['code'] == 200)
-            var default_title = 'Success!';
+            var default_title = '{{trans('general.success')}}';
             var type = 'success';
                 
         @else
@@ -54,16 +54,17 @@ setTimeout(function(){
     });
 },500)
 $( document ).ajaxComplete(function( event,request, settings ) {
+    debugger;
     if (request.status == 200) {
         return;
     }
     if (request.status == 204) {
         $.Notify({
-            caption: 'Success!',
-            content: 'Item deleted',
+            caption: '{{trans('general.success')}}',
+            content: '{{trans('general.http.204')}} / {{trans('general.http.204b')}}',
             type: 'success'
         });
-        setTimeout(function(){location.reload();},500)
+        setTimeout(function(){location.reload();},1200)
     }else if(request.status == 403) {
         $.Notify({
             caption:'Forbidden',

@@ -34,7 +34,7 @@ class PrioritiesController extends Controller
     public function index()
     {
         if ( ! Auth::user()->can("list-priorities")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -43,7 +43,7 @@ class PrioritiesController extends Controller
         
         $data = $user->priorities;
          if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         
         $position = Position::where('position_id', '=', $user->position)->first();
@@ -66,7 +66,7 @@ class PrioritiesController extends Controller
     public function team()
     {
         if ( ! Auth::user()->can("edit-priorities")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -75,7 +75,7 @@ class PrioritiesController extends Controller
         
         $data = $user->priorities;
          if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         
         $position = Position::where('position_id', '=', $user->position)->first();
@@ -95,7 +95,7 @@ class PrioritiesController extends Controller
         }
 
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
@@ -108,7 +108,7 @@ class PrioritiesController extends Controller
     public function create()
     {
         if ( ! Auth::user()->can("edit-priorities")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -133,7 +133,7 @@ class PrioritiesController extends Controller
     public function store(Request $request)
     {
         if ( ! Auth::user()->can("edit-priorities")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -149,14 +149,14 @@ class PrioritiesController extends Controller
     public function show($id)
     {
         if ( ! Auth::user()->can("edit-priorities")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
         $data = Priority::where('priority_id', '=', $id)->first();
 
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -170,7 +170,7 @@ class PrioritiesController extends Controller
     public function edit($id)
     {
         if ( ! Auth::user()->can("edit-priorities")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -198,7 +198,7 @@ class PrioritiesController extends Controller
     public function update(Request $request, $id)
     {
         if ( ! Auth::user()->can("edit-priorities")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -250,19 +250,19 @@ class PrioritiesController extends Controller
     public function destroy($id)
     {
         if ( ! Auth::user()->can("edit-priorities")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
         $priority = Priority::where('priority_id', '=', $id);
         if (!$priority) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
             exit;
         }
 
         $priority->delete();
 
-        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id DELETED"] , 204);
+        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204')] , 204);
         
     }
 

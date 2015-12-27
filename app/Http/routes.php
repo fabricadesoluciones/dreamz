@@ -11,9 +11,16 @@
 |
 */
 
+/* LANGUAGE */
+App::setLocale('es');
+// App::setLocale('en');
+/* LANGUAGE */
+
 /* HOME */
 
-Route::get('/', function(){return Redirect::route('home'); } );
+
+Route::get('/', function(){
+ return Redirect::route('home'); } );
 Route::get('/home', ['middleware' => 'auth', 'uses' => 'HomeController@index'])->name('home');
 Route::get('/forbidden', ['middleware' => 'auth', 'uses' => 'HomeController@returnForbidden'])->name('forbidden');
 Route::get('/users', ['middleware' => 'auth', 'uses' => 'HomeController@users'])->name('users');

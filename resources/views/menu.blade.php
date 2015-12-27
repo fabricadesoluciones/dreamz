@@ -1,45 +1,34 @@
 <!-- MENU -->
-
-<div class="container flex-grid">
-    <div class="row flex-align-center flex-just-center loginForm">
-        <div class="cell size12">
-            
-            <a href="/"><img src="/img/logo.svg" width="500"></a>
-
+<nav class="main_navigation">
+    <ul>
 			@if(Auth::check())
 
 			    
 				<br>
 				
-				<a class="button" href="/home">Home</a>
+				<li><a class="menu_link" href="/home" title="{{ trans('general.menu.home') }}"><img src="/img/home.svg" alt=""> </a></li>
 			    @if(Auth::user()->can('list-users'))
-                    <a class="button" href="/users">Users</a>
+                    <li><a class="menu_link" href="/users" title="{{ trans_choice('general.menu.users', 2) }}"> <img src='http://simpleicon.com/wp-content/uploads/multy-user.svg' alt=""> </a></li>
                 @endif
                 @if(Auth::user()->can('list-departments'))
-                    <a class="button" href="/departments">Departments</a>
+                    <li><a class="menu_link" href="/departments" title="{{ trans_choice('general.menu.departments', 2) }}"> <img src="/img/gear.svg" alt=""> </a></li>
                 @endif
                 @if(Auth::user()->can('list-positions'))
-                    <a class="button" href="/positions">Positions</a>
+                    <li><a class="menu_link" href="/positions" title="{{ trans_choice('general.menu.positions', 2) }}"> <img src="/img/gear.svg" alt=""> </a></li>
                 @endif
                 @if(Auth::user()->can('list-priorities'))
-                    <a class="button" href="/priorities">Priorities</a>
+                    <li><a class="menu_link" href="/priorities" title="{{ trans_choice('general.menu.priorities', 2) }}"> <img src="/img/gear.svg" alt=""> </a></li>
                 @endif
                 @if(Auth::user()->can('list-companies'))
-                    <a class="button" href="/companies">Companies</a>
+                    <li><a class="menu_link" href="/companies" title="{{ trans_choice('general.menu.companies', 2) }}"> <img src="http://simpleicon.com/wp-content/uploads/building-3.svg" alt=""> </a></li>
                 @endif
                 @if(Auth::user()->can('list-periods'))
-					<a class="button" href="/periods">Periods</a>
+					<li><a class="menu_link" href="/periods" title="{{ trans_choice('general.menu.periods', 2) }}"> <img src="/img/gear.svg" alt=""> </a></li>
 			    @endif
-				<a class="button btn-primary" id="logout" href="/logout">Logout <span class="mif-icon_name"></span></a>
-				<a class="button danger restore" href="/regenerate">Restore</a>
+				<li><a class="menu_link btn-primary" id="logout" href="/logout"><img src="http://uxrepo.com/static/icon-sets/font-awesome/svg/logout.svg" alt=""></a></li>
+				<li><a class="menu_link danger restore" href="/regenerate"><img src="http://www.synchronoss.com/assets/img/icons/restore.svg" alt=""></a></li>
 
 			@endif
-            <hr>
-
-
-        </div>
-    </div>
-</div>
-
-
+    </ul>
+</nav>
 <!-- MENU -->

@@ -29,7 +29,7 @@ class PositionsController extends Controller
     public function index()
     {
         if ( ! Auth::user()->can("list-positions")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
         $data = DB::table('positions')
@@ -39,7 +39,7 @@ class PositionsController extends Controller
             ->get();
 
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
@@ -52,7 +52,7 @@ class PositionsController extends Controller
     public function create()
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -68,7 +68,7 @@ class PositionsController extends Controller
     public function store(Request $request)
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -84,13 +84,13 @@ class PositionsController extends Controller
     public function show($id)
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
         $data = Position::where('position_id', '=', $id)->first();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -104,13 +104,13 @@ class PositionsController extends Controller
     public function users($id)
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
         $data = Position::where('position_id', '=', $id)->first()->users;
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -124,7 +124,7 @@ class PositionsController extends Controller
     public function edit($id)
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -143,7 +143,7 @@ class PositionsController extends Controller
     {
 
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -173,20 +173,20 @@ class PositionsController extends Controller
     public function destroy($id)
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
         $position = Position::where('position_id', '=', $id)->first();
         if (!$position) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
             exit;
         }
 
         $position->active = 0;
         $position->save();
 
-        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id DISABLED"] , 204);
+        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204b')] , 204);
         
     }
 

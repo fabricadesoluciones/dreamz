@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title', '- Edit Company')
+@section('title', trans('general.edit').' '.trans_choice('general.menu.companies', 1))
 
 @section('content')
-<h2>Edit Company </h2>
+<h2>{{trans('general.edit')}} {{trans_choice('general.menu.companies', 1)}} </h2>
 <hr>
 </div>
 <div class="container">
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="cell">
-                        <label>Commercial Name</label>
+                        <label>{{trans('general.forms.commercial_name')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="commercial_name" type="text" value="{!! $company->commercial_name !!}" >
                         </div>
@@ -64,8 +64,8 @@
                 
             </div>
 
-        <input type="submit" class="success">
-        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">Cancel</a>
+        <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
+        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">{{trans('general.forms.cancel')}}</a>
            
 {!! Form::close() !!}
 </div>

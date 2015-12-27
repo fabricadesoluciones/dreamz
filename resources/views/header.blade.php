@@ -4,15 +4,15 @@
                         {{ Auth::user()->name}} {{ Auth::user()->lastname}}
                         <br>
                         @if(Auth::user()->hasRole('super-admin')) 
-                            super_admin
+                            {{ trans('general.users.super_admin') }}
                         @elseif(Auth::user()->hasRole('coach')) 
-                            coach
+                            {{ trans('general.users.coach') }}
                         @elseif(Auth::user()->hasRole('ceo')) 
-                            ceo
+                            {{ trans('general.users.ceo') }}
                         @elseif(Auth::user()->hasRole('champion')) 
-                            champion
+                            {{ trans('general.users.champion') }}
                         @elseif(Auth::user()->hasRole('employee')) 
-                            employee
+                            {{ trans('general.users.employee') }}
                         @endif
 
                         @if(Session::get('company_name'))

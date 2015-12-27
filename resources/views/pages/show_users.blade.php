@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
-@section('title', '- Users')
+@section('title', trans_choice('general.menu.users', 2))
 
 @section('content')
 
                 
-<h2>Users <a href="/users/create" class="button success">Add new</a></h2>
+<h2>{{ trans_choice('general.menu.users', 2) }} <a href="/users/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
 <div id="table"></div>
 <hr>
 
@@ -29,9 +29,9 @@ var UserTr = React.createClass({
                 <td>{this.props.data.position_name}</td>
                 <td>{this.props.data.department_name}</td>
                 <td> 
-                    <a href={"/users/"+this.props.data.user_id+"/edit"} className="button success">Modify</a>
+                    <a href={"/users/"+this.props.data.user_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
                     &nbsp;
-                    <button className="button danger delete_item" data-type="users" data-id={this.props.data.user_id}>Delete</button>
+                    <button className="button danger delete_item" data-type="users" data-id={this.props.data.user_id}>{{trans('general.delete')}}</button>
                 </td>
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox" checked={Boolean(JSON.parse(this.props.data.active))} /> <span className="check"></span> </label> </td> 
 
@@ -59,12 +59,12 @@ var UserTable = React.createClass({
             <table id="datatable" className="table striped hovered cell-hovered border bordered">
                 <thead>
                     <tr>
-                        <th>name</th>
-                        <th>lastname</th>
-                        <th>position</th>
-                        <th>area</th>
-                        <th>actions</th>
-                        <th>active</th>
+                        <th> {{ trans('general.forms.name')}} </th>
+                        <th> {{ trans('general.forms.lastname')}} </th>
+                        <th> {{ trans_choice('general.menu.positions', 1) }} </th>
+                        <th> {{ trans_choice('general.menu.areas',1)}} </th>
+                        <th> {{ trans_choice('general.actions',2)}} </th>
+                        <th> {{ trans('general.active')}} </th>
 
                     </tr>
                 </thead>

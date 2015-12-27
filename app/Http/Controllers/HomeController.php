@@ -171,7 +171,7 @@ class HomeController extends Controller
 
     public function returnForbidden()
     {
-        Session::flash('update', ['code'=>403, 'title' => 'Forbidden', 'message' => 'User can not access this resource' ]);
+        Session::flash('update', ['code'=>403, 'title' => 'Forbidden', 'message' => trans('general.http.403') ]);
         return view('pages.generic_error');
 
     }

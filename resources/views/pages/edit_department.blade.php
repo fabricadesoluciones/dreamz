@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title', '- Edit Department')
+@section('title', trans('general.edit').' '.trans_choice('general.menu.departments', 1))
 
 @section('content')
-<h2>Edit Department </h2>
+<h2>{{ trans('general.edit')}} {{trans_choice('general.menu.departments', 1) }}</h2>
 <hr>
 </div>
 <div class="container">
@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="cell">
-                        <label>Name</label>
+                        <label>{{trans('general.forms.name')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="name" type="text" value="{!! $department->name !!}" >
                         </div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="row cells2">
                     <div class="cell">
-                        <label>Parent</label>
+                        <label>{{trans('general.parent')}}</label>
                         <div class="input-control text full-size">
                             <select name="parent" id="parent">
                                 <option value="0">-- ROOT --</option>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="cell">
-                        <label>Active</label>
+                        <label>{{trans('general.active')}}</label>
                         <br>
                         <label class="switch" style="padding: 1.2ex 0; ">
                             <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="active" value="{{$department->active}}" 
@@ -53,8 +53,8 @@
                 
             </div>
 
-        <input type="submit" class="success">
-        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">Cancel</a>
+        <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
+        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">{{trans('general.forms.cancel')}}</a>
            
 {!! Form::close() !!}
 </div>

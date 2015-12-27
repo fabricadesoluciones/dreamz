@@ -1,14 +1,14 @@
 @extends('layouts.master')
 
-@section('title', '- Departments')
+@section('title', trans_choice('general.menu.positions', 2))
 
 @section('content')
 
                 
-<h2>Positions</h2>
+<h2> {{ trans_choice('general.menu.positions', 2) }} </h2>
 <div id="table"></div>
 <hr>
-<button class="button success">Add Position</button>
+<button class="button success">{{ trans('general.forms.add_new') }}</button>
 <script type="text/babel">
 
     $.get('{!! route('positions.index') !!}', function(){},'json')
@@ -29,9 +29,9 @@ var Tr = React.createClass({
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox" checked={Boolean(JSON.parse(this.props.data.active))} /> <span className="check"></span> </label> </td> 
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox" checked={Boolean(JSON.parse(this.props.data.boss))} /> <span className="check"></span> </label> </td> 
                 <td> 
-                    <a href={"/positions/"+this.props.data.position_id+"/edit"} className="button success">Modify</a>
+                    <a href={"/positions/"+this.props.data.position_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
                     &nbsp;
-                    <button className="button warning delete_item" data-type="positions" data-id={this.props.data.position_id}>Disable</button>
+                    <button className="button warning delete_item" data-type="positions" data-id={this.props.data.position_id}>{{trans('general.disable')}}</button>
                     
                 </td>
 
@@ -53,11 +53,11 @@ var CompanyTable = React.createClass({
             <table className="table striped hovered cell-hovered border bordered">
                 <thead>
                     <tr>
-                        <th>name</th>
-                        <th>company</th>
-                        <th>active</th>
-                        <th>boss</th>
-                        <th>actions</th>
+                        <th> {{ trans('general.forms.name')}} </th>
+                        <th>{{ trans_choice('general.menu.companies', 1) }}</th>
+                        <th> {{ trans('general.active')}} </th>
+                        <th>{{trans('general.boss')}}</th>
+                        <th> {{ trans_choice('general.actions',2)}} </th>
                     </tr>
                 </thead>
                 <tbody>

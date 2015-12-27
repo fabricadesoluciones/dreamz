@@ -31,7 +31,7 @@ class UsersController extends Controller
     public function index()
     {
         if ( ! Auth::user()->can("list-users")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
         $data = DB::table('users')
@@ -41,7 +41,7 @@ class UsersController extends Controller
             ->where('users.company','LIKE',"%".$this->company."%")
             ->get();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
@@ -54,7 +54,7 @@ class UsersController extends Controller
     public function create()
     {
         if ( ! Auth::user()->can("edit-users")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
         return view('pages.create_user', ['id' => Uuid::generate(4), 'user' => Auth::user() ]);
@@ -87,7 +87,7 @@ class UsersController extends Controller
             ->where('user_id', '=', $id)
             ->first();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data)], 200);
     }
@@ -101,7 +101,7 @@ class UsersController extends Controller
     public function edit($id)
     {
         if ( ! Auth::user()->can("edit-users")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
         $data = DB::table('users')
@@ -124,17 +124,32 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         if ( ! Auth::user()->can("edit-users")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
-        $this->validate($request, [
-            'user_id' => 'required',
-            'employee_number' => 'required',
-            'email' => 'required|email|unique:users',
-            'lastname' => 'required',
-            'department' => 'required',
 
-        ]);
+        $user_details = UserDetail::where('user', '=', $id)->first();
+
+        if (!$user_details) {
+            $this->validate($request, [
+                'user_id' => 'required',
+                'employee_number' => 'required',
+                'email' => 'required|email|unique:users',
+                'lastname' => 'required',
+                'department' => 'required',
+
+            ]);
+        }else{
+            $this->validate($request, [
+                'user_id' => 'required',
+                'employee_number' => 'required',
+                'email' => 'required|email',
+                'lastname' => 'required',
+                'department' => 'required',
+
+            ]);
+        }
+        
 
         $attributes = $request->all();
         $user_attributes = $attributes;
@@ -164,11 +179,11 @@ class UsersController extends Controller
         if ($user) {
             unset($user_attributes["user_id"]);
             $user->fill($user_attributes);
-            Session::flash('update', ['code' => 200, 'message' => 'User info was updated']);
+            Session::flash('update', ['code' => 200, 'message' => trans('general.http.200u')]);
         }else{
             $user_attributes['password'] = Hash::make(rand());
             $user = User::create($user_attributes);
-            Session::flash('update', ['code' => 200, 'message' => 'User was added, please reset password']);
+            Session::flash('update', ['code' => 200, 'message' => trans('general.http.200up')]);
         }
         $user->save();
 
@@ -176,7 +191,7 @@ class UsersController extends Controller
         $user_details = UserDetail::where('user', '=', $id)->first();
         if ($user_details) {
             $user_details->fill($user_details_attributes);
-            Session::flash('update', ['code' => 200, 'message' => 'User info was updated']);
+            Session::flash('update', ['code' => 200, 'message' => trans('general.http.200u')]);
             $user_details->save();
         }else{
             UserDetail::create([
@@ -214,19 +229,19 @@ class UsersController extends Controller
     public function destroy($id)
     {
         if ( ! Auth::user()->can("edit-users")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
         $user = User::where('user_id', '=', $id)->first();
         if (!$user) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
             exit;
         }
 
         $user->delete();
 
-        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id DELETED"] , 204);
+        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204')] , 204);
         
     }
 

@@ -43,8 +43,7 @@ section {
         width: 2em;
         margin: 1em;
         height: 2em;
-        overflow: hidden;
-        background: red; }
+        overflow: hidden; }
   section article {
     -webkit-flex: 1;
     -ms-flex: 1;

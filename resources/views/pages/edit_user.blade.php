@@ -1,25 +1,25 @@
 @extends('layouts.master')
 
-@section('title', '- Edit User')
+@section('title', trans('general.edit').' '.trans_choice('general.menu.users', 1))
 
 @section('content')
-<h2>Edit User </h2>
+<h2>{{trans('general.edit')}} {{trans_choice('general.menu.users', 1)}} </h2>
 </div>
 <div class="container">
 
 {!! Form::model($user, array('route' => array('users.update', $user->user_id), 'method' => 'PUT')) !!}
-<h3>Basic Info</h3>
+<h3>{{trans('general.forms.basic_info')}}</h3>
 <hr>
     <div class="grid">
                 <div class="row cells2">
                     <div class="cell">
-                        <label>User ID</label>
+                        <label>User ID {{trans('general.http.200u')}} </label>
                         <div class="input-control text full-size">
                             <input size="65" type="text" value="{!! $user->user_id !!}" name="user_id" readonly="readonly">
                         </div>
                     </div>
                     <div class="cell">
-                        <label>Employee Number</label>
+                        <label>{{trans('general.forms.employee_number')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="employee_number" type="text" value="{!! $user->employee_number !!}" required="required">
                         </div>
@@ -27,14 +27,14 @@
                 </div>
                 <div class="row cells2">
                     <div class="cell">
-                        <label>Name</label>
+                        <label>{{trans('general.forms.name')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="name" type="text" value="{!! $user->name !!}"  required="required">
                         </div>
                     </div>
                     <div class="cell">
                     
-                        <label>Lastname</label>
+                        <label>{{trans('general.forms.lastname')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="lastname" type="text" value="{!! $user->lastname !!}"  required="required">
                         </div>
@@ -48,7 +48,7 @@
                             <input size="65" name="email" type="text" value="{!! $user->email !!}"  required="required">
                         </div></div>
                     <div class="cell">
-                        <label>Active</label>
+                        <label>{{trans('general.active')}}</label>
                         <br>
                         <label class="switch" style="padding: 1.2ex 0; ">
                             <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="active" value="{{$user->active}}" 
@@ -78,14 +78,14 @@
                 <div class="row cells2">
                     <div class="cell">
                         <div class="input-control select">
-                        <label for="department">Department</label>
+                        <label for="department">{{trans_choice('general.menu.departments',1)}}</label>
                             <select name="department" id="department">
                             </select>
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control select">
-                        <label for="position">Position</label>
+                        <label for="position">{{trans_choice('general.menu.positions',1)}}</label>
                             <select name="position" id="position">
                             </select>
                         </div>
@@ -93,20 +93,20 @@
                 </div>
             </div>
 
-            <h3>User Details</h3>
+            <h3>{{trans('general.forms.user_details')}}</h3>
             <hr>
 <div class="grid">
         <div class="row cells2">
 
             <div class="row cells2">
                 <div class="cell">
-                    <label for="mobile">mobile</label>
+                    <label for="mobile">{{trans('general.forms.mobile')}}</label>
                     <div class="input-control text full-size">
                         <input name='mobile' type="text" value="{{$user->mobile}}" />
                     </div>
                 </div>
                 <div class="cell">
-                    <label for="phone">phone</label>
+                    <label for="phone">{{trans('general.forms.phone')}}</label>
                     <div class="input-control text full-size">
                         <input name='phone' type="text" value="{{$user->phone}}" />
                     </div>
@@ -115,7 +115,7 @@
 
             <div class="row cells2">
                 <div class="cell">
-                    <label for="education">education</label>
+                    <label for="education">{{trans('general.forms.education')}}</label>
                     <div class="input-control text full-size">
                         <input name='education' type="text" value="{{$user->education}}" />
                     </div>
@@ -124,19 +124,19 @@
             
             <div class="row cells3">
                 <div class="cell">
-                    <label for="blood_type">blood_type</label>
+                    <label for="blood_type">{{trans('general.forms.blood_type')}}</label>
                     <div class="input-control text full-size">
                         <input name='blood_type' type="text" value="{{$user->blood_type}}" />
                     </div>
                 </div>
                 <div class="cell">
-                    <label for="birth_date">birth_date</label>
+                    <label for="birth_date">{{trans('general.forms.birth_date')}}</label>
                     <div class="input-control text full-size">
                         <input name='birth_date' type="date" value="{{$user->birth_date}}" />
                     </div>
                 </div>
                 <div class="cell">
-                    <label for="admission_date">admission_date</label>
+                    <label for="admission_date">{{trans('general.forms.admission_date')}}</label>
                     <div class="input-control text full-size">
                         <input name='admission_date' type="date" value="{{$user->admission_date}}" />
                     </div>
@@ -145,13 +145,13 @@
 
             <div class="row cells2">
                 <div class="cell">
-                    <label for="alergies">alergies</label> <br>
+                    <label for="alergies">{{trans('general.forms.alergies')}}</label> <br>
                     <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
                         <textarea cols="80" name="alergies">{{$user->alergies}}</textarea>
                     </div>
                 </div>
                 <div class="cell">
-                    <label for="emergency_contact">emergency_contact</label> <br>
+                    <label for="emergency_contact">{{trans('general.forms.emergency_contact')}}</label> <br>
                     <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
                         <textarea cols="80" name="emergency_contact">{{$user->emergency_contact}}</textarea>
                     </div>
@@ -191,7 +191,7 @@
             
             <div class="row cells2">
                 <div class="cell">
-                    <label for="googlep">googlep</label>
+                    <label for="googlep">google+</label>
                     <div class="input-control text full-size">
                         <input name='googlep' type="text" value="{{$user->googlep}}" />
                     </div>
@@ -202,13 +202,13 @@
         </div>
     </div>
 
-        <input type="submit" class="success">
-        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">Cancel</a>
+        <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
+        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">{{trans('general.forms.cancel')}}</a>
            
 {!! Form::close() !!}
 {!! Form::model($user, array('route' => array('password.email'), 'method' => 'POST')) !!}
 <input size="65" name="email" type="hidden" value="{!! $user->email !!}" >
-<input type="submit" value="Reset password" class="info">
+<input type="submit" value="{{trans('general.forms.reset_password')}}" class="info">
 {!! Form::close() !!}
 </div>
 

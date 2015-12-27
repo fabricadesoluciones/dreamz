@@ -20,12 +20,12 @@ class CompaniesController extends Controller
     public function index()
     {
         if ( ! Auth::user()->can("list-companies")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
         $data = Company::all();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
@@ -38,7 +38,7 @@ class CompaniesController extends Controller
     public function create()
     {
         if ( ! Auth::user()->can("edit-companies")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
     }
@@ -52,7 +52,7 @@ class CompaniesController extends Controller
     public function store(Request $request)
     {
         if ( ! Auth::user()->can("edit-companies")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
     }
@@ -66,13 +66,13 @@ class CompaniesController extends Controller
     public function show($id)
     {
         if ( ! Auth::user()->can("list-companies")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
         $data = Company::where('company_id', '=', $id)->first();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -88,7 +88,7 @@ class CompaniesController extends Controller
 
         $data = Company::where('company_id', '=', $id)->first()->users;
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -103,7 +103,7 @@ class CompaniesController extends Controller
     {
         $data = Company::where('company_id', '=', $id)->first()->departments;
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -118,7 +118,7 @@ class CompaniesController extends Controller
     {
         $data = Company::where('company_id', '=', $id)->first()->positions;
         if (!$data) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -132,7 +132,7 @@ class CompaniesController extends Controller
     public function edit($id)
     {
         if ( ! Auth::user()->can("edit-companies")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -151,7 +151,7 @@ class CompaniesController extends Controller
     {
         
         if ( ! Auth::user()->can("edit-companies")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
 
@@ -179,20 +179,20 @@ class CompaniesController extends Controller
     public function destroy($id)
     {
         if ( ! Auth::user()->can("edit-companies")){
-            return Response::json(['code'=>403,'message' => 'User can not access this resource' ,'data' => []], 403);
+            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
         
         $company = Company::where('company_id', '=', $id)->first();
         if (!$company) {
-            return Response::json(['code'=>404,'message' => 'Not Found' ,'data' => []], 404);
+            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
             exit;
         }
 
         $company->active = 0;
         $company->save();
 
-        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id DISABLED"] , 204);
+        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204b')] , 204);
         
     }
 
