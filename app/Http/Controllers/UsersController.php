@@ -100,18 +100,19 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        if ( ! Auth::user()->can("edit-users")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
+        if ( Auth::user()->user_id == $id || Auth::user()->can("edit-users")){
+            $data = DB::table('users')
+                ->join('positions', 'users.position', '=', 'positions.position_id')
+                ->join('departments', 'users.department', '=', 'departments.department_id')
+                ->join('user_details', 'users.user_id', '=', 'user_details.user')
+                ->select('users.*', 'user_details.*', 'positions.name AS position_name', 'departments.name AS department_name')
+                ->where('user_id', '=', $id)
+                ->first();
+            return view('pages.edit_user', ['user' => $data]);
+        } else {
+        return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
             exit;
         }
-        $data = DB::table('users')
-            ->join('positions', 'users.position', '=', 'positions.position_id')
-            ->join('departments', 'users.department', '=', 'departments.department_id')
-            ->join('user_details', 'users.user_id', '=', 'user_details.user')
-            ->select('users.*', 'user_details.*', 'positions.name AS position_name', 'departments.name AS department_name')
-            ->where('user_id', '=', $id)
-            ->first();
-        return view('pages.edit_user', ['user' => $data]);
     }
 
     /**

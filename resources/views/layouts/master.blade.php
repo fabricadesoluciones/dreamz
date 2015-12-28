@@ -13,13 +13,18 @@
 <body>
     <div id="wrapper">
         
-        <header>
-            @include('header')
-        </header>
-        <div class="gradient"></div>
+        @if(Auth::check())
+            <header>
+                @include('header')
+            </header>
+            <div class="gradient"></div>
+            
+        @endif
         <section>
+            @if(Auth::check())
                 @include('menu')
-                
+            @endif
+
         <article>
             @if (count($errors) > 0)
                 <div class="alert alert-danger">

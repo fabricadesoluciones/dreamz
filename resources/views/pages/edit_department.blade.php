@@ -5,8 +5,7 @@
 @section('content')
 <h2>{{ trans('general.edit')}} {{trans_choice('general.menu.departments', 1) }}</h2>
 <hr>
-</div>
-<div class="container">
+<div>
     
 
 {!! Form::model($department, array('route' => array('departments.update', $department->department_id), 'method' => 'PUT')) !!}

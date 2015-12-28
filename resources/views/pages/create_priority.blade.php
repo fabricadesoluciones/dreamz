@@ -5,8 +5,7 @@
 @section('content')
 <h2>New Priority </h2>
 <hr>
-</div>
-<div class="container">
+<div>
     {!! Form::model($user, array('route' => array('priorities.update', $id), 'method' => 'PUT')) !!}
     <div class="grid">
                 <div class="row cells2">

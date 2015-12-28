@@ -50,7 +50,6 @@ setTimeout(function(){
     });
 },500)
 $( document ).ajaxComplete(function( event,request, settings ) {
-    debugger;
     if (request.status == 200) {
         return;
     }
@@ -79,6 +78,22 @@ $( document ).ajaxComplete(function( event,request, settings ) {
         }); 
   }
 });
+
+function pad(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+}
+    function clock() {
+        setTimeout(function(){
+            var d = new Date();
+            $('span.time').text(pad(d.getHours(),2)+':'+pad(d.getMinutes(),2))
+            clock();
+        },15000)
+    }
+$(document).ready(function(){
+            clock();
+})
 
 </script>
 <!-- FOOTER -->

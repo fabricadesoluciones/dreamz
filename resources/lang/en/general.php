@@ -97,6 +97,8 @@ return [
     'pending' => 'Pending',
     'success' => 'Success',
     'confirm_delete' => 'Do you really want to delete that record?',
+    'from' => 'From',
+    'to' => 'To',
 
     'users' => [
         'super_admin' => 'Super Admin',

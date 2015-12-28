@@ -1,13 +1,11 @@
-<style>
-     .profile_pic{border-radius: 50%; width: 3.5em; margin-left:2em; }
-</style>
 <div class="logo">
     <a href="/"><img src="/img/main-logo.svg"></a>
 </div>
     @if(Auth::user())
 <div>
-{{ date('d/m/Y H:i:s') }}
-        <br>
+<div>
+    
+<div>{{ date('d/m/Y') }} <span class="time"> {{ date('H:i') }}</span></div>
         @if(Auth::user()->hasRole('super-admin')) 
             {{ trans('general.users.super_admin') }}
         @elseif(Auth::user()->hasRole('coach')) 
@@ -19,13 +17,15 @@
         @elseif(Auth::user()->hasRole('employee')) 
             {{ trans('general.users.employee') }}
         @endif
-
+        {{-- 
         @if(Session::get('company_name'))
             <br>
             <small>{{ Session::get('company_name') }}</small>
                 
         @endif
+         --}}
 
+</div>
 </div>
 <div>
     <span class="name">

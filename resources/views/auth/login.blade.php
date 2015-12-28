@@ -4,43 +4,27 @@
 
 @section('content')
 
-                
-<div class="row flex-align-center flex-just-center loginForm">
-    <div class="cell size6">
+<div class="login">
+
+    <img src="/img/login-logo.svg" hegiht="294" alt="">
+    <div class="relleno">
         <form method="POST" action="/login">
-            {!! csrf_field() !!}
-<br>
-            <div class="input-control text" data-role="input">
-                <label>Email</label>
-                {{-- <input type="email" name="email" value="{{ old('email') }}"> --}}
-                <input type="email" name="email" value="kreyes@fabricadesoluciones.com">
-                <button class="button helper-button clear"><span class="mif-cross"></span></button>
-            </div>
-            <br>
-            <br>
-
-            <div class="input-control text" data-role="input">
-                <label>Password</label>
-                <input type="password" name="password" id="password" value="admin">
-                <button class="button helper-button clear"><span class="mif-cross"></span></button>
-            </div>
-
-            <div>
-            <br>
-                <a href="{{ URL::to('password/email') }}">{{ trans('general.forms.forgot_my_password') }}</a>
-            <br>
-            <br>
-            </div>
-
-            <div>
-                <button type="submit">{{ trans('general.login') }}</button>
-            <br>
+        {!! csrf_field() !!}
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="kreyes@fabricadesoluciones.com" required="required">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" value="admin" required="required">
+            <div style="text-align:right">
+                <p>
+                    <button class="button success" type="submit">{{ trans('general.login') }}</button>
+                </p>
+                <p>
+                    <a href="{{ URL::to('password/email') }}">{{ trans('general.forms.forgot_my_password') }}</a>
+                </p>
 
             </div>
         </form>
     </div>
+
 </div>
-<script type="text/javascript">
-    $('#logout').detach()
-</script>
 @stop

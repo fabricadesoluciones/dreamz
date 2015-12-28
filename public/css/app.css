@@ -134,24 +134,56 @@ article {
   overflow-x: scroll;
   min-height: 800px; }
 
+.profile_pic {
+  border-radius: 50%;
+  width: 3.5em;
+  margin-left: 2em; }
+
+input[type="date"] {
+  font-size: 1.2em; }
+
 nav {
   background-color: #157b9b;
   -webkit-flex-basis: 4em;
   -ms-flex-preferred-size: 4em;
   flex-basis: 4em;
-  min-width: 4em; }
-  nav ul {
-    position: fixed; }
+  min-width: 4em;
+  z-index: 2 ul;
+    z-index-position: fixed; }
 
 .menu_link {
-  display: inline-block;
-  text-align: center;
-  width: 2em;
-  padding: 1ex 1em;
-  box-sizing: content-box;
-  overflow: hidden; }
+  position: relative; }
   .menu_link img {
     width: 2em; }
+  .menu_link > a {
+    display: inline-block;
+    text-align: center;
+    width: 2em;
+    padding: 1ex 1em;
+    box-sizing: content-box;
+    overflow: hidden; }
+  .menu_link ul {
+    position: absolute;
+    left: 4em;
+    top: 0;
+    padding: 0;
+    margin: 0;
+    display: none;
+    width: 200px; }
+    .menu_link ul a {
+      width: 100%;
+      font-size: 1.2em;
+      line-height: 1.85em;
+      padding: 1ex 1em;
+      background-color: #157b9b;
+      color: #FFF;
+      display: inline-block; }
+      .menu_link ul a:hover {
+        background-color: #00A185; }
+  .menu_link:hover {
+    background-color: #00A185; }
+    .menu_link:hover ul {
+      display: inline-block; }
 
 img {
   max-width: 100%;
@@ -159,7 +191,38 @@ img {
   vertical-align: middle;
   border: 0; }
 
-.nop {
-  padding: 0; }
+.login {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  justify-contents: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  .login label,
+  .login input {
+    line-height: 1.5em;
+    padding: .5ex 0;
+    margin: .5ex 0;
+    min-width: 150px;
+    display: inline-block;
+    text-align: left; }
+  .login input {
+    min-width: 349px;
+    padding: .5ex; }
+  .login label {
+    color: #1283AB; }
+  .login p {
+    margin: 1em 0; }
+
+.relleno {
+  width: 600px;
+  margin: 2em;
+  padding: 3em;
+  background-color: #EFEFEF;
+  border-radius: 1em; }
 
 /*# sourceMappingURL=app.css.map */

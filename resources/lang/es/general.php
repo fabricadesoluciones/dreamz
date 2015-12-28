@@ -22,7 +22,7 @@ return [
         'departments' => 'Departmento|Departmentos',
         'companies' => 'Empresa|Empresas',
         'priorities' => 'Prioridad|Prioridades',
-        'positions' => 'Posición|Posiciones',
+        'positions' => 'Puesto|Puestos',
         'periods' => 'Período|Períodos',
         'areas' => 'Área|Áreas',
     ],
@@ -45,7 +45,7 @@ return [
     */
 
     'forms' => [
-        'forgot_my_password'  => 'Olvidè mi contraseña',
+        'forgot_my_password'  => 'Olvidé mi contraseña',
         'employee_number' => 'Número de empleado',
         'name' => 'Nombre',
         'commercial_name' => 'Nombre Comercial',
@@ -96,6 +96,8 @@ return [
     'pending' => 'Pendiente',
     'success' => 'Listo',
     'confirm_delete' => 'Desea eliminar el elemento?',
+    'from' => 'Desde',
+    'to' => 'Hasta',
 
     'users' => [
         'super_admin' => 'Super Administrador',

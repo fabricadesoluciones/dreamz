@@ -5,8 +5,7 @@
 @section('content')
 <h2>{{ trans('general.edit')}} {{trans_choice('general.menu.positions', 1) }}</h2>
 <hr>
-</div>
-<div class="container">
+<div>
     
 
 {!! Form::model($position, array('route' => array('positions.update', $position->position_id), 'method' => 'PUT')) !!}

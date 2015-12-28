@@ -5,8 +5,7 @@
 @section('content')
 <h2>{{ trans('general.new')}} {{trans_choice('general.menu.users', 1) }}</h2>
 <hr>
-</div>
-<div class="container">
+<div>
     {!! Form::model($user, array('route' => array('users.update', $id), 'method' => 'PUT')) !!}
     <div class="grid">
                 <div class="row cells2">

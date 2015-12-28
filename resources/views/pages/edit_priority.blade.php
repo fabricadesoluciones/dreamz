@@ -5,8 +5,7 @@
 @section('content')
 <h2>{{trans('general.edit')}} {{trans_choice('general.menu.priorities', 1)}} </h2>
 <hr>
-</div>
-<div class="container">
+<div>
     {!! Form::model($user, array('route' => array('priorities.update', $id), 'method' => 'PUT')) !!}
     <div class="grid">
                 <div class="row cells2">

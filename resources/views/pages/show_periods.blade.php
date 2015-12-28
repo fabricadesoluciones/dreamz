@@ -1,67 +1,17 @@
 @extends('layouts.master')
 
-@section('title', '- Periods')
+@section('title', trans_choice('general.menu.periods', 2))
 
 @section('content')
 
                 
-<h2>Periods</h2>
-<a href="/periods/create" class="button success">Add Period</a>
+<h2>{{trans_choice('general.menu.periods', 2)}} <a href="/periods/create" class="button success">{{ trans('general.forms.add_new') }} </a></h2>
 <div id="table"></div>
 <br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
 <br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
 
 <hr>
-<div data-role="dialog" data-type="info" id="dialog" data-close-button="true" data-overlay="true" data-overlay-color="black" class="padding10">
-    <h1>Register Progress for: </h1>
-    <h4 id="priority_name"></h4>
-    <div class="grid">
-        <div class="row ">
-                    <div class="margin10">
-                        <label>Priority ID</label>
-                        <div class="input-control text full-size">
-                            <input id="priority_id" size="65" type="text" value="" readonly="readonly">
-                        </div>
-                    </div>
-                    </div>
-        <div class="row ">
-                    <div class="margin10">
-                        <div class="input-control select">
-                        <label for="department">Select Week</label>
-                            <select name="week" id="week">
-                                <option value="w1">Week 1</option>
-                                <option value="w2">Week 2</option>
-                                <option value="w3">Week 3</option>
-                                <option value="w4">Week 4</option>
-                                <option value="w5">Week 5</option>
-                                <option value="w6">Week 6</option>
-                                <option value="w7">Week 7</option>
-                                <option value="w8">Week 8</option>
-                                <option value="w9">Week 9</option>
-                                <option value="w10">Week 10</option>
-                                <option value="w11">Week 11</option>
-                                <option value="w12">Week 12</option>
-                                <option value="w13">Week 13</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="margin10">
-                        <div class="input-control select">
-                        <label for="department">Select Progress</label>
-                            <select name="progress" id="progress">
-                                <option value="0">Reset</option>
-                                <option value="3">No Progress</option>
-                                <option value="2">Some Progress</option>
-                                <option value="1">Completed</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                {{ csrf_field() }}
-                <button class="button success save_progress margin10" style="display: inline-block; margin:  0 1em; ">Save</button>
-                <button class="button danger cancel_progress">Cancel</button>
-    </div>
-</div>
+
 <script>
     function showDialog(id){
         var dialog = $(id).data('dialog');
@@ -137,9 +87,9 @@ var Tr = React.createClass({
                 <td><span className="name">{this.props.data.name}</span></td>
                 <td>{this.props.data.start}-{this.props.data.end}</td>
                 <td> 
-                    <a href={"/periods/"+this.props.data.period_id+"/edit"} className="button success" data-id={this.props.data.period_id}>Edit</a>
+                    <a href={"/periods/"+this.props.data.period_id+"/edit"} className="button success" data-id={this.props.data.period_id}>{{trans('general.modify')}}</a>
                     &nbsp;
-                    <button className="button danger delete_item" data-type="periods" data-id={this.props.data.period_id}>Delete</button>
+                    <button className="button danger delete_item" data-type="periods" data-id={this.props.data.period_id}>{{trans('general.delete')}}</button>
                     
                 </td>
 
@@ -166,9 +116,9 @@ var PrioritiesTable = React.createClass({
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>period</th>
-                        <th>from - to</th>
-                        <th>actions</th>
+                        <th>{{trans_choice('general.menu.periods', 1)}}</th>
+                        <th>{{trans('general.from')}} - {{trans('general.to')}}</th>
+                        <th>{{trans_choice('general.actions', 2)}}</th>
                     </tr>
                 </thead>
                 <tbody>

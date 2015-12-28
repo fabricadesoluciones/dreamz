@@ -1,12 +1,11 @@
 @extends('layouts.master')
 
-@section('title', '- Edit Period')
+@section('title', trans('general.edit').' '.trans_choice('general.menu.periods', 1))
 
 @section('content')
-<h2>Edit Period </h2>
+<h2>{{trans('general.edit')}} {{trans_choice('general.menu.periods', 1)}} </h2>
 <hr>
-</div>
-<div class="container">
+<div>
     
 
 {!! Form::model($period, array('route' => array('periods.update', $period->period_id), 'method' => 'PUT')) !!}
@@ -27,18 +26,16 @@
                 </div>
                 <div class="row cells3">
                     <div class="cell">
-                        <label>Start Date</label> <br>
-                        <div class="input-control text" data-role="datepicker" data-format='yyyy-mm-dd' data-preset="{{$period->start}}">
-                            <input name="start" type="text">
-                            <button class="button"><span class="mif-calendar"></span></button>
+                        <label>{{trans('general.from')}}</label> <br>
+                        <div class="input-control text">
+                            <input name="start" type="date" value="{{$period->start}}" required="required">
                         </div>
                     </div>
 
                     <div class="cell">
-                        <label>End Date</label> <br>
-                        <div class="input-control text" data-role="datepicker" data-format='yyyy-mm-dd' data-preset="{{$period->end}}">
-                            <input name="end" type="text">
-                            <button class="button"><span class="mif-calendar"></span></button>
+                        <label>{{trans('general.to')}}</label> <br>
+                        <div class="input-control text">
+                            <input name="end" type="date" value="{{$period->end}}" required="required">
                         </div>
                     </div>
                     <div class="cell">

@@ -4,8 +4,7 @@
 
 @section('content')
 <hr>
-</div>
-<div class="container">
+<div>
     <h1>An error Ocurred</h1>
     @if( Session::has('update') )
         @if(isset(Session::get('update')['title']))

@@ -5,8 +5,7 @@
 @section('content')
 <h2>New Period </h2>
 <hr>
-</div>
-<div class="container">
+<div>
     {!! Form::model($user, array('route' => array('periods.store', $id), 'method' => 'POST')) !!}
     <div class="grid">
                 <div class="row cells2">
