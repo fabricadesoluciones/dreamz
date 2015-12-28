@@ -1,14 +1,7 @@
+@import 'reset';
+@import 'defaults';
 .center {
     text-align: center;
-}
-
-.greeting {
-    display: inline-block;
-    float: right;
-    margin: 1em;
-    font-size: 1.7em;
-    font-weight: bolder;
-    text-align: right
 }
 
 .dialog-overlay {
@@ -16,35 +9,89 @@
     background-color: #000;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#wrapper,
 section {
+    min-height: 100%;
+    font-family: $font-stack;
+}
+
+.gradient {
+    display: block;
+    width: 100%;
+    height: 7px;
+    background: #157b9b;
+    background: -moz-linear-gradient(left, #157b9b 0%, #157b9b 24.999%, #0991a2 25%, #0991a2 49.999%, #00a090 50%, #00a090 74.999%, #00a266 75%, #00a266 100%);
+    background: -webkit-linear-gradient(left, #157b9b 0%, #157b9b 24.999%, #0991a2 25%, #0991a2 49.999%, #00a090 50%, #00a090 74.999%, #00a266 75%, #00a266 100%);
+    background: linear-gradient(to right, #157b9b 0%, #157b9b 24.999%, #0991a2 25%, #0991a2 49.999%, #00a090 50%, #00a090 74.999%, #00a266 75%, #00a266 100%);
+}
+
+header {
     display: flex;
-    flex-direction: row;
-    height: 100px;
-    nav.main_navigation {
-        background-color: #1283AB;
-        flex-basis: 4em;
-        ul {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            li {
-                width: 2em;
-                margin: 1em;
-                height: 2em;
-                overflow: hidden;
-            }
-        }
-    }
-    article {
+    position: relative;
+    padding-left: 1ex;
+    max-height: 100px;
+    overflow: hidden;
+    & > div {
+        display: flex;
+        align-items: center;
         flex: 1;
-        padding: 1em;
+        text-align: center;
+        justify-content: center;
+        font-weight: 500;
+        line-height: 1.4em;
+        color: #666666;
+        font-size: 1.1em;
+    }
+    .logo {
+        padding: 1ex;
     }
 }
 
+section {
+    display: flex;
+}
 
+article {
+    flex: 1;
+    flex-basis: auto;
+    padding: 1.5ex;
+    overflow-x: scroll;
+    min-height: 800px;
+}
+
+nav {
+    background-color: #157b9b;
+    flex-basis: 4em;
+    min-width: 4em;
+    ul {
+        position: fixed;
+    }
+}
+
+.menu_link {
+    display: inline-block;
+    text-align: center;
+    width: 2em;
+    padding: 1ex 1em;
+    box-sizing: content-box;
+    overflow: hidden;
+    img {
+        width: 2em;
+    }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border: 0;
+}
 
 .nop {
     padding: 0;

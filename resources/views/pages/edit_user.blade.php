@@ -4,8 +4,7 @@
 
 @section('content')
 <h2>{{trans('general.edit')}} {{trans_choice('general.menu.users', 1)}} </h2>
-</div>
-<div class="container">
+<div>
 
 {!! Form::model($user, array('route' => array('users.update', $user->user_id), 'method' => 'PUT')) !!}
 <h3>{{trans('general.forms.basic_info')}}</h3>

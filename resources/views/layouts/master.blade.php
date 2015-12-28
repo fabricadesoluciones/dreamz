@@ -8,42 +8,36 @@
     <link href="/css/app.css" rel="stylesheet">
     <script src="/js/all.js"></script>
     <script src="/metro/js/metro.min.js"></script>
-    <style>
-    html,body,section{
-        height: 100%;
-    }
     
-
-    .clear{
-        
-    }
-    </style>
 </head>
 <body>
+    <div id="wrapper">
+        
+        <header>
+            @include('header')
+        </header>
+        <div class="gradient"></div>
+        <section>
+                @include('menu')
+                
+        <article>
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                <h3>Please fix the following:</h3>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+             @yield('content')
+        <br class="clear">
+        </article>
+        </section>
 
-    <header>
-        @include('header')
-    </header>
-    <section>
-            @include('menu')
-            
-            <article>
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                    <h3>Please fix the following:</h3>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                @yield('content')
-            <br class="clear">
-            </article>
-    </section>
 
 
 
-
+    </div>
 @include('foot')

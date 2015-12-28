@@ -1,9 +1,5 @@
 <!-- FOOTER -->
 
-<div class="loader" style="display:none;">
-    {{-- <img src="https://thomas.vanhoutte.be/miniblog/wp-content/uploads/light_blue_material_design_loading.gif" alt=""> --}}
-</div>
-
 <script>
 
 $(document).on('click','.restore', function(){
