@@ -1,7 +1,11 @@
 <!-- FOOTER -->
 
 <script>
-
+    $('article').css('min-height', ( window.outerHeight - $('header').height() ) )
+window.onresize = function(){
+    $('article').css('min-height', ( window.outerHeight - $('header').height() ) )
+    
+}
 $(document).on('click','.restore', function(){
     $('.loader').attr('style','display:block;text-align:center')
 });
