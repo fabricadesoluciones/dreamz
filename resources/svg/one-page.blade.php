@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="300px" height="300px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve">
+<g id="Forma_1">
+	<g>
+		<path fill="#FFFFFF" d="M209.088,2.603H39.452v294.795h221.096V54.044L209.088,2.603z M205.256,24.833l33.053,33.044h-33.053
+			V24.833z M242.122,278.973H57.876V21.01h128.973v55.282h55.273V278.973z M76.301,205.273h110.548V186.85H76.301V205.273z
+			 M76.301,131.575h147.397v-18.424H76.301V131.575z M76.301,168.425h147.397V150H76.301V168.425z"/>
+	</g>
+</g>
+</svg>

@@ -25,6 +25,16 @@ return [
         'positions' => 'Position|Positions',
         'periods' => 'Period|Periods',
         'areas' => 'Area|Areas',
+        'catalogs' => 'Catalogs',
+        'rewarding' => 'Rewarding',
+        'task_manager' => 'Task Manager',
+        'one_page' => 'One Page',
+        'reports' => 'Report|Reports',
+        'my_profile' => 'My Profile',
+        'emotions' => 'Emotion|Emotions',
+        'virtues' => 'Value|Values',
+        'dreams' => 'Dream|Dreams',
+        'assesments' => 'Assesment|Assesments',
     ],
 
 
