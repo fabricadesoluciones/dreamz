@@ -10,7 +10,8 @@
 <h3>{{trans('general.forms.basic_info')}}</h3>
 <hr>
     <div class="grid">
-                <div class="row cells2">
+                
+                <div class="row cells2" @if( ! Auth::user()->can('edit_users')) style="display:none;" @endif>
                     <div class="cell">
                         <label>User ID {{trans('general.http.200u')}} </label>
                         <div class="input-control text full-size">
@@ -40,7 +41,7 @@
                     
                     </div>
                 </div>
-                <div class="row cells3">
+                <div class="row cells3" @if( ! Auth::user()->can('edit_users')) style="display:none;" @endif>
                     <div class="cell">
                         <label>Email</label>
                         <div class="input-control text full-size">
@@ -74,7 +75,7 @@
                     </div>
                 </div>
                 
-                <div class="row cells2">
+                <div class="row cells2" @if( ! Auth::user()->can('edit_users')) style="display:none;" @endif>
                     <div class="cell">
                         <div class="input-control select">
                         <label for="department">{{trans_choice('general.menu.departments',1)}}</label>
@@ -134,7 +135,7 @@
                         <input name='birth_date' type="date" value="{{$user->birth_date}}" />
                     </div>
                 </div>
-                <div class="cell">
+                <div class="cell" @if( ! Auth::user()->can('edit_users')) style="display:none;" @endif>
                     <label for="admission_date">{{trans('general.forms.admission_date')}}</label>
                     <div class="input-control text full-size">
                         <input name='admission_date' type="date" value="{{$user->admission_date}}" />

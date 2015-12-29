@@ -35,6 +35,7 @@ return [
         '200up' => 'User was added, please reset password',
         '204' => 'Deleted',
         '204b' => 'Disabled',
+        '403t' => 'Forbidden',
         '403' => 'User can not access this resource',
         '404' => 'Not Found',
     ],

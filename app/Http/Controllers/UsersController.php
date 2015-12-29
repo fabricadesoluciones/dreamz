@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use DB;
 use Session; 
 use Uuid; 
@@ -31,8 +32,7 @@ class UsersController extends Controller
     public function index()
     {
         if ( ! Auth::user()->can("list-users")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         $data = DB::table('users')
             ->join('positions', 'users.position', '=', 'positions.position_id')
@@ -41,7 +41,7 @@ class UsersController extends Controller
             ->where('users.company','LIKE',"%".$this->company."%")
             ->get();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
@@ -54,8 +54,7 @@ class UsersController extends Controller
     public function create()
     {
         if ( ! Auth::user()->can("edit-users")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         return view('pages.create_user', ['id' => Uuid::generate(4), 'user' => Auth::user() ]);
         
@@ -87,7 +86,7 @@ class UsersController extends Controller
             ->where('user_id', '=', $id)
             ->first();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data)], 200);
     }
@@ -108,10 +107,12 @@ class UsersController extends Controller
                 ->select('users.*', 'user_details.*', 'positions.name AS position_name', 'departments.name AS department_name')
                 ->where('user_id', '=', $id)
                 ->first();
+            if (!$data) {
+                return HomeController::returnError(404);
+            }
             return view('pages.edit_user', ['user' => $data]);
         } else {
-        return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+        return HomeController::returnError(403);
         }
     }
 
@@ -124,37 +125,37 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ( ! Auth::user()->can("edit-users")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
-        }
+        if ( Auth::user()->user_id == $id || Auth::user()->can("edit-users")){
 
         $user_details = UserDetail::where('user', '=', $id)->first();
 
-        if (!$user_details) {
-            $this->validate($request, [
+        $validateto = [
                 'user_id' => 'required',
                 'employee_number' => 'required',
-                'email' => 'required|email|unique:users',
                 'lastname' => 'required',
                 'department' => 'required',
-
-            ]);
-        }else{
-            $this->validate($request, [
-                'user_id' => 'required',
-                'employee_number' => 'required',
+                'position' => 'required',
                 'email' => 'required|email',
-                'lastname' => 'required',
-                'department' => 'required',
-
-            ]);
-        }
+            ];
         
+        if (!$user_details) {
+            $validateto['email'] = 'required|email|unique:users';
+        }
+
+        $this->validate($request, $validateto);
 
         $attributes = $request->all();
         $user_attributes = $attributes;
 
+        if ( ! Auth::user()->can("edit-users") && Auth::user()->user_id == $id){
+            $user_attributes['email'] = Auth::user()->email;
+            $user_attributes['active'] = Auth::user()->active;
+            $user_attributes['high_potential'] = Auth::user()->high_potential;
+            $user_attributes['position'] = Auth::user()->position;
+            $user_attributes['department'] = Auth::user()->department;
+            $user_attributes['admission_date'] = $user_details->admission_date;
+            
+        }
 
         unset($user_attributes['user']);
         unset($user_attributes['mobile']);
@@ -218,7 +219,9 @@ class UsersController extends Controller
         // return back();
         return redirect("/users/$id/edit");
 
-        
+        }else{
+            return HomeController::returnError(403);
+        }
     }
 
     /**
@@ -230,14 +233,12 @@ class UsersController extends Controller
     public function destroy($id)
     {
         if ( ! Auth::user()->can("edit-users")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
 
         $user = User::where('user_id', '=', $id)->first();
         if (!$user) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
-            exit;
+            return HomeController::returnError(404);
         }
 
         $user->delete();

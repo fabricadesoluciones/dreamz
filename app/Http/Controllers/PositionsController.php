@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use DB;
 use Auth; 
 use Session; 
@@ -29,8 +30,7 @@ class PositionsController extends Controller
     public function index()
     {
         if ( ! Auth::user()->can("list-positions")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         $data = DB::table('positions')
             ->join('companies', 'positions.company', '=', 'companies.company_id')
@@ -39,7 +39,7 @@ class PositionsController extends Controller
             ->get();
 
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
@@ -52,8 +52,7 @@ class PositionsController extends Controller
     public function create()
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
 
         //
@@ -68,8 +67,7 @@ class PositionsController extends Controller
     public function store(Request $request)
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
 
         //
@@ -84,13 +82,12 @@ class PositionsController extends Controller
     public function show($id)
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
 
         $data = Position::where('position_id', '=', $id)->first();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -104,13 +101,12 @@ class PositionsController extends Controller
     public function users($id)
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
 
         $data = Position::where('position_id', '=', $id)->first()->users;
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -124,11 +120,13 @@ class PositionsController extends Controller
     public function edit($id)
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
 
         $data = Position::where('position_id', '=', $id)->first();
+        if (!$data) {
+            return HomeController::returnError(404);
+        }
         return view('pages.edit_position', ['position' => $data]);
     }
 
@@ -143,8 +141,7 @@ class PositionsController extends Controller
     {
 
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
 
         
@@ -173,14 +170,12 @@ class PositionsController extends Controller
     public function destroy($id)
     {
         if ( ! Auth::user()->can("edit-positions")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
 
         $position = Position::where('position_id', '=', $id)->first();
         if (!$position) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
-            exit;
+            return HomeController::returnError(404);
         }
 
         $position->active = 0;

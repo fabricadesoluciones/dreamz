@@ -27,6 +27,13 @@
                         </a>
                     </li>
                 @endif
+                @if(Auth::user()->can('list-departments'))
+                    <li>
+                        <a class="menu_link" href="/departments" title="{{ trans_choice('general.menu.departments', 2) }}">
+                            {{ trans_choice('general.menu.departments', 2) }}
+                        </a>
+                    </li>
+                @endif
                 @if(Auth::user()->can('list-positions'))
                     <li>
                         <a class="menu_link" href="/positions" title="{{ trans_choice('general.menu.positions', 2) }}">

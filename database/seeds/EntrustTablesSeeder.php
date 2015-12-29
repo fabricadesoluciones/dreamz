@@ -44,6 +44,12 @@ class EntrustTablesSeeder extends Seeder
 		$coach->save();
 		$coach = Role::where('name','=','coach')->first();
 
+		$lead = new Role();
+		$lead->name         = 'team_lead';
+		$lead->display_name = 'Team Lead';
+		$lead->save();
+		$lead = Role::where('name','=','team_lead')->first();
+
 		$employee = new Role();
 		$employee->name         = 'employee';
 		$employee->display_name = 'Employee';
@@ -80,11 +86,22 @@ class EntrustTablesSeeder extends Seeder
 		$coach->attachPermissions(array($progress_objectives, $progress_priorities,$list_users , $edit_users , $list_companies , $edit_companies , $list_departments , $edit_departments , $list_objectives , $edit_objectives , $list_priorities , $edit_priorities , $list_industries , $edit_industries , $list_countries , $edit_countries , $list_languages , $edit_languages , $list_positions , $edit_positions , $list_education , $edit_education , $list_periods , $edit_periods ));
 		$ceo->attachPermissions(array($progress_objectives, $progress_priorities,$list_users, $list_departments, $list_objectives, $edit_objectives, $list_priorities, $edit_priorities, $list_industries, $edit_industries));
 		$champion->attachPermissions(array($progress_objectives, $progress_priorities,$list_users, $edit_users, $list_departments, $edit_departments, $list_objectives, $edit_objectives, $list_priorities, $edit_priorities, $list_positions, $edit_positions, $list_education, $edit_education, ));
-		$employee->attachPermissions(array($progress_objectives, $progress_priorities,$list_objectives, $edit_priorities, $list_priorities, $list_users, $list_departments));
+		$lead->attachPermissions(array($edit_objectives, $progress_objectives, $progress_priorities,$list_objectives, $edit_priorities, $list_priorities, $list_users, $list_departments));
+		$employee->attachPermissions(array($progress_objectives, $progress_priorities,$list_objectives, $edit_priorities, $list_priorities, $list_departments));
 
 		$alex = User::where('email','=','ageofzetta@gmail.com')->first();
     	$alex->attachRole($super_admin);
 		$karla = User::where('email','=','kreyes@fabricadesoluciones.com')->first();
-    	$karla->attachRole($champion->id);
+    	$karla->attachRole($coach);
+    	$ceo_user =  User::where('email','=','bill_doe@gmail.com')->first();
+    	$ceo_user->attachRole($ceo);
+    	$champion_user =  User::where('email','=','frank_doe@gmail.com')->first();
+    	$champion_user->attachRole($champion);
+    	$boss_user =  User::where('email','=','patrick_doe@gmail.com')->first();
+    	$boss_user->attachRole($lead);
+    	$employee_user =  User::where('email','=','john_doe@gmail.com')->first();
+    	$employee_user->attachRole($employee);
+
+
     }
 }

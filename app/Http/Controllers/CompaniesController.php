@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use DB;
 use Session; 
 use Auth; 
@@ -20,12 +21,12 @@ class CompaniesController extends Controller
     public function index()
     {
         if ( ! Auth::user()->can("list-companies")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         $data = Company::all();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
@@ -38,8 +39,7 @@ class CompaniesController extends Controller
     public function create()
     {
         if ( ! Auth::user()->can("edit-companies")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
     }
 
@@ -52,8 +52,7 @@ class CompaniesController extends Controller
     public function store(Request $request)
     {
         if ( ! Auth::user()->can("edit-companies")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
     }
 
@@ -66,13 +65,12 @@ class CompaniesController extends Controller
     public function show($id)
     {
         if ( ! Auth::user()->can("list-companies")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
 
         $data = Company::where('company_id', '=', $id)->first();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -88,7 +86,7 @@ class CompaniesController extends Controller
 
         $data = Company::where('company_id', '=', $id)->first()->users;
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -103,7 +101,7 @@ class CompaniesController extends Controller
     {
         $data = Company::where('company_id', '=', $id)->first()->departments;
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -118,7 +116,7 @@ class CompaniesController extends Controller
     {
         $data = Company::where('company_id', '=', $id)->first()->positions;
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -132,11 +130,13 @@ class CompaniesController extends Controller
     public function edit($id)
     {
         if ( ! Auth::user()->can("edit-companies")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
 
-        $data = Company::where('company_id', '=', $id)->first();
+        $company = Company::where('company_id', '=', $id)->first();
+        if (!$company) {
+            return HomeController::returnError(404);
+        }
         return view('pages.edit_company', ['company' => $data]);
     }
 
@@ -151,8 +151,7 @@ class CompaniesController extends Controller
     {
         
         if ( ! Auth::user()->can("edit-companies")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
 
         $attributes = $request->all();
@@ -179,14 +178,12 @@ class CompaniesController extends Controller
     public function destroy($id)
     {
         if ( ! Auth::user()->can("edit-companies")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         
         $company = Company::where('company_id', '=', $id)->first();
         if (!$company) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
-            exit;
+            return HomeController::returnError(404);
         }
 
         $company->active = 0;
@@ -205,4 +202,6 @@ class CompaniesController extends Controller
     {
         return $company;
     }
+
+    
 }

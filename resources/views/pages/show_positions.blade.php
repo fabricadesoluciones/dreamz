@@ -28,12 +28,14 @@ var Tr = React.createClass({
                 <td>{this.props.data.company_name}</td>
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox" checked={Boolean(JSON.parse(this.props.data.active))} /> <span className="check"></span> </label> </td> 
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox" checked={Boolean(JSON.parse(this.props.data.boss))} /> <span className="check"></span> </label> </td> 
-                <td> 
-                    <a href={"/positions/"+this.props.data.position_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
-                    &nbsp;
-                    <button className="button warning delete_item" data-type="positions" data-id={this.props.data.position_id}>{{trans('general.disable')}}</button>
-                    
-                </td>
+                @if(Auth::user()->can('edit-positions'))
+                    <td> 
+                        <a href={"/positions/"+this.props.data.position_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
+                        &nbsp;
+                        <button className="button warning delete_item" data-type="positions" data-id={this.props.data.position_id}>{{trans('general.disable')}}</button>
+                        
+                    </td>
+                @endif
 
             </tr>
 
@@ -57,7 +59,9 @@ var CompanyTable = React.createClass({
                         <th>{{ trans_choice('general.menu.companies', 1) }}</th>
                         <th> {{ trans('general.active')}} </th>
                         <th>{{trans('general.boss')}}</th>
-                        <th> {{ trans_choice('general.actions',2)}} </th>
+                        @if(Auth::user()->can('edit-positions'))
+                            <th> {{ trans_choice('general.actions',2)}} </th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>

@@ -25,7 +25,7 @@ $(document).on('click','.delete_item', function(){
             var type = 'success';
                 
         @else
-            var default_title = 'An error ocurred';
+            var default_title = 'Error';
             var type = 'alert';
         @endif
         var title = default_title;
@@ -62,7 +62,7 @@ $( document ).ajaxComplete(function( event,request, settings ) {
         setTimeout(function(){location.reload();},1200)
     }else if(request.status == 403) {
         $.Notify({
-            caption:'Forbidden',
+            caption: request.responseJSON.title,
             type:'alert',
             content: request.responseJSON.message,
             keepOpen: true,
@@ -71,7 +71,7 @@ $( document ).ajaxComplete(function( event,request, settings ) {
     } else {
 
     $.Notify({
-        caption:'An error ocurred: Error ' + request.responseJSON.code,
+        caption:'Error ' + request.responseJSON.code,
         type:'alert',
         content: request.responseJSON.message,
         keepOpen: true,

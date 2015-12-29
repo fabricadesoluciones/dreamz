@@ -28,12 +28,14 @@ var UserTr = React.createClass({
                 <td>{this.props.data.lastname}</td>
                 <td>{this.props.data.position_name}</td>
                 <td>{this.props.data.department_name}</td>
-                <td> 
-                    <a href={"/users/"+this.props.data.user_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
-                    &nbsp;
-                    <button className="button danger delete_item" data-type="users" data-id={this.props.data.user_id}>{{trans('general.delete')}}</button>
-                </td>
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox" checked={Boolean(JSON.parse(this.props.data.active))} /> <span className="check"></span> </label> </td> 
+                @if(Auth::user()->can('edit-users'))
+                    <td> 
+                        <a href={"/users/"+this.props.data.user_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
+                        &nbsp;
+                        <button className="button danger delete_item" data-type="users" data-id={this.props.data.user_id}>{{trans('general.delete')}}</button>
+                    </td>
+                @endif
 
 
             </tr>
@@ -63,8 +65,10 @@ var UserTable = React.createClass({
                         <th> {{ trans('general.forms.lastname')}} </th>
                         <th> {{ trans_choice('general.menu.positions', 1) }} </th>
                         <th> {{ trans_choice('general.menu.areas',1)}} </th>
-                        <th> {{ trans_choice('general.actions',2)}} </th>
                         <th> {{ trans('general.active')}} </th>
+                        @if(Auth::user()->can('edit-users'))
+                            <th> {{ trans_choice('general.actions',2)}} </th>
+                        @endif
 
                     </tr>
                 </thead>

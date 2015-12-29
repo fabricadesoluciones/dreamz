@@ -57,6 +57,70 @@ class UserTableSeeder extends Seeder
 			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/women/96.jpg'
 
     	]);
+
+    	$ceo = User::create([
+    		'name' => 'Bill',
+			'lastname' => 'Doe',
+    		'email' => 'bill_doe@gmail.com',
+    		'company' => $department2->company,
+    		'department' => $department2->department_id,
+    		'position' => $position2->position_id,
+    		'password' => Hash::make('admin'),
+			'active' => 1,
+			'company' => $karla_company->company_id,
+			'user_id' => $faker->uuid,
+			'employee_number' => $faker->uuid,
+			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/94.jpg'
+
+    	]);
+
+    	$coach = User::create([
+    		'name' => 'Bill',
+			'lastname' => 'Doe',
+    		'email' => 'frank_doe@gmail.com',
+    		'company' => $department2->company,
+    		'department' => $department2->department_id,
+    		'position' => $position2->position_id,
+    		'password' => Hash::make('admin'),
+			'active' => 1,
+			'company' => $karla_company->company_id,
+			'user_id' => $faker->uuid,
+			'employee_number' => $faker->uuid,
+			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/94.jpg'
+
+    	]);
+
+    	$boss = User::create([
+    		'name' => 'Patrick',
+			'lastname' => 'Doe',
+    		'email' => 'patrick_doe@gmail.com',
+    		'company' => $department2->company,
+    		'department' => $department2->department_id,
+    		'position' => $position2->position_id,
+    		'password' => Hash::make('admin'),
+			'active' => 1,
+			'company' => $karla_company->company_id,
+			'user_id' => $faker->uuid,
+			'employee_number' => $faker->uuid,
+			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/93.jpg'
+
+    	]);
+
+    	$employee = User::create([
+    		'name' => 'John',
+			'lastname' => 'Doe',
+    		'email' => 'john_doe@gmail.com',
+    		'company' => $department2->company,
+    		'department' => $department2->department_id,
+    		'position' => $position2->position_id,
+    		'password' => Hash::make('admin'),
+			'active' => 1,
+			'company' => $karla_company->company_id,
+			'user_id' => $faker->uuid,
+			'employee_number' => $faker->uuid,
+			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/92.jpg'
+
+    	]);
         $i = 0;
 
 		

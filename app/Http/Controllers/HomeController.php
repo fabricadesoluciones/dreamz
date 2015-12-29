@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Company;
 use App\User;
-use Illuminate\Http\Request;
+use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth; 
@@ -30,7 +30,7 @@ class HomeController extends Controller
     public function users()
     {
         if ( ! Auth::user()->can("list-users")){
-            return $this->returnForbidden();
+            return $this->returnError(403);
         }
 
         return view('pages.show_users');
@@ -39,7 +39,7 @@ class HomeController extends Controller
     public function companies()
     {
         if ( ! Auth::user()->can("list-companies")){
-            return $this->returnForbidden();
+            return $this->returnError(403);
         }
 
         return view('pages.show_companies');
@@ -171,8 +171,39 @@ class HomeController extends Controller
 
     public function returnForbidden()
     {
-        Session::flash('update', ['code'=>403, 'title' => 'Forbidden', 'message' => trans('general.http.403') ]);
+        Session::flash('update', ['code'=>403, 'title' =>  trans('general.http.403t'), 'message' => trans('general.http.403') ]);
         return view('pages.generic_error');
+
+    }
+
+    public static function returnError($errorCode = 404, $callbackurl = false, $json = false)
+    {
+        $errorResponse = [];
+
+        switch ($errorCode) {
+            case 403:
+                $errorResponse = ['code'=>403,'title' =>  trans('general.http.403t'), 'message' => trans('general.http.403') ,'data' => []];
+                break;
+            case 404:
+                $errorResponse = ['code'=>404,'message' => trans('general.http.404') ,'data' => []];
+                break;
+            default:
+                $errorResponse = ['code'=>404,'message' => trans('general.http.404') ,'data' => []];
+                break;
+        }
+
+        if (Request::ajax() || $json){
+            return Response::json($errorResponse, $errorCode);
+        }else{
+            Session::flash('update', $errorResponse);
+
+        }
+
+        if ($callbackurl) {
+            return redirect($callbackurl);
+        }else{
+            return view('pages.generic_error');
+        }
 
     }
 }

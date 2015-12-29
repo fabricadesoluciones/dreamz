@@ -34,6 +34,7 @@ return [
         '200up' => 'Se agregó un nuevo usuario, por favor reinicie la contraseña',
         '204' => 'Eliminado',
         '204b' => 'Deshabilitado',
+        '403t' => 'Accesso Restringido',
         '403' => 'El usuario actual no puede acceder al recurso',
         '404' => 'No se encontró el recurso',
     ],

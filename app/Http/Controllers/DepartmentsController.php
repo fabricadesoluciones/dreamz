@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use DB;
 use Session; 
 use Auth; 
@@ -29,8 +30,7 @@ class DepartmentsController extends Controller
     public function index()
     {
         if ( ! Auth::user()->can("list-departments")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         $data = DB::table('departments')
             ->join('companies', 'departments.company', '=', 'companies.company_id')
@@ -38,7 +38,7 @@ class DepartmentsController extends Controller
             ->where('departments.company','LIKE',"%".$this->company."%")
             ->get();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
@@ -51,8 +51,7 @@ class DepartmentsController extends Controller
     public function create()
     {
         if ( ! Auth::user()->can("edit-departments")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         //
     }
@@ -66,8 +65,7 @@ class DepartmentsController extends Controller
     public function store(Request $request)
     {
         if ( ! Auth::user()->can("edit-departments")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         //
     }
@@ -81,12 +79,11 @@ class DepartmentsController extends Controller
     public function show($id)
     {
         if ( ! Auth::user()->can("edit-departments")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         $data = Department::where('department_id', '=', $id)->first();
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -100,12 +97,11 @@ class DepartmentsController extends Controller
     public function users($id)
     {
         if ( ! Auth::user()->can("edit-departments")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         $data = Department::where('department_id', '=', $id)->first()->users;
         if (!$data) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
+            return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
@@ -119,10 +115,12 @@ class DepartmentsController extends Controller
     public function edit($id)
     {
         if ( ! Auth::user()->can("edit-departments")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         $data = Department::where('department_id', '=', $id)->first();
+        if (!$data) {
+            return HomeController::returnError(404);
+        }
         return view('pages.edit_department', ['department' => $data]);
     }
 
@@ -136,8 +134,7 @@ class DepartmentsController extends Controller
     public function update(Request $request, $id)
     {
         if ( ! Auth::user()->can("edit-departments")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         
         $attributes = $request->all();
@@ -202,13 +199,11 @@ class DepartmentsController extends Controller
     public function destroy($id)
     {
         if ( ! Auth::user()->can("edit-departments")){
-            return Response::json(['code'=>403,'message' => trans('general.http.403') ,'data' => []], 403);
-            exit;
+            return HomeController::returnError(403);
         }
         $department = Department::where('department_id', '=', $id)->first();
         if (!$department) {
-            return Response::json(['code'=>404,'message' => trans('general.http.404') ,'data' => []], 404);
-            exit;
+            return HomeController::returnError(404);
         }
 
         $department->active = 0;

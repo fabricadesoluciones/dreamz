@@ -5,14 +5,20 @@
 @section('content')
 <hr>
 <div>
-    <h1>An error Ocurred</h1>
+    <h1>Error
+    @if(isset(Session::get('update')['message']))
+        {{ Session::get('update')['code']  }}
+     @endif
+    </h1>
+    <hr>
     @if( Session::has('update') )
+
         @if(isset(Session::get('update')['title']))
-            <strong>{{ Session::get('update')['title']  }}</strong>
+            <h2>{{ Session::get('update')['title']  }}</h2>
         @endif
         @if(isset(Session::get('update')['message']))
         <br>
-            <p>{{ Session::get('update')['message']  }}</p>
+            <h3>{{ Session::get('update')['message']  }}</h3>
         @endif
 
         

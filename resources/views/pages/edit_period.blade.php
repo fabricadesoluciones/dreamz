@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="cell">
-                        <label>Name</label>
+                        <label>{{trans('general.forms.name')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="name" type="text" value="{!! $period->name !!}" >
                         </div>
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="cell">
-                        <label>Active</label>
+                        <label>{{trans('general.active')}}</label>
                         <br>
                         <label class="switch" style="padding: 1.2ex 0; ">
                             <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="active" value="{{$period->active}}" 
@@ -57,8 +57,8 @@
                 
             </div>
 
-        <input type="submit" class="success">
-        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">Cancel</a>
+        <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
+        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">{{trans('general.forms.cancel')}}</a>
            
 {!! Form::close() !!}
 </div>
