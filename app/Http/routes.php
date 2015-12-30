@@ -26,6 +26,7 @@ Route::get('/forbidden', ['middleware' => 'auth', 'uses' => 'HomeController@retu
 Route::get('/users', ['middleware' => 'auth', 'uses' => 'HomeController@users'])->name('users');
 Route::get('/users/create', ['middleware' => 'auth', 'uses' => 'UsersController@create']);
 Route::get('/companies/create', ['middleware' => 'auth', 'uses' => 'CompaniesController@create']);
+Route::get('/departments/create', ['middleware' => 'auth', 'uses' => 'DepartmentsController@create']);
 Route::get('/priorities/create', ['middleware' => 'auth', 'uses' => 'PrioritiesController@create']);
 Route::get('/periods/create', ['middleware' => 'auth', 'uses' => 'PeriodsController@create']);
 Route::get('/positions/create', ['middleware' => 'auth', 'uses' => 'PositionsController@create']);

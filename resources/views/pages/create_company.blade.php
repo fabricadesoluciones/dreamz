@@ -60,7 +60,7 @@
                             <select name="language" id="language">
                                 <option value=""> - </option>
                                 <option value="en">English</option>
-                                <option value="en">Spanish</option>
+                                <option value="es">Spanish</option>
                             </select>
                         </div>
                     </div>
@@ -85,12 +85,5 @@
 {!! Form::close() !!}
 </div>
 
-<script>
-function isChecked(input){
-    debugger;
-
-}
-    
-</script>
 
 @stop

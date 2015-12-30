@@ -60,7 +60,7 @@ class CompaniesController extends Controller
             return HomeController::returnError(403);
         }
 
-        $this->validate($request, [
+        $required = [
             "company_id" => 'required|unique:companies',
             "commercial_name" => 'required',
             "rfc" => 'required',
@@ -68,21 +68,15 @@ class CompaniesController extends Controller
             "logo" => 'required',
             "country" => 'required',
             "language" => 'required',
-        ]);
+        ];
+        $this->validate($request, $required);
 
         $attributes = $request->all();
-        
 
-        Company::create([
-            'company_id' => $attributes['company_id'],
-            'active' => $attributes['active'],
-            'commercial_name' => $attributes['commercial_name'],
-            'country' => $attributes['country'],
-            'language' => $attributes['language'],
-            'logo' => $attributes['logo'],
-            'slogan' => $attributes['slogan'],
-            'rfc' => $attributes['rfc'],
-        ]);
+        $fields = DB::table('companies')->first();
+        $fields = (array) $fields;
+
+        Company::create(array_intersect_key($attributes, $fields));
 
         return redirect("/companies/".$attributes['company_id']."/edit");
     }
@@ -186,7 +180,6 @@ class CompaniesController extends Controller
         }
 
         $this->validate($request, [
-            "company_id" => 'required',
             "commercial_name" => 'required',
             "rfc" => 'required',
             "slogan" => 'required',

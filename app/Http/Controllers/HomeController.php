@@ -35,7 +35,8 @@ class HomeController extends Controller
     public function index()
     {
         if( ! session('company')){
-            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
+            // return $this->returnError(403, trans('general.http.select_company'), route('companies'));
+            return redirect(route('companies'));
         }
 
         return view('welcome');

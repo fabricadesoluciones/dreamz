@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use DB;
 use Session; 
 use Auth; 
+use Uuid; 
 
 class DepartmentsController extends Controller
 {
@@ -53,7 +54,10 @@ class DepartmentsController extends Controller
         if ( ! Auth::user()->can("edit-departments")){
             return HomeController::returnError(403);
         }
-        //
+
+        return view('pages.create_department', ['id' => Uuid::generate(4), 'company' => Session::get('company') ]);
+        
+    
     }
 
     /**
@@ -67,7 +71,30 @@ class DepartmentsController extends Controller
         if ( ! Auth::user()->can("edit-departments")){
             return HomeController::returnError(403);
         }
-        //
+        
+        $attributes = $request->all();
+
+
+         $required = [
+            "department_id" => 'required',
+            "name" => 'required',
+        ];
+        $this->validate($request, $required);
+
+        $attributes = $request->all();
+        $attributes["parent"] = (array_key_exists('parent', $attributes)) ? $attributes["parent"] : 0;
+
+        $fields = DB::table('departments')->first();
+        $fields = (array) $fields;
+        $attributes['company'] = $this->company;
+
+        $parent = Department::where('department_id', '=', $attributes['parent'])->first();
+        
+        $this->checkParent($parent, $attributes['department_id']);
+
+        Department::create(array_intersect_key($attributes, $fields));
+
+        return redirect("/departments/".$attributes['department_id']."/edit");
     }
 
     /**
@@ -137,11 +164,89 @@ class DepartmentsController extends Controller
             return HomeController::returnError(403);
         }
         
-        $attributes = $request->all();
-        $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
+        // $attributes = $request->all();
+        // $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
         
+        // $parent = Department::where('department_id', '=', $attributes['parent'])->first();
+
+        // $this->checkParent($parent);
+        
+        // $department = Department::where('department_id', '=', $id)->first();
+        // $department->fill($attributes);
+        // $department->save();
+
+        
+        
+        // ///
+
+        $attributes = $request->all();
+        $required = [
+            "name" => 'required',
+        ];
+
+        $this->validate($request, $required);
+
+        $attributes = $request->all();
+
         $parent = Department::where('department_id', '=', $attributes['parent'])->first();
-        // $parents_objs = [$parent, $grandfather, $grand_grandfather, $grand_grand_grandfather, $grand_grand_grand_grandfather];
+        $this->checkParent($parent, $id);
+
+        $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
+        $attributes["parent"] = (array_key_exists('parent', $attributes)) ? $attributes["parent"] : 0;
+
+        $department = Department::where('department_id', '=', $id)->first();
+
+        $fields = DB::table('departments')->first();
+        $fields = (array) $fields;
+        $attributes['company'] = $this->company;
+
+        $department->fill(array_intersect_key($attributes, $fields));
+        $department->save();
+
+        Session::flash('update', ['code' => 200, 'message' => 'Department info was updated']);
+        return redirect("/departments/$id/edit");
+
+        ///
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        if ( ! Auth::user()->can("edit-departments")){
+            return HomeController::returnError(403);
+        }
+        $department = Department::where('department_id', '=', $id)->first();
+        if (!$department) {
+            return HomeController::returnError(404);
+        }
+
+        $department->active = 0;
+        $department->save();
+
+        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204b')] , 204);
+        
+    }
+
+    public function transformCollection($departments)
+    {
+        if(is_array($departments)){
+            return $departments;
+        }
+        return array_map([$this, 'transform'] , $departments->toArray());
+    }
+
+    private function transform ($department)
+    {
+        return $department;
+    }
+    private function checkParent ($parent = 0, $id)
+    {
+        
         $parents_objs = [];
         $parents = [];
 
@@ -180,49 +285,5 @@ class DepartmentsController extends Controller
             return redirect("/departments/$id/edit");
 
         }
-        $department = Department::where('department_id', '=', $id)->first();
-        $department->fill($attributes);
-        $department->save();
-
-        Session::flash('update', ['code' => 200, 'message' => 'Department info was updated']);
-        // return back();
-        return redirect("/departments/$id/edit");
-    
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        if ( ! Auth::user()->can("edit-departments")){
-            return HomeController::returnError(403);
-        }
-        $department = Department::where('department_id', '=', $id)->first();
-        if (!$department) {
-            return HomeController::returnError(404);
-        }
-
-        $department->active = 0;
-        $department->save();
-
-        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204b')] , 204);
-        
-    }
-
-    public function transformCollection($departments)
-    {
-        if(is_array($departments)){
-            return $departments;
-        }
-        return array_map([$this, 'transform'] , $departments->toArray());
-    }
-
-    private function transform ($department)
-    {
-        return $department;
     }
 }

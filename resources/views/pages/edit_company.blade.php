@@ -38,7 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row cells2">
+                <div class="row cells4">
                     <div class="cell">
                         <label>Logo (3:1)</label>
                         <div class="input-control text full-size">
@@ -58,6 +58,26 @@
                         </label>
                         
                     </div>
+                    <div class="cell">
+                        <div class="input-control select">
+                        <label for="language">{{trans('general.language')}}</label>
+                            <select name="language" id="language">
+                                <option value=""> - </option>
+                                <option value="en">English</option>
+                                <option value="es">Spanish</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div class="input-control select">
+                        <label for="country">{{trans('general.country')}}</label>
+                            <select name="country" id="country">
+                                <option value=""> - </option>
+                                <option value="MX">México</option>
+                                <option value="US">United States of America</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 
                 
@@ -70,10 +90,9 @@
 </div>
 
 <script>
-function isChecked(input){
-    debugger;
+    $("#country").attr("data-selected", "{{$company->country}}");
+    $("#language").attr("data-selected", "{{$company->language}}");
 
-}
     
 </script>
 

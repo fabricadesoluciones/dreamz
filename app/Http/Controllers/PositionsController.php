@@ -76,16 +76,22 @@ class PositionsController extends Controller
             return HomeController::returnError(403);
         }
 
-        $this->validate($request, [
-            'position_id' => 'required|unique:positions',
-            'name' => 'required',
-        ]);
-
+         $required = [
+            "position_id" => 'required',
+            "name" => 'required',
+        ];
+        $this->validate($request, $required);
 
         $attributes = $request->all();
-        $position_attributes = [ 'position_id' => $attributes['position_id'], 'name' => $attributes['name'], 'boss' => (isset($attributes['boss']) ? $attributes['boss'] : 0), 'active' => (isset($attributes['boss']) ? $attributes['boss'] : 0), 'company' => $this->company ];
+        $attributes["boss"] = (array_key_exists('boss', $attributes)) ? $attributes["boss"] : 0;
+        $attributes["active"] = (array_key_exists('active', $attributes)) ? $attributes["active"] : 0;
 
-        $user = Position::create($position_attributes);
+        $fields = DB::table('positions')->first();
+        $fields = (array) $fields;
+        $attributes['company'] = $this->company;
+
+        Position::create(array_intersect_key($attributes, $fields));
+
         Session::flash('update', ['code' => 200, 'message' => 'Position was added']);
         return redirect("/positions/".$attributes['position_id']."/edit");
 
@@ -162,18 +168,23 @@ class PositionsController extends Controller
         if ( ! Auth::user()->can("edit-positions")){
             return HomeController::returnError(403);
         }
-
-        $this->validate($request, [
-            'name' => 'required',
-        ]);
-
         
+        $required = [
+            "name" => 'required',
+        ];
+
+        $this->validate($request, $required);
+
         $attributes = $request->all();
-        $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
-        $attributes["boss"] = (array_key_exists('boss', $attributes)) ? intval($attributes["boss"]) : 0;
-        
+        $attributes["boss"] = (array_key_exists('boss', $attributes)) ? $attributes["boss"] : 0;
+        $attributes["active"] = (array_key_exists('active', $attributes)) ? $attributes["active"] : 0;
+
+        $fields = DB::table('positions')->first();
+        $fields = (array) $fields;
+        $attributes['company'] = $this->company;
+
         $position = Position::where('position_id', '=', $id)->first();
-        $position->fill($attributes);
+        $position->fill(array_intersect_key($attributes, $fields));
         $position->save();
 
         Session::flash('update', ['code' => 200, 'message' => 'Position info was updated']);
