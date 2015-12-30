@@ -38,7 +38,7 @@ var Tr = React.createClass({
                         &nbsp;
                         <button className="button warning delete_item" data-type="companies" data-id={this.props.data.company_id}>{{trans('general.disable')}}</button>
                         &nbsp;
-                        <a href="#" className="button use_this" data-type="companies" data-id={this.props.data.company_id}>{{trans_choice('general.use_this', 2)}}</a>
+                        <a href={"/set_company/"+this.props.data.company_id} className="button use_this" data-type="companies" data-id={this.props.data.company_id}>{{trans_choice('general.select_this', 2)}}</a>
                     </td>
                 @endif
 
@@ -79,29 +79,29 @@ var CompanyTable = React.createClass({
             );
     }
 });
-$(document).on('click','.use_this', function (event) {
-        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+// $(document).on('click','.use_this', function (event) {
+//         event.preventDefault ? event.preventDefault() : event.returnValue = false;
 
-        var this_id = $(this).attr('data-id');
-        $.get('/set_company/'+this_id, function(d){
-            $.Notify({
+//         var this_id = $(this).attr('data-id');
+//         $.get('/set_company/'+this_id, function(d){
+//             $.Notify({
         
-                caption: 'Company changed',
-                type: 'success',
-                content: d,
-                }); 
-            setTimeout(function(){
+//                 caption: 'Company changed',
+//                 type: 'success',
+//                 content: d,
+//                 }); 
+//             setTimeout(function(){
                 
-            location.reload();
-            },500)
-        })
-        .done(function(d){
-            // location.reload();
-        });
+//             location.reload();
+//             },500)
+//         })
+//         .done(function(d){
+//             // location.reload();
+//         });
 
 
     
-    });
+//     });
 </script>
 
 @stop

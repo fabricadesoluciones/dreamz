@@ -33,6 +33,7 @@ var Tr = React.createClass({
                         &nbsp;
                         <button className="button warning delete_item" data-type="departments" data-id={this.props.data.department_id}>{{trans('general.disable')}}</button>
                         
+                        <a href={"/set_department/"+this.props.data.department_id} className="button use_this" data-type="departments" data-id={this.props.data.department_id}>{{trans('general.select_this')}}</a>
                     </td>
                 @endif
 

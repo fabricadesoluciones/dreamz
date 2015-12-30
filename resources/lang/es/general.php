@@ -49,6 +49,7 @@ return [
         '403' => 'El usuario actual no puede acceder al recurso',
         '404' => 'No se encontró el recurso',
         'select_company' => 'Primero es necesario seleccionar una empresa',
+        'select_department' => 'Primero es necesario seleccionar un departmento',
     ],
 
     /*
@@ -115,7 +116,7 @@ return [
     'to' => 'Hasta',
     'language' => 'Idioma',
     'country' => 'País',
-    'use_this' => 'Usar',
+    'select_this' => 'Seleccionar',
 
     'users' => [
         'super_admin' => 'Super Administrador',

@@ -49,6 +49,7 @@ return [
         '403' => 'User can not access this resource',
         '404' => 'Not Found',
         'select_company' => 'Select a company first',
+        'select_department' => 'Select a department first',
     ],
 
     /*
@@ -114,7 +115,7 @@ return [
     'to' => 'To',
     'language' => 'Language',
     'country' => 'Country',
-    'use_this' => 'Use',
+    'select_this' => 'Select',
 
     'users' => [
         'super_admin' => 'Super Admin',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Company;
+use App\Department;
 use App\User;
 use Request;
 use App\Http\Requests;
@@ -19,10 +20,15 @@ class HomeController extends Controller
         if( ! session('company')){
             Session::set('name', Auth::user()->name ." ".Auth::user()->lastname);
             $company = Company::where('company_id', '=', Auth::user()->company)->first();
+            $department = Department::where('department_id', '=', Auth::user()->department)->first();
             if ($company) {
                 Session::set('company', Auth::user()->company);
                 Session::set('company_name', $company->commercial_name);
                 Session::set('company_logo', $company->logo);
+            }
+            if ($department) {
+                Session::set('department', $department->department_id);
+                Session::set('department_name', $department->name);
             }
         }
     }
@@ -92,8 +98,8 @@ class HomeController extends Controller
         if ( ! Auth::user()->can("list-priorities")){
             return $this->returnError(403);
         }
-        if( ! session('company')){
-            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
+        if( ! session('department')){
+            return $this->returnError(403, trans('general.http.select_department'), route('departments'));
         }
 
         return view('pages.show_priorities');
@@ -161,20 +167,47 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function set($id)
+    public function setCompany($id)
     {
+        if ( ! Auth::user()->can("list-companies")){
+            return $this->returnError(403);
+        }
+
         $company = Company::where('company_id', '=', $id)->first();
 
         if ($company) {
             Session::forget('company');
             Session::forget('company_name');
             Session::forget('company_logo');
+            Session::forget('department');
+            Session::forget('department_name');
             Session::set('company', $company->company_id);
             Session::set('company_name', $company->commercial_name);
             Session::set('company_logo', $company->logo);
-            return $company->commercial_name;
+            
+            Session::flash('update', ['code' => 200, 'message' => 'Company was updated']);
+            return redirect("/companies/");
         }else{
-            return 0;
+            return $this->returnError(404);
+        }
+    }
+
+    public function setDepartment($id)
+    {
+        if ( ! Auth::user()->can("list-departments")){
+            return $this->returnError(403);
+        }
+
+        $department = Department::where('department_id', '=', $id)->first();
+
+        if ($department) {
+            Session::set('department', $department->department_id);
+            Session::set('department_name', $department->name);
+
+            Session::flash('update', ['code' => 200, 'message' => 'Department was updated']);
+            return redirect("/departments/");
+        }else{
+            return $this->returnError(404);
         }
     }
 

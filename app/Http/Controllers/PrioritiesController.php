@@ -22,8 +22,13 @@ class PrioritiesController extends Controller
     private $company;
     function __construct() {
         $this->company = '';
+        $this->department = '';
         if ( session('company')) {
             $this->company = session('company');
+        }
+
+        if ( session('department')) {
+            $this->department = session('department');
         }
     }
 
@@ -51,11 +56,15 @@ class PrioritiesController extends Controller
         $users = [];
 
         if (!empty($position) && $position->boss) {
-            $users = User::where('department', '=', $user->department)->get(['user_id']);
+            $users = User::where('department', '=', $this->department)->get(['user_id']);
+        }
+
+        if ( ! $users ) {
+            die('no users');
         }
 
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => 
-            ['priorities' => $this->transform($data->toArray()), 'subordinates' => $users]
+            ['priorities' => $this->transform($data->toArray()), 'department' => $this->department, 'subordinates' => $users]
             ], 200);
     }
     /**
@@ -73,22 +82,20 @@ class PrioritiesController extends Controller
         $user = Auth::user();
         
         $data = $user->priorities;
-         if (!$data) {
-            return HomeController::returnError(404);
-        }
+        
         
         $position = Position::where('position_id', '=', $user->position)->first();
 
         $users = [];
 
-        if (!empty($position) && $position->boss) {
-            $users = User::where('department', '=', $user->department)->get(['user_id']);
+        if (!empty($position) && $position->boss || Auth::user()->can("edit-companies")) {
+            $users = User::where('department', '=', $this->department)->get(['user_id']);
 
             $data = DB::table('priorities')
-                ->join('users', 'priorities.user', '=', 'users.user_id')
-                ->join('periods', 'priorities.period', '=', 'periods.period_id')
+                ->leftJoin('users', 'priorities.user', '=', 'users.user_id')
+                ->leftJoin('periods', 'priorities.period', '=', 'periods.period_id')
                 ->select('priorities.*', 'users.name AS user_name','periods.name AS period_name', 'users.lastname AS user_lastname')
-                ->where('users.department','=', $user->department)
+                ->where('users.department','=', $this->department)
                 ->get();
 
         }
