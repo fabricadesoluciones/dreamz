@@ -90,7 +90,10 @@ class DepartmentsController extends Controller
 
         $parent = Department::where('department_id', '=', $attributes['parent'])->first();
         
-        $this->checkParent($parent, $attributes['department_id']);
+        $parents = $this->checkParent($parent, $attributes['department_id']);
+        if ($parents) {
+            return $parents;
+        }
 
         Department::create(array_intersect_key($attributes, $fields));
 
@@ -164,21 +167,6 @@ class DepartmentsController extends Controller
             return HomeController::returnError(403);
         }
         
-        // $attributes = $request->all();
-        // $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
-        
-        // $parent = Department::where('department_id', '=', $attributes['parent'])->first();
-
-        // $this->checkParent($parent);
-        
-        // $department = Department::where('department_id', '=', $id)->first();
-        // $department->fill($attributes);
-        // $department->save();
-
-        
-        
-        // ///
-
         $attributes = $request->all();
         $required = [
             "name" => 'required',
@@ -189,7 +177,10 @@ class DepartmentsController extends Controller
         $attributes = $request->all();
 
         $parent = Department::where('department_id', '=', $attributes['parent'])->first();
-        $this->checkParent($parent, $id);
+        $parents = $this->checkParent($parent, $id);
+        if ($parents) {
+            return $parents;
+        }
 
         $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
         $attributes["parent"] = (array_key_exists('parent', $attributes)) ? $attributes["parent"] : 0;
@@ -247,6 +238,7 @@ class DepartmentsController extends Controller
     private function checkParent ($parent = 0, $id)
     {
         
+
         $parents_objs = [];
         $parents = [];
 
@@ -272,7 +264,7 @@ class DepartmentsController extends Controller
         }
         if (isset($grand_grand_grand_grandfather) && $grand_grand_grand_grandfather) {
             
-            Session::flash('update', ['code' => 500, 'title' => 'Hierarchy constraint violation', 'message' => "Trying to add too many children, max level is 5"]);
+            Session::flash('update', ['code' => 500, 'title' => 'Hierarchy constraint violation', 'message' => "Trying to add too many children, max level is 5: "]);
             return redirect("/departments/$id/edit");
 
         }
@@ -285,5 +277,7 @@ class DepartmentsController extends Controller
             return redirect("/departments/$id/edit");
 
         }
+
+        return false;
     }
 }
