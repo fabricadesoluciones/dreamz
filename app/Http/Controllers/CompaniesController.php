@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use DB;
 use Session; 
 use Auth; 
+use Uuid; 
 
 class CompaniesController extends Controller
 {
@@ -41,6 +42,10 @@ class CompaniesController extends Controller
         if ( ! Auth::user()->can("edit-companies")){
             return HomeController::returnError(403);
         }
+
+        return view('pages.create_company', ['id' => Uuid::generate(4), 'user' => Auth::user() ]);
+        
+    
     }
 
     /**
@@ -54,6 +59,32 @@ class CompaniesController extends Controller
         if ( ! Auth::user()->can("edit-companies")){
             return HomeController::returnError(403);
         }
+
+        $this->validate($request, [
+            "company_id" => 'required|unique:companies',
+            "commercial_name" => 'required',
+            "rfc" => 'required',
+            "slogan" => 'required',
+            "logo" => 'required',
+            "country" => 'required',
+            "language" => 'required',
+        ]);
+
+        $attributes = $request->all();
+        
+
+        Company::create([
+            'company_id' => $attributes['company_id'],
+            'active' => $attributes['active'],
+            'commercial_name' => $attributes['commercial_name'],
+            'country' => $attributes['country'],
+            'language' => $attributes['language'],
+            'logo' => $attributes['logo'],
+            'slogan' => $attributes['slogan'],
+            'rfc' => $attributes['rfc'],
+        ]);
+
+        return redirect("/companies/".$attributes['company_id']."/edit");
     }
 
     /**
@@ -137,7 +168,7 @@ class CompaniesController extends Controller
         if (!$company) {
             return HomeController::returnError(404);
         }
-        return view('pages.edit_company', ['company' => $data]);
+        return view('pages.edit_company', ['company' => $company]);
     }
 
     /**
@@ -154,6 +185,16 @@ class CompaniesController extends Controller
             return HomeController::returnError(403);
         }
 
+        $this->validate($request, [
+            "company_id" => 'required',
+            "commercial_name" => 'required',
+            "rfc" => 'required',
+            "slogan" => 'required',
+            "logo" => 'required',
+            "country" => 'required',
+            "language" => 'required',
+        ]);
+
         $attributes = $request->all();
         $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
         
@@ -161,8 +202,7 @@ class CompaniesController extends Controller
         $company->fill($attributes);
         $company->save();
 
-        Session::flash('update', ['code' => 200, 'message' => 'Company info was updated']);
-        // return back();
+        Session::flash('update', ['code' => 200, 'message' => 'Company was updated']);
         return redirect("/companies/$id/edit");
 
         

@@ -34,6 +34,7 @@ class UsersController extends Controller
         if ( ! Auth::user()->can("list-users")){
             return HomeController::returnError(403);
         }
+        
         $data = DB::table('users')
             ->join('positions', 'users.position', '=', 'positions.position_id')
             ->join('departments', 'users.department', '=', 'departments.department_id')
@@ -80,8 +81,8 @@ class UsersController extends Controller
     public function show($id)
     {
         $data = DB::table('users')
-            ->join('positions', 'users.position', '=', 'positions.position_id')
-            ->join('departments', 'users.department', '=', 'departments.department_id')
+            ->leftJoin('positions', 'users.position', '=', 'positions.position_id')
+            ->leftJoin('departments', 'users.department', '=', 'departments.department_id')
             ->select('users.*', 'positions.position_id AS pst_id','departments.department_id AS dpt_id', 'positions.name AS position_name', 'departments.name AS department_name')
             ->where('user_id', '=', $id)
             ->first();
@@ -101,9 +102,9 @@ class UsersController extends Controller
     {
         if ( Auth::user()->user_id == $id || Auth::user()->can("edit-users")){
             $data = DB::table('users')
-                ->join('positions', 'users.position', '=', 'positions.position_id')
-                ->join('departments', 'users.department', '=', 'departments.department_id')
-                ->join('user_details', 'users.user_id', '=', 'user_details.user')
+                ->leftJoin('positions', 'users.position', '=', 'positions.position_id')
+                ->leftJoin('departments', 'users.department', '=', 'departments.department_id')
+                ->leftJoin('user_details', 'users.user_id', '=', 'user_details.user')
                 ->select('users.*', 'user_details.*', 'positions.name AS position_name', 'departments.name AS department_name')
                 ->where('user_id', '=', $id)
                 ->first();

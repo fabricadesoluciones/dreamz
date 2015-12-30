@@ -113,6 +113,9 @@ return [
     'confirm_delete' => 'Desea eliminar el elemento?',
     'from' => 'Desde',
     'to' => 'Hasta',
+    'language' => 'Idioma',
+    'country' => 'País',
+    'use_this' => 'Usar',
 
     'users' => [
         'super_admin' => 'Super Administrador',

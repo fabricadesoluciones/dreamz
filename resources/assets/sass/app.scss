@@ -87,9 +87,13 @@ nav {
 
 .menu_link {
     position: relative;
-    img {
-        width: 2em;
+    svg {
+        max-width: 100%;
+        height: auto;
+        vertical-align: middle;
+        border: 0;
     }
+    
     & > a {
         display: inline-block;
         text-align: center;
@@ -166,4 +170,35 @@ img {
     padding: 3em;
     background-color: #EFEFEF;
     border-radius: 1em;
+}
+
+.main_navigation svg {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border: 0;
+}
+
+.validation_error {
+    background: pink;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+.disabled {
+    svg path {
+        fill: #979797;
+    }
+    a {
+        color: #979797 !important;
+    }
+}
+
+.pending {
+    svg path {
+        fill: orange;
+    }
+    a {
+        color: orange !important;
+    }
 }

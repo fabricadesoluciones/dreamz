@@ -33,7 +33,7 @@
     </span>
     <img class="profile_pic" src="{{Auth::user()->thumbnail}}">
 </div>
-<div style="background-image:url(http://placehold.it/150x150);background-repeat: no-repeat; background-size: 100% 100%;">
+<div style="background-image:url({{ Session::get('company_logo')}});background-repeat: no-repeat; background-size: 100% 100%;">
     
 </div>
     @endif

@@ -10,10 +10,9 @@
     }
 </style>
                 
-<h2>{{ trans_choice('general.menu.companies', 2) }}</h2>
+<h2>{{ trans_choice('general.menu.companies', 2) }} <a href="/companies/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
 <div id="table"></div>
 <hr>
-<button class="button success"> {{ trans('general.forms.add_new') }} </button>
 <script type="text/babel">
 
     $.get('{!! route('companies.index') !!}', function(){},'json')
@@ -39,7 +38,7 @@ var Tr = React.createClass({
                         &nbsp;
                         <button className="button warning delete_item" data-type="companies" data-id={this.props.data.company_id}>{{trans('general.disable')}}</button>
                         &nbsp;
-                        <a href={"/companies/"+this.props.data.company_id+"/users"} className="button" data-type="companies" data-id={this.props.data.company_id}>{{trans_choice('general.menu.users', 2)}}</a>
+                        <a href="#" className="button use_this" data-type="companies" data-id={this.props.data.company_id}>{{trans_choice('general.use_this', 2)}}</a>
                     </td>
                 @endif
 
@@ -80,6 +79,29 @@ var CompanyTable = React.createClass({
             );
     }
 });
+$(document).on('click','.use_this', function (event) {
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+
+        var this_id = $(this).attr('data-id');
+        $.get('/set_company/'+this_id, function(d){
+            $.Notify({
+        
+                caption: 'Company changed',
+                type: 'success',
+                content: d,
+                }); 
+            setTimeout(function(){
+                
+            location.reload();
+            },500)
+        })
+        .done(function(d){
+            // location.reload();
+        });
+
+
+    
+    });
 </script>
 
 @stop

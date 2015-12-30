@@ -93,13 +93,21 @@ class EntrustTablesSeeder extends Seeder
     	$alex->attachRole($super_admin);
 		$karla = User::where('email','=','kreyes@fabricadesoluciones.com')->first();
     	$karla->attachRole($coach);
-    	$ceo_user =  User::where('email','=','bill_doe@gmail.com')->first();
+
+
+    	$ceo_user =  User::where('email','=','ceo@gmail.com')->first();
     	$ceo_user->attachRole($ceo);
-    	$champion_user =  User::where('email','=','frank_doe@gmail.com')->first();
+    	
+    	$champion_user =  User::where('email','=','champion@gmail.com')->first();
     	$champion_user->attachRole($champion);
-    	$boss_user =  User::where('email','=','patrick_doe@gmail.com')->first();
+
+    	$coach_user =  User::where('email','=','coach@gmail.com')->first();
+    	$coach_user->attachRole($coach);
+    	
+    	$boss_user =  User::where('email','=','team_lead@gmail.com')->first();
     	$boss_user->attachRole($lead);
-    	$employee_user =  User::where('email','=','john_doe@gmail.com')->first();
+    	
+    	$employee_user =  User::where('email','=','employee@gmail.com')->first();
     	$employee_user->attachRole($employee);
 
 

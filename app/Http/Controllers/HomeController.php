@@ -14,6 +14,18 @@ use Response;
 
 class HomeController extends Controller
 {
+    function __construct()
+    {
+        if( ! session('company')){
+            Session::set('name', Auth::user()->name ." ".Auth::user()->lastname);
+            $company = Company::where('company_id', '=', Auth::user()->company)->first();
+            if ($company) {
+                Session::set('company', Auth::user()->company);
+                Session::set('company_name', $company->commercial_name);
+                Session::set('company_logo', $company->logo);
+            }
+        }
+    }
 
     /**
      * Display a listing of the resource.
@@ -22,7 +34,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        Session::set('name', Auth::user()->name ." ".Auth::user()->lastname);
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
+        }
 
         return view('welcome');
     }
@@ -31,6 +45,9 @@ class HomeController extends Controller
     {
         if ( ! Auth::user()->can("list-users")){
             return $this->returnError(403);
+        }
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
         }
 
         return view('pages.show_users');
@@ -48,7 +65,10 @@ class HomeController extends Controller
     public function departments()
     {
         if ( ! Auth::user()->can("list-departments")){
-            return $this->returnForbidden();
+            return $this->returnError(403);
+        }
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
         }
 
         return view('pages.show_departments');
@@ -57,7 +77,10 @@ class HomeController extends Controller
     public function positions()
     {
         if ( ! Auth::user()->can("list-positions")){
-            return $this->returnForbidden();
+            return $this->returnError(403);
+        }
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
         }
 
         return view('pages.show_positions');
@@ -66,7 +89,10 @@ class HomeController extends Controller
     public function priorities()
     {
         if ( ! Auth::user()->can("list-priorities")){
-            return $this->returnForbidden();
+            return $this->returnError(403);
+        }
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
         }
 
         return view('pages.show_priorities');
@@ -75,8 +101,11 @@ class HomeController extends Controller
     public function periods()
     {
         if ( ! Auth::user()->can("list-periods")){
-            return $this->returnForbidden();
+            return $this->returnError(403);
 
+        }
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
         }
 
         return view('pages.show_periods');
@@ -138,8 +167,10 @@ class HomeController extends Controller
         if ($company) {
             Session::forget('company');
             Session::forget('company_name');
+            Session::forget('company_logo');
             Session::set('company', $company->company_id);
             Session::set('company_name', $company->commercial_name);
+            Session::set('company_logo', $company->logo);
             return $company->commercial_name;
         }else{
             return 0;
@@ -167,13 +198,6 @@ class HomeController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function returnForbidden()
-    {
-        Session::flash('update', ['code'=>403, 'title' =>  trans('general.http.403t'), 'message' => trans('general.http.403') ]);
-        return view('pages.generic_error');
-
     }
 
     public static function returnError($errorCode = 404, $message = false, $callbackurl = false, $json = false)

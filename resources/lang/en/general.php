@@ -112,6 +112,9 @@ return [
     'confirm_delete' => 'Do you really want to delete that record?',
     'from' => 'From',
     'to' => 'To',
+    'language' => 'Language',
+    'country' => 'Country',
+    'use_this' => 'Use',
 
     'users' => [
         'super_admin' => 'Super Admin',

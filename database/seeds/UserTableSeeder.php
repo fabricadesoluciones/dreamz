@@ -32,9 +32,6 @@ class UserTableSeeder extends Seeder
     		'name' => 'Alejandro',
 			'lastname' => 'Tapia',
     		'email' => 'ageofzetta@gmail.com',
-    		'company' => $department1->company,
-    		'department' => $department1->department_id,
-    		'position' => $position1->position_id,
     		'password' => Hash::make('admin'),
 			'active' => 1,
 			'user_id' => $faker->uuid,
@@ -47,12 +44,8 @@ class UserTableSeeder extends Seeder
     		'name' => 'Karla',
 			'lastname' => 'Reyes',
     		'email' => 'kreyes@fabricadesoluciones.com',
-    		'company' => $department2->company,
-    		'department' => $department2->department_id,
-    		'position' => $position2->position_id,
     		'password' => Hash::make('admin'),
 			'active' => 1,
-			'company' => $karla_company->company_id,
 			'user_id' => $faker->uuid,
 			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/women/96.jpg'
 
@@ -60,8 +53,8 @@ class UserTableSeeder extends Seeder
 
     	$ceo = User::create([
     		'name' => 'Bill',
-			'lastname' => 'Doe',
-    		'email' => 'bill_doe@gmail.com',
+			'lastname' => 'CEO',
+    		'email' => 'ceo@gmail.com',
     		'company' => $department2->company,
     		'department' => $department2->department_id,
     		'position' => $position2->position_id,
@@ -70,30 +63,26 @@ class UserTableSeeder extends Seeder
 			'company' => $karla_company->company_id,
 			'user_id' => $faker->uuid,
 			'employee_number' => $faker->uuid,
-			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/94.jpg'
+			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/95.jpg'
 
     	]);
 
     	$coach = User::create([
     		'name' => 'Bill',
-			'lastname' => 'Doe',
-    		'email' => 'frank_doe@gmail.com',
-    		'company' => $department2->company,
-    		'department' => $department2->department_id,
-    		'position' => $position2->position_id,
+			'lastname' => 'Coach',
+    		'email' => 'coach@gmail.com',
     		'password' => Hash::make('admin'),
 			'active' => 1,
-			'company' => $karla_company->company_id,
 			'user_id' => $faker->uuid,
 			'employee_number' => $faker->uuid,
 			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/94.jpg'
 
     	]);
 
-    	$boss = User::create([
-    		'name' => 'Patrick',
-			'lastname' => 'Doe',
-    		'email' => 'patrick_doe@gmail.com',
+    	$champion = User::create([
+    		'name' => 'Bill',
+			'lastname' => 'Champion',
+    		'email' => 'champion@gmail.com',
     		'company' => $department2->company,
     		'department' => $department2->department_id,
     		'position' => $position2->position_id,
@@ -106,10 +95,10 @@ class UserTableSeeder extends Seeder
 
     	]);
 
-    	$employee = User::create([
-    		'name' => 'John',
-			'lastname' => 'Doe',
-    		'email' => 'john_doe@gmail.com',
+    	$boss = User::create([
+    		'name' => 'Patrick',
+			'lastname' => 'Team Lead',
+    		'email' => 'team_lead@gmail.com',
     		'company' => $department2->company,
     		'department' => $department2->department_id,
     		'position' => $position2->position_id,
@@ -119,6 +108,22 @@ class UserTableSeeder extends Seeder
 			'user_id' => $faker->uuid,
 			'employee_number' => $faker->uuid,
 			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/92.jpg'
+
+    	]);
+
+    	$employee = User::create([
+    		'name' => 'John',
+			'lastname' => 'Doe',
+    		'email' => 'employee@gmail.com',
+    		'company' => $department2->company,
+    		'department' => $department2->department_id,
+    		'position' => $position2->position_id,
+    		'password' => Hash::make('admin'),
+			'active' => 1,
+			'company' => $karla_company->company_id,
+			'user_id' => $faker->uuid,
+			'employee_number' => $faker->uuid,
+			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/91.jpg'
 
     	]);
         $i = 0;

@@ -1,29 +1,3 @@
-<style>
-    
-.main_navigation svg {
-    max-width: 100%;
-    height: auto;
-    vertical-align: middle;
-    border: 0;
-}
-.disabled svg path{
-    fill: #979797;
-}
-.pending svg path{
-    fill: orange;
-}
-.disabled a {
-    color: #979797 !important;
-}
-.pending a {
-    color: orange !important;
-}
-.validation_error{
-    background: pink;
-    padding: 1em;
-    margin-bottom: 1em;
-}
-</style>
 <!-- MENU -->
 <nav class="main_navigation">
     <ul>

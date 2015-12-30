@@ -148,13 +148,17 @@ nav {
   -ms-flex-preferred-size: 4em;
   flex-basis: 4em;
   min-width: 4em;
-  z-index: 2 ul;
-    z-index-position: fixed; }
+  z-index: 3; }
+  nav ul {
+    position: fixed; }
 
 .menu_link {
   position: relative; }
-  .menu_link img {
-    width: 2em; }
+  .menu_link svg {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    border: 0; }
   .menu_link > a {
     display: inline-block;
     text-align: center;
@@ -224,5 +228,28 @@ img {
   padding: 3em;
   background-color: #EFEFEF;
   border-radius: 1em; }
+
+.main_navigation svg {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  border: 0; }
+
+.validation_error {
+  background: pink;
+  padding: 1em;
+  margin-bottom: 1em; }
+
+.disabled svg path {
+  fill: #979797; }
+
+.disabled a {
+  color: #979797 !important; }
+
+.pending svg path {
+  fill: orange; }
+
+.pending a {
+  color: orange !important; }
 
 /*# sourceMappingURL=app.css.map */
