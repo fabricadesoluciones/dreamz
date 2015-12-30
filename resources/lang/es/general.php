@@ -34,7 +34,7 @@ return [
         'emotions' => 'Emoción|Emociones',
         'virtues' => 'Valor|Valores',
         'dreams' => 'Sueño|Sueños',
-        'assessments' => 'Assessment|Assessments',
+        'assesments' => 'Assesment|Assesments',
 
     ],
 
@@ -48,6 +48,7 @@ return [
         '403t' => 'Accesso Restringido',
         '403' => 'El usuario actual no puede acceder al recurso',
         '404' => 'No se encontró el recurso',
+        'select_company' => 'Primero es necesario seleccionar una empresa',
     ],
 
     /*
@@ -80,6 +81,8 @@ return [
         'no_progress' => 'Sin progreso',
         'some_progress' => 'Progresando',
         'completed' => 'Completado',
+        'validation_error' => 'Error de validación, por favor corrija lo siguiente:',
+
     ],
 
     'new' => 'Nuevo',
@@ -98,7 +101,7 @@ return [
     'search' => 'Buscar',
     'disable' => 'Deshabilitar',
     'parent' => 'Padre',
-    'boss' => 'Jefe de Área',
+    'boss' => 'Líder de Equipo',
     'actions' => 'Acción|Acciones',
     'types' => 'Tipo|Tipos',
     'edit' => 'Editar',

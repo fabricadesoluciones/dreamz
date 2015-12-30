@@ -67,14 +67,16 @@
                     <div class="cell">
                         <div class="input-control select">
                         <label for="department">{{trans_choice('general.menu.departments',1)}}</label>
-                            <select name="department" id="department">
+                            <select name="department" id="department" >
+                            <option value=""> - </option>
                             </select>
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control select">
                         <label for="position">{{trans_choice('general.menu.positions',1)}}</label>
-                            <select name="position" id="position">
+                            <select name="position" id="position" >
+                            <option value=""> - </option>
                             </select>
                         </div>
                     </div>

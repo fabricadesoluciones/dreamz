@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use DB;
 use Auth; 
 use Session; 
+use Uuid; 
 
 class PositionsController extends Controller
 {
@@ -55,7 +56,12 @@ class PositionsController extends Controller
             return HomeController::returnError(403);
         }
 
-        //
+        if ( ! Session::get('company') ) {
+            return HomeController::returnError(403, trans('general.http.select_company'), route('home'));
+
+        }
+
+        return view('pages.create_position', ['id' => Uuid::generate(4), 'user' => Auth::user() ]);
     }
 
     /**
@@ -70,7 +76,19 @@ class PositionsController extends Controller
             return HomeController::returnError(403);
         }
 
-        //
+        $this->validate($request, [
+            'position_id' => 'required|unique:positions',
+            'name' => 'required',
+        ]);
+
+
+        $attributes = $request->all();
+        $position_attributes = [ 'position_id' => $attributes['position_id'], 'name' => $attributes['name'], 'boss' => (isset($attributes['boss']) ? $attributes['boss'] : 0), 'active' => (isset($attributes['boss']) ? $attributes['boss'] : 0), 'company' => $this->company ];
+
+        $user = Position::create($position_attributes);
+        Session::flash('update', ['code' => 200, 'message' => 'Position was added']);
+        return redirect("/positions/".$attributes['position_id']."/edit");
+
     }
 
     /**
@@ -140,9 +158,14 @@ class PositionsController extends Controller
     public function update(Request $request, $id)
     {
 
+
         if ( ! Auth::user()->can("edit-positions")){
             return HomeController::returnError(403);
         }
+
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
 
         
         $attributes = $request->all();

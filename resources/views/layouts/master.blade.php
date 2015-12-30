@@ -27,11 +27,11 @@
 
         <article>
             @if (count($errors) > 0)
-                <div class="alert alert-danger">
-                <h3>Please fix the following:</h3>
+                <div class="validation_error">
+                <h3>{{trans('general.forms.validation_error') }}</h3>
                     <ul>
                         @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                            <li> - {{ $error }}</li>
                         @endforeach
                     </ul>
                 </div>

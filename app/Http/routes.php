@@ -27,6 +27,7 @@ Route::get('/users', ['middleware' => 'auth', 'uses' => 'HomeController@users'])
 Route::get('/users/create', ['middleware' => 'auth', 'uses' => 'UsersController@create']);
 Route::get('/priorities/create', ['middleware' => 'auth', 'uses' => 'PrioritiesController@create']);
 Route::get('/periods/create', ['middleware' => 'auth', 'uses' => 'PeriodsController@create']);
+Route::get('/positions/create', ['middleware' => 'auth', 'uses' => 'PositionsController@create']);
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');

@@ -5,10 +5,9 @@
 @section('content')
 
                 
-<h2> {{ trans_choice('general.menu.positions', 2) }} </h2>
+<h2> {{ trans_choice('general.menu.positions', 2) }} <a href="/positions/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
 <div id="table"></div>
 <hr>
-<button class="button success">{{ trans('general.forms.add_new') }}</button>
 <script type="text/babel">
 
     $.get('{!! route('positions.index') !!}', function(){},'json')
@@ -49,6 +48,10 @@ var CompanyTable = React.createClass({
         return {
             data: this.props.data
         };
+    },
+    componentDidMount: function() {
+    
+        $('#datatable').DataTable();
     },
     render: function() {
         return (

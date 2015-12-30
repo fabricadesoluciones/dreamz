@@ -176,7 +176,7 @@ class HomeController extends Controller
 
     }
 
-    public static function returnError($errorCode = 404, $callbackurl = false, $json = false)
+    public static function returnError($errorCode = 404, $message = false, $callbackurl = false, $json = false)
     {
         $errorResponse = [];
 
@@ -190,6 +190,10 @@ class HomeController extends Controller
             default:
                 $errorResponse = ['code'=>404,'message' => trans('general.http.404') ,'data' => []];
                 break;
+        }
+
+        if ($message) {
+            $errorResponse['message'] = $message;
         }
 
         if (Request::ajax() || $json){

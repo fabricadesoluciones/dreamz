@@ -18,6 +18,11 @@
 .pending a {
     color: orange !important;
 }
+.validation_error{
+    background: pink;
+    padding: 1em;
+    margin-bottom: 1em;
+}
 </style>
 <!-- MENU -->
 <nav class="main_navigation">

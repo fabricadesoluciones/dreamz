@@ -11,7 +11,7 @@
         <form method="POST" action="/login">
         {!! csrf_field() !!}
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" value="kreyes@fabricadesoluciones.com" required="required">
+            <input type="email" id="email" name="email" value="kreyes@fabricadesoluciones.com" required="required" autofocus="autofocus">
             <label for="password">Password</label>
             <input type="password" name="password" id="password" value="admin" required="required">
             <div style="text-align:right">
