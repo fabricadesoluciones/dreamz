@@ -16,8 +16,9 @@ class CreateObjectivesProgressTable extends Migration
             $table->string('objectives_progress_id');
             $table->dateTime('progress_date');
             $table->string('objective');
+            $table->string('company');
+            $table->string('department');
             $table->float('value');
-            $table->boolean('active');
             $table->timestamps();
         });
     }

@@ -128,6 +128,18 @@ Route::group(['middleware' => 'auth','prefix' => 'api/v1.0'], function ()
         
     ]]);
 
+    Route::resource('objectives', 'ObjectivesController', ['names' => [
+
+'store' => 'objectives.store',
+'index' => 'objectives.index',
+'create' => 'objectives.create',
+'destroy' => 'objectives.destroy',
+'update' => 'objectives.update',
+'show' => 'objectives.show',
+'edit' => 'objectives.edit',
+        
+    ]]);
+
 
 
     /* API ROUTES END */

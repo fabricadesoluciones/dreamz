@@ -120,7 +120,7 @@ class PrioritiesController extends Controller
         $user = Auth::user();
         $position = Position::where('position_id', '=', $user->position)->first();
         $periods = Period::where('company','LIKE',"%".$this->company."%")->get();
-        if($position->boss){
+        if(isset($position) && $position->boss){
             $users = User::where('department', '=', $user->department)->get();
         }else{
             $users = [$user];

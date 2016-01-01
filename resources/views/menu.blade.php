@@ -2,12 +2,12 @@
 <nav class="main_navigation">
     <ul>
         <li class="menu_link" ><a href="/home" title="{{ trans('general.menu.home') }}">
-            @include('inicio')
+                <?php include base_path('resources/svg/inicio.svg'); ?>
         </a></li>
 
         <li class="menu_link">
             <a title="Administración">
-                @include('administracion')
+                <?php include base_path('resources/svg/administracion.svg'); ?>
             </a>
             <ul>
                 @if(Auth::user()->can('list-companies'))
@@ -70,7 +70,7 @@
         <li class="menu_link pending">
 
             <a title="{{ trans('general.menu.catalogs') }}">
-                @include('catalogos')
+                <?php include base_path('resources/svg/catalogos.svg'); ?>
             </a>
             <ul>
                 <li>
@@ -94,42 +94,46 @@
         </li>
         <li class="menu_link pending">
             <a href="/objectives" title="KPIs">
-                @include('kpis')
+                <?php include base_path('resources/svg/kpis.svg'); ?>
             </a>
         </li>
 
         <li class="menu_link disabled">
             <a href="/rewarding" title="{{ trans('general.menu.rewarding') }}">
-                @include('rewarding')
+                <?php include base_path('resources/svg/rewarding.svg'); ?>
             </a>
         </li>
         <li class="menu_link pending">
             <a href="/tasks" title="{{ trans('general.menu.task_manager') }}">
-                @include('task-manager')
+                <?php include base_path('resources/svg/task-manager.svg'); ?>
             </a>
         </li>
         <li class="menu_link disabled">
             <a href="/one_page" title="{{ trans('general.menu.one_page') }}">
-                @include('one-page')
+                <?php include base_path('resources/svg/one-page.svg'); ?>
             </a>
         </li>
         <li class="menu_link disabled">
             <a href="/reports" title="{{ trans_choice('general.menu.reports',2) }}">
-                @include('reports')
+                <?php include base_path('resources/svg/reports.svg'); ?>
             </a>
         </li>
 
         @if(Auth::user()->can('list-priorities'))
             <li class="menu_link">
                 <a href="/priorities" title="{{ trans_choice('general.menu.priorities', 2) }}">
-                    @include('prioridades')
+                <?php include base_path('resources/svg/prioridades.svg'); ?>
                 </a>
             </li>
         @endif
             <li class="menu_link">
-                <a href="/users/{{Auth::user()->user_id}}/edit" title='Mi Perfil'>@include('mi-perfil') </a>
+                <a href="/users/{{Auth::user()->user_id}}/edit" title='Mi Perfil'>
+                <?php include base_path('resources/svg/mi-perfil.svg'); ?>
+                </a>
             </li>
-		<li class="menu_link"><a href="/logout" title="Cerrar Sesión">@include('cerrar-sesion')</a></li>
+		<li class="menu_link"><a href="/logout" title="Cerrar Sesión">
+                <?php include base_path('resources/svg/cerrar-sesion.svg'); ?>
+            </a></li>
     </ul>
     {{-- <ul>
 				<li><a class="menu_link danger restore" href="/regenerate"><img src="http://www.synchronoss.com/assets/img/icons/restore.svg" alt=""></a></li>

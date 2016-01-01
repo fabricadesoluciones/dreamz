@@ -16,6 +16,7 @@ class CreateObjectivesTable extends Migration
             $table->string('objective_id');
             $table->string('company');
             $table->string('department');
+            $table->string('period');
             $table->string('name');
             $table->string('category');
             $table->string('description');
