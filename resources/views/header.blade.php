@@ -1,3 +1,15 @@
+<style>
+                    .inlined .input-control.text{
+                        width:100%;
+                    }
+                    .inlined input.auto{
+                        width:auto;
+
+                    }
+                    .inlined span.select2.select2-container.select2-container--default{
+                        width: 40% !important;
+                    }
+                </style>
 <div class="logo">
     <a href="/"><img src="/img/main-logo.svg"></a>
 </div>

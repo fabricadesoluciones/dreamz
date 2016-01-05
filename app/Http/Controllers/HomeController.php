@@ -118,6 +118,20 @@ class HomeController extends Controller
         return view('pages.show_periods');
     }
 
+    public function objectives()
+    {
+        if ( ! Auth::user()->can("list-objectives")){
+            return $this->returnError(403);
+
+        }
+        
+        if( ! session('department')){
+            return $this->returnError(403, trans('general.http.select_department'), route('departments'));
+        }
+
+        return view('pages.show_objectives');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

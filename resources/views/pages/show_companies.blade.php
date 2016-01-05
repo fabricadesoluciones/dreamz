@@ -60,7 +60,7 @@ var CompanyTable = React.createClass({
             <table className="table striped hovered cell-hovered border bordered">
                 <thead>
                     <tr>
-                        <th> {{ trans('general.forms.name')}} </th>
+                        <th> # </th>
                         <th> {{ trans('general.forms.commercial_name')}} </th>
                         <th> {{ trans('general.active')}} </th>
                         <th>logo</th>

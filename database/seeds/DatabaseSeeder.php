@@ -20,6 +20,12 @@ class DatabaseSeeder extends Seeder
         'role_user',
         'permissions',
         'permission_role',
+        'tasks',
+        'user_details',
+        'measuring_units',
+        'objective_categories',
+        'objectives',
+        'objectives_progress',
     ];
     /**
      * Run the database seeds.
@@ -47,6 +53,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserDetailsTableSeeder::class);
         $this->call(PrioritiesTableSeeder::class);
         $this->call(EntrustTablesSeeder::class);
+        $this->call(MeasuringUnitsTableSeeder::class);
         $this->call(ObjectiveCategoriesTableSeeder::class);
         $this->call(ObjectivesTableSeeder::class);
         $this->call(ObjectivesProgressTableSeeder::class);

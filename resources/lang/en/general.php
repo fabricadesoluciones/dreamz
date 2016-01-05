@@ -24,6 +24,7 @@ return [
         'priorities' => 'Priority|Priorities',
         'positions' => 'Position|Positions',
         'periods' => 'Period|Periods',
+        'objectives' => 'Objective|Objectives',
         'areas' => 'Area|Areas',
         'catalogs' => 'Catalogs',
         'rewarding' => 'Rewarding',
@@ -116,7 +117,8 @@ return [
     'language' => 'Language',
     'country' => 'Country',
     'select_this' => 'Select',
-
+    'measuring_unit' => 'Measuring unit|Measuring units',
+    'categories' => 'Category|Categories',
     'users' => [
         'super_admin' => 'Super Admin',
         'ceo' => 'CEO',

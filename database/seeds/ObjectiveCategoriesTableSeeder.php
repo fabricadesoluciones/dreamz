@@ -21,19 +21,28 @@ class ObjectiveCategoriesTableSeeder extends Seeder
 
         $companies = Company::all();
 
-        foreach (range(1, 4) as $user) {
-	        foreach ($companies as $company) {
-	    		ObjectiveCategory::create([
-					'category_id' => $faker->uuid,
-					'company' => $company->company_id,
-					'name' => $faker->word,
-					'parent' => $faker->uuid,
-					'active' => $faker->boolean(70),
-				]);
+        foreach ($companies as $company) {
 
-	        }
+            foreach (range(1, 4) as $user) {
+                ObjectiveCategory::create([
+                    'category_id' => $faker->uuid,
+                    'company' => $company->company_id,
+                    'name' => $faker->word,
+                    'parent' => 0,
+                    'active' => $faker->boolean(70),
+                ]);
+            }
+            foreach (range(1, 4) as $user) {
+                
+                ObjectiveCategory::create([
+                    'category_id' => $faker->uuid,
+                    'company' => $company->company_id,
+                    'name' => $faker->word,
+                    'parent' => DB::table('objective_categories')->skip(rand(0,4))->take(1)->get()[0]->category_id,
+                    'active' => $faker->boolean(70),
+                ]);
+            }
         }
-
 
     }
 }

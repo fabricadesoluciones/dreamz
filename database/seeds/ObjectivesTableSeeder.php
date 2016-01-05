@@ -2,6 +2,7 @@
 
 use App\Objective;
 use App\ObjectiveCategory;
+use App\MeasuringUnit;
 use App\Period;
 use App\Company;
 use App\User;
@@ -31,6 +32,11 @@ class ObjectivesTableSeeder extends Seeder
 	        foreach ($categories as $category) {
 	        	$flat_categories[] = $category->category_id;
 	        }
+	        $munits = MeasuringUnit::where('company','=', $company->company_id)->get();
+	        $flat_munits = [];
+	        foreach ($munits as $munit) {
+	        	$flat_munits[] = $munit->measuring_unit_id;
+	        }
 	        foreach ($periods as $period) {
 	        	$users = User::where('company', $company->company_id)->get();
 	        	foreach ($users as $user) {
@@ -43,17 +49,19 @@ class ObjectivesTableSeeder extends Seeder
 						'name' => $faker->word,
 						'category' => $faker->randomElement($flat_categories),
 						'description' => $faker->sentence($nbWords = 4),
-						'measuring_unit' => $faker->uuid,
+						'measuring_unit' => $faker->randomElement($flat_munits),
 						'user' => $user->user_id,
 						'type' => $faker->randomElement(['PERSONAL','DEPARTAMENTO','EMPRESA']),
 						'period_objective' => 9000,
-						'period_green' => 'x > 7000',
-						'period_yellow' => '7000 > x > 4000',
-						'period_red' => 'x < 4000',
+						'period_green' => '7000',
+						'period_yellow_ceil' => '6999.99',
+						'period_yellow_floor' => '4000.01',
+						'period_red' => '4000',
 						'daily_objective' => 100,
-						'daily_green' => 'x > 77',
-						'daily_yellow' => '77 > x > 45',
-						'daily_red' => 'x < 45',
+						'daily_green' => '77',
+						'daily_yellow_ceil' => '76.99',
+						'daily_yellow_floor' => '45.01',
+						'daily_red' => '45',
 						'active' => $faker->boolean(70),
 
 					]);

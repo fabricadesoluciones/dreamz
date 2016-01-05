@@ -30,12 +30,14 @@ Route::get('/departments/create', ['middleware' => 'auth', 'uses' => 'Department
 Route::get('/priorities/create', ['middleware' => 'auth', 'uses' => 'PrioritiesController@create']);
 Route::get('/periods/create', ['middleware' => 'auth', 'uses' => 'PeriodsController@create']);
 Route::get('/positions/create', ['middleware' => 'auth', 'uses' => 'PositionsController@create']);
+Route::get('/objectives/create', ['middleware' => 'auth', 'uses' => 'ObjectivesController@create']);
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');
 Route::get('/priorities', ['middleware' => 'auth', 'uses' => 'HomeController@priorities'])->name('priorities');
 Route::get('/periods', ['middleware' => 'auth', 'uses' => 'HomeController@periods'])->name('periods');
 Route::get('/tasks', ['middleware' => 'auth', 'uses' => 'HomeController@tasks'])->name('tasks');
+Route::get('/objectives', ['middleware' => 'auth', 'uses' => 'HomeController@objectives'])->name('objectives');
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setCompany']);
 Route::get('/set_department/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setDepartment']);
@@ -47,6 +49,7 @@ Route::get('/departments/{id}/edit', ['middleware' => 'auth', 'uses' => 'Departm
 Route::get('/positions/{id}/edit', ['middleware' => 'auth', 'uses' => 'PositionsController@edit']);
 Route::get('/priorities/{id}/edit', ['middleware' => 'auth', 'uses' => 'PrioritiesController@edit']);
 Route::get('/periods/{id}/edit', ['middleware' => 'auth', 'uses' => 'PeriodsController@edit']);
+Route::get('/objectives/{id}/edit', ['middleware' => 'auth', 'uses' => 'ObjectivesController@edit']);
 Route::get('/priorities/team', ['middleware' => 'auth', 'uses' => 'PrioritiesController@team'])->name('priorities.team');
 
 /* HOME */
