@@ -50,7 +50,7 @@ class ObjectivesProgressTableSeeder extends Seeder
 	        	$periods_array[$period->period_id] = $period;
 	        }
 	        foreach ($objectives as $objective) {
-	        	for ($i=0; $i < 15; $i++) {
+	        	for ($i=0; $i < 90; $i++) {
 	        		$this_date = date('Y-m-d', strtotime($periods_array[$objective->period]->start . ' +'.$i.' days'));
 		    		ObjectiveProgress::create([
 						'objectives_progress_id' => $faker->uuid,
