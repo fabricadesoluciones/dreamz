@@ -12,7 +12,14 @@ class CreateDailyEmotionsTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('daily_emotions', function (Blueprint $table) {
+            $table->string('daily_emotion_id')->unique();
+            $table->string('company');
+            $table->string('department');
+            $table->string('user');
+            $table->string('emotion');
+            $table->date('emotion_date');
+        });
     }
 
     /**
@@ -22,6 +29,6 @@ class CreateDailyEmotionsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('daily_emotions');
     }
 }

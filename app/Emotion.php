@@ -13,5 +13,5 @@ class Emotion extends Model
      */
     protected $primaryKey = 'emotion_id';
     protected $table = 'emotions';
-
+    protected $guarded = array('id');
 }

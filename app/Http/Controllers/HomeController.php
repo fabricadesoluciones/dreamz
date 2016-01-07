@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use DB;
 use App\Company;
 use App\Department;
+use App\DailyEmotion;
 use App\User;
 use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Auth; 
+use Uuid; 
 use Session; 
 use Response;
 
@@ -200,6 +202,28 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function setFeeling($id)
+    {
+        $todays_emotion = DailyEmotion::where('emotion_date','=', date('Y-m-d'))->first();
+        if ( ! $todays_emotion) {
+                
+            $new_emotion = new DailyEmotion;
+            $new_emotion->daily_emotion_id = Uuid::generate(4);
+            $new_emotion->company = Auth::user()->company;
+            $new_emotion->department = Auth::user()->department;
+            $new_emotion->user = Auth::user()->user_id;
+            $new_emotion->emotion = $id;
+            $new_emotion->emotion_date = date('Y-m-d');
+            $new_emotion->save();
+            $insertedId = $new_emotion->id;
+            $todays_emotion = DailyEmotion::where('daily_emotion_id','=', $insertedId)->first();
+
+        }        
+            Session::set('feeling', json_encode($todays_emotion));
+            $Response = ['code'=>200,'message' => 'Se registró una emoción' ,'data' => []];
+            return Response::json($Response, 200);
+    }
+
     public function setCompany($id)
     {
         if ( ! Auth::user()->can("list-companies")){
@@ -214,7 +238,6 @@ class HomeController extends Controller
             Session::forget('company_logo');
             Session::forget('department');
             Session::forget('department_name');
-            Session::set('company', $company->company_id);
             Session::set('company_name', $company->commercial_name);
             Session::set('company_logo', $company->logo);
             

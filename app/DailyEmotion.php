@@ -13,5 +13,6 @@ class DailyEmotion extends Model
      */
     protected $primaryKey = 'daily_emotion_id';
     protected $table = 'daily_emotions';
+    public $timestamps = false;
 
 }

@@ -7,6 +7,7 @@ use Auth;
 use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\DailyEmotion;
 use Response;
 use DB;
 
@@ -21,7 +22,23 @@ class FeelingMiddleware
      */
     public function handle($request, Closure $next)
     {
-     
-        return $next($request);
+        if(Auth::check()){
+
+            if ( ! session('feeling')) {
+                $todays_emotion = DailyEmotion::where('emotion_date','=', date('Y-m-d'))->first();
+                if ( $todays_emotion) {
+                    Session::set('feeling', json_encode($todays_emotion));
+                }else{
+                    if ($request->segments()[0] != 'home' && $request->segments()[0] != 'set_feeling' && $request->segments()[0] != 'logout' &&  ! Auth::user()->can("list-companies") ){
+                        $errorResponse = ['code'=>403,'title' =>  'No tan pronto', 'message' => 'Antes registra como te sientes hoy '. date('Y-m-d') ,'data' => []];
+                        Session::flash('update', $errorResponse);
+                        return redirect(route('home'));
+                    }
+                }
+            }
+
+        }
+            return $next($request);
+
     }
 }

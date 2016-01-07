@@ -99,5 +99,15 @@ $(document).ready(function(){
             clock();
 })
 
+function returnNotify(msg, title, type){
+    var datitle = title || 'Error';
+    var datype = type || 'alert';
+
+    $.Notify({
+        caption:datitle,
+        type:datype,
+        content: msg,
+    }); 
+}
 </script>
 <!-- FOOTER -->

@@ -49,8 +49,8 @@
 <div class="feelings">
     @foreach ($emotions as $emotion)
         <div class="feeling">
-            <a class="select_this_feeling" data-id="id" href="#"><?php include base_path('public/img/emociones/'.$emotion->name.'.svg');?></a>
-            <div class="feeling_name"><a class="select_this_feeling" data-id="{{ $emotion->active_emotion_id }}" href="#"> {{trans('general.emotions.'.$emotion->name)}} </a></div>
+            <a class="select_this_feeling" data-id="{{ $emotion->active_emotion_id }}" href="#"><?php include base_path('public/img/emociones/'.$emotion->name.'.svg');?></a>
+            <div class="feeling_name"><a class="select_this_feeling" href="#"> {{trans('general.emotions.'.$emotion->name)}} </a></div>
         </div>
     @endforeach
 </div>
@@ -59,7 +59,14 @@
 
 <script>
     $(document).on('click','.select_this_feeling', function(){
-        return false;
+
+        $.get('/set_feeling/'+$(this).attr('data-id'), function(){},'json')
+        .done(function(d){
+            returnNotify(d.message, 'Listo', 'success')
+            setTimeout(function(){
+                location.reload();
+            },1000)
+        });
     })
 </script>
 
