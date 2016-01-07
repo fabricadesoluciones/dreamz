@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
         'objective_categories',
         'objectives',
         'objectives_progress',
+        'emotions',
+        'active_emotions'
     ];
     /**
      * Run the database seeds.
@@ -44,6 +46,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(CountriesTableSeeder::class);
         $this->call(CompanyTableSeeder::class);
+        $this->call(EmotionsTableSeeder::class);
+        $this->call(ActiveEmotionsTableSeeder::class);
         $this->call(DepartmentsTableSeeder::class);
         $this->call(PeriodsTableSeeder::class);
         $this->call(PositionTableSeeder::class);

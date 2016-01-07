@@ -1,0 +1,27 @@
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="185px" height="185px" viewBox="0 0 300 300" enable-background="new 0 0 300 300" xml:space="preserve">
+<g>
+	<path fill="#FBB03B" d="M288.5,150.002c0,76.489-62.012,138.497-138.498,138.497c-76.494,0-138.502-62.008-138.502-138.497
+		c0-76.493,62.008-138.501,138.502-138.501C226.488,11.501,288.5,73.509,288.5,150.002z"/>
+	<g>
+		<g>
+			<path fill="#FFFFFF" d="M211.436,88.572c-33.877-33.879-88.994-33.879-122.863-0.007c-33.875,33.873-33.873,88.989,0.002,122.869
+				c33.867,33.87,88.984,33.87,122.857-0.01C245.303,177.555,245.301,122.441,211.436,88.572z M201.955,201.952
+				c-28.646,28.644-75.262,28.647-103.906,0.002c-28.654-28.65-28.65-75.267,0-103.915c28.645-28.645,75.258-28.645,103.908,0.004
+				C230.605,126.69,230.602,173.307,201.955,201.952z"/>
+		</g>
+		<g>
+			<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-miterlimit="10" d="M108.684,174.991
+				c0,0,44.637,24.509,91.602-1.643"/>
+			<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-miterlimit="10" d="M108.518,143.138
+				c0,0,12.041-10.176,29.264-0.383"/>
+			<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-miterlimit="10" d="M167.668,143.138
+				c0,0,12.041-10.176,29.264-0.383"/>
+			<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-miterlimit="10" d="M97.885,115.442
+				c0,0,8.867-10.311,20.594-9.29"/>
+			<path fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-miterlimit="10" d="M200.635,115.442
+				c0,0-8.869-10.311-20.596-9.29"/>
+		</g>
+	</g>
+</g>
+</svg>

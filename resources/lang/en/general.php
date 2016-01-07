@@ -127,4 +127,20 @@ return [
         'employee' => 'Employee',
     ],
 
+    'emotions' => [
+
+        'pick_one' => 'How do you feel today?',
+        'welcome' => '¡Welcome!',
+        'agradecido' => 'Gratitude',
+        'alegre' => 'Joy',
+        'ansioso' => 'Anxious',
+        'apasionado' => 'Passionate',
+        'emocionado' => 'Excited',
+        'enojado' => 'Anger',
+        'esperanzado' => 'Hope',
+        'estresado' => 'Stress',
+        'frustracion' => 'Frustation',
+        'inspirado' => 'Inspiration',
+    ]
+
 ];

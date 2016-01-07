@@ -45,7 +45,26 @@ class HomeController extends Controller
             return redirect(route('companies'));
         }
 
-        return view('welcome');
+
+        if ( ! Auth::user()->can("list-companies")){
+            if ( ! session('feeling')) {
+                $whereClause = ['active' => 1, 'company' => Auth::user()->company];
+
+                $data = DB::table('active_emotions')
+                ->join('emotions', 'active_emotions.emotion', '=', 'emotions.emotion_id')
+                ->select('emotions.*', 'active_emotions.*')
+                ->where($whereClause)
+                ->get();
+
+                return view('choose-feeling', ['emotions' => $data]);
+            }else{
+
+                return view('dashboard');
+            }
+
+        }else{
+            return redirect(route('companies'));
+        }
     }
 
     public function users()
