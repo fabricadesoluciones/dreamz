@@ -153,6 +153,20 @@ class HomeController extends Controller
         return view('pages.show_objectives');
     }
 
+    public function emotions()
+    {
+        if ( ! Auth::user()->can("edit-emotions")){
+            return $this->returnError(403);
+
+        }
+
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
+        }
+
+        return view('pages.show_emotions');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -204,7 +218,10 @@ class HomeController extends Controller
      */
     public function setFeeling($id)
     {
-        $todays_emotion = DailyEmotion::where('emotion_date','=', date('Y-m-d'))->first();
+        $whereClause = ['emotion_date' => date('Y-m-d'), 'user' => Auth::user()->user_id];
+        $todays_emotion = DB::table('daily_emotions')
+                            ->where($whereClause)
+                            ->first();
         if ( ! $todays_emotion) {
                 
             $new_emotion = new DailyEmotion;

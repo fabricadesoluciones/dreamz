@@ -25,7 +25,12 @@ class FeelingMiddleware
         if(Auth::check()){
 
             if ( ! session('feeling')) {
-                $todays_emotion = DailyEmotion::where('emotion_date','=', date('Y-m-d'))->first();
+                $whereClause = ['emotion_date' => date('Y-m-d'), 'user' => Auth::user()->user_id];
+
+                $todays_emotion = DB::table('daily_emotions')
+                ->where($whereClause)
+                ->first();
+
                 if ( $todays_emotion) {
                     Session::set('feeling', json_encode($todays_emotion));
                 }else{

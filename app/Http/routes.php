@@ -38,6 +38,7 @@ Route::get('/priorities', ['middleware' => 'auth', 'uses' => 'HomeController@pri
 Route::get('/periods', ['middleware' => 'auth', 'uses' => 'HomeController@periods'])->name('periods');
 Route::get('/tasks', ['middleware' => 'auth', 'uses' => 'HomeController@tasks'])->name('tasks');
 Route::get('/objectives', ['middleware' => 'auth', 'uses' => 'HomeController@objectives'])->name('objectives');
+Route::get('/emotions', ['middleware' => 'auth', 'uses' => 'HomeController@emotions'])->name('emotions');
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setCompany']);
 Route::get('/set_department/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setDepartment']);

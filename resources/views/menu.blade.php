@@ -74,18 +74,23 @@
             </a>
             <ul>
                 <li>
-                    <a href="/companies" title="{{ trans_choice('general.menu.companies', 2) }}">
+                    <a href="/education" title="{{ trans_choice('general.menu.companies', 2) }}">
                         Escolaridad
                     </a>
                 </li>
                 <li>
-                    <a href="/companies" title="{{ trans_choice('general.menu.companies', 2) }}">
+                    <a href="/industries" title="{{ trans_choice('general.menu.companies', 2) }}">
                         Industrias
                     </a>
                 </li>
                 <li>
-                    <a href="/companies" title="{{ trans_choice('general.menu.companies', 2) }}">
+                    <a href="/countries" title="{{ trans_choice('general.menu.companies', 2) }}">
                         Paises
+                    </a>
+                </li>
+                <li>
+                    <a href="/emotions" title="{{ trans_choice('general.menu.companies', 2) }}">
+                        Emociones
                     </a>
                 </li>
                 
