@@ -60,8 +60,8 @@ class HomeController extends Controller
 
                 return view('choose-feeling', ['emotions' => $data]);
             }else{
-
-                return view('dashboard');
+                $departments = Department::where('company','=', Auth::user()->company)->get();
+                return view('dashboard', ['user' => Auth::user(), 'departments' => $departments]);
             }
 
         }else{

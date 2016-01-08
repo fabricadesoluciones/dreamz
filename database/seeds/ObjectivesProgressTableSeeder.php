@@ -56,7 +56,7 @@ class ObjectivesProgressTableSeeder extends Seeder
 						'objectives_progress_id' => $faker->uuid,
 						'progress_date' => $this_date,
 						'objective' => $objective->objective_id,
-						'value' => $faker->numberBetween(($objective->daily_yellow/2),$objective->daily_objective),
+						'value' => $faker->numberBetween(($objective->daily_yellow_ceil),$objective->daily_objective + 15),
 						'company' => $company->company_id,
 						'department' => $objective->department,
 						

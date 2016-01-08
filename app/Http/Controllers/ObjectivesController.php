@@ -117,6 +117,29 @@ class ObjectivesController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDepartmentSummary($id)
+    {
+
+        $whereClause = ['objectives.period' => 'c0890410-9fd5-3f2f-a00e-f118e639e5c3', 'objectives.type' => 'DEPARTAMENTO', 'objectives.department' => $id];
+        $objectives = DB::table('objectives')
+        ->where($whereClause)
+        ->get();
+
+        foreach ($objectives as $objective) {
+            $whereClause = ['objectives_progress.objective' => $objective->objective_id];
+            $objective->real = DB::table('objectives_progress')
+            ->where($whereClause)
+            ->sum('objectives_progress.value');
+        }
+
+        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objectives] , 200);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
