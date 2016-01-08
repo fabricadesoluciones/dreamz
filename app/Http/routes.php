@@ -43,7 +43,8 @@ Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'Companie
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setCompany']);
 Route::get('/set_department/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setDepartment']);
 Route::get('/set_feeling/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setFeeling']);
-Route::get('/get_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getDepartmentSummary']);
+Route::get('/get_objective_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getDepartmentSummary']);
+Route::get('/get_priority_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'PrioritiesController@getDepartmentSummary']);
 Route::get('/companies/{id}/departments', ['middleware' => 'auth', 'uses' => 'CompaniesController@departments']);
 Route::get('/companies/{id}/positions', ['middleware' => 'auth', 'uses' => 'CompaniesController@positions']);
 Route::get('/users/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@edit']);

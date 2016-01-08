@@ -67,6 +67,21 @@ class PrioritiesController extends Controller
             ['priorities' => $this->transform($data->toArray()), 'department' => $this->department, 'subordinates' => $users]
             ], 200);
     }
+
+    public function getDepartmentSummary($id)
+    {
+
+        $period = Period::where('company', '=', $this->company)->first();
+        $whereClause = ['priorities.period' => $period->period_id, 'priorities.type' => 'DEPARTAMENTO', 'priorities.department' => $id];
+        $priorities = DB::table('priorities')
+        ->where($whereClause)
+        ->get();
+
+        
+
+        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $priorities] , 200);
+    }
+
     /**
      * Display a listing of the resource.
      *

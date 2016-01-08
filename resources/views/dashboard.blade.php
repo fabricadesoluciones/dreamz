@@ -42,7 +42,7 @@
 var angles = [-60,0,70,140,140].reverse()
 function getObjectivesDepartmentSummary(department_id){
 
-    $.get('/get_summary_department/'+department_id, function(){},'json')
+    $.get('/get_objective_summary_department/'+department_id, function(){},'json')
     .done(function(d){
         var objectives = d.data;
         objectives.forEach(function(d){
@@ -71,6 +71,36 @@ function getObjectivesDepartmentSummary(department_id){
         }
         var rotateto = 'rotate( '+angles[sem_dept]+' 1000 1000)';
         $('#depto_'+department_id+' .objectives #Layer_4').attr('transform', rotateto )
+        
+    });
+}
+function getPrioritiesDepartmentSummary(department_id){
+
+    $.get('/get_priority_summary_department/'+department_id, function(){},'json')
+    .done(function(d){
+        var priorities = d.data;
+
+        var sem_priorities = [];
+        priorities.forEach(function(d){
+            var weeks = [d.w1, d.w2, d.w3, d.w4, d.w5, d.w6, d.w7, d.w8, d.w9, d.w10, d.w11, d.w12, d.w13];
+
+            var sem_priority = weeks.reduce(function(p,c){ return parseFloat(p)+parseFloat(c)}) / weeks.length;
+
+            sem_priorities.push(sem_priority);
+        });
+
+        // var sem_dept = objectives.map(function(d){
+        //     return d.semaf
+        // }).reduce(function(p,c){return p + c}) / objectives.length ;
+        // if (sem_dept == 3) {
+        //     sem_dept = 4;
+        // }
+        // var rotateto = 'rotate( '+angles[sem_dept]+' 1000 1000)';
+        // $('#depto_'+department_id+' .objectives #Layer_4').attr('transform', rotateto )
+        var sem_priority = sem_priorities.reduce(function(p,c){ return parseFloat(p)+parseFloat(c)}) / sem_priorities.length;
+        var rotateto = 'rotate( '+angles[Math.floor(sem_priority)]+' 1000 1000)';
+        debugger;
+        $('#depto_'+department_id+' .priorities #Layer_4').attr('transform', rotateto )
         
     });
 }

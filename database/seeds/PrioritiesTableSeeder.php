@@ -32,6 +32,7 @@ class PrioritiesTableSeeder extends Seeder
 						'name' => $faker->word,
 						'user' => $user->user_id,
 						'company' => $company->company_id,
+						'department' => $user->department,
 						'description' => $faker->sentence($nbWords = 4),
 						'status' => $faker->randomElement(['ASIGNADO','PENDIENTE','AUTORIZADO']),
 						'type' => $faker->randomElement(['PERSONAL','DEPARTAMENTO','EMPRESA']),

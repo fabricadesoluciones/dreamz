@@ -19,7 +19,7 @@
         <div class="dash_title">
             {{trans_choice('general.menu.priorities',2)}}
         </div>
-        <div class="hud priorites">
+        <div class="hud priorities">
             <?php include base_path('resources/svg/hud.svg'); ?>
         </div>
     </div>
@@ -35,6 +35,7 @@
 
 <script>
     getObjectivesDepartmentSummary('{{$department->department_id}}');
+    getPrioritiesDepartmentSummary('{{$department->department_id}}');
 </script>
 
 <!-- ITEM -->

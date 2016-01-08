@@ -20,6 +20,7 @@ class CreatePrioritiesTable extends Migration
             $table->string('name');
             $table->string('user');
             $table->string('company');
+            $table->string('department');
             $table->string('description');
             $table->string('status');
             $table->string('type');

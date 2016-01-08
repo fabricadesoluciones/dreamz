@@ -124,7 +124,8 @@ class ObjectivesController extends Controller
     public function getDepartmentSummary($id)
     {
 
-        $whereClause = ['objectives.period' => 'c0890410-9fd5-3f2f-a00e-f118e639e5c3', 'objectives.type' => 'DEPARTAMENTO', 'objectives.department' => $id];
+        $period = Period::where('company', '=', $this->company)->first();
+        $whereClause = ['objectives.period' => $period->period_id, 'objectives.type' => 'DEPARTAMENTO', 'objectives.department' => $id];
         $objectives = DB::table('objectives')
         ->where($whereClause)
         ->get();
