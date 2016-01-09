@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
         'objectives',
         'objectives_progress',
         'emotions',
-        'active_emotions'
+        'active_emotions',
+        'daily_emotions'
     ];
     /**
      * Run the database seeds.
@@ -58,9 +59,11 @@ class DatabaseSeeder extends Seeder
         $this->call(PrioritiesTableSeeder::class);
         $this->call(EntrustTablesSeeder::class);
         $this->call(MeasuringUnitsTableSeeder::class);
+        $this->call(DailyEmotionsTableSeeder::class);
         $this->call(ObjectiveCategoriesTableSeeder::class);
         $this->call(ObjectivesTableSeeder::class);
         $this->call(ObjectivesProgressTableSeeder::class);
+        
         
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

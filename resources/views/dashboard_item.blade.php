@@ -28,7 +28,7 @@
             {{trans_choice('general.menu.emotions',2)}}
         </div>
         <div class="emotions">
-            <?php include base_path('public/img/emociones/alegre.svg');?>
+            <img class="most_emotion" src="/img/emociones/none.svg" alt="">
         </div>
     </div>
 </div>
@@ -36,6 +36,7 @@
 <script>
     getObjectivesDepartmentSummary('{{$department->department_id}}');
     getPrioritiesDepartmentSummary('{{$department->department_id}}');
+    getEmotionsDepartmentSummary('{{$department->department_id}}');
 </script>
 
 <!-- ITEM -->

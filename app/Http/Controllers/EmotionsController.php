@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Emotion;
+use App\Period;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
@@ -13,7 +14,7 @@ use Session;
 use Auth; 
 use Uuid; 
 
-class DepartmentsController extends Controller
+class EmotionsController extends Controller
 {
     private $company;
     function __construct() {
@@ -44,6 +45,22 @@ class DepartmentsController extends Controller
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
 
+    public function getDepartmentSummary($id)
+    {
+        $period = Period::where('company', '=', $this->company)->first();
+        $active_emotions = DB::table('active_emotions')
+        ->join('emotions', 'active_emotions.emotion', '=', 'emotions.emotion_id')
+        ->select('active_emotions.*', 'emotions.*')
+        ->where('active_emotions.company','=',$this->company)
+        ->get();
+
+        $whereClause = ['daily_emotions.period' => $period->period_id, 'daily_emotions.department' => $id];
+        $daily_emotions = DB::table('daily_emotions')
+        ->where($whereClause)
+        ->get();
+
+        return Response::json(['code'=>200, 'message' => 'OK' ,'active'=> $active_emotions, 'data' => $daily_emotions] , 200);
+    }
     /**
      * Show the form for creating a new resource.
      *

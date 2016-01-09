@@ -16,6 +16,7 @@ class CreateDailyEmotionsTable extends Migration
             $table->string('daily_emotion_id')->unique();
             $table->string('company');
             $table->string('department');
+            $table->string('period');
             $table->string('user');
             $table->string('emotion');
             $table->date('emotion_date');

@@ -5,6 +5,9 @@
 @section('content')
 
 <style>
+.hide{
+    display: none;
+}
 .dashboard{
     display: flex;
     flex-wrap:no-wrap;
@@ -36,10 +39,61 @@
         max-width: 100%;
         height: 120px;
     }
+    .emotions{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .emotions img.most_emotion {
+        width: 5.5em;
+        height: 6em;
+    }
+    .emotions .percentage{
+        font-size: 2.5em;
+        padding-right: 0.5ex;
+    }
 </style>
 
 <script>
 var angles = [-60,0,70,140,140].reverse()
+function getEmotionsDepartmentSummary(department_id){
+
+    $.get('/get_emotion_summary_department/'+department_id, function(){},'json')
+    .done(function(d){
+        var rawactive = d.active
+        var emotions = {}
+        emotions.counts = {};
+        emotions.names = {};
+        for (var i = 0; i < rawactive.length; i++) {
+            emotions.names[rawactive[i].active_emotion_id] = rawactive[i].name;
+            emotions.counts[rawactive[i].active_emotion_id] = 0;
+            emotions.total = 0;
+        };
+        var all_emotions = d.data;
+
+        all_emotions.forEach(function(d){
+            this.counts[d.emotion]++;
+            this.total++;
+        },emotions)
+
+        var ids = Object.keys(emotions.counts);
+        var current = 0; var maximum = 0;
+
+        for (var i = 0; i < ids.length; i++) {
+            if (emotions.counts[ids[i]] > maximum){
+                current = ids[i];
+                maximum = emotions.counts[ids[i]];
+            }
+        };
+
+        var final_emotion = emotions.names[current];
+
+        var percentage = ((1 / (emotions.total / maximum))  * 100).toFixed(2)
+
+        $('#depto_'+department_id+' .most_emotion').attr('src', '/img/emociones/'+final_emotion+'.svg' );
+        $('#depto_'+department_id+' .emotions').append('<span class="percentage"> '+percentage+'% </span' );
+    });
+}
 function getObjectivesDepartmentSummary(department_id){
 
     $.get('/get_objective_summary_department/'+department_id, function(){},'json')
@@ -89,23 +143,16 @@ function getPrioritiesDepartmentSummary(department_id){
             sem_priorities.push(sem_priority);
         });
 
-        // var sem_dept = objectives.map(function(d){
-        //     return d.semaf
-        // }).reduce(function(p,c){return p + c}) / objectives.length ;
-        // if (sem_dept == 3) {
-        //     sem_dept = 4;
-        // }
-        // var rotateto = 'rotate( '+angles[sem_dept]+' 1000 1000)';
-        // $('#depto_'+department_id+' .objectives #Layer_4').attr('transform', rotateto )
         var sem_priority = sem_priorities.reduce(function(p,c){ return parseFloat(p)+parseFloat(c)}) / sem_priorities.length;
-        var rotateto = 'rotate( '+angles[Math.floor(sem_priority)]+' 1000 1000)';
-        debugger;
+        var rotateto = 'rotate( '+angles[Math.ceil(sem_priority)]+' 1000 1000)';
+        
         $('#depto_'+department_id+' .priorities #Layer_4').attr('transform', rotateto )
         
     });
 }
 
 </script>
+<div class="hide"> <img src="/img/emociones/agradecido.svg" alt=""> <img src="/img/emociones/alegre.svg" alt=""> <img src="/img/emociones/ansioso.svg" alt=""> <img src="/img/emociones/apasionado.svg" alt=""> <img src="/img/emociones/emocionado.svg" alt=""> <img src="/img/emociones/enojado.svg" alt=""> <img src="/img/emociones/esperanzado.svg" alt=""> <img src="/img/emociones/estresado.svg" alt=""> <img src="/img/emociones/frustracion.svg" alt=""> <img src="/img/emociones/inspirado.svg" alt=""> <img src="/img/emociones/none.svg" alt=""> </div>
 <div class="dashboard">
     @foreach ($departments as $department)
         @include('dashboard_item', array('department' => $department)) 
