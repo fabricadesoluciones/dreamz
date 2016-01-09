@@ -12,7 +12,7 @@
 */
 
 /* LANGUAGE */
-App::setLocale('es');
+App::setLocale('en');
 // App::setLocale('en');
 /* LANGUAGE */
 

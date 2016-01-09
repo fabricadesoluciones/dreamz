@@ -24,7 +24,7 @@ class FeelingMiddleware
     {
         if(Auth::check()){
 
-            if ( ! session('feeling')) {
+            if ( ! session('feeling') ) {
                 $whereClause = ['emotion_date' => date('Y-m-d'), 'user' => Auth::user()->user_id];
 
                 $todays_emotion = DB::table('daily_emotions')

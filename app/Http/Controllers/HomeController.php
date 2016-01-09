@@ -60,7 +60,14 @@ class HomeController extends Controller
 
                 return view('choose-feeling', ['emotions' => $data]);
             }else{
-                $departments = Department::where('company','=', Auth::user()->company)->get();
+
+                if ( Auth::user()->can("list-departments")){
+
+                    $departments = Department::where('company','=', Auth::user()->company)->get();
+                }else{
+                    $departments = Department::where('department_id','=', Auth::user()->department)->get();
+                }
+
                 return view('dashboard', ['user' => Auth::user(), 'departments' => $departments]);
             }
 
@@ -255,6 +262,7 @@ class HomeController extends Controller
             Session::forget('company_logo');
             Session::forget('department');
             Session::forget('department_name');
+            Session::set('company', $company->company_id);
             Session::set('company_name', $company->commercial_name);
             Session::set('company_logo', $company->logo);
             

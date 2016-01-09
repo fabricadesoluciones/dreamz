@@ -12,7 +12,7 @@
                     <div class="cell">
                         <label>Priority ID</label>
                         <div class="input-control text full-size">
-                            <input size="65" type="text" name="user_id" value="{!! $id !!}" readonly="readonly">
+                            <input size="65" type="text" name="priority_id" value="{!! $id !!}" readonly="readonly">
                         </div>
                     </div>
                     <div class="cell">
