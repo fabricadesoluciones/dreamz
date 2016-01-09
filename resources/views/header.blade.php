@@ -1,15 +1,27 @@
 <style>
-                    .inlined .input-control.text{
-                        width:100%;
-                    }
-                    .inlined input.auto{
-                        width:auto;
+    .inlined .input-control.text{
+        width:100%;
+    }
+    .inlined input.auto{
+        width:auto;
 
-                    }
-                    .inlined span.select2.select2-container.select2-container--default{
-                        width: 40% !important;
-                    }
-                </style>
+    }
+    .inlined span.select2.select2-container.select2-container--default{
+        width: 40% !important;
+    }
+    .company_logo{
+        background-repeat: no-repeat; background-size: 100% 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+    .company_logo label{
+        display: block;
+        padding: 1ex;
+        background-color: #fff;
+    }
+
+</style>
 <div class="logo">
     <a href="/"><img src="/img/main-logo.svg"></a>
 </div>
@@ -48,7 +60,12 @@
     </span>
     <img class="profile_pic" src="{{Auth::user()->thumbnail}}">
 </div>
-<div style="background-image:url({{ Session::get('company_logo')}});background-repeat: no-repeat; background-size: 100% 100%;">
+<div class="company_logo" style="background-image:url({{ Session::get('company_logo')}})">
+
+    <select id="lang" data-selected="{{ Session::get('language')}}">
+        <option value="es">Español</option>
+        <option value="en">English</option>
+    </select>
     
 </div>
     @endif

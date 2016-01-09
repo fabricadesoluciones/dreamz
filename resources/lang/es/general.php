@@ -116,6 +116,7 @@ return [
     'from' => 'Desde',
     'to' => 'Hasta',
     'language' => 'Idioma',
+    'lang_updated' => 'Se actualizo el idioma, actualice la página.',
     'country' => 'País',
     'select_this' => 'Seleccionar',
     'measuring_unit' => 'Unidad de medida|Unidades de medida',

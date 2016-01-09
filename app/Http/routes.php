@@ -11,16 +11,11 @@
 |
 */
 
-/* LANGUAGE */
-App::setLocale('en');
-// App::setLocale('en');
-/* LANGUAGE */
+
 
 /* HOME */
 
-
-Route::get('/', function(){
- return Redirect::route('home'); } );
+Route::get('/', function(){return Redirect::route('home'); } );
 Route::get('/home', ['middleware' => 'auth', 'uses' => 'HomeController@index'])->name('home');
 Route::get('/forbidden', ['middleware' => 'auth', 'uses' => 'HomeController@returnForbidden'])->name('forbidden');
 Route::get('/users', ['middleware' => 'auth', 'uses' => 'HomeController@users'])->name('users');
@@ -43,6 +38,7 @@ Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'Companie
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setCompany']);
 Route::get('/set_department/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setDepartment']);
 Route::get('/set_feeling/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setFeeling']);
+Route::get('/set_lang/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setLang']);
 Route::get('/get_objective_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getDepartmentSummary']);
 Route::get('/get_priority_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'PrioritiesController@getDepartmentSummary']);
 Route::get('/get_emotion_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'EmotionsController@getDepartmentSummary']);

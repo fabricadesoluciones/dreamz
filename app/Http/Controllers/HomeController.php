@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Company;
+use App;
 use App\Department;
 use App\DailyEmotion;
 use App\User;
@@ -290,6 +291,24 @@ class HomeController extends Controller
         }else{
             return $this->returnError(404);
         }
+    }
+
+    public function setLang($id)
+    {
+
+        if ($id == 'en') {
+            App::setLocale('en');
+            Session::set('language', $id);
+        }else if ($id == 'es') {
+            App::setLocale('es');
+            Session::set('language', $id);
+        }else{
+            App::setLocale('en');
+            Session::set('language', $id);
+        }
+
+        // Session::flash('notify', ['type' => 'success',  'title' => trans('general.success'), 'message' => trans('general.lang_updated') ]);
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => trans('general.language') ], 200);
     }
 
     /**

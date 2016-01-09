@@ -8,6 +8,7 @@ use Session;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\DailyEmotion;
+use App;
 use Response;
 use DB;
 
@@ -24,6 +25,9 @@ class FeelingMiddleware
     {
         if(Auth::check()){
 
+            if( session('language')){
+                App::setLocale( session('language') );
+            }
             if ( ! session('feeling') ) {
                 $whereClause = ['emotion_date' => date('Y-m-d'), 'user' => Auth::user()->user_id];
 

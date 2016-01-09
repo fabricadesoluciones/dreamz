@@ -99,6 +99,7 @@ function getObjectivesDepartmentSummary(department_id){
     $.get('/get_objective_summary_department/'+department_id, function(){},'json')
     .done(function(d){
         var objectives = d.data;
+
         objectives.forEach(function(d){
             var props = Object.keys(d);
             for (var i = 0; i < props.length; i++) {
@@ -123,7 +124,8 @@ function getObjectivesDepartmentSummary(department_id){
         if (sem_dept == 3) {
             sem_dept = 4;
         }
-        var rotateto = 'rotate( '+angles[sem_dept]+' 1000 1000)';
+        console.log(sem_dept);
+        var rotateto = 'rotate( '+angles[Math.ceil(sem_dept)]+' 1000 1000)';
         $('#depto_'+department_id+' .objectives #Layer_4').attr('transform', rotateto )
         
     });

@@ -115,6 +115,7 @@ return [
     'from' => 'From',
     'to' => 'To',
     'language' => 'Language',
+    'lang_updated' => 'The site language was updated, refresh this page.',
     'country' => 'Country',
     'select_this' => 'Select',
     'measuring_unit' => 'Measuring unit|Measuring units',

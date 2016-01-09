@@ -109,5 +109,22 @@ function returnNotify(msg, title, type){
         content: msg,
     }); 
 }
+
+
+        // display logs
+        function log(text) {
+          // $('#logs').append(text + '<br>');
+          console.log(text);
+        }
+
+    $('#lang').select2().on("change", function(e) {
+        var this_val = $(this).val();
+        $.get('/set_lang/'+this_val, function(){},'json')
+        .done(function(d){
+            
+        });
+    });
+
+      
 </script>
 <!-- FOOTER -->
