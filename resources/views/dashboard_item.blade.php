@@ -28,7 +28,7 @@
             {{trans_choice('general.menu.emotions',2)}}
         </div>
         <div class="emotions">
-            <img class="most_emotion" src="/img/emociones/none.svg" alt="">
+            <img title="" class="most_emotion" src="/img/emociones/none.svg" alt="">
         </div>
     </div>
 </div>

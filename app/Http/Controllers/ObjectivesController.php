@@ -140,6 +140,19 @@ class ObjectivesController extends Controller
         return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objectives] , 200);
     }
 
+    public function getObjectiveSummary($id)
+    {
+
+        $objective = Objective::where('objective_id','=',$id)->first();
+        
+        $whereClause = ['objectives_progress.objective' => $objective->objective_id];
+        $objective->real = DB::table('objectives_progress')
+        ->where($whereClause)
+        ->sum('objectives_progress.value');
+
+        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objective] , 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

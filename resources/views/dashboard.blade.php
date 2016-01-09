@@ -5,12 +5,12 @@
 @section('content')
 
 <style>
-.hide{
-    display: none;
-}
+
 .dashboard{
     display: flex;
-    flex-wrap:no-wrap;
+    overflow: scroll;
+    width: 100%;
+    padding-top: 1ex;
 }
     
     .dash_element{
@@ -54,6 +54,10 @@
     }
 </style>
 
+
+
+
+
 <script>
 var angles = [-60,0,70,140,140].reverse()
 function getEmotionsDepartmentSummary(department_id){
@@ -91,6 +95,7 @@ function getEmotionsDepartmentSummary(department_id){
         var percentage = ((1 / (emotions.total / maximum))  * 100).toFixed(2)
 
         $('#depto_'+department_id+' .most_emotion').attr('src', '/img/emociones/'+final_emotion+'.svg' );
+        $('#depto_'+department_id+' .most_emotion').attr('title', final_emotion);
         $('#depto_'+department_id+' .emotions').append('<span class="percentage"> '+percentage+'% </span' );
     });
 }
@@ -154,11 +159,14 @@ function getPrioritiesDepartmentSummary(department_id){
 }
 
 </script>
-<div class="hide"> <img src="/img/emociones/agradecido.svg" alt=""> <img src="/img/emociones/alegre.svg" alt=""> <img src="/img/emociones/ansioso.svg" alt=""> <img src="/img/emociones/apasionado.svg" alt=""> <img src="/img/emociones/emocionado.svg" alt=""> <img src="/img/emociones/enojado.svg" alt=""> <img src="/img/emociones/esperanzado.svg" alt=""> <img src="/img/emociones/estresado.svg" alt=""> <img src="/img/emociones/frustracion.svg" alt=""> <img src="/img/emociones/inspirado.svg" alt=""> <img src="/img/emociones/none.svg" alt=""> </div>
+
 <div class="dashboard">
     @foreach ($departments as $department)
         @include('dashboard_item', array('department' => $department)) 
     @endforeach
+</div>
+<div class="my_summary">
+    @include('my_summary', array('objectives' => Auth::user()->objectives , 'priorities' => Auth::user()->priorities )) 
 </div>
 
 @stop

@@ -88,7 +88,7 @@ class EntrustTablesSeeder extends Seeder
 		$ceo->attachPermissions(array($progress_objectives, $progress_priorities,$list_users, $list_departments, $list_objectives, $edit_objectives, $list_priorities, $edit_priorities, $list_industries, $edit_industries));
 		$champion->attachPermissions(array($edit_emotions, $progress_objectives, $progress_priorities,$list_users, $edit_users, $list_departments, $edit_departments, $list_objectives, $edit_objectives, $list_priorities, $edit_priorities, $list_positions, $edit_positions, $list_education, $edit_education, ));
 		$lead->attachPermissions(array($edit_objectives, $progress_objectives, $progress_priorities,$list_objectives, $edit_priorities, $list_priorities, $list_users));
-		$employee->attachPermissions(array($progress_objectives, $progress_priorities,$list_objectives, $edit_priorities, $list_priorities, $list_departments));
+		$employee->attachPermissions(array($progress_objectives, $progress_priorities,$list_objectives, $edit_priorities, $list_priorities));
 
 		$alex = User::where('email','=','ageofzetta@gmail.com')->first();
     	$alex->attachRole($super_admin);

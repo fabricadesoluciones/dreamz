@@ -1,4 +1,10 @@
 <style>
+    .hide{
+    display: none;
+}
+.autowidth{
+    width: auto;
+}
     .inlined .input-control.text{
         width:100%;
     }

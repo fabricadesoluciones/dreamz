@@ -1,5 +1,5 @@
 <!-- FOOTER -->
-
+<div class="hide"> <img src="/img/emociones/agradecido.svg" alt=""> <img src="/img/emociones/alegre.svg" alt=""> <img src="/img/emociones/ansioso.svg" alt=""> <img src="/img/emociones/apasionado.svg" alt=""> <img src="/img/emociones/emocionado.svg" alt=""> <img src="/img/emociones/enojado.svg" alt=""> <img src="/img/emociones/esperanzado.svg" alt=""> <img src="/img/emociones/estresado.svg" alt=""> <img src="/img/emociones/frustracion.svg" alt=""> <img src="/img/emociones/inspirado.svg" alt=""> <img src="/img/emociones/none.svg" alt=""> </div>
 <script>
     $('article').css('min-height', ( window.outerHeight - $('header').height() ) )
 window.onresize = function(){

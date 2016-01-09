@@ -25,9 +25,10 @@ class FeelingMiddleware
     {
         if(Auth::check()){
 
-            if( session('language')){
-                App::setLocale( session('language') );
+            if( ! session('language')){
+                Session::set('language', 'en');
             }
+                App::setLocale( session('language') );
             if ( ! session('feeling') ) {
                 $whereClause = ['emotion_date' => date('Y-m-d'), 'user' => Auth::user()->user_id];
 

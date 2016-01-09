@@ -120,6 +120,10 @@ return [
     'select_this' => 'Select',
     'measuring_unit' => 'Measuring unit|Measuring units',
     'categories' => 'Category|Categories',
+    'mine' => 'My|My',
+    'semaforo' => 'Level',
+    'actual' => 'Actual Result',
+    'expected' => 'Expected Result',
     'users' => [
         'super_admin' => 'Super Admin',
         'ceo' => 'CEO',

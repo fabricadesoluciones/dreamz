@@ -121,6 +121,10 @@ return [
     'select_this' => 'Seleccionar',
     'measuring_unit' => 'Unidad de medida|Unidades de medida',
     'categories' => 'Categoría|Categorias',
+    'mine' => 'Mi|Mis',
+    'semaforo' => 'Semáforo',
+    'actual' => 'Resultado Actual',
+    'expected' => 'Resultado Esperado',
     'users' => [
         'super_admin' => 'Super Administrador',
         'ceo' => 'CEO',
