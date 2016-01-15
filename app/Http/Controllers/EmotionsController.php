@@ -37,7 +37,7 @@ class EmotionsController extends Controller
         $data = DB::table('active_emotions')
             ->join('emotions', 'active_emotions.emotion', '=', 'emotions.emotion_id')
             ->select('active_emotions.*', 'emotions.*')
-            ->where('active_emotions.emotion','LIKE',"%".$this->company."%")
+            ->where('active_emotions.company','=',$this->company)
             ->get();
         if (!$data) {
             return HomeController::returnError(404);
@@ -45,22 +45,6 @@ class EmotionsController extends Controller
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
 
-    public function getDepartmentSummary($id)
-    {
-        $period = Period::where('company', '=', $this->company)->first();
-        $active_emotions = DB::table('active_emotions')
-        ->join('emotions', 'active_emotions.emotion', '=', 'emotions.emotion_id')
-        ->select('active_emotions.*', 'emotions.*')
-        ->where('active_emotions.company','=',$this->company)
-        ->get();
-
-        $whereClause = ['daily_emotions.period' => $period->period_id, 'daily_emotions.department' => $id];
-        $daily_emotions = DB::table('daily_emotions')
-        ->where($whereClause)
-        ->get();
-
-        return Response::json(['code'=>200, 'message' => 'OK' ,'active'=> $active_emotions, 'data' => $daily_emotions] , 200);
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -129,24 +113,6 @@ class EmotionsController extends Controller
             return HomeController::returnError(403);
         }
         $data = Department::where('department_id', '=', $id)->first();
-        if (!$data) {
-            return HomeController::returnError(404);
-        }
-        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
-    }
-
-     /**
-     * Display the users for the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function users($id)
-    {
-        if ( ! Auth::user()->can("edit-departments")){
-            return HomeController::returnError(403);
-        }
-        $data = Department::where('department_id', '=', $id)->first()->users;
         if (!$data) {
             return HomeController::returnError(404);
         }

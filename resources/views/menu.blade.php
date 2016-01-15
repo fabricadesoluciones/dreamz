@@ -79,13 +79,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/industries" title="{{ trans_choice('general.menu.companies', 2) }}">
-                        Industrias
-                    </a>
-                </li>
-                <li>
-                    <a href="/countries" title="{{ trans_choice('general.menu.companies', 2) }}">
-                        Paises
+                    <a href="/measuring_units" title="{{ trans_choice('general.menu.companies', 2) }}">
+                        Unidades de Medida
                     </a>
                 </li>
                 <li>

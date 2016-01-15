@@ -35,7 +35,8 @@ return [
         'emotions' => 'Emotion|Emotions',
         'virtues' => 'Value|Values',
         'dreams' => 'Dream|Dreams',
-        'asseschromments' => 'Assesment|Assesments',
+        'assesments' => 'Assesment|Assesments',
+        'education' => 'Education',
     ],
 
 

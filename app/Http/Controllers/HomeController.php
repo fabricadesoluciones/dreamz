@@ -7,6 +7,7 @@ use App\Company;
 use App;
 use App\Department;
 use App\DailyEmotion;
+use App\ActiveEmotion;
 use App\User;
 use Request;
 use App\Http\Requests;
@@ -175,6 +176,34 @@ class HomeController extends Controller
         return view('pages.show_emotions');
     }
 
+    public function education()
+    {
+        if ( ! Auth::user()->can("edit-departments")){
+            return $this->returnError(403);
+
+        }
+
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
+        }
+
+        return view('pages.show_education_levels');
+    }
+
+    public function measuring_units()
+    {
+        if ( ! Auth::user()->can("edit-departments")){
+            return $this->returnError(403);
+
+        }
+
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
+        }
+
+        return view('pages.show_measuring_units');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -224,6 +253,16 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function setFeelingEnabled(Request $request, $id){
+        $emotion = ActiveEmotion::where('active_emotion_id','=',$id)->first();
+        $attributes = Request::all();
+        if ( ! isset($attributes['active'] ) ) { return $this->returnError(403); }
+        $active = filter_var($attributes['active'], FILTER_VALIDATE_BOOLEAN,[]);
+        $emotion->active = $active;
+        $emotion->save();
+        return Response::json(['code' => 200, 'title' => 'Success', 'message' => 'Emotion was updated', 'type'=> 'success'], 200);
+
+    }
     public function setFeeling($id)
     {
         $whereClause = ['emotion_date' => date('Y-m-d'), 'user' => Auth::user()->user_id];

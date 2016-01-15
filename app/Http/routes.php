@@ -26,6 +26,8 @@ Route::get('/priorities/create', ['middleware' => 'auth', 'uses' => 'PrioritiesC
 Route::get('/periods/create', ['middleware' => 'auth', 'uses' => 'PeriodsController@create']);
 Route::get('/positions/create', ['middleware' => 'auth', 'uses' => 'PositionsController@create']);
 Route::get('/objectives/create', ['middleware' => 'auth', 'uses' => 'ObjectivesController@create']);
+Route::get('/education/create', ['middleware' => 'auth', 'uses' => 'EducationLevelController@create']);
+Route::get('/measuring_units/create', ['middleware' => 'auth', 'uses' => 'MeasuringUnitController@create']);
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');
@@ -34,6 +36,8 @@ Route::get('/periods', ['middleware' => 'auth', 'uses' => 'HomeController@period
 Route::get('/tasks', ['middleware' => 'auth', 'uses' => 'HomeController@tasks'])->name('tasks');
 Route::get('/objectives', ['middleware' => 'auth', 'uses' => 'HomeController@objectives'])->name('objectives');
 Route::get('/emotions', ['middleware' => 'auth', 'uses' => 'HomeController@emotions'])->name('emotions');
+Route::get('/education', ['middleware' => 'auth', 'uses' => 'HomeController@education'])->name('education_levels');
+Route::get('/measuring_units', ['middleware' => 'auth', 'uses' => 'HomeController@measuring_units'])->name('measuring_units');
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setCompany']);
 Route::get('/set_department/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setDepartment']);
@@ -52,7 +56,11 @@ Route::get('/positions/{id}/edit', ['middleware' => 'auth', 'uses' => 'Positions
 Route::get('/priorities/{id}/edit', ['middleware' => 'auth', 'uses' => 'PrioritiesController@edit']);
 Route::get('/periods/{id}/edit', ['middleware' => 'auth', 'uses' => 'PeriodsController@edit']);
 Route::get('/objectives/{id}/edit', ['middleware' => 'auth', 'uses' => 'ObjectivesController@edit']);
+Route::get('/education/{id}/edit', ['middleware' => 'auth', 'uses' => 'EducationLevelController@edit']);
+Route::get('/measuring_units/{id}/edit', ['middleware' => 'auth', 'uses' => 'MeasuringUnitController@edit']);
 Route::get('/priorities/team', ['middleware' => 'auth', 'uses' => 'PrioritiesController@team'])->name('priorities.team');
+
+Route::post('/set_feeling_enabled/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setFeelingEnabled']);
 
 /* HOME */
 
@@ -142,6 +150,42 @@ Route::group(['middleware' => 'auth','prefix' => 'api/v1.0'], function ()
 'update' => 'objectives.update',
 'show' => 'objectives.show',
 'edit' => 'objectives.edit',
+        
+    ]]);
+
+    Route::resource('education_level', 'EducationLevelController', ['names' => [
+
+'store' => 'education_level.store',
+'index' => 'education_level.index',
+'create' => 'education_level.create',
+'destroy' => 'education_level.destroy',
+'update' => 'education_level.update',
+'show' => 'education_level.show',
+'edit' => 'education_level.edit',
+        
+    ]]);
+
+    Route::resource('measuring_unit', 'MeasuringUnitController', ['names' => [
+
+'store' => 'measuring_unit.store',
+'index' => 'measuring_unit.index',
+'create' => 'measuring_unit.create',
+'destroy' => 'measuring_unit.destroy',
+'update' => 'measuring_unit.update',
+'show' => 'measuring_unit.show',
+'edit' => 'measuring_unit.edit',
+        
+    ]]);
+
+    Route::resource('emotion', 'EmotionsController', ['names' => [
+
+'store' => 'emotion.store',
+'index' => 'emotion.index',
+'create' => 'emotion.create',
+'destroy' => 'emotion.destroy',
+'update' => 'emotion.update',
+'show' => 'emotion.show',
+'edit' => 'emotion.edit',
         
     ]]);
 

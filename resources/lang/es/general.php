@@ -36,6 +36,7 @@ return [
         'virtues' => 'Valor|Valores',
         'dreams' => 'Sueño|Sueños',
         'assesments' => 'Assesment|Assesments',
+        'education' => 'Educación',
 
     ],
 

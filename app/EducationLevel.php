@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Education_level extends Model
+class EducationLevel extends Model
 {
 	/**
      * The database table used by the model.
@@ -13,6 +13,8 @@ class Education_level extends Model
      */
 
 	protected $table = 'education_levels';
+    protected $primaryKey = 'education_level_id';
+    
 
 	/**
      * The attributes that are not mass assignable.

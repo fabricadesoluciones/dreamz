@@ -1,6 +1,7 @@
 <?php
 
-use App\Education_level;
+use App\Company;
+use App\EducationLevel;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Faker\Factory as Faker;
@@ -15,14 +16,17 @@ class Education_levelsTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create();
+        $companies = Company::all();
 
-        foreach (range(1, 5) as $user) {
-        	Education_level::create([
-				'education_level_id' => $faker->uuid,
-				'company' => $faker->uuid,
-				'name' => $faker->word,
-				'active' => $faker->boolean(70),
-        	]);
+        foreach ($companies as $company) {
+            foreach (range(1, 5) as $user) {
+                EducationLevel::create([
+                    'education_level_id' => $faker->uuid,
+                    'company' => $company->company_id,
+                    'name' => $faker->word,
+                    'active' => $faker->boolean(70),
+                ]);
+            }
         }
     }
 }
