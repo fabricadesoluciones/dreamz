@@ -30,19 +30,21 @@
                         </div>
                     </div>
                     <div class="cell">
-                        <label>Email</label>
-                        <div class="input-control text full-size">
-                            <input size="65" name="email" type="text" value=""  required="required" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row cells3">
-                    <div class="cell">
                         <label>{{trans('general.forms.lastname')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="lastname" type="text" value=""  required="required" />
                         </div>
                     </div>
+                    
+                </div>
+                <div class="row cells3">
+                    <div class="cell">
+                        <label>Email</label>
+                        <div class="input-control text full-size">
+                            <input size="65" name="email" type="text" value=""  required="required" />
+                        </div>
+                    </div>
+                    
                     <div class="cell">
                         <label>{{trans('general.active')}}</label>
                         <br>
@@ -91,7 +93,7 @@
 </div>
 
 <script>
-    $.getJSON( "/companies/{{$user->company}}/departments", function( response ) {
+    $.getJSON( "/companies/{{ session('company') }}/departments", function( response ) {
         if (response.code == 200) {
             var records = response.data;
 
@@ -104,7 +106,7 @@
         
     });
 
-    $.getJSON( "/companies/{{$user->company}}/positions", function( response ) {
+    $.getJSON( "/companies/{{ session('company') }}/positions", function( response ) {
         if (response.code == 200) {
             var records = response.data;
 

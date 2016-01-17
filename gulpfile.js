@@ -22,5 +22,6 @@ elixir(function(mix) {
 		'vendor/jquery.min.js',
 		'vendor/select2.min.js',
 		'vendor/datatables.min.js',
+		'vendor/moment.min.js',
     ]);
 });

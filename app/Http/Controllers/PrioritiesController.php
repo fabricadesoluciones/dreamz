@@ -135,8 +135,8 @@ class PrioritiesController extends Controller
         $user = Auth::user();
         $position = Position::where('position_id', '=', $user->position)->first();
         $periods = Period::where('company','LIKE',"%".$this->company."%")->get();
-        if(isset($position) && $position->boss){
-            $users = User::where('department', '=', $user->department)->get();
+        if(Auth::user()->hasRole('champion') || Auth::user()->hasRole('super-admin' ) || Auth::user()->hasRole('team_lead' )){
+            $users = User::where('department', '=', $this->department)->get();
         }else{
             $users = [$user];
         }
@@ -224,6 +224,9 @@ class PrioritiesController extends Controller
         
         $attributes = $request->all();
 
+        $attributes["company"] = $this->company;
+        $attributes["department"] = $this->department;
+
         $priority = Priority::where('priority_id', '=', $id)->first();
         if (array_key_exists('progress', $attributes) && $priority) {
             unset($attributes['progress']);
@@ -241,15 +244,13 @@ class PrioritiesController extends Controller
             if ($priority) {
                 $priority->fill($attributes);
                 Session::flash('update', ['code' => 200, 'message' => 'Priority info was updated']);
+                $priority->save();
             }else{
                 $attributes["priority_id"] = $id;
-                $priority = Priority::create($attributes);
+                $fields = HomeController::returnTableColumns('priorities');
+                Priority::create(array_intersect_key($attributes, $fields));
                 Session::flash('update', ['code' => 200, 'message' => 'Priority was added']);
             }
-            $priority->save();
-
-
-            // return redirect("/priorities/$id/edit");
 
             return redirect("/priorities/");
         }

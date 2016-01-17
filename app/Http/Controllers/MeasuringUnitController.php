@@ -79,9 +79,9 @@ class MeasuringUnitController extends Controller
         $this->validate($request, $required);
 
         $attributes = $request->all();
-        $fields = DB::table('measuring_units')->first();
-        $fields = (array) $fields;
         $attributes['company'] = $this->company;
+
+        $fields = HomeController::returnTableColumns('measuring_units');
         MeasuringUnit::create(array_intersect_key($attributes, $fields));
 
         return redirect("/measuring_units/".$attributes['measuring_unit_id']."/edit");
@@ -177,8 +177,7 @@ class MeasuringUnitController extends Controller
             return HomeController::returnError(404);
         }
 
-        $education_level->active = 0;
-        $education_level->save();
+        $education_level->delete();
 
         return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204b')] , 204);
         

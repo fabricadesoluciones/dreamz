@@ -126,7 +126,7 @@
                     <div class="cell">
                         <div class="input-control text">
                         <label for="department">Valor Objetivo</label>
-                            <input type="number" pattern="[0-9.,]+" step="0.01" name="daily_objective" id="daily_objective" placeholder="{{$objective->measuring_unit_name}}" value="{{$objective->daily_objective}}" readonly="readonly" />
+                            <input type="number" pattern="[0-9.,]+" step="0.01" name="daily_objective" id="daily_objective" placeholder="{{$objective->measuring_unit_name}}" value="{{$objective->daily_objective}}"  />
                         </div>
                     </div>
                 </div>

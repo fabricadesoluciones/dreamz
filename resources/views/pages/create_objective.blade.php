@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title', trans('general.edit').' '.trans_choice('general.menu.objectives', 1))
+@section('title', trans('general.new').' '.trans_choice('general.menu.objectives', 1))
 
 @section('content')
-<h2>{{trans('general.edit')}} {{trans_choice('general.menu.objectives', 1)}} </h2>
+<h2>{{trans('general.new')}} {{trans_choice('general.menu.objectives', 1)}} </h2>
 <hr>
 <div>
     
@@ -126,7 +126,7 @@
                     <div class="cell">
                         <div class="input-control text">
                         <label for="department">Valor Objetivo</label>
-                            <input type="number" pattern="[0-9.,]+" step="0.01" name="daily_objective" id="daily_objective"   readonly="readonly" />
+                            <input type="number" pattern="[0-9.,]+" step="0.01" name="daily_objective" id="daily_objective" />
                         </div>
                     </div>
                 </div>

@@ -171,7 +171,7 @@ class ObjectivesController extends Controller
                 'objective_id' => 'required|unique:objectives',
                 'period' => 'required',
                 'name' => 'required',
-                'category' => 'required',
+                // 'category' => 'required',
                 'description' => 'required',
                 'measuring_unit' => 'required',
                 'type' => 'required',
@@ -198,6 +198,7 @@ class ObjectivesController extends Controller
         $attributes['department'] = $this->department;
         $attributes['user'] = Auth::user()->user_id;
 
+        $fields = HomeController::returnTableColumns('objectives');
         Objective::create(array_intersect_key($attributes, $fields));
 
         return redirect("/objectives/".$attributes['objective_id']."/edit");

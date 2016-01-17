@@ -86,10 +86,9 @@ class PositionsController extends Controller
         $attributes["boss"] = (array_key_exists('boss', $attributes)) ? $attributes["boss"] : 0;
         $attributes["active"] = (array_key_exists('active', $attributes)) ? $attributes["active"] : 0;
 
-        $fields = DB::table('positions')->first();
-        $fields = (array) $fields;
         $attributes['company'] = $this->company;
 
+        $fields = HomeController::returnTableColumns('positions');
         Position::create(array_intersect_key($attributes, $fields));
 
         Session::flash('update', ['code' => 200, 'message' => 'Position was added']);

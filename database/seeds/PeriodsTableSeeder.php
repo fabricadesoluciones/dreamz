@@ -28,13 +28,13 @@ class PeriodsTableSeeder extends Seeder
 				$curMonth = $i*3;
 				$curQuarter = ceil($curMonth/3) ;
 				$month = $quarters[$curQuarter];
-				$date = "2014-$month-01";
+				$date = "2015-$month-01";
 				$next = date('Y-m-d', strtotime("+3 months", strtotime($date)));
 				$ends = date('Y-m-d', strtotime("-1 day", strtotime($next)));
 
 	        	Period::create([
 						'period_id' => $faker->uuid,
-		        		'name' => '2014 Q'.$i,
+		        		'name' => '2015 Q'.$i,
 						'company' => $company->company_id,
 						'active' => $faker->boolean(100),
 						'start' =>   $date,
@@ -49,13 +49,13 @@ class PeriodsTableSeeder extends Seeder
 				$curMonth = $i*3;
 				$curQuarter = ceil($curMonth/3) ;
 				$month = $quarters[$curQuarter];
-				$date = "2015-$month-01";
+				$date = "2016-$month-01";
 				$next = date('Y-m-d', strtotime("+3 months", strtotime($date)));
 				$ends = date('Y-m-d', strtotime("-1 day", strtotime($next)));
 
 	        	Period::create([
 						'period_id' => $faker->uuid,
-		        		'name' => '2015 Q'.$i,
+		        		'name' => '2016 Q'.$i,
 						'company' => $company->company_id,
 						'active' => $faker->boolean(100),
 						'start' =>   $date,

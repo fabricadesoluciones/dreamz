@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Company;
+use App\Emotion;
+use App\ActiveEmotion;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
@@ -14,6 +16,13 @@ use Uuid;
 
 class CompaniesController extends Controller
 {
+    private $company;
+    function __construct() {
+        $this->company = '';
+        if ( session('company')) {
+            $this->company = session('company');
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -72,13 +81,24 @@ class CompaniesController extends Controller
         $this->validate($request, $required);
 
         $attributes = $request->all();
-
-        $fields = DB::table('companies')->first();
-        $fields = (array) $fields;
-
+        $fields = HomeController::returnTableColumns('companies');
         Company::create(array_intersect_key($attributes, $fields));
 
-        return redirect("/companies/".$attributes['company_id']."/edit");
+        $emotions = Emotion::all();
+        foreach ($emotions as $emotion) {
+                ActiveEmotion::create([
+                    'active_emotion_id' => Uuid::generate(4),
+                    'company' => $attributes['company_id'],
+                    'emotion' => $emotion->emotion_id,
+                    'active' => 0 ,
+                ]);
+            }
+
+        Session::flash('update', ['code' => 200, 'message' => 'Company was created,  please enable emotions for it']);
+        Session::set('company', $attributes['company_id']);
+        Session::set('company_name', $attributes['commercial_name']);
+        Session::set('company_logo', $attributes['logo']);
+        return redirect('/emotions');
     }
 
     /**

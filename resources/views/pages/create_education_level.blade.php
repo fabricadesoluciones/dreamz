@@ -10,7 +10,7 @@
 
 {!! Form::model($id, array('route' => array('education_level.store', $id), 'method' => 'POST')) !!}
     <div class="grid">
-                <div class="row cells2">
+                <div class="row cells3">
                     <div class="cell">
                         <label>Education ID</label>
                         <div class="input-control text full-size">
@@ -22,6 +22,15 @@
                         <div class="input-control text full-size">
                             <input size="65" name="name" type="text" value="" >
                         </div>
+                    </div>
+                    <div class="cell">
+                        <label>{{trans('general.active')}}</label>
+                        <br>
+                        <label class="switch" style="padding: 1.2ex 0; ">
+                            <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="active">
+                            <span class="check"></span>
+                        </label>
+                        
                     </div>
                 </div>
                 

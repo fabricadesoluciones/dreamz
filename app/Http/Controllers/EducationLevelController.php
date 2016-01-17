@@ -79,9 +79,8 @@ class EducationLevelController extends Controller
         $this->validate($request, $required);
 
         $attributes = $request->all();
-        $fields = DB::table('education_levels')->first();
-        $fields = (array) $fields;
         $attributes['company'] = $this->company;
+        $fields = HomeController::returnTableColumns('education_levels');
         EducationLevel::create(array_intersect_key($attributes, $fields));
 
         return redirect("/education/".$attributes['education_level_id']."/edit");
@@ -179,8 +178,7 @@ class EducationLevelController extends Controller
             return HomeController::returnError(404);
         }
 
-        $education_level->active = 0;
-        $education_level->save();
+        $education_level->delete();
 
         return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204b')] , 204);
         

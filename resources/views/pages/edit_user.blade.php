@@ -213,7 +213,7 @@
 </div>
 
 <script>
-    $.getJSON( "/companies/{{$user->company}}/departments", function( response ) {
+    $.getJSON( "/companies/{{ session('company') }}/departments", function( response ) {
         if (response.code == 200) {
             var records = response.data;
 
@@ -227,7 +227,7 @@
         
     });
 
-    $.getJSON( "/companies/{{$user->company}}/positions", function( response ) {
+    $.getJSON( "/companies/{{ session('company') }}/positions", function( response ) {
         if (response.code == 200) {
             var records = response.data;
 

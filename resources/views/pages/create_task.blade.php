@@ -1,0 +1,106 @@
+@extends('layouts.master')
+
+@section('title', trans('general.new').' '.trans_choice('general.menu.tasks', 1))
+
+@section('content')
+<h2>{{trans('general.new')}} {{trans_choice('general.menu.tasks', 1)}} </h2>
+<hr>
+<div>
+    
+
+{!! Form::model($id, array('route' => array('task.store', $id), 'method' => 'POST')) !!}
+    <div class="grid">
+                <div class="row cells2">
+                    <div class="cell">
+                        <label>Period ID</label>
+                        <div class="input-control text full-size">
+                            <input size="65" type="text" name="task_id"  value="{!! $id !!}" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <label>{{trans('general.forms.name')}}</label>
+                        <div class="input-control text full-size">
+                            <input size="65" name="name" type="text" >
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row cells1">
+                    <div class="cell">
+                    <label for="description">{{trans('general.description')}}</label> <br>
+                    <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
+                        <textarea cols="80" name="description"></textarea>
+                    </div>
+                </div>
+                </div>
+                <div class="row cells3">
+                    <div class="cell">
+                        <div class="input-control select">
+                        <label for="type">{{trans_choice('general.menu.priorities', 1)}}</label>
+                            <select name="priority" id="priority">
+                            <option value="ALTA">ALTA</option>
+                            <option value="MEDIA">MEDIA</option>
+                            <option value="BAJA">BAJA</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div class="input-control select">
+                        <label for="type">Status</label>
+                            <select name="status" id="status">
+                                <option value="ASIGNADO">ASIGNADO</option>
+                                <option value="CANCELADO">CANCELADO</option>
+                                <option value="COMENZANDO">COMENZANDO</option>
+                                <option value="EN PROCESO">EN PROCESO</option>
+                                <option value="TERMINADO">TERMINADO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div class="input-control select">
+                        <label for="user">{{trans('general.asigned_to')}}</label>
+                            <select name="owner" id="owner">
+                            @foreach ($owners as $owner)
+                                <option value="{{$owner->user_id}}">{{$owner->name}} {{$owner->lastname}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row cells3">
+                    <div class="cell">
+                        <div class="input-control select" style="height:auto">
+                        <label for="user">Participantes</label>
+                            <select multiple>
+                            @foreach ($all_dept_users as $all_dept_user)
+                                <option value="{{$all_dept_user->user_id}}">{{$all_dept_user->name}} {{$all_dept_user->lastname}}</option>
+                            @endforeach
+                            </select>
+
+                        </div>
+
+                    </div>
+                    <div class="cell">
+                        <label>Fecha límite</label> <br>
+                        <div class="input-control text">
+                            <input name="due_date" type="date" required="required">
+                        </div>
+                    </div>
+
+                </div>
+                
+                
+                
+            </div>
+            <br class="clear-float">
+
+        <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
+        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">{{trans('general.forms.cancel')}}</a>
+           
+{!! Form::close() !!}
+</div>
+
+
+
+@stop

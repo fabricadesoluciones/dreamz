@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-    .company_logo{
+    article .company_logo{
      display:block; max-height:50px;
      margin: auto;
     }

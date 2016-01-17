@@ -28,6 +28,7 @@ Route::get('/positions/create', ['middleware' => 'auth', 'uses' => 'PositionsCon
 Route::get('/objectives/create', ['middleware' => 'auth', 'uses' => 'ObjectivesController@create']);
 Route::get('/education/create', ['middleware' => 'auth', 'uses' => 'EducationLevelController@create']);
 Route::get('/measuring_units/create', ['middleware' => 'auth', 'uses' => 'MeasuringUnitController@create']);
+Route::get('/tasks/create', ['middleware' => 'auth', 'uses' => 'TasksController@create']);
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');
@@ -58,6 +59,7 @@ Route::get('/periods/{id}/edit', ['middleware' => 'auth', 'uses' => 'PeriodsCont
 Route::get('/objectives/{id}/edit', ['middleware' => 'auth', 'uses' => 'ObjectivesController@edit']);
 Route::get('/education/{id}/edit', ['middleware' => 'auth', 'uses' => 'EducationLevelController@edit']);
 Route::get('/measuring_units/{id}/edit', ['middleware' => 'auth', 'uses' => 'MeasuringUnitController@edit']);
+Route::get('/tasks/{id}/edit', ['middleware' => 'auth', 'uses' => 'TasksController@edit']);
 Route::get('/priorities/team', ['middleware' => 'auth', 'uses' => 'PrioritiesController@team'])->name('priorities.team');
 
 Route::post('/set_feeling_enabled/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setFeelingEnabled']);
@@ -186,6 +188,18 @@ Route::group(['middleware' => 'auth','prefix' => 'api/v1.0'], function ()
 'update' => 'emotion.update',
 'show' => 'emotion.show',
 'edit' => 'emotion.edit',
+        
+    ]]);
+
+    Route::resource('task', 'TasksController', ['names' => [
+
+'store' => 'task.store',
+'index' => 'task.index',
+'create' => 'task.create',
+'destroy' => 'task.destroy',
+'update' => 'task.update',
+'show' => 'task.show',
+'edit' => 'task.edit',
         
     ]]);
 

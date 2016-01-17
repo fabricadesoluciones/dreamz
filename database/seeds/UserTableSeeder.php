@@ -1,7 +1,7 @@
 <?php
 
 use App\User;
-use App\Education_level;
+use App\EducationLevel;
 use App\Position;
 use App\Department;
 use App\Company;
@@ -28,29 +28,9 @@ class UserTableSeeder extends Seeder
         $where2 = ['company' => $department2->company, 'boss' => 1];
         $position2 = Position::where($where2)->first();
 
-    	$alex = User::create([
-    		'name' => 'Alejandro',
-			'lastname' => 'Tapia',
-    		'email' => 'ageofzetta@gmail.com',
-    		'password' => Hash::make('admin'),
-			'active' => 1,
-			'user_id' => $faker->uuid,
-			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/96.jpg'
-
-    	]);
-
+    	$alex = User::create(['name' => 'Alejandro', 'lastname' => 'Tapia', 'email' => 'ageofzetta@gmail.com', 'password' => Hash::make('admin'), 'active' => 1, 'user_id' => $faker->uuid, 'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/96.jpg']);
         $karla_company = Company::first();
-    	$karla = User::create([
-    		'name' => 'Karla',
-			'lastname' => 'Reyes',
-    		'email' => 'kreyes@fabricadesoluciones.com',
-    		'password' => Hash::make('admin'),
-			'active' => 1,
-			'user_id' => $faker->uuid,
-			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/women/96.jpg'
-
-    	]);
-
+    	$karla = User::create(['name' => 'Karla', 'lastname' => 'Reyes', 'email' => 'kreyes@fabricadesoluciones.com', 'password' => Hash::make('admin'), 'active' => 1, 'user_id' => $faker->uuid, 'thumbnail' => 'https://randomuser.me/api/portraits/thumb/women/96.jpg']);
     	$ceo = User::create([
     		'name' => 'Bill',
 			'lastname' => 'CEO',

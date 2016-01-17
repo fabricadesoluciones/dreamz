@@ -45,6 +45,20 @@ class EmotionsController extends Controller
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
 
+    public function getDepartmentSummary($id)
+    {
+        $period = Period::where('company', '=', $this->company)->first();
+        $active_emotions = DB::table('active_emotions')
+        ->join('emotions', 'active_emotions.emotion', '=', 'emotions.emotion_id')
+        ->select('active_emotions.*', 'emotions.*')
+        ->where('active_emotions.company','=',$this->company)
+        ->get();
+        $whereClause = ['daily_emotions.period' => $period->period_id, 'daily_emotions.department' => $id];
+        $daily_emotions = DB::table('daily_emotions')
+        ->where($whereClause)
+        ->get();
+        return Response::json(['code'=>200, 'message' => 'OK' ,'active'=> $active_emotions, 'data' => $daily_emotions] , 200);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -69,36 +83,7 @@ class EmotionsController extends Controller
      */
     public function store(Request $request)
     {
-        if ( ! Auth::user()->can("edit-departments")){
-            return HomeController::returnError(403);
-        }
         
-        $attributes = $request->all();
-
-
-         $required = [
-            "department_id" => 'required',
-            "name" => 'required',
-        ];
-        $this->validate($request, $required);
-
-        $attributes = $request->all();
-        $attributes["parent"] = (array_key_exists('parent', $attributes)) ? $attributes["parent"] : 0;
-
-        $fields = DB::table('departments')->first();
-        $fields = (array) $fields;
-        $attributes['company'] = $this->company;
-
-        $parent = Department::where('department_id', '=', $attributes['parent'])->first();
-        
-        $parents = $this->checkParent($parent, $attributes['department_id']);
-        if ($parents) {
-            return $parents;
-        }
-
-        Department::create(array_intersect_key($attributes, $fields));
-
-        return redirect("/departments/".$attributes['department_id']."/edit");
     }
 
     /**

@@ -29,6 +29,7 @@ return [
         'catalogs' => 'Catálogos',
         'rewarding' => 'Rewarding',
         'task_manager' => 'Gestor de Tareas',
+        'tasks' => 'Tarea|Tareas',
         'one_page' => 'One Page',
         'reports' => 'Reporte|Reportes',
         'my_profile' => 'Mi Perfil',

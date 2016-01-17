@@ -35,7 +35,7 @@ class PeriodsController extends Controller
             return HomeController::returnError(403);
         }
 
-        $data = Period::where('company','LIKE',"%".$this->company."%")->get();
+        $data = Period::where('company','=',$this->company)->get();
         
         if (!$data) {
             return HomeController::returnError(404);
@@ -78,12 +78,13 @@ class PeriodsController extends Controller
 
 
         $attributes = $request->all();
-        $period_attributes = [ 'period_id' => $attributes['period_id'], 'name' => $attributes['name'], 'start' => $attributes['start'], 'end' => $attributes['end'], 'company' => Auth::user()->company ];
+        $period_attributes = [ 'period_id' => $attributes['period_id'], 'name' => $attributes['name'], 'start' => $attributes['start'], 'end' => $attributes['end'], 'company' => $this->company ];
 
-        $user = Period::create($period_attributes);
+        $fields = HomeController::returnTableColumns('periods');
+        Period::create(array_intersect_key($period_attributes, $fields));
+
         Session::flash('update', ['code' => 200, 'message' => 'Period was added']);
-        // return redirect("/users/$id/edit");
-        return redirect("/periods/");
+        return redirect("/periods/".$attributes['period_id']."/edit");
 
 
     }

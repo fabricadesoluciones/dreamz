@@ -1,7 +1,7 @@
 <?php
 
 use App\User;
-use App\Education_level;
+use App\EducationLevel;
 use App\Position;
 use App\Department;
 use App\Company;
@@ -91,25 +91,39 @@ class EntrustTablesSeeder extends Seeder
 		$employee->attachPermissions(array($progress_objectives, $progress_priorities,$list_objectives, $edit_priorities, $list_priorities));
 
 		$alex = User::where('email','=','ageofzetta@gmail.com')->first();
-    	$alex->attachRole($super_admin);
+		if ($alex) {
+	    	$alex->attachRole($super_admin);
+		}
 		$karla = User::where('email','=','kreyes@fabricadesoluciones.com')->first();
-    	$karla->attachRole($coach);
+		if ($karla) {
+	    	$karla->attachRole($coach);
+		}
 
 
     	$ceo_user =  User::where('email','=','ceo@gmail.com')->first();
-    	$ceo_user->attachRole($ceo);
+    	if ($ceo_user) {
+	    	$ceo_user->attachRole($ceo);
+    	}
     	
     	$champion_user =  User::where('email','=','champion@gmail.com')->first();
-    	$champion_user->attachRole($champion);
+    	if ($champion_user) {
+	    	$champion_user->attachRole($champion);
+    	}
 
     	$coach_user =  User::where('email','=','coach@gmail.com')->first();
-    	$coach_user->attachRole($coach);
+    	if ($coach_user) {
+	    	$coach_user->attachRole($coach);
+    	}
     	
     	$boss_user =  User::where('email','=','team_lead@gmail.com')->first();
-    	$boss_user->attachRole($lead);
+    	if ($boss_user) {
+	    	$boss_user->attachRole($lead);
+    	}
     	
     	$employee_user =  User::where('email','=','employee@gmail.com')->first();
-    	$employee_user->attachRole($employee);
+    	if ($employee_user) {
+	    	$employee_user->attachRole($employee);
+    	}
 
 
     }

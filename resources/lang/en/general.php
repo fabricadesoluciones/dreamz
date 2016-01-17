@@ -29,6 +29,7 @@ return [
         'catalogs' => 'Catalogs',
         'rewarding' => 'Rewarding',
         'task_manager' => 'Task Manager',
+        'tasks' => 'Task|Tasks',
         'one_page' => 'One Page',
         'reports' => 'Report|Reports',
         'my_profile' => 'My Profile',

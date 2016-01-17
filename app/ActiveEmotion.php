@@ -13,5 +13,6 @@ class ActiveEmotion extends Model
      */
     protected $primaryKey = 'active_emotion_id';
     protected $table = 'active_emotions';
+    protected $guarded = array('id');
 
 }

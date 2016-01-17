@@ -8,7 +8,6 @@
 <h2> {{ trans_choice('general.menu.departments', 2) }} <a href="/departments/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
 <div id="table"></div>
 <hr>
-<button class="button success">{{ trans('general.forms.add_new') }}</button>
 <script type="text/babel">
 
     $.get('{!! route('departments.index') !!}', function(){},'json')

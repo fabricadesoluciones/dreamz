@@ -83,9 +83,6 @@ class DepartmentsController extends Controller
 
         $attributes = $request->all();
         $attributes["parent"] = (array_key_exists('parent', $attributes)) ? $attributes["parent"] : 0;
-
-        $fields = DB::table('departments')->first();
-        $fields = (array) $fields;
         $attributes['company'] = $this->company;
 
         $parent = Department::where('department_id', '=', $attributes['parent'])->first();
@@ -95,8 +92,10 @@ class DepartmentsController extends Controller
             return $parents;
         }
 
+        $fields = HomeController::returnTableColumns('departments');
         Department::create(array_intersect_key($attributes, $fields));
 
+        Session::flash('update', ['code' => 200, 'message' => 'Department was updated']);
         return redirect("/departments/".$attributes['department_id']."/edit");
     }
 

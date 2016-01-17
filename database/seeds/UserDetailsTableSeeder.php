@@ -1,7 +1,7 @@
 <?php
 
 use App\User;
-use App\Education_level;
+use App\EducationLevel;
 use App\Position;
 use App\Department;
 use App\Company;
@@ -28,7 +28,7 @@ class UserDetailsTableSeeder extends Seeder
 				'user_details_id' => $faker->uuid,
             	'user' => $user->user_id,
             	'birth_date' => $faker->dateTimeBetween($startDate = '-60 years', $startDate = '-20 years'), 
-				'education' => Education_level::find($faker->randomElement([1,2,3,4,5]))->education_level_id,
+				'education' => EducationLevel::where('id','=', $faker->numberBetween($min = 1, $max = 20))->first()->education_level_id,
 				'mobile' => $faker->phoneNumber,
 				'alergies' => $faker->realText($maxNbChars = 200, $indexSize = 2),
 				'blood_type' => $faker->randomElement($array = array ('A-', 'A+', 'B-', 'B+', 'AB-', 'A+B', 'O-', 'O+')),

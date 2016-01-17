@@ -31,7 +31,7 @@
                         </a>
                     </li>
                 @endif
-                <li class="pending">
+                <li>
                     <a href="/emotions" title="{{ trans_choice('general.menu.emotions', 2) }}">
                         {{ trans_choice('general.menu.emotions', 2) }}
                     </a>
@@ -67,7 +67,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu_link pending">
+        <li class="menu_link">
 
             <a title="{{ trans('general.menu.catalogs') }}">
                 <?php include base_path('resources/svg/catalogos.svg'); ?>

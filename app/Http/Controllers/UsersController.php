@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\User;
 use App\UserDetail;
-use App\Education_level;
+use App\EducationLevel;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
@@ -185,6 +185,7 @@ class UsersController extends Controller
             Session::flash('update', ['code' => 200, 'message' => trans('general.http.200u')]);
         }else{
             $user_attributes['password'] = Hash::make(rand());
+            $user_attributes['company'] = $this->company;
             $user = User::create($user_attributes);
             Session::flash('update', ['code' => 200, 'message' => trans('general.http.200up')]);
         }
@@ -201,7 +202,6 @@ class UsersController extends Controller
                 'user_details_id' => Uuid::generate(4),
                 'user' => $id,
                 'birth_date' => '1988-05-30', 
-                'education' => Education_level::find(1)->education_level_id,
                 'mobile' => '',
                 'alergies' => '',
                 'blood_type' => '',

@@ -162,6 +162,16 @@ class HomeController extends Controller
         return view('pages.show_objectives');
     }
 
+    public function tasks()
+    {
+        
+        if( ! session('department')){
+            return $this->returnError(403, trans('general.http.select_department'), route('departments'));
+        }
+
+        return view('pages.show_tasks');
+    }
+
     public function emotions()
     {
         if ( ! Auth::user()->can("edit-emotions")){
@@ -371,6 +381,15 @@ class HomeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public static function returnTableColumns($table){
+        $fields = [];
+        $rawfields = DB::getSchemaBuilder()->getColumnListing($table);
+        foreach ($rawfields as $field) {
+            $fields[$field] = 0;
+        }
+        return $fields;
     }
 
     public static function returnError($errorCode = 404, $message = false, $callbackurl = false, $json = false)
