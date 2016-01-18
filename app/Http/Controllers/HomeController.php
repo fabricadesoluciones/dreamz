@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Company;
+use App\Period;
 use App;
 use App\Department;
 use App\DailyEmotion;
@@ -172,6 +173,11 @@ class HomeController extends Controller
         return view('pages.show_tasks');
     }
 
+    public function dreams()
+    {
+        return view('pages.show_dreams');
+    }
+
     public function emotions()
     {
         if ( ! Auth::user()->can("edit-emotions")){
@@ -298,6 +304,31 @@ class HomeController extends Controller
             return Response::json($Response, 200);
     }
 
+    public static function setPeriod($company_id, $period_id = false)
+    {
+        if ($period_id) {
+            $period = Period::where('period_id','=',$period_id)->first();
+            if ($period) {
+                Session::set('period', $period_id);
+            }
+        }else{
+
+            $periods = Period::where('company','=', $company_id)->get();
+            $today = (int) date('U');
+
+            foreach ($periods as $period) {
+                $start = strtotime($period->start);
+                $end = strtotime($period->end);
+                if ( ($today >= $start) && ($today <= $end) ) {
+                    Session::set('period', $period->period_id);
+                    break;
+                }
+            }
+
+        }
+
+
+    }
     public function setCompany($id)
     {
         if ( ! Auth::user()->can("list-companies")){
@@ -315,8 +346,9 @@ class HomeController extends Controller
             Session::set('company', $company->company_id);
             Session::set('company_name', $company->commercial_name);
             Session::set('company_logo', $company->logo);
-            
+            $this->setPeriod($company->company_id);
             Session::flash('update', ['code' => 200, 'message' => 'Company was updated']);
+
             return redirect("/companies/");
         }else{
             return $this->returnError(404);

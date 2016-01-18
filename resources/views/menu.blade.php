@@ -103,7 +103,7 @@
                 <?php include base_path('resources/svg/rewarding.svg'); ?>
             </a>
         </li>
-        <li class="menu_link pending">
+        <li class="menu_link">
             <a href="/tasks" title="{{ trans('general.menu.task_manager') }}">
                 <?php include base_path('resources/svg/task-manager.svg'); ?>
             </a>

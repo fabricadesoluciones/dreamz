@@ -63,6 +63,7 @@
         @if(Session::get('department_name'))
             <br> {{Session::get('department_name')}}
         @endif
+        
     </span>
     <img class="profile_pic" src="{{Auth::user()->thumbnail}}">
 </div>

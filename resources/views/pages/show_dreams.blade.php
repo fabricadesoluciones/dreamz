@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
-@section('title', trans_choice('general.menu.periods', 2))
+@section('title', trans_choice('general.menu.dreams', 2))
 
 @section('content')
 
                 
-<h2>{{trans_choice('general.menu.periods', 2)}} <a href="/periods/create" class="button success">{{ trans('general.forms.add_new') }} </a></h2>
+<h2>{{trans_choice('general.menu.dreams', 2)}} <a href="/dreams/create" class="button success">{{ trans('general.forms.add_new') }} </a></h2>
 <div id="table"></div>
 <br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
 <br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
@@ -14,10 +14,11 @@
 
 <script type="text/babel">
 
-    $.get('{!! route('periods.index') !!}', function(){},'json')
+    $.get('{!! route('dreams.index') !!}', function(){},'json')
     .done(function(d){
+        debugger;
         React.render(
-            <PrioritiesTable list={d.data} />,
+            <DreamsTable list={d.data} />,
             document.getElementById('table')
         );
     });
@@ -29,12 +30,11 @@ var Tr = React.createClass({
         return (
             <tr>
                 <td>{this.props.index + 1}</td>
-                <td><span className="name">{this.props.data.name}</span></td>
-                <td>{this.props.data.start}-{this.props.data.end}</td>
+                <td><span className="name">{this.props.data.description}</span></td>
                 <td> 
-                    <a href={"/periods/"+this.props.data.period_id+"/edit"} className="button success" data-id={this.props.data.period_id}>{{trans('general.modify')}}</a>
+                    <a href={"/dreams/"+this.props.data.dreams_id+"/edit"} className="button success" data-id={this.props.data.dreams_id}>{{trans('general.modify')}}</a>
                     &nbsp;
-                    <button className="button danger delete_item" data-type="periods" data-id={this.props.data.period_id}>{{trans('general.delete')}}</button>
+                    <button className="button danger delete_item" data-type="dreams" data-id={this.props.data.dreams_id}>{{trans('general.delete')}}</button>
                     
                 </td>
 
@@ -45,7 +45,7 @@ var Tr = React.createClass({
     }
 });
 
-var PrioritiesTable = React.createClass({
+var DreamsTable = React.createClass({
     getInitialState: function() {
         return {
             data: this.props.data
@@ -61,8 +61,7 @@ var PrioritiesTable = React.createClass({
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>{{trans_choice('general.menu.periods', 1)}}</th>
-                        <th>{{trans('general.from')}} - {{trans('general.to')}}</th>
+                        <th>{{trans_choice('general.menu.dreams', 1)}}</th>
                         <th>{{trans_choice('general.actions', 2)}}</th>
                     </tr>
                 </thead>

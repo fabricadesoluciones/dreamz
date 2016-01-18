@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dreamz @yield('title')</title>
+    <title>Dreamz - @yield('title')</title>
     <link href="/metro/css/metro.min.css" rel="stylesheet">
     <link href="/metro/css/metro-icons.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
