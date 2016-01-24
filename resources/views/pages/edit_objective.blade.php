@@ -84,13 +84,13 @@
                 
             </div>
             <div class="grid">
-                <h3>Semáforos para el período</h3>    
+                <h3>{{trans('general.objectives.period_target')}}</h3>    
                 <hr>
                 <br>
                 <div class="row cells1">
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Objetivo</label>
+                        <label for="department">{{trans('general.objectives.target')}}</label>
                             <input type="number" pattern="[0-9.,]+" step="0.01" name="period_objective" id="period_objective" placeholder="{{$objective->measuring_unit_name}}" value="{{$objective->period_objective}}"/>
                         </div>
                     </div>
@@ -98,19 +98,19 @@
                 <div class="row cells3 inlined">
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Verde</label>
-                           Mayor o igual a:  <input placeholder="{{$objective->measuring_unit_name}}"  class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="period_green" id="period_green" value="{{$objective->period_green}}"/>
+                        <label for="department">{{trans('general.objectives.green')}}</label>
+                           {{trans('general.objectives.greater')}}  <input placeholder="{{$objective->measuring_unit_name}}"  class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="period_green" id="period_green" value="{{$objective->period_green}}"/>
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Rojo</label>
-                           Menor a:   <input placeholder="{{$objective->measuring_unit_name}}" class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="period_red" id="period_red" value="{{$objective->period_red}}"/>
+                        <label for="department">{{trans('general.objectives.red')}}</label>
+                           {{trans('general.objectives.lesser')}}   <input placeholder="{{$objective->measuring_unit_name}}" class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="period_red" id="period_red" value="{{$objective->period_red}}"/>
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Amarillo</label> 
+                        <label for="department">{{trans('general.objectives.yellow')}}</label> 
                             <input class="auto" type="number" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="period_yellow_ceil" id="period_yellow_ceil" value="{{$objective->period_yellow_ceil}}"/> - 
                             <input class="auto" type="number" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="period_yellow_floor" id="period_yellow_floor" value="{{$objective->period_yellow_floor}}"/>
                         </div>
@@ -119,7 +119,7 @@
             </div>
 
             <div class="grid">
-                <h3>Semáforos por día</h3>    
+                <h3>{{trans('general.objectives.daily_target')}}</h3>    
                 <hr>
                 <br>
                 <div class="row cells1">
@@ -134,18 +134,18 @@
                     <div class="cell">
                         <div class="input-control text">
                         <label for="department">Valor Verde</label>
-                           Mayor o igual a:  <input placeholder="{{$objective->measuring_unit_name}}"  class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="daily_green" id="daily_green" value="{{$objective->daily_green}}"/>
+                           {{trans('general.objectives.greater')}}  <input placeholder="{{$objective->measuring_unit_name}}"  class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="daily_green" id="daily_green" value="{{$objective->daily_green}}"/>
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control text">
                         <label for="department">Valor Rojo</label>
-                           Menor a:   <input placeholder="{{$objective->measuring_unit_name}}" class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="daily_red" id="daily_red" value="{{$objective->daily_red}}"/>
+                           {{trans('general.objectives.lesser')}}   <input placeholder="{{$objective->measuring_unit_name}}" class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="daily_red" id="daily_red" value="{{$objective->daily_red}}"/>
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Amarillo</label> 
+                        <label for="department">{{trans('general.objectives.yellow')}}</label> 
                             <input class="auto" type="number" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="daily_yellow_ceil" id="daily_yellow_ceil" value="{{$objective->daily_yellow_ceil}}"/> - 
                             <input class="auto" type="number" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="daily_yellow_floor" id="daily_yellow_floor" value="{{$objective->daily_yellow_floor}}"/>
                         </div>

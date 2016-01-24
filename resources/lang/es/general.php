@@ -148,16 +148,23 @@ return [
         'estresado' => 'Estresado',
         'frustracion' => 'Frustración',
         'inspirado' => 'Inspirado',
-    ]
+    ],
+    'priorities' => [
+
+        'verde' => 'Por buen camino',
+        'amarillo' => 'Retrasado',
+        'rojo' => 'Estoy estancado',
+        'azul' => 'Terminado',
+    ],
+    'objectives' => [
+        'target' => 'Valor Objetivo : ',
+        'green' => 'Valor Verde : ',
+        'yellow' => 'Valor Amarillo : ',
+        'red' => 'Valor Rojo : ',
+        'greater' => 'Mayor o igual a: ',
+        'lesser' => 'Menor a: ',
+        'period_target' => 'Semáforos para el período: ',
+        'daily_target' => 'Semáforos por día: ',
+    ],
+
 ];
-
-
-
-
-
-
-
-
-
-
-

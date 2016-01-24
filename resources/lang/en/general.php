@@ -148,6 +148,23 @@ return [
         'estresado' => 'Stress',
         'frustracion' => 'Frustation',
         'inspirado' => 'Inspiration',
+    ],
+
+    'priorities' => [
+        'verde' => 'On track',
+        'amarillo' => 'Not there yet',
+        'rojo' => 'I\'m stuck',
+        'azul' => 'Completed',
+    ],
+    'objectives' => [
+        'target' => 'Target Value : ',
+        'green' => 'Green Value : ',
+        'yellow' => 'Yellow Value : ',
+        'red' => 'Red Value : ',
+        'greater' => 'Equal or greater than: ',
+        'lesser' => 'Less than: ',
+        'period_target' => 'Target Values for Period: ',
+        'daily_target' => 'Daily Target Values: ',
     ]
 
 ];

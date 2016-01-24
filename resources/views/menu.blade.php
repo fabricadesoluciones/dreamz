@@ -55,7 +55,7 @@
                         </a>
                     </li>
                 @endif
-                <li class="pending">
+                <li>
                     <a href="/dreams" title="{{ trans_choice('general.menu.dreams', 2) }}">
                         {{ trans_choice('general.menu.dreams', 2) }}
                     </a>
@@ -92,7 +92,7 @@
             </ul>
         
         </li>
-        <li class="menu_link pending">
+        <li class="menu_link">
             <a href="/objectives" title="KPIs">
                 <?php include base_path('resources/svg/kpis.svg'); ?>
             </a>
