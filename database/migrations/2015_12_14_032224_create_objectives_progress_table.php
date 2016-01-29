@@ -20,6 +20,7 @@ class CreateObjectivesProgressTable extends Migration
             $table->string('department');
             $table->float('value');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

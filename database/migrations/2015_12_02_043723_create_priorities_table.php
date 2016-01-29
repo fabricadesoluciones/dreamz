@@ -40,6 +40,7 @@ class CreatePrioritiesTable extends Migration
 
             $table->boolean('active');
             $table->timestamps();
+            $table->softDeletes();
 
         });
     }

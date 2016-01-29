@@ -22,7 +22,7 @@ class CreatePeriodsTable extends Migration
             $table->date('end');
             $table->boolean('active');
             $table->timestamps();
-
+            $table->softDeletes();
         });
     }
 

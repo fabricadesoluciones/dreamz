@@ -20,9 +20,7 @@ class IndustriesTableSeeder extends Seeder
         foreach (range(1, 30) as $user) {
         	Industry::create([
 				'industry_id' => $faker->uuid,
-				'company' => Company::find($faker->numberBetween($min = 1, $max = 4))->company_id,
 				'name' => $faker->word,
-				'active' => $faker->boolean(70),
         	]);
         }
     }

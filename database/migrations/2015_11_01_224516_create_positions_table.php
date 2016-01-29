@@ -20,6 +20,8 @@ class CreatePositionsTable extends Migration
             $table->boolean('active');
             $table->boolean('boss');
             $table->timestamps();
+            $table->softDeletes();
+            
         });
     }
 

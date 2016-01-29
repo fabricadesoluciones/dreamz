@@ -19,6 +19,7 @@ class CreateMeasuringUnitsTable extends Migration
             $table->boolean('currency');
             $table->boolean('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

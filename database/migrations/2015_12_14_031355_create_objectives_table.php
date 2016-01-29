@@ -35,6 +35,7 @@ class CreateObjectivesTable extends Migration
             $table->float('daily_red',16,2);
             $table->boolean('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

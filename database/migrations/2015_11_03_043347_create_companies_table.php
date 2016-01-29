@@ -24,6 +24,7 @@ class CreateCompaniesTable extends Migration
             $table->string('rfc');
             
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

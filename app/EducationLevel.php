@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EducationLevel extends Model
 {
+    use SoftDeletes;
+
 	/**
      * The database table used by the model.
      *
@@ -22,5 +25,6 @@ class EducationLevel extends Model
      * @var array
      */
     protected $guarded = array('id');
+    protected $dates = ['deleted_at'];
 
 }

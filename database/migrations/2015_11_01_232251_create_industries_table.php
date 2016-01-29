@@ -16,8 +16,6 @@ class CreateIndustriesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('industry_id')->unique();
-            $table->string('company');
-            $table->boolean('active');
             $table->timestamps();
         });
     }

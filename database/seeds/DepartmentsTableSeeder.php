@@ -33,7 +33,7 @@ class DepartmentsTableSeeder extends Seeder
 	        	Department::create([
 					'department_id' => $faker->uuid,
 					'company' => $company->company_id,
-					'parent' => Department::find($faker->numberBetween($min = 1, $max = 2))->department_id,
+					'parent' => Department::all()->random(1)->department_id,
 					'name' => $faker->word,
 					'active' => $faker->boolean(70),
 	        	]);

@@ -18,6 +18,7 @@ class CreateCountriesTable extends Migration
             $table->string('code',2);
             $table->boolean('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

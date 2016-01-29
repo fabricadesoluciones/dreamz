@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Department extends Model
 {
+    use SoftDeletes;
 	/**
      * The database table used by the model.
      *
@@ -13,6 +15,7 @@ class Department extends Model
      */
 
 	protected $table = 'departments';
+    protected $primaryKey = 'department_id';
 
 	/**
      * The attributes that are not mass assignable.
@@ -20,7 +23,7 @@ class Department extends Model
      * @var array
      */
     protected $guarded = array('id');
-
+    protected $dates = ['deleted_at'];
 
     /**
      * Get the users for belonging to this department.

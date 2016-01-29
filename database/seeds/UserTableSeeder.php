@@ -21,10 +21,10 @@ class UserTableSeeder extends Seeder
     {
 
         $faker = Faker::create();
-        $department1 = Department::find(1);
+        $department1 = Department::all()->random(1);
         $where1 = ['company' => $department1->company, 'boss' => 1];
         $position1 = Position::where($where1)->first();
-        $department2 = Department::find(2);
+        $department2 = Department::all()->random(1);
         $where2 = ['company' => $department2->company, 'boss' => 1];
         $position2 = Position::where($where2)->first();
 

@@ -21,6 +21,7 @@ class CreateDepartmentsTable extends Migration
             $table->smallInteger('level');
             $table->boolean('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
+    use SoftDeletes;
+
 	/**
      * The database table used by the model.
      *
@@ -13,6 +16,7 @@ class Company extends Model
      */
 
 	protected $table = 'companies';
+    protected $primaryKey = 'company_id';
 
 	/**
      * The attributes that are not mass assignable.
@@ -20,6 +24,7 @@ class Company extends Model
      * @var array
      */
     protected $guarded = array('id');
+    protected $dates = ['deleted_at'];
 
     /**
      * Get the users for belonging to this company.

@@ -23,6 +23,9 @@ class CreateTasksTable extends Migration
             $table->string('priority');
             $table->date('due_date');
             $table->timestamps();
+            $table->softDeletes();
+
+
         });
 
         Schema::create('task_participants', function (Blueprint $table) {
@@ -32,6 +35,8 @@ class CreateTasksTable extends Migration
             $table->string('company');
             $table->string('deparment');
             $table->timestamps();
+            $table->softDeletes();
+            
         });
     }
 

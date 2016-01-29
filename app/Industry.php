@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Industry extends Model
 {
+    use SoftDeletes;
+
 	/**
      * The database table used by the model.
      *
@@ -13,6 +16,7 @@ class Industry extends Model
      */
 
 	protected $table = 'industries';
+    protected $primaryKey = 'industry_id';
 
 	/**
      * The attributes that are not mass assignable.
@@ -20,5 +24,5 @@ class Industry extends Model
      * @var array
      */
     protected $guarded = array('id');
-
+    protected $dates = ['deleted_at'];
 }

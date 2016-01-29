@@ -22,7 +22,7 @@ class CompanyTableSeeder extends Seeder
 				'company_id' => $faker->uuid,
 				'active' => $faker->boolean(70),
 				'commercial_name' => $faker->company,
-				'country' => Country::find($faker->numberBetween($min = 1, $max = 249))->country_id,
+				'country' => Country::where('id','=', $faker->numberBetween($min = 1, $max = 249))->first()->country_id,
 				'language' => $faker->locale,
 				'logo' => "https://logo.clearbit.com/".$faker->freeEmailDomain,
 				'slogan' => $faker->catchPhrase,
