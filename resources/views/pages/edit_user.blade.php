@@ -25,7 +25,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row cells2">
+                <div class="row cells3">
                     <div class="cell">
                         <label>{{trans('general.forms.name')}}</label>
                         <div class="input-control text full-size">
@@ -37,6 +37,17 @@
                         <label>{{trans('general.forms.lastname')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="lastname" type="text" value="{!! $user->lastname !!}"  required="required">
+                        </div>
+                    
+                    </div>
+                    <div class="cell">
+                    <br>
+                        <div class="input-control select">
+                        <label>{{trans('general.forms.gender')}}</label>
+                            <select name="sex" id="sex" data-selected="{{$user->sex}}">
+                                <option value="M">{{trans_choice('general.males',1)}} </option>
+                                <option value="F">{{trans_choice('general.females',1)}} </option>
+                            </select>
                         </div>
                     
                     </div>
@@ -115,9 +126,14 @@
 
             <div class="row cells2">
                 <div class="cell">
+                    <div class="input-control select">
                     <label for="education">{{trans('general.forms.education')}}</label>
-                    <div class="input-control text full-size">
-                        <input name='education' type="text" value="{{$user->education}}" />
+                    
+                    <select name="education" id="education" data-selected="{{$user->education}}">
+                        @foreach ($education_levels as $education_level)
+                            <option value="{{$education_level->education_level_id}}">{{$education_level->name}}</option>
+                        @endforeach
+                    </select>
                     </div>
                 </div>
             </div>

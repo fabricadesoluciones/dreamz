@@ -87,6 +87,7 @@ return [
         'some_progress' => 'Some progress',
         'completed' => 'Completed',
         'validation_error' => 'Validation error, please fix the following:',
+        'gender' => 'Gender',
     ],
 
     'new' => 'New',
@@ -127,6 +128,8 @@ return [
     'semaforo' => 'Level',
     'actual' => 'Actual Result',
     'expected' => 'Expected Result',
+    'males' => 'Male|Males',
+    'females' => 'Female|Females',
     'users' => [
         'super_admin' => 'Super Admin',
         'ceo' => 'CEO',

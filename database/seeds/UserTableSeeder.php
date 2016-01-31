@@ -35,6 +35,7 @@ class UserTableSeeder extends Seeder
     		'name' => 'Bill',
 			'lastname' => 'CEO',
     		'email' => 'ceo@gmail.com',
+    		'sex'=> $faker->randomElement($array = array ('M','F')),
     		'company' => $department2->company,
     		'department' => $department2->department_id,
     		'position' => $position2->position_id,
@@ -51,6 +52,7 @@ class UserTableSeeder extends Seeder
     		'name' => 'Bill',
 			'lastname' => 'Coach',
     		'email' => 'coach@gmail.com',
+    		'sex'=> $faker->randomElement($array = array ('M','F')),
     		'password' => Hash::make('admin'),
 			'active' => 1,
 			'user_id' => $faker->uuid,
@@ -63,6 +65,7 @@ class UserTableSeeder extends Seeder
     		'name' => 'Bill',
 			'lastname' => 'Champion',
     		'email' => 'champion@gmail.com',
+    		'sex'=> $faker->randomElement($array = array ('M','F')),
     		'company' => $department2->company,
     		'department' => $department2->department_id,
     		'position' => $position2->position_id,
@@ -79,6 +82,7 @@ class UserTableSeeder extends Seeder
     		'name' => 'Patrick',
 			'lastname' => 'Team Lead',
     		'email' => 'team_lead@gmail.com',
+    		'sex'=> $faker->randomElement($array = array ('M','F')),
     		'company' => $department2->company,
     		'department' => $department2->department_id,
     		'position' => $position2->position_id,
@@ -95,6 +99,7 @@ class UserTableSeeder extends Seeder
     		'name' => 'John',
 			'lastname' => 'Doe',
     		'email' => 'employee@gmail.com',
+    		'sex'=> $faker->randomElement($array = array ('M','F')),
     		'company' => $department2->company,
     		'department' => $department2->department_id,
     		'position' => $position2->position_id,
@@ -127,6 +132,7 @@ class UserTableSeeder extends Seeder
 		        	User::create([
 		        		'name' => $faker->firstName($gender = null|'male'|'female'),
 		        		'email' => $faker->freeEmail,
+		        		'sex'=> $faker->randomElement($array = array ('M','F')),
 		        		'password' => Hash::make('admin'),
 						'lastname' => $faker->lastName,
 						'active' => $faker->boolean(70),
@@ -139,25 +145,6 @@ class UserTableSeeder extends Seeder
 						'thumbnail' => 'https://randomuser.me/api/portraits/thumb/'.$faker->randomElement(['women','men']).'/'. $faker->numberBetween($min = 1, $max = 95) .'.jpg'
 
 
-
-						/*
-			             TODO: Move to User Details
-
-						'birth_date' => $faker->dateTimeBetween($startDate = '-60 years', $startDate = '-20 years'), 
-						'education' => Education_level::find($faker->randomElement([1,2,3,4,5]))->education_level_id,
-						'mobile' => $faker->phoneNumber,
-						'alergies' => $faker->realText($maxNbChars = 200, $indexSize = 2),
-						'blood_type' => $faker->randomElement($array = array ('A-', 'A+', 'B-', 'B+', 'AB-', 'A+B', 'O-', 'O+')),
-						'emergency_contact' => $faker->name." ".$faker->phoneNumber,
-						'phone' => $faker->phoneNumber,
-						'admission_date' => $faker->dateTimeBetween($startDate = '-15 years', $startDate = '-1 years'), 
-						'facebook' => "facebook.com/".$faker->userName,
-						'twitter' => "twitter.com/@".$faker->userName,
-						'instagram' => "instagram.com/".$faker->userName,
-						'linkedin' => "linkedin.com/".$faker->userName,
-						'googlep' => "googlep.com/".$faker->userName,
-
-						*/
 						/*
 			             TODO: Move to User Assesments
 

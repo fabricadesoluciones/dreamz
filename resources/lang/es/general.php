@@ -87,6 +87,7 @@ return [
         'some_progress' => 'Progresando',
         'completed' => 'Completado',
         'validation_error' => 'Error de validación, por favor corrija lo siguiente:',
+        'gender' => 'Género',
 
     ],
 
@@ -128,6 +129,8 @@ return [
     'semaforo' => 'Semáforo',
     'actual' => 'Resultado Actual',
     'expected' => 'Resultado Esperado',
+    'males' => 'Hombre|Hombres',
+    'females' => 'Mujer|Mujeres',
     'users' => [
         'super_admin' => 'Super Administrador',
         'ceo' => 'CEO',

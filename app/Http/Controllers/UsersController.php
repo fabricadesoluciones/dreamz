@@ -111,7 +111,8 @@ class UsersController extends Controller
             if (!$data) {
                 return HomeController::returnError(404);
             }
-            return view('pages.edit_user', ['user' => $data]);
+            $education_levels = EducationLevel::where('company','=', $this->company)->get();
+            return view('pages.edit_user', ['user' => $data, 'education_levels' => $education_levels]);
         } else {
         return HomeController::returnError(403);
         }
