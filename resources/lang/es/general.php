@@ -38,6 +38,7 @@ return [
         'dreams' => 'Sueño|Sueños',
         'assesments' => 'Assesment|Assesments',
         'education' => 'Educación',
+        'industries' => 'Industria|Industrias',
 
     ],
 

@@ -17,6 +17,7 @@ class CreateIndustriesTable extends Migration
             $table->string('name');
             $table->string('industry_id')->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

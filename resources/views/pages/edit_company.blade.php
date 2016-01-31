@@ -10,7 +10,7 @@
 
 {!! Form::model($company, array('route' => array('companies.update', $company->company_id), 'method' => 'PUT')) !!}
     <div class="grid">
-                <div class="row cells2">
+                <div class="row cells3">
                     <div class="cell">
                         <label>Company ID</label>
                         <div class="input-control text full-size">
@@ -21,6 +21,18 @@
                         <label>{{trans('general.forms.commercial_name')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" name="commercial_name" type="text" value="{!! $company->commercial_name !!}" required="required">
+                        </div>
+                    </div>
+                    <div class="cell">
+                    <br>
+                        <div class="input-control select">
+                        <label for="industry">{{trans_choice('general.menu.industries',1)}}</label>
+                            <select name="industry" id="industry" data-selected="{{$company->industry}}">
+                                @foreach ($industries as $industry)
+                                    <option value="{{$industry->industry_id}}">{{$industry->name}}</option>
+                                @endforeach
+
+                            </select>
                         </div>
                     </div>
                 </div>

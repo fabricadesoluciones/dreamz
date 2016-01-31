@@ -38,7 +38,7 @@ class ObjectiveCategoriesTableSeeder extends Seeder
                     'category_id' => $faker->uuid,
                     'company' => $company->company_id,
                     'name' => $faker->word,
-                    'parent' => DB::table('objective_categories')->skip(rand(0,4))->take(1)->get()[0]->category_id,
+                    'parent' => ObjectiveCategory::all()->random(1)->category_id,
                     'active' => $faker->boolean(70),
                 ]);
             }

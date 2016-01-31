@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Company;
+use App\Industry;
 use App\Emotion;
 use App\ActiveEmotion;
 use Illuminate\Http\Request;
@@ -52,7 +53,9 @@ class CompaniesController extends Controller
             return HomeController::returnError(403);
         }
 
-        return view('pages.create_company', ['id' => Uuid::generate(4), 'user' => Auth::user() ]);
+        $industries = Industry::all();
+
+        return view('pages.create_company', ['id' => Uuid::generate(4), 'user' => Auth::user(), 'industries' => $industries ]);
         
     
     }
@@ -179,10 +182,11 @@ class CompaniesController extends Controller
         }
 
         $company = Company::where('company_id', '=', $id)->first();
+        $industries = Industry::all();
         if (!$company) {
             return HomeController::returnError(404);
         }
-        return view('pages.edit_company', ['company' => $company]);
+        return view('pages.edit_company', ['company' => $company, 'industries' => $industries]);
     }
 
     /**
@@ -239,8 +243,7 @@ class CompaniesController extends Controller
             return HomeController::returnError(404);
         }
 
-        $company->active = 0;
-        $company->save();
+        $company->delete();
 
         return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204b')] , 204);
         

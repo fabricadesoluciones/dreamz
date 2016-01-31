@@ -2,6 +2,7 @@
 
 use App\Company;
 use App\Country;
+use App\Industry;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Faker\Factory as Faker;
@@ -27,6 +28,7 @@ class CompanyTableSeeder extends Seeder
 				'logo' => "https://logo.clearbit.com/".$faker->freeEmailDomain,
 				'slogan' => $faker->catchPhrase,
 				'rfc' => $faker->swiftBicNumber,
+                'industry' => Industry::all()->random(1)->industry_id,
         	]);
         }
     }

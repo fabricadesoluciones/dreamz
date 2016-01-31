@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call(CountriesTableSeeder::class);
+        $this->call(IndustriesTableSeeder::class);
         $this->call(CompanyTableSeeder::class);
         $this->call(EmotionsTableSeeder::class);
         $this->call(ActiveEmotionsTableSeeder::class);
@@ -53,7 +54,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PeriodsTableSeeder::class);
         $this->call(PositionTableSeeder::class);
         $this->call(Education_levelsTableSeeder::class);
-        $this->call(IndustriesTableSeeder::class);
         $this->call(UserTableSeeder::class);
         $this->call(UserDetailsTableSeeder::class);
         $this->call(PrioritiesTableSeeder::class);

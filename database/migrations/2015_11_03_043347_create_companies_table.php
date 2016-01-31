@@ -22,6 +22,8 @@ class CreateCompaniesTable extends Migration
             $table->string('logo');
             $table->string('slogan');
             $table->string('rfc');
+            $table->string('industry');
+            $table->string('current_period');
             
             $table->timestamps();
             $table->softDeletes();
