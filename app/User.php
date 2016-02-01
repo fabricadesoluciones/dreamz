@@ -59,7 +59,7 @@ class User extends Model implements AuthenticatableContract,
 
     public function details()
     {
-        return $this->hasOne('App\UserDetail','user_id','user');
+        return $this->hasOne('App\UserDetail','user','user_id');
     }
 
     public function priorities()

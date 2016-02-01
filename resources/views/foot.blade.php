@@ -44,12 +44,19 @@ $(document).on('click','.delete_item', function(){
         }); 
 @endif
 
-$('select').select2();
+window.Select2 = $('select').select2();
 
 setTimeout(function(){
     $('select').each(function(d){
         if ($(this).attr("data-selected")) {
             $(this).select2("val", $(this).attr("data-selected"));
+        }else if ($(this).attr("data-multiselected")) {
+            var these_values = $(this).attr("data-multiselected").split(',');
+            values = these_values.filter(function(d){
+                if (d) { return d;}
+            })
+            $(this).val(values);
+            Select2.trigger("change");
         }
     });
 },500)

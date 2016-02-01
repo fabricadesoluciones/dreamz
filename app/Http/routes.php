@@ -30,6 +30,7 @@ Route::get('/education/create', ['middleware' => 'auth', 'uses' => 'EducationLev
 Route::get('/measuring_units/create', ['middleware' => 'auth', 'uses' => 'MeasuringUnitController@create']);
 Route::get('/tasks/create', ['middleware' => 'auth', 'uses' => 'TasksController@create']);
 Route::get('/dreams/create', ['middleware' => 'auth', 'uses' => 'DreamsController@create']);
+Route::get('/coaches/create', ['middleware' => 'auth', 'uses' => 'UsersController@createCoach']);
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');
@@ -41,6 +42,7 @@ Route::get('/emotions', ['middleware' => 'auth', 'uses' => 'HomeController@emoti
 Route::get('/education', ['middleware' => 'auth', 'uses' => 'HomeController@education'])->name('education_levels');
 Route::get('/measuring_units', ['middleware' => 'auth', 'uses' => 'HomeController@measuring_units'])->name('measuring_units');
 Route::get('/dreams', ['middleware' => 'auth', 'uses' => 'HomeController@dreams'])->name('dreams');
+Route::get('/coaches', ['middleware' => 'auth', 'uses' => 'HomeController@coaches'])->name('coaches');
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setCompany']);
 Route::get('/set_department/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setDepartment']);
@@ -63,9 +65,12 @@ Route::get('/education/{id}/edit', ['middleware' => 'auth', 'uses' => 'Education
 Route::get('/measuring_units/{id}/edit', ['middleware' => 'auth', 'uses' => 'MeasuringUnitController@edit']);
 Route::get('/tasks/{id}/edit', ['middleware' => 'auth', 'uses' => 'TasksController@edit']);
 Route::get('/dreams/{id}/edit', ['middleware' => 'auth', 'uses' => 'DreamsController@edit']);
+Route::get('/coaches/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@editcoach']);
 Route::get('/priorities/team', ['middleware' => 'auth', 'uses' => 'PrioritiesController@team'])->name('priorities.team');
 
 Route::post('/set_feeling_enabled/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setFeelingEnabled']);
+Route::post('/update_coach/{id}', ['middleware' => 'auth', 'uses' => 'UsersController@updateCoach'])->name('update_coach');
+Route::post('/store_coach/{id}', ['middleware' => 'auth', 'uses' => 'UsersController@storeCoach'])->name('store_coach');
 
 /* HOME */
 

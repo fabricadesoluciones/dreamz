@@ -41,7 +41,7 @@ class FeelingMiddleware
                 Session::set('company', $company->company_id);
                 Session::set('company_name', $company->commercial_name);
                 Session::set('company_logo', $company->logo);
-                HomeController::setPeriod($company->company_id);
+                HomeController::setPeriod($company);
             }
             if( ! session('language')){
                 Session::set('language', 'en');

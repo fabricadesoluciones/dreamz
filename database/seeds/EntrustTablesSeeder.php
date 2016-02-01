@@ -114,7 +114,22 @@ class EntrustTablesSeeder extends Seeder
     	if ($coach_user) {
 	    	$coach_user->attachRole($coach);
     	}
-    	
+
+    	$coach_user =  User::where('email','=','coach1@gmail.com')->first();
+    	if ($coach_user) {
+	    	$coach_user->attachRole($coach);
+    	}
+
+    	$coach_user =  User::where('email','=','coach2@gmail.com')->first();
+    	if ($coach_user) {
+	    	$coach_user->attachRole($coach);
+    	}
+
+    	$coach_user =  User::where('email','=','coach3@gmail.com')->first();
+    	if ($coach_user) {
+	    	$coach_user->attachRole($coach);
+    	}
+
     	$boss_user =  User::where('email','=','team_lead@gmail.com')->first();
     	if ($boss_user) {
 	    	$boss_user->attachRole($lead);

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', trans_choice('general.menu.companies', 2))
+@section('title', trans_choice('general.menu.coaches', 2))
 
 @section('content')
 <style>
@@ -10,17 +10,44 @@
     }
 </style>
                 
-<h2>{{ trans_choice('general.menu.companies', 2) }} <a href="/companies/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
-<div id="table"></div>
+<h2>{{ trans_choice('general.menu.coaches', 2) }} <a href="/coaches/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
+<div id="table">
+    
+    <table class="table striped hovered cell-hovered border bordered">
+        <thead>
+            <tr>
+                <th> # </th>
+                <th> {{ trans('general.forms.name')}} </th>
+                <th> {{ trans('general.active')}} </th>
+                <th> {{ trans_choice('general.menu.companies',2)}} </th>
+                <th> {{ trans_choice('general.actions',2)}} </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $i=0; ?>
+            @foreach ($coaches as $coach)
+            <tr>
+                <td>{{ ++$i }}</td>
+                <td>{{$coach->name}} {{$coach->lastname}}</td>
+                <td>{{ $coach->active ? trans('general.active') : trans('general.inactive') }}</td>
+                <td><span class="company_count" data-id="$coach->user_id">0</span> </td>
+                <td> 
+                    <a href="/coaches/{{$coach->user_id}}/edit" class="button success">{{trans('general.modify')}}</a>
+                    &nbsp;
+                    <button class="button danger delete_item" data-type="users" data-id="{{$coach->user_id}}">{{trans('general.delete')}}</button>
+                    &nbsp;
+                </td>
+            </tr>
+            @endforeach            
+        </tbody>
+    </table>
+</div>
 <hr>
 <script type="text/babel">
 
     $.get('{!! route('companies.index') !!}', function(){},'json')
     .done(function(d){
-        React.render(
-            <CompanyTable list={d.data} />,
-            document.getElementById('table')
-        );
+        
     });
 
 var Tr = React.createClass({

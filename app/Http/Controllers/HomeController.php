@@ -91,6 +91,25 @@ class HomeController extends Controller
         return view('pages.show_users');
     }
 
+    public function coaches()
+    {
+        if ( ! Auth::user()->hasRole("super-admin")){
+            return $this->returnError(403);
+        }
+        
+        $whereClause = ['roles.name' => 'coach' ];
+        $coaches = DB::table('users')
+                ->join('role_user', 'users.user_id', '=', 'role_user.user_id')
+                ->join('roles', 'role_user.role_id', '=', 'roles.id')
+                ->select('users.*')
+                ->where($whereClause)
+                ->get();
+
+        return view('pages.show_coaches',['coaches' => $coaches] );
+
+
+    }
+
     public function companies()
     {
         if ( ! Auth::user()->can("list-companies")){
@@ -304,7 +323,7 @@ class HomeController extends Controller
             return Response::json($Response, 200);
     }
 
-    public static function setPeriod($company_id, $period_id = false)
+    public static function setPeriod($company, $period_id = false)
     {
         if ($period_id) {
             $period = Period::where('period_id','=',$period_id)->first();
@@ -313,15 +332,22 @@ class HomeController extends Controller
             }
         }else{
 
-            $periods = Period::where('company','=', $company_id)->get();
-            $today = (int) date('U');
+            if ($company->current_period) {
+                Session::set('period', $company->current_period);
+                
+            }else{
 
-            foreach ($periods as $period) {
-                $start = strtotime($period->start);
-                $end = strtotime($period->end);
-                if ( ($today >= $start) && ($today <= $end) ) {
-                    Session::set('period', $period->period_id);
-                    break;
+                $periods = Period::where('company','=', $company->company_id)->get();
+                $today = (int) date('U');
+
+                foreach ($periods as $period) {
+                    $start = strtotime($period->start);
+                    $end = strtotime($period->end);
+                    if ( ($today >= $start) && ($today <= $end) ) {
+                        Session::set('period', $period->period_id);
+                        Company::where('company_id', $company->company_id)->update(['current_period' => $period->period_id]);
+                        break;
+                    }
                 }
             }
 
@@ -346,7 +372,7 @@ class HomeController extends Controller
             Session::set('company', $company->company_id);
             Session::set('company_name', $company->commercial_name);
             Session::set('company_logo', $company->logo);
-            $this->setPeriod($company->company_id);
+            $this->setPeriod($company);
             Session::flash('update', ['code' => 200, 'message' => 'Company was updated']);
 
             return redirect("/companies/");

@@ -61,6 +61,45 @@ class UserTableSeeder extends Seeder
 
     	]);
 
+    	$coach1 = User::create([
+    		'name' => 'Coach1',
+			'lastname' => 'Coach',
+    		'email' => 'coach1@gmail.com',
+    		'sex'=> $faker->randomElement($array = array ('M','F')),
+    		'password' => Hash::make('admin'),
+			'active' => 1,
+			'user_id' => $faker->uuid,
+			'employee_number' => $faker->uuid,
+			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/94.jpg'
+
+    	]);
+
+    	$coach2 = User::create([
+    		'name' => 'Coach2',
+			'lastname' => 'Coach',
+    		'email' => 'coach2@gmail.com',
+    		'sex'=> $faker->randomElement($array = array ('M','F')),
+    		'password' => Hash::make('admin'),
+			'active' => 1,
+			'user_id' => $faker->uuid,
+			'employee_number' => $faker->uuid,
+			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/94.jpg'
+
+    	]);
+
+    	$coach3 = User::create([
+    		'name' => 'Coach3',
+			'lastname' => 'Coach',
+    		'email' => 'coach3@gmail.com',
+    		'sex'=> $faker->randomElement($array = array ('M','F')),
+    		'password' => Hash::make('admin'),
+			'active' => 1,
+			'user_id' => $faker->uuid,
+			'employee_number' => $faker->uuid,
+			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/94.jpg'
+
+    	]);
+
     	$champion = User::create([
     		'name' => 'Bill',
 			'lastname' => 'Champion',

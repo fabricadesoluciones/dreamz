@@ -24,6 +24,7 @@ class CreateCompaniesTable extends Migration
             $table->string('rfc');
             $table->string('industry');
             $table->string('current_period');
+            $table->string('coach');
             
             $table->timestamps();
             $table->softDeletes();

@@ -39,6 +39,7 @@ return [
         'assesments' => 'Assesment|Assesments',
         'education' => 'Education',
         'industries' => 'Industry|Industries',
+        'coaches' => 'Coach|Coaches',
     ],
 
 
@@ -103,6 +104,7 @@ return [
     'week' => 'Week',
     'delete' => 'Delete',
     'active' => 'Active',
+    'inactive' => 'Inactive',
     'search' => 'Search',
     'disable' => 'Disable',
     'parent' => 'Parent',

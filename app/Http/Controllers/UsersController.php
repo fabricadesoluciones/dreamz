@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\Company;
 use App\UserDetail;
 use App\EducationLevel;
+use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Response;
@@ -98,6 +100,119 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function createCoach()
+    {
+        $companies = Company::all();
+        return view('pages.create_coach', ['id' => Uuid::generate(4), 'companies' => $companies ]);
+    }
+    public function storeCoach(Request $request, $id)
+    {
+
+        $validateto = [
+                'user_id' => 'required',
+                'name' => 'required',
+                'lastname' => 'required',
+                'email' => 'required|email|unique:users',
+            ];
+        $this->validate($request, $validateto);
+        $post = $request->all();
+        $attributes = ['user_id' => $post['user_id'], 'name' => $post['name'], 'lastname' => $post['lastname'], 'email' => $post['email']];
+        $attributes["active"] = (array_key_exists('active', $post)) ? intval($post["active"]) : 0;
+        $fields = HomeController::returnTableColumns('users');
+        User::create(array_intersect_key($attributes, $fields));
+        UserDetail::create([
+                'user_details_id' => Uuid::generate(4),
+                'user' => $id,
+                'birth_date' => '1988-05-30', 
+                'mobile' => '',
+                'alergies' => '',
+                'blood_type' => '',
+                'emergency_contact' => '',
+                'phone' => '',
+                'admission_date' => '1988-05-30', 
+                'facebook' => "facebook.com/",
+                'twitter' => "twitter.com/@",
+                'instagram' => "instagram.com/",
+                'linkedin' => "linkedin.com/",
+                'googlep' => "googlep.com/"
+
+            ]);
+        $coach_role = Role::where('name','=','coach')->first();
+        $coach_user = User::where('email','=', $post['email'])->first();
+        $coach_user->attachRole($coach_role);
+
+        if ( isset($post['companies'])) {
+            foreach ($post['companies'] as $company) {
+                $updatedcompany = Company::where('company_id','=', $company)->first();
+                $updatedcompany->coach = $id;
+                $updatedcompany->save();
+            }
+        }
+        Session::flash('update', ['code' => 200, 'message' => 'Coach was added']);
+        return redirect('/coaches');
+    }
+
+    public function updateCoach(Request $request, $id)
+    {
+        if ( ! Auth::user()->hasRole('super-admin')) {
+            return HomeController::returnError(403);
+        }
+        $whereClause = ['users.user_id'=> $id,  'roles.name' => 'coach' ];
+        $coach = DB::table('users')
+                ->join('role_user', 'users.user_id', '=', 'role_user.user_id')
+                ->join('roles', 'role_user.role_id', '=', 'roles.id')
+                ->select('users.*')
+                ->where($whereClause)
+                ->first();
+        if ( ! $coach ) {
+            return HomeController::returnError(404);
+        }
+
+        $user_details = UserDetail::where('user', '=', $id)->first();
+        $user = User::where('user_id', '=', $id)->first();
+
+        $validateto = [
+                'name' => 'required',
+                'email' => 'required|email',
+            ];
+
+        $this->validate($request, $validateto);
+        
+        $post = $request->all();
+        $companies = $post['companies'];
+        $user->name = $post['name'];
+        $user->email = $post['email'];
+        $user->active = (array_key_exists('active', $post)) ? intval($post["active"]) : 0;
+        $user_details->birth_date = $post['birth_date'];
+        $user->save();
+        $user_details->save();
+        $companies = $post['companies'];
+        Company::where('coach', '=', $id)->update(['coach' => NULL]);
+
+        foreach ($companies as $company) {
+            $updatedcompany = Company::where('company_id','=', $company)->first();
+            $updatedcompany->coach = $id;
+            $updatedcompany->save();
+        }
+        Session::flash('update', ['code' => 200, 'message' => 'Coach updated']);
+        return redirect("/coaches");
+
+
+    }
+    public function editcoach($id)
+    {
+        if ( ! Auth::user()->hasRole('super-admin')) {
+            return HomeController::returnError(403);
+        }
+        $companies = Company::all();
+        $coach_companies = Company::where('coach', '=', $id)->get();
+        $coach = User::find($id);
+        if ($coach) {
+            return view('pages.edit_coach',['coach' => $coach, 'coachdetails' =>  $coach->details, 'companies' => $companies , 'coach_companies' => $coach_companies]);
+
+        }
+        
+    }
     public function edit($id)
     {
         if ( Auth::user()->user_id == $id || Auth::user()->can("edit-users")){
