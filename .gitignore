@@ -4,6 +4,11 @@ Homestead.yaml
 Homestead.json
 .env
 
+## Sublime
+
+*.sublime-project
+*.sublime-workspace
+
 ## Mac Specific
 
 .DS_Store

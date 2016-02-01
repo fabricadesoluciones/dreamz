@@ -10,7 +10,7 @@
 
 {!! Form::model($objective, array('route' => array('objectives.update', $id), 'method' => 'PUT')) !!}
     <div class="grid">
-                <div class="row cells2">
+                <div class="row cells3">
                     <div class="cell">
                         <label>Objective ID</label>
                         <div class="input-control text full-size">
@@ -23,19 +23,9 @@
                             <input  name="name" type="text" value="{!! $objective->name !!}" >
                         </div>
                     </div>
-                </div>
-                <div class="row cells1">
-                <div class="cell">
-                    <label for="alergies">{{trans('general.description')}}</label> <br>
-                    <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
-                        <textarea cols="200" name="description">{{$objective->description}}</textarea>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-                <div class="row cells4">
                     <div class="cell">
-                        <div class="input-control select">
+                    <br>
+                        <div class="input-control select full-size">
                         <label for="department">{{trans_choice('general.menu.periods',1)}}</label>
                             <select name="period" id="period" data-selected="{{$objective->period}}">
                                  @foreach ($periods as $period)
@@ -44,6 +34,18 @@
                             </select>
                         </div>
                     </div>
+                </div>
+                <div class="row cells1">
+                    <div class="cell">
+                        <label for="alergies">{{trans('general.description')}}</label> <br>
+                        <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
+                            <textarea cols="200" name="description">{{$objective->description}}</textarea>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cells4">
                     <div class="cell">
                         <div class="input-control select">
                         <label for="position">{{trans_choice('general.measuring_unit',1)}}</label>
@@ -57,9 +59,19 @@
                     <div class="cell">
                         <div class="input-control select">
                         <label for="position">{{trans_choice('general.categories',1)}}</label>
-                            <select name="category" id="category" data-selected="{{$objective->category}}">
+                            <select id="oldcategory" data-selected="{{$objective->objective_categorie_id}}">
                             @foreach ($categories as $category)
                                     <option value="{{$category->category_id}}">{{$category->name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div class="input-control select has_subcategory">
+                        <label for="position">{{trans_choice('general.subcategories',1)}}</label>
+                            <select name="subcategory" id="subcategory" data-selected="{{$objective->subcategory}}">
+                            @foreach ($subcategories as $subcategory)
+                                    <option value="{{$subcategory->subcategory_id}}">{{$subcategory->name}}</option>
                             @endforeach
                             </select>
                         </div>
@@ -264,6 +276,26 @@
         }else{
             KPI.daily.value = $(this).val();
         }
+    });
+    $(document).on('change','#oldcategory',function(){
+        $(this).attr('id','category');
+    });
+    $(document).on('change','#category',function(){
+        $.get('/get_subcategories/'+$(this).val(), function(){},'json')
+        .done(function(d){
+            $("#subcategory").select2('destroy'); 
+            $('#subcategory').detach();
+            var select = '<select id="subcategory" name="subcategory">';
+            var subcategories = d.data;
+            for (var i = 0; i < subcategories.length; i++) {
+                select += '<option value="'+subcategories[i].subcategory_id+'">'+subcategories[i].name+'</option>'
+            };            
+            select += '</select>';
+            $('.has_subcategory').append(select);
+
+            $("#subcategory").select2(); 
+
+        });
     });
 
 </script>

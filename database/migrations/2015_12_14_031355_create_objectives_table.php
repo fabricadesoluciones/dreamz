@@ -18,7 +18,7 @@ class CreateObjectivesTable extends Migration
             $table->string('department');
             $table->string('period');
             $table->string('name');
-            $table->string('category');
+            $table->string('subcategory');
             $table->string('description');
             $table->string('measuring_unit');
             $table->string('user');

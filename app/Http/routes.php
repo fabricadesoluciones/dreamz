@@ -31,6 +31,8 @@ Route::get('/measuring_units/create', ['middleware' => 'auth', 'uses' => 'Measur
 Route::get('/tasks/create', ['middleware' => 'auth', 'uses' => 'TasksController@create']);
 Route::get('/dreams/create', ['middleware' => 'auth', 'uses' => 'DreamsController@create']);
 Route::get('/coaches/create', ['middleware' => 'auth', 'uses' => 'UsersController@createCoach']);
+Route::get('/objective_category/create', ['middleware' => 'auth', 'uses' => 'ObjectivesController@createCategory']);
+Route::get('/objective_subcategory/create', ['middleware' => 'auth', 'uses' => 'ObjectivesController@createSubcategory']);
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
 Route::get('/positions', ['middleware' => 'auth', 'uses' => 'HomeController@positions'])->name('positions');
@@ -68,9 +70,13 @@ Route::get('/dreams/{id}/edit', ['middleware' => 'auth', 'uses' => 'DreamsContro
 Route::get('/coaches/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@editcoach']);
 Route::get('/priorities/team', ['middleware' => 'auth', 'uses' => 'PrioritiesController@team'])->name('priorities.team');
 
+Route::get('/get_subcategories/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@get_subcategories'])->name('objectives.get_subcategories');
+
 Route::post('/set_feeling_enabled/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setFeelingEnabled']);
 Route::post('/update_coach/{id}', ['middleware' => 'auth', 'uses' => 'UsersController@updateCoach'])->name('update_coach');
 Route::post('/store_coach/{id}', ['middleware' => 'auth', 'uses' => 'UsersController@storeCoach'])->name('store_coach');
+Route::post('/store_objective_category/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@storeCategory'])->name('store_objective_category');
+Route::post('/store_objective_subcategory/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@storeSubcategory'])->name('store_objective_subcategory');
 
 /* HOME */
 

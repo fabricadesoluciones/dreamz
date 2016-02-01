@@ -1,6 +1,7 @@
 <?php
 
 use App\ObjectiveCategory;
+use App\ObjectiveSubcategory;
 use App\Period;
 use App\Company;
 use App\User;
@@ -8,7 +9,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Faker\Factory as Faker;
 
-class ObjectiveCategoriesTableSeeder extends Seeder
+class ObjectiveSubcategoriesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -24,10 +25,11 @@ class ObjectiveCategoriesTableSeeder extends Seeder
         foreach ($companies as $company) {
 
             foreach (range(1, 4) as $user) {
-                ObjectiveCategory::create([
-                    'category_id' => $faker->uuid,
+                ObjectiveSubcategory::create([
+                    'subcategory_id' => $faker->uuid,
                     'company' => $company->company_id,
                     'name' => $faker->word,
+                    'parent' => ObjectiveCategory::where('company','=',$company->company_id)->get()->random(1)->category_id,
                     'active' => $faker->boolean(70),
                 ]);
             }

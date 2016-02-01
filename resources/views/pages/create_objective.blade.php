@@ -10,7 +10,7 @@
 
 {!! Form::model($user, array('route' => array('objectives.store', $id), 'method' => 'POST')) !!}
     <div class="grid">
-                <div class="row cells2">
+                <div class="row cells3">
                     <div class="cell">
                         <label>Objective ID</label>
                         <div class="input-control text full-size">
@@ -23,19 +23,9 @@
                             <input  name="name" type="text"  >
                         </div>
                     </div>
-                </div>
-                <div class="row cells1">
-                <div class="cell">
-                    <label for="alergies">{{trans('general.description')}}</label> <br>
-                    <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
-                        <textarea cols="200" name="description"></textarea>
-                        <br>
-                        <br>
-                    </div>
-                </div>
-                <div class="row cells4">
                     <div class="cell">
-                        <div class="input-control select">
+                        <br>
+                        <div class="input-control select full-size">
                         <label for="department">{{trans_choice('general.menu.periods',1)}}</label>
                             <select name="period" id="period" >
                                  @foreach ($periods as $period)
@@ -44,6 +34,19 @@
                             </select>
                         </div>
                     </div>
+                </div>
+                <div class="row cells1">
+                    <div class="cell">
+                        <label for="alergies">{{trans('general.description')}}</label> <br>
+                        <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
+                            <textarea cols="200" name="description"></textarea>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cells4">
+                    
                     <div class="cell">
                         <div class="input-control select">
                         <label for="position">{{trans_choice('general.measuring_unit',1)}}</label>
@@ -60,6 +63,16 @@
                             <select name="category" id="category" >
                             @foreach ($categories as $category)
                                     <option value="{{$category->category_id}}">{{$category->name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div class="input-control select has_subcategory">
+                        <label for="position">{{trans_choice('general.subcategories',1)}}</label>
+                            <select name="subcategory" id="subcategory" >
+                            @foreach ($subcategories as $subcategory)
+                                    <option value="{{$subcategory->subcategory_id}}">{{$subcategory->name}}</option>
                             @endforeach
                             </select>
                         </div>
@@ -276,6 +289,23 @@ function returnNotify(msg, title, type){
         }
     });
 
+    $(document).on('change','#category',function(){
+        $.get('/get_subcategories/'+$(this).val(), function(){},'json')
+        .done(function(d){
+            $("#subcategory").select2('destroy'); 
+            $('#subcategory').detach();
+            var select = '<select id="subcategory" name="subcategory">';
+            var subcategories = d.data;
+            for (var i = 0; i < subcategories.length; i++) {
+                select += '<option value="'+subcategories[i].subcategory_id+'">'+subcategories[i].name+'</option>'
+            };            
+            select += '</select>';
+            $('.has_subcategory').append(select);
+
+            $("#subcategory").select2(); 
+
+        });
+    });
 </script>
 
 

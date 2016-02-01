@@ -126,6 +126,7 @@ return [
     'select_this' => 'Select',
     'measuring_unit' => 'Measuring unit|Measuring units',
     'categories' => 'Category|Categories',
+    'subcategories' => 'Subcategory|Subcategories',
     'mine' => 'My|My',
     'semaforo' => 'Level',
     'actual' => 'Actual Result',

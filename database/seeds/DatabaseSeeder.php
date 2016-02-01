@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         'user_details',
         'measuring_units',
         'objective_categories',
+        'objective_subcategories',
         'objectives',
         'objectives_progress',
         'emotions',
@@ -61,6 +62,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MeasuringUnitsTableSeeder::class);
         $this->call(DailyEmotionsTableSeeder::class);
         $this->call(ObjectiveCategoriesTableSeeder::class);
+        $this->call(ObjectiveSubcategoriesTableSeeder::class);
         $this->call(ObjectivesTableSeeder::class);
         $this->call(ObjectivesProgressTableSeeder::class);
         

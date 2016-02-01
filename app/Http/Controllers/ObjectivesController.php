@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Objective;
 use App\ObjectiveCategory;
+use App\ObjectiveSubcategory;
 use App\Priority;
 use App\Period;
 use App\Position;
@@ -109,10 +110,12 @@ class ObjectivesController extends Controller
         }
 
         $user = Auth::user();
-        $periods = Period::where('company','LIKE',"%".$this->company."%")->get();
-        $measuring_units = MeasuringUnit::where('company','LIKE',"%".$this->company."%")->get();
-        $categories = ObjectiveCategory::where('company','LIKE',"%".$this->company."%")->get();
-        return view('pages.create_objective', ['id' => Uuid::generate(4), 'user' => Auth::user(), 'measuring_units' => $measuring_units, 'periods' => $periods, 'categories' => $categories]);
+        $periods = Period::where('company','=',$this->company)->get();
+        $measuring_units = MeasuringUnit::where('company','=',$this->company)->get();
+        $categories = ObjectiveCategory::where('company','=',$this->company)->get();
+        $subcategories = ObjectiveSubcategory::where('company','=',$this->company)->get();
+
+        return view('pages.create_objective', ['id' => Uuid::generate(4), 'user' => Auth::user(), 'measuring_units' => $measuring_units, 'periods' => $periods, 'categories' => $categories, 'subcategories' => $subcategories]);
 
     }
 
@@ -138,6 +141,63 @@ class ObjectivesController extends Controller
         }
 
         return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objectives] , 200);
+    }
+
+    public function createCategory()
+    {
+        if ( ! Auth::user()->hasRole('super-admin') && ! Auth::user()->hasRole('coach') && ! Auth::user()->hasRole('champion')) { return HomeController::returnError(403); }
+
+        return view('pages.create_objective_category', ['id' => Uuid::generate(4), 'user' => Auth::user()] );
+    }
+
+    public function storeCategory(Request $request, $id)
+    {
+        if ( ! Auth::user()->hasRole('super-admin') && ! Auth::user()->hasRole('coach') && ! Auth::user()->hasRole('champion')) { return HomeController::returnError(403); }
+        $attributes = $request->all();
+
+
+         $required = [
+            "category_id" => 'required|unique:objective_categories',
+            "name" => 'required',
+        ];
+        $this->validate($request, $required);
+
+        $attributes = $request->all();
+        $attributes['company'] = $this->company;
+        $attributes['active'] = 1;
+        $fields = HomeController::returnTableColumns('objective_categories');
+        ObjectiveCategory::create(array_intersect_key($attributes, $fields));
+        Session::flash('update', ['code' => 200, 'message' => 'Category was added']);
+        return redirect('/objectives/');
+    }
+
+    public function createSubcategory()
+    {
+        if ( ! Auth::user()->hasRole('super-admin') && ! Auth::user()->hasRole('coach') && ! Auth::user()->hasRole('champion')) { return HomeController::returnError(403); }
+        $categories = ObjectiveCategory::where('company','=',$this->company)->get();
+        return view('pages.create_objective_subcategory', ['id' => Uuid::generate(4), 'user' => Auth::user(), 'categories' => $categories] );
+    }
+
+    public function storeSubcategory(Request $request, $id)
+    {
+        if ( ! Auth::user()->hasRole('super-admin') && ! Auth::user()->hasRole('coach') && ! Auth::user()->hasRole('champion')) { return HomeController::returnError(403); }
+        $attributes = $request->all();
+
+
+         $required = [
+            "subcategory_id" => 'required|unique:objective_subcategories',
+            "name" => 'required',
+            "parent" => 'required',
+        ];
+        $this->validate($request, $required);
+
+        $attributes = $request->all();
+        $attributes['company'] = $this->company;
+        $attributes['active'] = 1;
+        $fields = HomeController::returnTableColumns('objective_subcategories');
+        ObjectiveSubcategory::create(array_intersect_key($attributes, $fields));
+        Session::flash('update', ['code' => 200, 'message' => 'Category was added']);
+        return redirect('/objectives/');
     }
 
     public function getObjectiveSummary($id)
@@ -171,7 +231,7 @@ class ObjectivesController extends Controller
                 'objective_id' => 'required|unique:objectives',
                 'period' => 'required',
                 'name' => 'required',
-                // 'category' => 'required',
+                'subcategory' => 'required',
                 'description' => 'required',
                 'measuring_unit' => 'required',
                 'type' => 'required',
@@ -231,6 +291,17 @@ class ObjectivesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function get_subcategories($id)
+    {
+        if ( ! Auth::user()->can("edit-objectives")){
+            return HomeController::returnError(403);
+        }
+        $data = ObjectiveSubcategory::where('parent', '=', $id)->get();
+        if (!$data) {
+            return HomeController::returnError(404);
+        }
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
+    }
     public function edit($id)
     {
         if ( ! Auth::user()->can("edit-objectives")){
@@ -241,20 +312,22 @@ class ObjectivesController extends Controller
         $data = DB::table('objectives')
             ->join('periods', 'objectives.period', '=', 'periods.period_id')
             ->join('measuring_units', 'objectives.measuring_unit', '=', 'measuring_units.measuring_unit_id')
-            ->join('objective_categories', 'objectives.category', '=', 'objective_categories.category_id')
-            ->select('objectives.*','periods.name AS period_name' ,'measuring_units.name AS measuring_unit_name' ,'objective_categories.name AS objective_categorie_name')
+            ->join('objective_subcategories', 'objectives.subcategory', '=', 'objective_subcategories.subcategory_id')
+            ->join('objective_categories', 'objective_subcategories.parent', '=', 'objective_categories.category_id')
+            ->select('objectives.*','periods.name AS period_name' ,'measuring_units.name AS measuring_unit_name' ,'objective_categories.name AS objective_categorie_name','objective_categories.category_id AS objective_categorie_id','objective_subcategories.name AS objective_subcategorie_name')
             ->where('objectives.objective_id','=', $id)
             ->first();
         if (!$data) {
             return HomeController::returnError(404);
         }
 
-        $periods = Period::where('company','LIKE',"%".$this->company."%")->get();
-        $measuring_units = MeasuringUnit::where('company','LIKE',"%".$this->company."%")->get();
-        $categories = ObjectiveCategory::where('company','LIKE',"%".$this->company."%")->get();
+        $periods = Period::where('company','=',$this->company)->get();
+        $measuring_units = MeasuringUnit::where('company','=',$this->company)->get();
+        $categories = ObjectiveCategory::where('company','=',$this->company)->get();
+        $subcategories = ObjectiveSubcategory::where('company','=',$this->company)->get();
 
 
-        return view('pages.edit_objective', ['id' => $id, 'objective' => $data, 'measuring_units' => $measuring_units, 'periods' => $periods, 'categories' => $categories]);
+        return view('pages.edit_objective', ['id' => $id, 'objective' => $data, 'measuring_units' => $measuring_units, 'periods' => $periods, 'categories' => $categories, 'subcategories' => $subcategories]);
     }
 
     /**
@@ -275,7 +348,7 @@ class ObjectivesController extends Controller
         $validateto = [
                 'period' => 'required',
                 'name' => 'required',
-                'category' => 'required',
+                'subcategory' => 'required',
                 'description' => 'required',
                 'measuring_unit' => 'required',
                 'type' => 'required',

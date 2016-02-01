@@ -127,6 +127,7 @@ return [
     'select_this' => 'Seleccionar',
     'measuring_unit' => 'Unidad de medida|Unidades de medida',
     'categories' => 'Categoría|Categorias',
+    'subcategories' => 'Subcategoría|Subcategorías',
     'mine' => 'Mi|Mis',
     'semaforo' => 'Semáforo',
     'actual' => 'Resultado Actual',

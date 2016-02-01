@@ -1,7 +1,7 @@
 <?php
 
 use App\Objective;
-use App\ObjectiveCategory;
+use App\ObjectiveSubcategory;
 use App\MeasuringUnit;
 use App\Period;
 use App\Company;
@@ -27,10 +27,10 @@ class ObjectivesTableSeeder extends Seeder
 
         foreach ($companies as $company) {
         	$periods = Period::where('company', $company->company_id)->get();
-	        $categories = ObjectiveCategory::where('company','=', $company->company_id)->get();
-	        $flat_categories = [];
-	        foreach ($categories as $category) {
-	        	$flat_categories[] = $category->category_id;
+	        $subcategories = ObjectiveSubcategory::where('company','=', $company->company_id)->get();
+	        $flat_subcategories = [];
+	        foreach ($subcategories as $subcategory) {
+	        	$flat_subcategories[] = $subcategory->subcategory_id;
 	        }
 	        $munits = MeasuringUnit::where('company','=', $company->company_id)->get();
 	        $flat_munits = [];
@@ -47,7 +47,7 @@ class ObjectivesTableSeeder extends Seeder
 						'department' => $user->department,
 						'period' => $period->period_id,
 						'name' => $faker->word,
-						'category' => $faker->randomElement($flat_categories),
+						'subcategory' => $faker->randomElement($flat_subcategories),
 						'description' => $faker->sentence($nbWords = 4),
 						'measuring_unit' => $faker->randomElement($flat_munits),
 						'user' => $user->user_id,
