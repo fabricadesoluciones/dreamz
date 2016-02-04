@@ -1,9 +1,9 @@
 @extends('layouts.master')
 
-@section('title', trans('general.edit').' '.trans_choice('general.menu.periods', 1))
+@section('title', trans('general.new').' '.trans_choice('general.subcategories', 1))
 
 @section('content')
-<h2>{{trans('general.edit')}} {{trans_choice('general.menu.periods', 1)}} </h2>
+<h2>{{trans('general.new')}} {{trans_choice('general.subcategories', 1)}} </h2>
 <hr>
 <div>
     
@@ -38,8 +38,7 @@
             </div>
 
         <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
-        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">{{trans('general.forms.cancel')}}</a>
-           
+        <a href="/objectives"  class="button danger">{{trans('general.forms.cancel')}}</a>           
 {!! Form::close() !!}
 </div>
 

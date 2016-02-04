@@ -40,6 +40,14 @@ class ObjectivesTableSeeder extends Seeder
 	        foreach ($periods as $period) {
 	        	$users = User::where('company', $company->company_id)->get();
 	        	foreach ($users as $user) {
+	        		$target = (int) $faker->numberBetween($min = 1000, $max = 100000);
+	        		$green_percentage = (int) $faker->numberBetween($min = 70, $max = 95);
+	        		$red_percentage = (int) $faker->numberBetween($min = 20, $max = 60);
+	        		$green_value = $target * ( $green_percentage / 100 );
+	        		$red_value = $target * ( $red_percentage / 100 );
+	        		$yellow_ceil = $green_value - 0.01;
+	        		$yellow_floor = $red_value + 0.01;
+
 	        		Objective::create([
 
 						'objective_id' => $faker->uuid,
@@ -52,16 +60,16 @@ class ObjectivesTableSeeder extends Seeder
 						'measuring_unit' => $faker->randomElement($flat_munits),
 						'user' => $user->user_id,
 						'type' => $faker->randomElement(['PERSONAL','DEPARTAMENTO','EMPRESA']),
-						'period_objective' => 9000,
-						'period_green' => '7000',
-						'period_yellow_ceil' => '6999.99',
-						'period_yellow_floor' => '4000.01',
-						'period_red' => '4000',
-						'daily_objective' => 100,
-						'daily_green' => '77',
-						'daily_yellow_ceil' => '76.99',
-						'daily_yellow_floor' => '45.01',
-						'daily_red' => '45',
+						'period_objective' => $target,
+						'period_green' => $green_value,
+						'period_yellow_ceil' => $yellow_ceil,
+						'period_yellow_floor' => $yellow_floor,
+						'period_red' => $red_value,
+						'daily_objective' => $target / 90,
+						'daily_green' => $green_value / 90,
+						'daily_yellow_ceil' => $yellow_ceil / 90,
+						'daily_yellow_floor' => $yellow_floor / 90,
+						'daily_red' => $red_value / 90,
 						'active' => $faker->boolean(70),
 
 					]);

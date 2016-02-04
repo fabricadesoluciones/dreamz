@@ -105,9 +105,6 @@ class ObjectivesController extends Controller
      */
     public function create()
     {
-        if ( ! Auth::user()->can("edit-objectives")){
-            return HomeController::returnError(403);
-        }
 
         $user = Auth::user();
         $periods = Period::where('company','=',$this->company)->get();
@@ -138,6 +135,7 @@ class ObjectivesController extends Controller
             $objective->real = DB::table('objectives_progress')
             ->where($whereClause)
             ->sum('objectives_progress.value');
+            $objective->days = session('elapsed_days') ? session('elapsed_days')  : 0;
         }
 
         return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objectives] , 200);
@@ -209,6 +207,7 @@ class ObjectivesController extends Controller
         $objective->real = DB::table('objectives_progress')
         ->where($whereClause)
         ->sum('objectives_progress.value');
+        $objective->days = session('elapsed_days') ? session('elapsed_days')  : 0;
 
         return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objective] , 200);
     }
@@ -221,11 +220,6 @@ class ObjectivesController extends Controller
      */
     public function store(Request $request)
     {
-        if ( ! Auth::user()->can("edit-objectives")){
-            return HomeController::returnError(403);
-        }
-
-        
 
         $validateto = [
                 'objective_id' => 'required|unique:objectives',
@@ -304,9 +298,6 @@ class ObjectivesController extends Controller
     }
     public function edit($id)
     {
-        if ( ! Auth::user()->can("edit-objectives")){
-            return HomeController::returnError(403);
-        }
 
         $data = Objective::where('objective_id', '=', $id)->first();
         $data = DB::table('objectives')

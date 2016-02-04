@@ -9,7 +9,12 @@
 <div id="table"></div>
 <br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
 <br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
+<style>
+    .emotion_list_img{
+        height: 3em !important;
+    }
 
+</style>
 <hr>
  <script>
  $(document).on("change",".activeitem",function(event) {
@@ -41,6 +46,7 @@ var Tr = React.createClass({
             <tr>
                 <td>{this.props.index + 1}</td>
                 <td><span className="name">{this.props.data.name}</span></td>
+                <td> <img className="emotion_list_img" src={'/img/emociones/'+this.props.data.name+'.svg'} height="25" /></td>
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox" className="activeitem" data-id={this.props.data.active_emotion_id} checked={Boolean(JSON.parse(this.props.data.active))} /> <span className="check"></span> </label> </td> 
 
             </tr>
@@ -67,6 +73,7 @@ var EmotionsTable = React.createClass({
                     <tr>
                         <th>#</th>
                         <th>{{trans('general.forms.name')}}</th>
+                        <th>Ícono</th>
                         <th>{{trans('general.forms.active')}}</th>
                     </tr>
                 </thead>

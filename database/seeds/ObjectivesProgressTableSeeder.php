@@ -31,8 +31,16 @@ class ObjectivesProgressTableSeeder extends Seeder
 	        foreach ($periods as $period) {
 	        	$periods_array[$period->period_id] = $period;
 	        }
+
+        	$current_period = Period::where('company', $company->company_id)->first();
+			$dStart = new DateTime(date('Y-m-d',strtotime(date($current_period->start))));
+			$dEnd  = new DateTime();
+			$dDiff = $dStart->diff($dEnd);
+
 	        foreach ($objectives as $objective) {
-	        	for ($i=0; $i < 90; $i++) {
+
+	        	for ($i=0; $i < $dDiff->days; $i++) {
+
 	        		$this_date = date('Y-m-d', strtotime($periods_array[$objective->period]->start . ' +'.$i.' days'));
 		    		ObjectiveProgress::create([
 						'objectives_progress_id' => $faker->uuid,

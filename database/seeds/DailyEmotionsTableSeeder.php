@@ -38,8 +38,12 @@ class DailyEmotionsTableSeeder extends Seeder
             ->get();
 
 
+            $current_period = Period::where('company', $company->company_id)->first();
+            $dStart = new DateTime(date('Y-m-d',strtotime(date($current_period->start))));
+            $dEnd  = new DateTime();
+            $dDiff = $dStart->diff($dEnd);
 	        foreach ($periods as $period) {
-	        	for ($i=0; $i < 90; $i++) {
+	        	for ($i=0; $i < $dDiff->days; $i++) {
 	        		$this_date = date('Y-m-d', strtotime($period->start . ' +'.$i.' days'));
 			        foreach ($users as $user) {
 		        		$emotion = $faker->randomElement($emotions);

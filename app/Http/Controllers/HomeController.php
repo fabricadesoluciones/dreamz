@@ -328,13 +328,25 @@ class HomeController extends Controller
         if ($period_id) {
             $period = Period::where('period_id','=',$period_id)->first();
             if ($period) {
-                Session::set('period', $period_id);
+                $current_period = Period::where('period_id', $period_id)->first();
+                $dStart = new \DateTime(date('Y-m-d',strtotime(date($current_period->start))));
+                $dEnd  = new \DateTime();
+                $dDiff = $dStart->diff($dEnd);
+
+                Session::set('period', $company->current_period);
+                Session::set('elapsed_days', $dDiff->days);
             }
         }else{
 
             if ($company->current_period) {
+                $current_period = Period::where('period_id', $company->current_period)->first();
+                $dStart = new \DateTime(date('Y-m-d',strtotime(date($current_period->start))));
+                $dEnd  = new \DateTime();
+                $dDiff = $dStart->diff($dEnd);
+
                 Session::set('period', $company->current_period);
-                
+                Session::set('elapsed_days', $dDiff->days);
+
             }else{
 
                 $periods = Period::where('company','=', $company->company_id)->get();

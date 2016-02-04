@@ -57,7 +57,6 @@
 
 
 
-
 <script>
 var angles = [-60,0,70,140,140].reverse()
 function getEmotionsDepartmentSummary(department_id){
@@ -103,6 +102,7 @@ function getObjectivesDepartmentSummary(department_id){
 
     $.get('/get_objective_summary_department/'+department_id, function(){},'json')
     .done(function(d){
+        debugger;
         var objectives = d.data;
 
         objectives.forEach(function(d){
