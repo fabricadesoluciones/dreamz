@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use App\Company;
 use App\Period;
+use App\Dream;
 use App;
 use App\Department;
 use App\DailyEmotion;
@@ -71,7 +72,11 @@ class HomeController extends Controller
                     $departments = Department::where('department_id','=', Auth::user()->department)->get();
                 }
 
-                return view('dashboard', ['user' => Auth::user(), 'departments' => $departments]);
+
+                $whereClause = ['user' => Auth::user()->user_id, 'period' => session('period'), 'dreams.deleted_at' => NULL];
+                
+                $dreams = Dream::where($whereClause)->get();
+                return view('dashboard', ['user' => Auth::user(), 'departments' => $departments, 'dreams' => $dreams ]);
             }
 
         }else{

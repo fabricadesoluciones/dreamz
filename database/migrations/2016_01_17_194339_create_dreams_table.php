@@ -20,6 +20,7 @@ class CreateDreamsTable extends Migration
             $table->string('user');
             $table->string('description');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

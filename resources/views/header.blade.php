@@ -1,7 +1,5 @@
 <style>
-    .hide{
-    display: none;
-}
+    
 .autowidth{
     width: auto;
 }

@@ -70,6 +70,11 @@ Route::get('/dreams/{id}/edit', ['middleware' => 'auth', 'uses' => 'DreamsContro
 Route::get('/coaches/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@editcoach']);
 Route::get('/priorities/team', ['middleware' => 'auth', 'uses' => 'PrioritiesController@team'])->name('priorities.team');
 
+Route::get('/objectives/progress', ['middleware' => 'auth', 'uses' => 'ObjectivesController@progress'])->name('objectives.progress');
+Route::get('/objectives/progress/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@addProgress'])->name('objectives.addprogress');
+Route::get('/objectives/myobjectives', ['middleware' => 'auth', 'uses' => 'ObjectivesController@onlymine'])->name('objectives.onlymine');
+Route::post('/objectives/progress/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@updateProgress'])->name('objectives.update_objective_progress');
+
 Route::get('/get_subcategories/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@get_subcategories'])->name('objectives.get_subcategories');
 
 Route::post('/set_feeling_enabled/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setFeelingEnabled']);

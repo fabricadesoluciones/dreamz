@@ -72,6 +72,11 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Objective','user','user_id');
     }
 
+    public function dreams()
+    {
+        return $this->hasMany('App\Dream','user','user_id');
+    }
+
     public function tasks()
     {
         return $this->hasMany('App\Task','user','user_id');

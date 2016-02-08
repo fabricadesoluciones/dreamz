@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Objective;
 use App\ObjectiveCategory;
 use App\ObjectiveSubcategory;
+use App\ObjectiveProgress;
 use App\Priority;
 use App\Period;
 use App\Position;
@@ -49,9 +50,100 @@ class ObjectivesController extends Controller
 
         $data = DB::table('objectives')
             ->join('users', 'objectives.user', '=', 'users.user_id')
+            ->join('periods', 'objectives.period', '=', 'periods.period_id')
             ->join('measuring_units', 'objectives.measuring_unit', '=', 'measuring_units.measuring_unit_id')
-            ->select('users.user_id', 'users.name AS user_name', 'measuring_units.name AS measuring_unit_name','users.lastname AS user_lastname', 'objectives.*')
+            ->select('users.user_id', 'users.name AS user_name', 'measuring_units.name AS measuring_unit_name','periods.name AS period_name' ,'users.lastname AS user_lastname', 'objectives.*')
             ->where('objectives.department','=', $this->department)
+            ->get();
+        if (!$data) {
+            return HomeController::returnError(404);
+        }
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
+
+    }
+
+    public function progress()
+    {
+        return view('pages.show_my_objectives');
+
+    }
+
+    public function addProgress($id)
+    {
+        $whereClause = ['objectives.objective_id' => $id, 'objectives.deleted_at' => NULL];
+        $objective = DB::table('objectives')
+            ->join('users', 'objectives.user', '=', 'users.user_id')
+            ->join('periods', 'objectives.period', '=', 'periods.period_id')
+            ->join('objective_subcategories', 'objectives.subcategory', '=', 'objective_subcategories.subcategory_id')
+            ->join('objective_categories', 'objective_subcategories.parent', '=', 'objective_categories.category_id')
+            ->join('measuring_units', 'objectives.measuring_unit', '=', 'measuring_units.measuring_unit_id')
+            ->select('users.user_id','users.name AS user_name', 'measuring_units.name AS measuring_unit_name','periods.name AS period_name' ,'users.lastname AS user_lastname', 'objectives.*', 'objective_subcategories.name AS objective_subcategory_name', 'objective_categories.name AS objective_category_name')
+            ->where($whereClause)
+            ->first();
+        $whereClause = ['objectives_progress.objective' => $objective->objective_id, 'objectives_progress.deleted_at' => NULL];
+            $objective->real = DB::table('objectives_progress')
+            ->where($whereClause)
+            ->sum('objectives_progress.value');
+
+        return view('pages.progress_objective',['objective' => $objective]);
+
+    }
+
+    public function updateProgress(Request $request, $id)
+    {
+        $validateto = [
+                'objective' => 'required',
+                'progress' => 'required',
+        ];
+
+        $this->validate($request, $validateto);
+
+        $whereClause = ['objectives.objective_id' => $id, 'objectives.deleted_at' => NULL];
+        $objective = DB::table('objectives')
+            ->join('users', 'objectives.user', '=', 'users.user_id')
+            ->join('periods', 'objectives.period', '=', 'periods.period_id')
+            ->join('objective_subcategories', 'objectives.subcategory', '=', 'objective_subcategories.subcategory_id')
+            ->join('objective_categories', 'objective_subcategories.parent', '=', 'objective_categories.category_id')
+            ->join('measuring_units', 'objectives.measuring_unit', '=', 'measuring_units.measuring_unit_id')
+            ->select('users.user_id','users.name AS user_name', 'measuring_units.name AS measuring_unit_name','periods.name AS period_name' ,'users.lastname AS user_lastname', 'objectives.*', 'objective_subcategories.name AS objective_subcategory_name', 'objective_categories.name AS objective_category_name')
+            ->where($whereClause)
+            ->first();
+
+        if (!$objective) {
+            return HomeController::returnError(404);
+        }
+        
+            ObjectiveProgress::create([
+                'objectives_progress_id' => Uuid::generate(4),
+                'progress_date' => date('Y-m-d H:i:s'),
+                'objective' => $objective->objective_id,
+                'value' => $request['progress'],
+                'company' => $objective->company,
+                'department' => $objective->department,
+                
+            ]);
+
+
+        Session::flash('update', ['code' => 200, 'message' => 'Progress was added']);
+        return redirect('/objectives/');
+
+    }
+
+    public function onlymine()
+    {
+        if ( ! Auth::user()->can("list-objectives")){
+            return HomeController::returnError(403);
+        }
+
+        $whereClause = ['objectives.user' => Auth::user()->user_id, 'objectives.deleted_at' => NULL];
+        $data = DB::table('objectives')
+            ->join('users', 'objectives.user', '=', 'users.user_id')
+            ->join('periods', 'objectives.period', '=', 'periods.period_id')
+            ->join('objective_subcategories', 'objectives.subcategory', '=', 'objective_subcategories.subcategory_id')
+            ->join('objective_categories', 'objective_subcategories.parent', '=', 'objective_categories.category_id')
+            ->join('measuring_units', 'objectives.measuring_unit', '=', 'measuring_units.measuring_unit_id')
+            ->select('users.user_id','users.name AS user_name', 'measuring_units.name AS measuring_unit_name','periods.name AS period_name' ,'users.lastname AS user_lastname', 'objectives.*', 'objective_subcategories.name AS objective_subcategory_name', 'objective_categories.name AS objective_category_name')
+            ->where($whereClause)
             ->get();
         if (!$data) {
             return HomeController::returnError(404);

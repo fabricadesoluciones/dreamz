@@ -55,8 +55,6 @@
 </style>
 
 
-
-
 <script>
 var angles = [-60,0,70,140,140].reverse()
 function getEmotionsDepartmentSummary(department_id){
@@ -102,26 +100,14 @@ function getObjectivesDepartmentSummary(department_id){
 
     $.get('/get_objective_summary_department/'+department_id, function(){},'json')
     .done(function(d){
-        debugger;
         var objectives = d.data;
 
         objectives.forEach(function(d){
-            var props = Object.keys(d);
-            for (var i = 0; i < props.length; i++) {
-                if ( ! isNaN( parseFloat(d[props[i]]) ) ){
-                    d[props[i]] =parseFloat(d[props[i]])
-                }
-            }
-            if (d.real > d.period_green) {
-                d.semaf = 3;
-            }
-            else if (d.real > d.period_yellow_floor) {
-                d.semaf = 2;
-            }else{
-                
-                d.semaf = 1;
-            }
-
+            var cumulative = parseFloat(d.real)/d.days
+            if (cumulative > d.daily_yellow_ceil) { d.semaf = 3; return;}
+            if (cumulative > d.daily_yellow_floor) { d.semaf = 2; return;}
+            d.semaf = 1;
+            
         });
         var sem_dept = objectives.map(function(d){
             return d.semaf
@@ -166,7 +152,7 @@ function getPrioritiesDepartmentSummary(department_id){
     @endforeach
 </div>
 <div class="my_summary">
-    @include('my_summary', array('objectives' => Auth::user()->objectives , 'priorities' => Auth::user()->priorities )) 
+    @include('my_summary', array('objectives' => Auth::user()->objectives , 'priorities' => Auth::user()->priorities , 'dreams' => $dreams )) 
 </div>
 
 @stop

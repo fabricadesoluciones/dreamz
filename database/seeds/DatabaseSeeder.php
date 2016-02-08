@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
         'departments',
         'periods',
         'priorities',
+        'tasks',
+        'task_participants',
+        'dreams',
         'roles',
         'role_user',
         'permissions',
@@ -58,6 +61,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTableSeeder::class);
         $this->call(UserDetailsTableSeeder::class);
         $this->call(PrioritiesTableSeeder::class);
+        $this->call(TasksTableSeeder::class);
+        $this->call(DreamsTableSeeder::class);
         $this->call(EntrustTablesSeeder::class);
         $this->call(MeasuringUnitsTableSeeder::class);
         $this->call(DailyEmotionsTableSeeder::class);

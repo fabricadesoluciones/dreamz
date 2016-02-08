@@ -96,6 +96,13 @@
             <a href="/objectives" title="KPIs">
                 <?php include base_path('resources/svg/kpis.svg'); ?>
             </a>
+            <ul>
+                <li>
+                    <a href="/objectives/progress" title="{{ trans('general.register_progress') }}">
+                        {{trans('general.register_progress')}}
+                    </a>
+                </li>
+            </ul>
         </li>
 
         <li class="menu_link disabled">
