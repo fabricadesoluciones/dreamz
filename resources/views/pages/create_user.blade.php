@@ -48,7 +48,7 @@
                     </div>
                     
                 </div>
-                <div class="row cells3">
+                <div class="row cells4">
                     <div class="cell">
                         <label>Email</label>
                         <div class="input-control text full-size">
@@ -74,9 +74,6 @@
                         </label>
                         
                     </div>
-                </div>
-                
-                <div class="row cells2">
                     <div class="cell">
                         <div class="input-control select">
                         <label for="department">{{trans_choice('general.menu.departments',1)}}</label>
@@ -85,17 +82,11 @@
                             </select>
                         </div>
                     </div>
-                    <div class="cell">
-                        <div class="input-control select">
-                        <label for="position">{{trans_choice('general.menu.positions',1)}}</label>
-                            <select name="position" id="position" >
-                            <option value=""> - </option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
+                
             </div>
         <input type="hidden" name="company" value="{{$user->company}}">
+        <input type="hidden" name="position" value="1">
         <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
         <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">{{trans('general.forms.cancel')}}</a>
            
@@ -117,18 +108,6 @@
         
     });
 
-    $.getJSON( "/companies/{{ session('company') }}/positions", function( response ) {
-        if (response.code == 200) {
-            var records = response.data;
-
-            records.forEach(function(d,i,a){
-                $('select#position').append('<option value="'+d.position_id+'">'+d.name+'</option>')
-            });
-
-
-        }
-
-    });
 </script>
 
 @stop

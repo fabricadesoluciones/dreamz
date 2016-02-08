@@ -87,6 +87,7 @@ return [
         'no_progress' => 'Sin progreso',
         'some_progress' => 'Progresando',
         'completed' => 'Completado',
+        'completed_on' => 'Completado el',
         'validation_error' => 'Error de validación, por favor corrija lo siguiente:',
         'gender' => 'Género',
 

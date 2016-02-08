@@ -87,6 +87,7 @@ return [
         'no_progress' => 'No progress',
         'some_progress' => 'Some progress',
         'completed' => 'Completed',
+        'completed_on' => 'Completed on',
         'validation_error' => 'Validation error, please fix the following:',
         'gender' => 'Gender',
     ],

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Company;
 use App\UserDetail;
+use App\Position;
 use App\EducationLevel;
 use App\Role;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class UsersController extends Controller
             ->join('positions', 'users.position', '=', 'positions.position_id')
             ->join('departments', 'users.department', '=', 'departments.department_id')
             ->select('users.*', 'positions.name AS position_name', 'departments.name AS department_name')
-            ->where('users.company','LIKE',"%".$this->company."%")
+            ->where('users.company', '=', $this->company)
             ->get();
         if (!$data) {
             return HomeController::returnError(404);
@@ -297,11 +298,26 @@ class UsersController extends Controller
         $user = User::where('user_id', '=', $id)->first();
         if ($user) {
             unset($user_attributes["user_id"]);
+
             $user->fill($user_attributes);
             Session::flash('update', ['code' => 200, 'message' => trans('general.http.200u')]);
+
+            $whereClause = ['position_id'=> $user_attributes['position'],  'deleted_at' => NULL];
+            $position = Position::where($whereClause)->first();
+
+            if ($position && $position->boss) {
+                $lead = Role::where('name','=','team_lead')->first();
+                $user->attachRole($lead);
+            }else{
+                $lead = Role::where('name','=','employee')->first();
+                $user->attachRole($lead);
+            }
         }else{
+            $whereClause = ['company' => $this->company, 'boss' => 0 ,  'deleted_at' => NULL];
+            $position = Position::where($whereClause)->first();
             $user_attributes['password'] = Hash::make(rand());
             $user_attributes['company'] = $this->company;
+            $user_attributes['position'] = $position->position_id;
             $user = User::create($user_attributes);
             Session::flash('update', ['code' => 200, 'message' => trans('general.http.200up')]);
         }

@@ -15,8 +15,10 @@
         d.data.forEach(function(d,i,a){
 
 
+            d.done = false;
             if (d.status == 'TERMINADO') {
                 d.text_due = 'fg-grayDark';
+                d.done =  moment(d.updated_at).format("DD/MM/YYYY");
 
             }else{
                 if(moment(d.due_date).isBefore(moment())){
@@ -37,7 +39,16 @@
     });
 
 var Tr = React.createClass({
+getInitialState: function() {
 
+
+    if ( ! this.props.data.done) {
+    this.props.data.done = 'NO COMPLETADO';
+    } 
+    return {
+        data: this.props.data
+    };
+  },
     render: function(){
         return (
             <tr>
@@ -47,6 +58,7 @@ var Tr = React.createClass({
                 <td>{this.props.data.description}</td>
                 <td>{this.props.data.user_name} {this.props.data.user_lastname}</td>
                 <td>{this.props.data.status}</td>
+                <td>{this.props.data.done}</td>
                 <td>{this.props.data.priority}</td>
                 
                     <td> 
@@ -83,6 +95,7 @@ var CompanyTable = React.createClass({
                         <th>{{ trans('general.description') }}</th>
                         <th>{{ trans_choice('general.menu.users', 1) }}</th>
                         <th>Status</th>
+                        <th>{{ trans('general.forms.completed_on') }}</th>
                         <th>{{ trans_choice('general.menu.priorities', 1) }}</th>
                         <th> {{ trans_choice('general.actions',2)}} </th>
                     </tr>

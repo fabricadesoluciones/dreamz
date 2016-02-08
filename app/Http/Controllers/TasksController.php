@@ -51,6 +51,8 @@ class TasksController extends Controller
         }else{
             $whereClause = ['tasks.owner' => Auth::user()->user_id];
         }
+        $whereClause['tasks.deleted_at'] = NULL;
+
         $data = DB::table('tasks')
             ->join('users', 'tasks.owner', '=', 'users.user_id')
             ->select( 'users.name AS user_name', 'users.lastname AS user_lastname', 'tasks.*')
