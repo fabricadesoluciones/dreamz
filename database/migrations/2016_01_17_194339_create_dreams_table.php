@@ -19,6 +19,7 @@ class CreateDreamsTable extends Migration
             $table->string('period');
             $table->string('user');
             $table->string('description');
+            $table->string('subcategory');
             $table->timestamps();
             $table->softDeletes();
         });

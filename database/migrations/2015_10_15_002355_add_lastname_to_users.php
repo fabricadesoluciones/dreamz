@@ -21,24 +21,7 @@ class AddLastnameToUsers extends Migration
             $table->string('employee_number');
             $table->boolean('high_potential');
             $table->string('thumbnail');
-            /*
-
-            TODO: Move to User Details
-
-            $table->string('mobile');
-            $table->string('phone', 45);
-            $table->date('birth_date');
-            $table->string('education');
-            $table->string('blood_type');
-            $table->text('alergies');
-            $table->text('emergency_contact');
-            $table->date('admission_date');
-            $table->string('facebook');
-            $table->string('twitter');
-            $table->string('instagram');
-            $table->string('linkedin');
-            $table->string('googlep');
-            */
+            
             /*
 
             TODO: Move to User Assesments

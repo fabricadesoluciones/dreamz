@@ -270,7 +270,7 @@ class TasksController extends Controller
                 'owner' => 'required',
                 'status' => 'required',
                 'priority' => 'required',
-                'due_date' => 'date_format:Y-m-d|after:yesterday',
+                'due_date' => 'date_format:Y-m-d',
         ];
         
         $this->validate($request, $validateto);

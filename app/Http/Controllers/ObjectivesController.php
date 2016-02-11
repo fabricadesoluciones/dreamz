@@ -391,7 +391,6 @@ class ObjectivesController extends Controller
     public function edit($id)
     {
 
-        $data = Objective::where('objective_id', '=', $id)->first();
         $data = DB::table('objectives')
             ->join('periods', 'objectives.period', '=', 'periods.period_id')
             ->join('measuring_units', 'objectives.measuring_unit', '=', 'measuring_units.measuring_unit_id')

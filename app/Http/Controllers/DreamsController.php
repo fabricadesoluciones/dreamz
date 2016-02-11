@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Task;
 use App\Dream;
+use App\DreamCategory;
+use App\DreamSubcategory;
 use App\Priority;
 use App\Period;
 use App\Position;
@@ -100,45 +102,68 @@ class DreamsController extends Controller
     public function create()
     {
         $periods = Period::where('company','=',$this->company)->get();
-        return view('pages.create_dream', ['id' => Uuid::generate(4), 'periods' => $periods]);
+        $categories = DreamCategory::where('company','=',$this->company)->get();
+        $subcategories = DreamSubcategory::where('company','=',$this->company)->get();
+        return view('pages.create_dream', ['id' => Uuid::generate(4), 'periods' => $periods, 'categories' => $categories, 'subcategories' => $subcategories]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getDepartmentSummary($id)
+    public function createCategory()
     {
+        if ( ! Auth::user()->hasRole('super-admin') && ! Auth::user()->hasRole('coach') && ! Auth::user()->hasRole('champion')) { return HomeController::returnError(403); }
 
-        $period = Period::where('company', '=', $this->company)->first();
-        $whereClause = ['objectives.period' => $period->period_id, 'objectives.type' => 'DEPARTAMENTO', 'objectives.department' => $id];
-        $objectives = DB::table('objectives')
-        ->where($whereClause)
-        ->get();
-
-        foreach ($objectives as $objective) {
-            $whereClause = ['objectives_progress.objective' => $objective->objective_id];
-            $objective->real = DB::table('objectives_progress')
-            ->where($whereClause)
-            ->sum('objectives_progress.value');
-        }
-
-        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objectives] , 200);
+        return view('pages.create_dream_category', ['id' => Uuid::generate(4), 'user' => Auth::user()] );
     }
 
-    public function getObjectiveSummary($id)
+    public function storeCategory(Request $request, $id)
     {
+        if ( ! Auth::user()->hasRole('super-admin') && ! Auth::user()->hasRole('coach') && ! Auth::user()->hasRole('champion')) { return HomeController::returnError(403); }
+        $attributes = $request->all();
 
-        $objective = Objective::where('objective_id','=',$id)->first();
-        
-        $whereClause = ['objectives_progress.objective' => $objective->objective_id];
-        $objective->real = DB::table('objectives_progress')
-        ->where($whereClause)
-        ->sum('objectives_progress.value');
 
-        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objective] , 200);
+         $required = [
+            "category_id" => 'required|unique:dreams_categories',
+            "name" => 'required',
+        ];
+        $this->validate($request, $required);
+
+        $attributes = $request->all();
+        $attributes['company'] = $this->company;
+        $attributes['active'] = 1;
+        $fields = HomeController::returnTableColumns('dreams_categories');
+        DreamCategory::create(array_intersect_key($attributes, $fields));
+        Session::flash('update', ['code' => 200, 'message' => 'Category was added']);
+        return redirect('/dreams/');
     }
+
+    public function createSubcategory()
+    {
+        if ( ! Auth::user()->hasRole('super-admin') && ! Auth::user()->hasRole('coach') && ! Auth::user()->hasRole('champion')) { return HomeController::returnError(403); }
+        $categories = DreamCategory::where('company','=',$this->company)->get();
+        return view('pages.create_dream_subcategory', ['id' => Uuid::generate(4), 'user' => Auth::user(), 'categories' => $categories] );
+    }
+
+    public function storeSubcategory(Request $request, $id)
+    {
+        if ( ! Auth::user()->hasRole('super-admin') && ! Auth::user()->hasRole('coach') && ! Auth::user()->hasRole('champion')) { return HomeController::returnError(403); }
+        $attributes = $request->all();
+
+
+         $required = [
+            "subcategory_id" => 'required|unique:dreams_subcategories',
+            "name" => 'required',
+            "parent" => 'required',
+        ];
+        $this->validate($request, $required);
+
+        $attributes = $request->all();
+        $attributes['company'] = $this->company;
+        $attributes['active'] = 1;
+        $fields = HomeController::returnTableColumns('dreams_subcategories');
+        DreamSubcategory::create(array_intersect_key($attributes, $fields));
+        Session::flash('update', ['code' => 200, 'message' => 'Category was added']);
+        return redirect('/dreams/');
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -189,6 +214,18 @@ class DreamsController extends Controller
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transform($data->toArray())], 200);
     }
 
+    public function get_dream_subcategories($id)
+    {
+        if ( ! Auth::user()->can("edit-emotions")){
+            return HomeController::returnError(403);
+        }
+        $data = DreamSubcategory::where('parent', '=', $id)->get();
+        if (!$data) {
+            return HomeController::returnError(404);
+        }
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -199,10 +236,21 @@ class DreamsController extends Controller
     {
         $periods = Period::where('company','=',$this->company)->get();
         $dream = Dream::where('dreams_id','=',$id)->first();
-        if (!$dream) {
+        $data = DB::table('dreams')
+            ->join('dreams_subcategories', 'dreams.subcategory', '=', 'dreams_subcategories.subcategory_id')
+            ->join('dreams_categories', 'dreams_subcategories.parent', '=', 'dreams_categories.category_id')
+            ->select('dreams.*','dreams_categories.name AS dream_categorie_name','dreams_categories.category_id AS dream_categorie_id','dreams_subcategories.name AS dream_subcategorie_name')
+            ->where('dreams.dreams_id','=', $id)
+            ->first();
+
+        if (!$data) {
             return HomeController::returnError(404);
         }
-        return view('pages.edit_dream', ['id'=> $id, 'dream' => $dream, 'periods' => $periods]);
+
+        $categories = DreamCategory::where('company','=',$this->company)->get();
+        $subcategories = DreamSubcategory::where('company','=',$this->company)->get();
+
+        return view('pages.edit_dream', ['id'=> $id, 'dream' => $data, 'periods' => $periods, 'categories' => $categories, 'subcategories' => $subcategories]);
 
     }
 
@@ -218,6 +266,7 @@ class DreamsController extends Controller
         $validateto = [
                 'description' => 'required',
                 'period' => 'required',
+                'subcategory' => 'required',
         ];
         
         $this->validate($request, $validateto);

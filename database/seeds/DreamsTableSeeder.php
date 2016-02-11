@@ -3,6 +3,7 @@
 use App\User;
 use App\Period;
 use App\Dream;
+use App\DreamSubcategory;
 use App\Company;
 use App\Department;
 use Illuminate\Database\Seeder;
@@ -11,6 +12,7 @@ use Faker\Factory as Faker;
 
 class DreamsTableSeeder extends Seeder
 {
+	
     /**
      * Run the database seeds.
      *
@@ -25,6 +27,11 @@ class DreamsTableSeeder extends Seeder
 
         foreach ($companies as $company) {
         	$periods = Period::where('company', $company->company_id)->get();
+        	$subcategories = DreamSubcategory::where('company','=', $company->company_id)->get();
+	        $flat_subcategories = [];
+	        foreach ($subcategories as $subcategory) {
+	        	$flat_subcategories[] = $subcategory->subcategory_id;
+	        }
 	        foreach ($periods as $period) {
 	        	$users = User::where('company', $company->company_id)->get();
 	        	foreach ($users as $user) {
@@ -35,7 +42,8 @@ class DreamsTableSeeder extends Seeder
 							'department' => $user->department,
 							'period' => $period->period_id,
 							'user' => $user->user_id,
-							'description' => $faker->sentence($nbWords = 4)
+							'description' => $faker->sentence($nbWords = 4),
+							'subcategory' => $faker->randomElement($flat_subcategories),
 	        			]);
 			        }
 	        	}

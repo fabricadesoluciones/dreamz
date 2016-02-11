@@ -30,11 +30,33 @@
                     </div>
                     
                 </div>
-                <div class="row cells1">
+                <div class="row cells3">
                     <div class="cell">
-                        <label for="alergies">{{trans_choice('general.menu.dreams', 1)}}</label> <br>
+                        <label for="description">{{trans_choice('general.menu.dreams', 1)}}</label> <br>
                         <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
                             <textarea cols="80" name="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="cell">
+                    <br>
+                        <div class="input-control select">
+                        <label for="position">{{trans_choice('general.categories',1)}}</label>
+                            <select name="category" id="category" >
+                            @foreach ($categories as $category)
+                                    <option value="{{$category->category_id}}">{{$category->name}}</option>
+                            @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="cell">
+                    <br>
+                        <div class="input-control select has_subcategory">
+                        <label for="position">{{trans_choice('general.subcategories',1)}}</label>
+                            <select name="subcategory" id="subcategory" >
+                            @foreach ($subcategories as $subcategory)
+                                    <option value="{{$subcategory->subcategory_id}}">{{$subcategory->name}}</option>
+                            @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -47,5 +69,25 @@
 </div>
 
 
+<script>
+    $(document).on('change','#category',function(){
+        $.get('/get_dream_subcategories/'+$(this).val(), function(){},'json')
+        .done(function(d){
+            debugger;
+            $("#subcategory").select2('destroy'); 
+            $('#subcategory').detach();
+            var select = '<select id="subcategory" name="subcategory">';
 
+            var subcategories = d.data;
+            for (var i = 0; i < subcategories.length; i++) {
+                select += '<option value="'+subcategories[i].subcategory_id+'">'+subcategories[i].name+'</option>'
+            };            
+            select += '</select>';
+            $('.has_subcategory').append(select);
+
+            $("#subcategory").select2(); 
+
+        });
+    });
+</script>
 @stop

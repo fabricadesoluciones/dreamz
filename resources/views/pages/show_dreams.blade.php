@@ -5,7 +5,14 @@
 @section('content')
 
                 
-<h2>{{trans_choice('general.menu.dreams', 2)}} <a href="/dreams/create" class="button success">{{ trans('general.forms.add_new') }} </a></h2>
+<h2>{{trans_choice('general.menu.dreams', 2)}} <a href="/dreams/create" class="button success">{{ trans('general.forms.add_new') }} </a>
+
+@if ( Auth::user()->hasRole('super-admin') || Auth::user()->hasRole('coach') || Auth::user()->hasRole('champion') )
+<a href="/dream_category/create" class="button success"> {{ trans('general.forms.add_new') }} {{trans_choice('general.categories',1)}} </a>
+<a href="/dream_subcategory/create" class="button success"> {{ trans('general.forms.add_new') }} {{trans_choice('general.subcategories',1)}}</a>
+@endif
+
+</h2>
 <div id="table"></div>
 <br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
 <br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
