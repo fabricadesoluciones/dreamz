@@ -47,7 +47,7 @@ class EmotionsController extends Controller
 
     public function getDepartmentSummary($id)
     {
-        $period = Period::where('company', '=', $this->company)->first();
+        $period = Period::where('period_id' ,'=', session('period'))->first();
         $active_emotions = DB::table('active_emotions')
         ->join('emotions', 'active_emotions.emotion', '=', 'emotions.emotion_id')
         ->select('active_emotions.*', 'emotions.*')
@@ -59,6 +59,22 @@ class EmotionsController extends Controller
         ->get();
         return Response::json(['code'=>200, 'message' => 'OK' ,'active'=> $active_emotions, 'data' => $daily_emotions] , 200);
     }
+
+    public function getCompanySummary()
+    {
+        $period = Period::where('period_id' ,'=', session('period'))->first();
+        $active_emotions = DB::table('active_emotions')
+        ->join('emotions', 'active_emotions.emotion', '=', 'emotions.emotion_id')
+        ->select('active_emotions.*', 'emotions.*')
+        ->where('active_emotions.company','=',$this->company)
+        ->get();
+        $whereClause = ['daily_emotions.period' => $period->period_id, 'daily_emotions.company' => $this->company];
+        $daily_emotions = DB::table('daily_emotions')
+        ->where($whereClause)
+        ->get();
+        return Response::json(['code'=>200, 'message' => 'OK' ,'active'=> $active_emotions, 'data' => $daily_emotions] , 200);
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

@@ -23,5 +23,6 @@ elixir(function(mix) {
 		'vendor/select2.min.js',
 		'vendor/datatables.min.js',
 		'vendor/moment.min.js',
+		'vendor/d3.min.js',
     ]);
 });

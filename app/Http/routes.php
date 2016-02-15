@@ -50,8 +50,11 @@ Route::get('/set_department/{id}', ['middleware' => 'auth', 'uses' => 'HomeContr
 Route::get('/set_feeling/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setFeeling']);
 Route::get('/set_lang/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setLang']);
 Route::get('/get_objective_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getDepartmentSummary']);
+Route::get('/get_objective_summary_company', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getCompanySummary']);
 Route::get('/get_priority_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'PrioritiesController@getDepartmentSummary']);
+Route::get('/get_priority_summary_company', ['middleware' => 'auth', 'uses' => 'PrioritiesController@getCompanySummary']);
 Route::get('/get_emotion_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'EmotionsController@getDepartmentSummary']);
+Route::get('/get_emotion_summary_company', ['middleware' => 'auth', 'uses' => 'EmotionsController@getCompanySummary']);
 Route::get('/get_objective_summary/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getObjectiveSummary']);
 Route::get('/companies/{id}/departments', ['middleware' => 'auth', 'uses' => 'CompaniesController@departments']);
 Route::get('/companies/{id}/positions', ['middleware' => 'auth', 'uses' => 'CompaniesController@positions']);

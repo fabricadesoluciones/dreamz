@@ -71,8 +71,22 @@ class PrioritiesController extends Controller
     public function getDepartmentSummary($id)
     {
 
-        $period = Period::where('company', '=', $this->company)->first();
-        $whereClause = ['priorities.period' => $period->period_id, 'priorities.type' => 'DEPARTAMENTO', 'priorities.department' => $id];
+        $period = Period::where('period_id' ,'=', session('period'))->first();
+        $whereClause = ['priorities.period' => $period->period_id, 'priorities.type' => 'DEPARTAMENTO', 'priorities.department' => $id , 'priorities.deleted_at' => NULL];
+        $priorities = DB::table('priorities')
+        ->where($whereClause)
+        ->get();
+
+        
+
+        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $priorities] , 200);
+    }
+
+    public function getCompanySummary()
+    {
+
+        $period = Period::where('period_id' ,'=', session('period'))->first();
+        $whereClause = ['priorities.period' => $period->period_id, 'priorities.type' => 'EMPRESA', 'priorities.deleted_at' => NULL];
         $priorities = DB::table('priorities')
         ->where($whereClause)
         ->get();

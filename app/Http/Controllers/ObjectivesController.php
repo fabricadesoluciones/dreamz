@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+/*
+use App\Objective; use App\ObjectiveCategory; use App\ObjectiveSubcategory; use App\ObjectiveProgress; use App\Priority; use App\Period; use App\Position; use App\User; use App\MeasuringUnit; use Illuminate\Http\Request; use App\Http\Requests; use Response; use App\Http\Controllers\Controller; use App\Http\Controllers\HomeController; use DB; use Session; use Uuid; use Hash; use Auth;
+$whereClause = ['objectives_progress.objective' => '67ed4e41-1871-3b58-9f45-732df68a106f'];
+$objective_progress = DB::table('objectives_progress')->select('objectives_progress_id','value','updated_at')->where($whereClause)->get();
+*/
 use App\Objective;
 use App\ObjectiveCategory;
 use App\ObjectiveSubcategory;
@@ -216,14 +220,34 @@ class ObjectivesController extends Controller
     public function getDepartmentSummary($id)
     {
 
-        $period = Period::where('company', '=', $this->company)->first();
-        $whereClause = ['objectives.period' => $period->period_id, 'objectives.type' => 'DEPARTAMENTO', 'objectives.department' => $id];
+        $period = Period::where('period_id' ,'=', session('period'))->first();
+        $whereClause = ['objectives.period' => $period->period_id, 'objectives.type' => 'DEPARTAMENTO', 'objectives.department' => $id, 'objectives.deleted_at' => NULL ];
         $objectives = DB::table('objectives')
         ->where($whereClause)
         ->get();
 
         foreach ($objectives as $objective) {
-            $whereClause = ['objectives_progress.objective' => $objective->objective_id];
+            $whereClause = ['objectives_progress.objective' => $objective->objective_id, 'objectives_progress.deleted_at' => NULL ];
+            $objective->real = DB::table('objectives_progress')
+            ->where($whereClause)
+            ->sum('objectives_progress.value');
+            $objective->days = session('elapsed_days') ? session('elapsed_days')  : 0;
+        }
+
+        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objectives] , 200);
+    }
+
+    public function getCompanySummary()
+    {
+
+        $period = Period::where('period_id' ,'=', session('period'))->first();
+        $whereClause = ['objectives.period' => $period->period_id, 'objectives.type' => 'EMPRESA', 'objectives.deleted_at' => NULL ];
+        $objectives = DB::table('objectives')
+        ->where($whereClause)
+        ->get();
+
+        foreach ($objectives as $objective) {
+            $whereClause = ['objectives_progress.objective' => $objective->objective_id, 'objectives_progress.deleted_at' => NULL ];
             $objective->real = DB::table('objectives_progress')
             ->where($whereClause)
             ->sum('objectives_progress.value');
@@ -300,6 +324,7 @@ class ObjectivesController extends Controller
         ->where($whereClause)
         ->sum('objectives_progress.value');
         $objective->days = session('elapsed_days') ? session('elapsed_days')  : 0;
+        $objective->results = DB::table('objectives_progress')->select('objectives_progress_id','value','progress_date')->where($whereClause)->get();
 
         return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objective] , 200);
     }
