@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Company;
+use App\Objective;
 use App\Period;
 use App\Dream;
 use App;
@@ -14,7 +15,7 @@ use App\User;
 use Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Auth; 
+use Auth;  
 use Uuid; 
 use Session; 
 use Response;
@@ -76,7 +77,11 @@ class HomeController extends Controller
                 $whereClause = ['user' => Auth::user()->user_id, 'period' => session('period'), 'dreams.deleted_at' => NULL];
                 
                 $dreams = Dream::where($whereClause)->get();
-                return view('dashboard', ['user' => Auth::user(), 'departments' => $departments, 'dreams' => $dreams ]);
+
+                $whereClause = ['objectives.user' => Auth::user()->user_id, 'period' => session('period'), 'objectives.deleted_at' => NULL];
+                
+                $user_objectives = Objective::where($whereClause)->get();
+                return view('dashboard', ['user' => Auth::user(), 'departments' => $departments,'user_objectives' => $user_objectives, 'dreams' => $dreams ]);
             }
 
         }else{

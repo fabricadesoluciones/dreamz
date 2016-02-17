@@ -300,7 +300,7 @@ function getPrioritiesCompanySummary(){
     </div>
 </div>
 <div class="my_summary">
-    @include('my_summary', array('objectives' => Auth::user()->objectives , 'priorities' => Auth::user()->priorities , 'dreams' => $dreams )) 
+    @include('my_summary', array('objectives' => $user_objectives , 'priorities' => Auth::user()->priorities , 'dreams' => $dreams )) 
 </div>
 
 @stop

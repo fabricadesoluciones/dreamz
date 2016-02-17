@@ -32,11 +32,9 @@ var Tr = React.createClass({
                 <td>{this.props.data.measuring_unit_name}</td>
                 <td>{this.props.data.user_name} {this.props.data.user_lastname}</td>
                 
-                @if(Auth::user()->can('edit-objectives'))
                     <td> 
                         <a href={"/objectives/progress/"+this.props.data.objective_id} className="button success register_progress" data-id={this.props.data.priority_id}>{{trans('general.register_progress')}}</a>
                     </td>
-                @endif
 
             </tr>
 
@@ -66,10 +64,8 @@ var CompanyTable = React.createClass({
                         <th>{{ trans('general.description') }}</th>
                         <th> Unidad </th>
                         <th>{{ trans_choice('general.menu.users', 1) }}</th>
-                        @if(Auth::user()->can('edit-objectives'))
-                            <th> {{ trans_choice('general.actions',2)}} </th>
-                        @endif
-                    </tr>
+                        <th> {{ trans_choice('general.actions',2)}} </th>
+                </tr>
                 </thead>
                 <tbody>
                     {this.props.list.map(function(data, i) {

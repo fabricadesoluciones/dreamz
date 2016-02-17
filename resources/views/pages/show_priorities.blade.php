@@ -50,9 +50,9 @@
                         <label for="department">{{trans('general.select_progress')}}</label>
                             <select name="progress" id="progress">
                                 <option value="0">Reset</option>
-                                <option value="1">{{trans('general.priorities.verde')}}</option>
+                                <option value="3">{{trans('general.priorities.verde')}}</option>
                                 <option value="2">{{trans('general.priorities.amarillo')}}</option>
-                                <option value="3">{{trans('general.priorities.rojo')}}</option>
+                                <option value="1">{{trans('general.priorities.rojo')}}</option>
                                 <option value="4">{{trans('general.priorities.azul')}}</option>
                             </select>
                         </div>

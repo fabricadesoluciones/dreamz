@@ -218,9 +218,12 @@ function renderChart(data){
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     x.domain([data[0].progress_date,data[data.length - 1].progress_date]);
-    y.domain([0,d3.max(data.map(function(d){return d.value}))]);
+    // y.domain([0,d3.max(data.map(function(d){return d.value}))]);
     // y.domain([0,d3.max(cumulativeData.map(function(d){return d.value}))]);
-
+    // y.domain(d3.extent(data, function(d) { return d.value; }));
+    var this_difference = d3.max(data.map(function(d){return d.value})) - d3.min(data.map(function(d){return d.value}));
+    this_difference = Math.min(this_difference,0);
+    y.domain([d3.min(data.map(function(d){return d.value})) - this_difference ,d3.max(data.map(function(d){return d.value})) + this_difference]);
     svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
@@ -275,7 +278,17 @@ function retrieveObjective(objective_id){
         $('#my-objectives tbody').append(row);
         $('.objectives_charts').append('<div class="objective_chart_container needs_chart"></div');
         $('.needs_chart').append('<span class="objective_chart_title">'+objective.name+'</span')
-        renderChart(objective.results);
+        results_difference = [];
+        if (objective.results != objective.results.length) {
+            var objective_array_difference = objective.days - objective.results.length;
+            for (var i = 0; i < objective_array_difference; i++) {
+                results_difference.push({progress_date: moment().subtract(i, 'days').toDate(), value: 0 })}
+
+        results_difference.reverse();
+        objective.results = results_difference.concat(objective.results);
+
+        }
+            renderChart(objective.results);
 
     });
 }
