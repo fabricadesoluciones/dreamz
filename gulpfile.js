@@ -16,6 +16,7 @@ elixir(function(mix) {
     mix.sass(['app.scss']);
     mix.scripts([
         
+		'utilities.js',
 		'vendor/react.min.js',
 		'vendor/react-dom.min.js',
 		'vendor/browser.min.js',
@@ -23,6 +24,7 @@ elixir(function(mix) {
 		'vendor/select2.min.js',
 		'vendor/datatables.min.js',
 		'vendor/moment.min.js',
-		'vendor/d3.min.js',
+		'vendor/highcharts.min.js',
+		'vendor/underscore.min.js',
     ]);
 });

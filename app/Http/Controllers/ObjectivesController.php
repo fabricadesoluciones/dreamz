@@ -324,7 +324,15 @@ class ObjectivesController extends Controller
         ->where($whereClause)
         ->sum('objectives_progress.value');
         $objective->days = session('elapsed_days') ? session('elapsed_days')  : 0;
-        $objective->results = DB::table('objectives_progress')->select('objectives_progress_id','value','progress_date')->where($whereClause)->get();
+        $objective->results = DB::table('objectives_progress')
+            ->select('objectives_progress_id','value','progress_date')
+            ->where($whereClause)
+            ->orderBy('objectives_progress.progress_date', 'ASC')
+            ->get();
+        $whereClause = ['periods.period_id' => $objective->period];
+        $objective->period = DB::table('periods')
+            ->where($whereClause)
+            ->first();
 
         return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objective] , 200);
     }

@@ -18,7 +18,6 @@
         min-width: 600px;
         max-width: 600px;
         height: 400px;
-        border:solid 1px #000;
         position: relative;
     }
 
@@ -168,98 +167,89 @@ var days = {{ session('elapsed_days')}};
 var counter_i = 0;
 
 function renderChart(data){
+
+    var objective  = data;
+    data = objective.results;
     cumulativeData = JSON.parse(JSON.stringify(data));
-    data.forEach(function(d){
-        d.progress_date = moment(d.progress_date).toDate();
-        d.value = parseFloat(d.value);
-    });
+
     var cumulativeValue = 0;
     for (var i = 0; i < cumulativeData.length; i++) {
         cumulativeValue += cumulativeData[i].value * 1;
         cumulativeData[i].value = cumulativeValue * 1;
     };
-    console.log(data);
 
-    var margin = {top: 30, right: 20, bottom: 30, left: 50},
-    width = 600 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    var array_of_data = data.map(function(d){ return [parseInt(moment(d.progress_date).format('x')), parseFloat(d.value)];});
+    var array_of_cumulativeData = cumulativeData.map(function(d){ return [parseInt(moment(d.progress_date).format('x')), parseFloat(d.value)];});
+    var min_of_data = _.min(data.map(function(d){ return parseFloat(d.value);}));
+    var min_of_cumulativeData = _.min(cumulativeData.map(function(d){ return parseFloat(d.value);}));
 
+    $('.needs_chart').highcharts({
+        chart: {
+            zoomType: 'x'
+        },
+        title: {
+            text: objective.name
+        },
+        subtitle: {
+            text: objective.description
+        },
+        xAxis: [{
+            crosshair: true,
+            type: 'datetime',
 
-    var formatDate = d3.time.format("%Y-%m-%d");
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value}'
+            },
+            title: {
+                text: 'Daily'
+            },
+            min:min_of_data - (min_of_data / 10)
+        }, { // Secondary yAxis
+            title: {
+                text: 'Cumulative'
+            },
+            labels: {
+                format: '{value}'
+            },
+            min:min_of_cumulativeData - (min_of_cumulativeData / 10),
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            
+        },
+        series: [{
+            name: 'Daily',
+            type: 'line',
+            data:array_of_data,
+            marker: {
+                width:4,
+                height:4,
+                radius:4,
+                symbol: 'square'
+            },
+            color: '#6AD1BB'
 
-    var x = d3.time.scale()
-        .range([0, width]);
-
-    var y = d3.scale.linear()
-        .range([height, 0]);
-
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .orient("bottom")
-        .innerTickSize(-height)
-        .outerTickSize(0)
-        .tickPadding(10);
-
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left")
-        .innerTickSize(-width)
-        .outerTickSize(0)
-        .tickPadding(10);
-
-    var line = d3.svg.line()
-        .x(function(d) { return x(moment(d.progress_date).toDate()); })
-        .y(function(d) { return y(parseFloat(d.value)); });
-
-    var svg = d3.select(".needs_chart").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    x.domain([data[0].progress_date,data[data.length - 1].progress_date]);
-    // y.domain([0,d3.max(data.map(function(d){return d.value}))]);
-    // y.domain([0,d3.max(cumulativeData.map(function(d){return d.value}))]);
-    // y.domain(d3.extent(data, function(d) { return d.value; }));
-    var this_difference = d3.max(data.map(function(d){return d.value})) - d3.min(data.map(function(d){return d.value}));
-    this_difference = Math.min(this_difference,0);
-    y.domain([d3.min(data.map(function(d){return d.value})) - this_difference ,d3.max(data.map(function(d){return d.value})) + this_difference]);
-    svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
-
-    svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-
-    svg.append('path')
-      .attr('d', line(data))
-      .attr('class', 'line aquamarine')
-
-    // svg.append('path')
-    //   .attr('d', line(cumulativeData))
-    //   .attr('class', 'line blue')
-
-    svg.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "aquamarine bar")
-      .attr("x", function(d) { return x(moment(d.progress_date).toDate()) -3; })
-      .attr("width", "6")
-      .attr("y", function(d) { return y(parseFloat(d.value)) -3 ; })
-      .attr("height", "6");
-
-    // svg.selectAll(".blue.bar")
-    //   .data(cumulativeData)
-    // .enter().append("rect")
-    //   .attr("class", "blue bar")
-    //   .attr("x", function(d) { return x(moment(d.progress_date).toDate()) -3; })
-    //   .attr("width", "6")
-    //   .attr("y", function(d) { return y(parseFloat(d.value)) -3 ; })
-    //   .attr("height", "6");
-
+        }, {
+            name: 'Cumulative',
+            type: 'line',
+            yAxis: 1,
+            data: array_of_cumulativeData,
+            marker: {
+                width:4,
+                height:4,
+                radius:4,
+                symbol: 'square'
+            },
+            color: '#1B9ACB'
+        }]
+    });
     $('.needs_chart').removeClass('needs_chart');
+
 }
 
 function retrieveObjective(objective_id){
@@ -278,17 +268,31 @@ function retrieveObjective(objective_id){
         $('#my-objectives tbody').append(row);
         $('.objectives_charts').append('<div class="objective_chart_container needs_chart"></div');
         $('.needs_chart').append('<span class="objective_chart_title">'+objective.name+'</span')
-        results_difference = [];
-        if (objective.results != objective.results.length) {
-            var objective_array_difference = objective.days - objective.results.length;
-            for (var i = 0; i < objective_array_difference; i++) {
-                results_difference.push({progress_date: moment().subtract(i, 'days').toDate(), value: 0 })}
+        
+        if (objective.days != objective.results.length) {
+            var newresults =[]
+            loop1:
+            for (var i = 0; i < objective.days + 1; i++) {
+                var this_value = 0
+                loop2:
+                for (var j = 0; j < objective.results.length; j++) {
+                    if (moment(objective.results[j].progress_date).format('YYYY-MM-DD') == moment(objective.period.start).add(i, 'days').format('YYYY-MM-DD') ){
+                    this_value = objective.results[j].value;
 
-        results_difference.reverse();
-        objective.results = results_difference.concat(objective.results);
-
+                    break loop2;  
+                    } 
+                }
+                newresults.push(
+                    {
+                        progress_date: moment(objective.period.start).add(i, 'days').format('YYYY-MM-DD HH:mm:ss'),
+                        value:this_value
+                    }
+                )
+            }
+            objective.results = newresults;
         }
-            renderChart(objective.results);
+
+        renderChart(objective);
 
     });
 }
