@@ -65,7 +65,7 @@ var CompanyTable = React.createClass({
                         <th> Unidad </th>
                         <th>{{ trans_choice('general.menu.users', 1) }}</th>
                         <th> {{ trans_choice('general.actions',2)}} </th>
-                </tr>
+                    </tr>
                 </thead>
                 <tbody>
                     {this.props.list.map(function(data, i) {

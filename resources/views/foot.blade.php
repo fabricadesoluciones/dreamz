@@ -129,11 +129,13 @@ function returnNotify(msg, title, type){
           console.log(text);
         }
 
-    $('#lang').select2().on("change", function(e) {
-        var this_val = $(this).val();
-        $.get('/set_lang/'+this_val, function(){},'json')
+    
+
+    $(document).on('click','.lang', function(){
+        var lang = $(this).attr('data-lang');
+        $.get('/set_lang/'+lang, function(){},'json')
         .done(function(d){
-            
+            location.reload();
         });
     });
 

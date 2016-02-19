@@ -135,9 +135,6 @@ class ObjectivesController extends Controller
 
     public function onlymine()
     {
-        if ( ! Auth::user()->can("list-objectives")){
-            return HomeController::returnError(403);
-        }
 
         $whereClause = ['objectives.user' => Auth::user()->user_id, 'objectives.deleted_at' => NULL];
         $data = DB::table('objectives')

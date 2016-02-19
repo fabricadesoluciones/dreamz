@@ -24,7 +24,24 @@
         padding: 1ex;
         background-color: #fff;
     }
+.langs{
+    position: absolute;
+    top: 0em;
+    right: 0;
+    display: flex;
+    width: 75px;
+    justify-content: flex-start;
+    height: 40px;
+    z-index: 2;
+    background-color: rgba(246, 246, 246, 0.68);
+    padding: 0.25ex 0.5ex;
+    box-sizing: content-box;
+    border-radius: 1ex;    
+}
 
+.langs img{
+    cursor:pointer;
+}
 </style>
 <div class="logo">
     <a href="/"><img src="/img/main-logo.svg"></a>
@@ -67,10 +84,16 @@
 </div>
 <div class="company_logo" style="background-image:url({{ Session::get('company_logo')}})">
 
-    <select id="lang" data-selected="{{ Session::get('language')}}">
-        <option value="es">Español</option>
-        <option value="en">English</option>
-    </select>
+    <div class="langs">
+        <img class="lang" src="/img/es.svg" style="-webkit-filter: grayscale(95%);
+    opacity: .75;" data-lang="es" alt=""> 
+        <img class="lang" src="/img/en.svg" style="-webkit-filter: grayscale(95%);
+    opacity: .75;" data-lang="en" alt=""> 
+        
+    </div>
     
 </div>
+<script>
+    $('img[data-lang="{{ Session::get('language')}}"]').removeAttr('style');
+</script>
     @endif
