@@ -15,7 +15,7 @@ class ObjectiveProgress extends Model
      * @var string
      */
 
-    protected $primaryKey = 'objective_progress_id';
+    protected $primaryKey = 'objectives_progress_id';
 	protected $table = 'objectives_progress';
 
 	/**

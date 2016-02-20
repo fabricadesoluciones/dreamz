@@ -133,6 +133,8 @@ return [
     'actual' => 'Actual Result',
     'expected' => 'Expected Result',
     'males' => 'Male|Males',
+    'dates' => 'Date|Dates',
+    'values' => 'Value|Values',
     'females' => 'Female|Females',
     'users' => [
         'super_admin' => 'Super Admin',

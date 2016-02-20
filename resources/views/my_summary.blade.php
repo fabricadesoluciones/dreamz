@@ -185,6 +185,7 @@ function renderChart(data){
 
     $('.needs_chart').highcharts({
         chart: {
+            type: 'spline',
             zoomType: 'x'
         },
         title: {
@@ -224,7 +225,7 @@ function renderChart(data){
         },
         series: [{
             name: 'Daily',
-            type: 'line',
+            type: 'spline',
             data:array_of_data,
             marker: {
                 width:4,
@@ -236,7 +237,7 @@ function renderChart(data){
 
         }, {
             name: 'Cumulative',
-            type: 'line',
+            type: 'spline',
             yAxis: 1,
             data: array_of_cumulativeData,
             marker: {

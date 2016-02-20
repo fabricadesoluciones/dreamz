@@ -135,6 +135,8 @@ return [
     'expected' => 'Resultado Esperado',
     'males' => 'Hombre|Hombres',
     'females' => 'Mujer|Mujeres',
+    'dates' => 'Fecha|Fechas',
+    'values' => 'Valor|Valores',
     'users' => [
         'super_admin' => 'Super Administrador',
         'ceo' => 'CEO',
