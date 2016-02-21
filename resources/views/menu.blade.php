@@ -6,10 +6,12 @@
         </a></li>
 
         <li class="menu_link">
+
             <a title="Administración">
                 <?php include base_path('resources/svg/administracion.svg'); ?>
             </a>
             <ul>
+        @if(! Session::has('original_user'))
                 @if(Auth::user()->can('list-companies'))
                     <li>
                         <a href="/companies" title="{{ trans_choice('general.menu.companies', 2) }}">
@@ -65,6 +67,7 @@
                         {{ trans_choice('general.menu.assesments', 2) }}
                     </a>
                 </li>
+        @endif
                 <li>
                     <a href="/other_users" title="{{trans_choice('general.others', 2)}} {{ trans_choice('general.menu.users', 2) }}">
                         {{trans_choice('general.others', 1)}} {{ trans_choice('general.menu.users', 2) }}
@@ -72,6 +75,7 @@
                 </li>
             </ul>
         </li>
+        @if(! Session::has('original_user'))
         <li class="menu_link">
 
             <a title="{{ trans('general.menu.catalogs') }}">
@@ -97,10 +101,12 @@
             </ul>
         
         </li>
+        @endif
         <li class="menu_link">
             <a href="/objectives" title="KPIs">
                 <?php include base_path('resources/svg/kpis.svg'); ?>
             </a>
+            @if(! Session::has('original_user'))
             <ul>
                 <li>
                     <a href="/objectives/progress" title="{{ trans('general.register_progress') }}">
@@ -108,6 +114,7 @@
                     </a>
                 </li>
             </ul>
+            @endif
         </li>
 
         <li class="menu_link disabled">
@@ -138,11 +145,13 @@
                 </a>
             </li>
         @endif
+        @if(! Session::has('original_user'))
             <li class="menu_link">
                 <a href="/users/{{Auth::user()->user_id}}/edit" title='Mi Perfil'>
                 <?php include base_path('resources/svg/mi-perfil.svg'); ?>
                 </a>
             </li>
+        @endif
 		<li class="menu_link"><a href="/logout" title="Cerrar Sesión">
                 <?php include base_path('resources/svg/cerrar-sesion.svg'); ?>
             </a></li>

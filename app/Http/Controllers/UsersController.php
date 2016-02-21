@@ -55,8 +55,8 @@ class UsersController extends Controller
             return HomeController::returnError(404);
         }
 
+        Session::set('original_user', Auth::user()->user_id);
         Auth::login($newuser);
-
         Session::flash('update', ['code' => 200, 'message' => 'Now logged as '.$newuser->name.' '.$newuser->lastname]);
         return redirect('/home');
     }
