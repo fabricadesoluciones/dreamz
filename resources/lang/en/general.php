@@ -135,6 +135,7 @@ return [
     'males' => 'Male|Males',
     'dates' => 'Date|Dates',
     'values' => 'Value|Values',
+    'others' => 'Other|Others',
     'females' => 'Female|Females',
     'users' => [
         'super_admin' => 'Super Admin',

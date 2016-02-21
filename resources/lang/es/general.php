@@ -137,6 +137,7 @@ return [
     'females' => 'Mujer|Mujeres',
     'dates' => 'Fecha|Fechas',
     'values' => 'Valor|Valores',
+    'others' => 'Otro|Otros',
     'users' => [
         'super_admin' => 'Super Administrador',
         'ceo' => 'CEO',

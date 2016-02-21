@@ -65,6 +65,11 @@
                         {{ trans_choice('general.menu.assesments', 2) }}
                     </a>
                 </li>
+                <li>
+                    <a href="/other_users" title="{{trans_choice('general.others', 2)}} {{ trans_choice('general.menu.users', 2) }}">
+                        {{trans_choice('general.others', 1)}} {{ trans_choice('general.menu.users', 2) }}
+                    </a>
+                </li>
             </ul>
         </li>
         <li class="menu_link">

@@ -34,9 +34,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        if ( ! Auth::user()->can("list-users")){
-            return HomeController::returnError(403);
-        }
+
         
         $data = DB::table('users')
             ->join('positions', 'users.position', '=', 'positions.position_id')
@@ -48,6 +46,32 @@ class UsersController extends Controller
             return HomeController::returnError(404);
         }
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
+    }
+
+    public function setUser($id)
+    {
+        $newuser = User::find($id);
+        if (! $newuser) {
+            return HomeController::returnError(404);
+        }
+
+        Auth::login($newuser);
+
+        Session::flash('update', ['code' => 200, 'message' => 'Now logged as '.$newuser->name.' '.$newuser->lastname]);
+        return redirect('/home');
+    }
+
+    public function otherUsers()
+    {
+        
+        $data = User::where('departmen','=', Auth::user()->department );
+
+        if (!$data) {
+            return HomeController::returnError(404);
+        }
+
+        
+        return view('pages.other_users', ['users' => $data] );
     }
 
     /**

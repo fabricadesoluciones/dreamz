@@ -19,6 +19,7 @@ Route::get('/', function(){return Redirect::route('home'); } );
 Route::get('/home', ['middleware' => 'auth', 'uses' => 'HomeController@index'])->name('home');
 Route::get('/forbidden', ['middleware' => 'auth', 'uses' => 'HomeController@returnForbidden'])->name('forbidden');
 Route::get('/users', ['middleware' => 'auth', 'uses' => 'HomeController@users'])->name('users');
+Route::get('/other_users', ['middleware' => 'auth', 'uses' => 'UsersController@otherUsers'])->name('other_users');
 Route::get('/users/create', ['middleware' => 'auth', 'uses' => 'UsersController@create']);
 Route::get('/companies/create', ['middleware' => 'auth', 'uses' => 'CompaniesController@create']);
 Route::get('/departments/create', ['middleware' => 'auth', 'uses' => 'DepartmentsController@create']);
@@ -92,6 +93,8 @@ Route::post('/store_objective_category/{id}', ['middleware' => 'auth', 'uses' =>
 Route::post('/store_objective_subcategory/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@storeSubcategory'])->name('store_objective_subcategory');
 Route::post('/store_dream_category/{id}', ['middleware' => 'auth', 'uses' => 'DreamsController@storeCategory'])->name('store_dream_category');
 Route::post('/store_dream_subcategory/{id}', ['middleware' => 'auth', 'uses' => 'DreamsController@storeSubcategory'])->name('store_dream_subcategory');
+
+Route::get('/set_user/{id}', ['middleware' => 'auth', 'uses' => 'UsersController@setUser'])->name('users.set_user');
 
 /* HOME */
 
