@@ -130,7 +130,11 @@ span.objective_chart_title {
                             {{trans('general.actual')}}
                         </th>
                         <th>
-                            {{trans('general.semaforo')}}
+                        Period Level
+                            <!-- {{trans('general.semaforo')}} -->
+                        </th>
+                        <th>
+                            Daily Level
                         </th>
 
                     </tr>
@@ -233,7 +237,7 @@ function renderChart(data){
             title: {
                 text: 'Daily'
             },
-            max:objective.weekly_green,
+            // max:objective.weekly_green,
             min:min_of_data - (min_of_data / 10),
             plotLines: [
                 {
@@ -241,18 +245,11 @@ function renderChart(data){
                     color: 'green',
                     dashStyle: 'shortdash',
                     width: 2,
-                    label: {
-                        text: 'Daily green'
-                    }
                 }, {
                     value: objective.daily_red,
                     color: 'red',
                     dashStyle: 'shortdash',
                     width: 2,
-                    label: {
-                        text: 'Daily red',
-                        align: 'right',
-                    }
                 }
             ]
         }, { // Secondary yAxis
@@ -262,26 +259,19 @@ function renderChart(data){
             labels: {
                 format: '{value}'
             },
-            max:objective.period_green,
+            // max:objective.period_green,
             min:min_of_cumulativeData - (min_of_cumulativeData / 10),
             plotLines: [
                 {
                     value: objective.period_green,
                     color: 'green',
-                    dashStyle: 'shortdash',
+                    dashStyle: 'solid',
                     width: 2,
-                    label: {
-                        text: 'Weekly green'
-                    }
                 }, {
                     value: objective.period_red,
                     color: 'red',
-                    dashStyle: 'shortdash',
+                    dashStyle: 'solid',
                     width: 2,
-                    label: {
-                        text: 'Weekly red',
-                        align: 'right',
-                    }
                 }
             ],
             opposite: true
@@ -329,13 +319,10 @@ function retrieveObjective(objective_id){
         counter_i++;
         var row = '<tr>';
         var color_class;
-        var cumulative = parseFloat(objective.real/objective.days)
-            if (cumulative > objective.daily_yellow_ceil) { color_class = 'emerald'; }
-            else if (cumulative > objective.daily_yellow_floor) { color_class = 'yellow'; }
-            else {color_class = 'darkRed';}
-
-        var row = '<tr> <td>'+counter_i+'</td> <td>'+objective.description+'</td> <td>'+objective.period_objective+'</td> <td>'+objective.real+'</td> <td width="30" align="center"> <span class="square bg-'+color_class+'" ></span> </td> </tr>' ;
-        $('#my-objectives tbody').append(row);
+        var cumulative = parseFloat(objective.real)
+        var today_value = 0;
+            
+        
         $('.objectives_charts').append('<div class="objective_chart_container needs_chart"></div');
         $('.needs_chart').append('<span class="objective_chart_title">'+objective.name+'</span')
         
@@ -346,10 +333,13 @@ function retrieveObjective(objective_id){
                 var this_value = 0
                 loop2:
                 for (var j = 0; j < objective.results.length; j++) {
-                    if (moment(objective.results[j].progress_date).format('YYYY-MM-DD') == moment(objective.period.start).add(i, 'days').format('YYYY-MM-DD') ){
-                    this_value = objective.results[j].value;
 
-                    break loop2;  
+                    if (moment(objective.results[j].progress_date).format('YYYY-MM-DD') == moment().format('YYYY-MM-DD') ){
+                        today_value = parseFloat(objective.results[j].value);
+                    }
+                    if (moment(objective.results[j].progress_date).format('YYYY-MM-DD') == moment(objective.period.start).add(i, 'days').format('YYYY-MM-DD') ){
+                        this_value = objective.results[j].value;
+                        break loop2;  
                     } 
                 }
                 newresults.push(
@@ -363,7 +353,16 @@ function retrieveObjective(objective_id){
         }
 
 
-        debugger;
+        if (cumulative > objective.period_yellow_ceil) { color_class = 'emerald'; }
+        else if (cumulative > objective.period_yellow_floor) { color_class = 'yellow'; }
+        else {color_class = 'darkRed';}
+
+        if (today_value > objective.daily_yellow_ceil) { daily_color_class = 'emerald'; }
+        else if (today_value > objective.daily_yellow_floor) { daily_color_class = 'yellow'; }
+        else {daily_color_class = 'darkRed';}
+
+        var row = '<tr> <td>'+counter_i+'</td> <td>'+objective.description+'</td> <td>'+objective.period_objective+'</td> <td>'+objective.real+'</td> <td width="30" align="center"> <span class="square bg-'+color_class+'" ></span> </td><td width="30" align="center"> <span class="square bg-'+daily_color_class+'" ></span> </td> </tr>' ;
+        $('#my-objectives tbody').append(row);
         renderChart(objective);
 
     });
