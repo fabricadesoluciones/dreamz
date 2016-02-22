@@ -253,23 +253,6 @@ function renderChart(data){
                         text: 'Daily red',
                         align: 'right',
                     }
-                },{
-                    value: objective.weekly_green,
-                    color: 'green',
-                    dashStyle: 'shortdash',
-                    width: 2,
-                    label: {
-                        text: 'Weekly green'
-                    }
-                }, {
-                    value: objective.weekly_red,
-                    color: 'red',
-                    dashStyle: 'shortdash',
-                    width: 2,
-                    label: {
-                        text: 'Weekly red',
-                        align: 'right',
-                    }
                 }
             ]
         }, { // Secondary yAxis
@@ -279,7 +262,28 @@ function renderChart(data){
             labels: {
                 format: '{value}'
             },
+            max:objective.period_green,
             min:min_of_cumulativeData - (min_of_cumulativeData / 10),
+            plotLines: [
+                {
+                    value: objective.period_green,
+                    color: 'green',
+                    dashStyle: 'shortdash',
+                    width: 2,
+                    label: {
+                        text: 'Weekly green'
+                    }
+                }, {
+                    value: objective.period_red,
+                    color: 'red',
+                    dashStyle: 'shortdash',
+                    width: 2,
+                    label: {
+                        text: 'Weekly red',
+                        align: 'right',
+                    }
+                }
+            ],
             opposite: true
         }],
         tooltip: {
