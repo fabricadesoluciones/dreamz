@@ -329,19 +329,21 @@ class UsersController extends Controller
             $whereClause = ['position_id'=> $user_attributes['position'],  'deleted_at' => NULL];
             $position = Position::where($whereClause)->first();
 
+            $user->detachRoles($user->roles);
+
             if ($position && $position->boss) {
                 $lead = Role::where('name','=','team_lead')->first();
                 $user->attachRole($lead);
             }else{
-                $lead = Role::where('name','=','employee')->first();
-                $user->attachRole($lead);
+                $employee = Role::where('name','=','employee')->first();
+                $user->attachRole($employee);
             }
         }else{
             $whereClause = ['company' => $this->company, 'boss' => 0 ,  'deleted_at' => NULL];
             $position = Position::where($whereClause)->first();
             $user_attributes['password'] = Hash::make(rand());
             $user_attributes['company'] = $this->company;
-            $user_attributes['position'] = $position->position_id;
+            // $user_attributes['position'] = $position->position_id;
             $user = User::create($user_attributes);
             Session::flash('update', ['code' => 200, 'message' => trans('general.http.200up')]);
         }

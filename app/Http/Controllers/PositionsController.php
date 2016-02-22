@@ -92,7 +92,7 @@ class PositionsController extends Controller
         Position::create(array_intersect_key($attributes, $fields));
 
         Session::flash('update', ['code' => 200, 'message' => 'Position was added']);
-        return redirect("/positions/".$attributes['position_id']."/edit");
+        return redirect(route('positions'));
 
     }
 
@@ -188,7 +188,7 @@ class PositionsController extends Controller
 
         Session::flash('update', ['code' => 200, 'message' => 'Position info was updated']);
         // return back();
-        return redirect("/positions/$id/edit");
+        return redirect(route('positions'));
 
         
     

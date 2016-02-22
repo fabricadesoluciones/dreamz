@@ -84,7 +84,7 @@ class PeriodsController extends Controller
         Period::create(array_intersect_key($period_attributes, $fields));
 
         Session::flash('update', ['code' => 200, 'message' => 'Period was added']);
-        return redirect("/periods/".$attributes['period_id']."/edit");
+        return redirect(route('periods'));
 
 
     }
@@ -150,7 +150,7 @@ class PeriodsController extends Controller
 
         Session::flash('update', ['code' => 200, 'message' => 'Department info was updated']);
         // return back();
-        return redirect("/periods/$id/edit");
+        return redirect(route('periods'));
 
         
     

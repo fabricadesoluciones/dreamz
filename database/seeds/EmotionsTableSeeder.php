@@ -18,7 +18,6 @@ class EmotionsTableSeeder extends Seeder
     {
         
         $faker = Faker::create();
-        $companies = Company::all();
 
 		$emotions = ['agradecido', 'alegre', 'ansioso', 'apasionado', 'emocionado', 'enojado', 'esperanzado', 'estresado', 'frustracion', 'inspirado'];
         	

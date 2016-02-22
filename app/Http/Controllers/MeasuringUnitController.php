@@ -84,7 +84,7 @@ class MeasuringUnitController extends Controller
         $fields = HomeController::returnTableColumns('measuring_units');
         MeasuringUnit::create(array_intersect_key($attributes, $fields));
 
-        return redirect("/measuring_units/".$attributes['measuring_unit_id']."/edit");
+        return redirect(route('measuring_units'));
     }
 
     /**
@@ -155,7 +155,7 @@ class MeasuringUnitController extends Controller
         $measuring_unit->save();
 
         Session::flash('update', ['code' => 200, 'message' => 'Education info was updated']);
-        return redirect("/measuring_units/$id/edit");
+        return redirect(route('measuring_units'));
 
         ///
 

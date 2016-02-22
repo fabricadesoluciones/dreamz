@@ -1,11 +1,13 @@
-<!-- resources/views/auth/password.blade.php -->
 @extends('layouts.master')
 
 @section('title', 'Login')
 
 @section('content')
-<div class="row flex-align-center flex-just-center loginForm">
-    <div class="cell size6">
+
+<div class="login">
+
+    <img src="/img/login-logo.svg" hegiht="294" alt="">
+    <div class="relleno">
         <form method="POST" action="/password/email">
             {!! csrf_field() !!}
 
@@ -23,11 +25,14 @@
             </div>
 
             <div>
-                <button type="submit">
+            <br>
+                <button class="button success" type="submit">
                     Send Password Reset Link
                 </button>
             </div>
         </form>
     </div>
+    </div>
+
 </div>
 @stop

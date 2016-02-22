@@ -83,7 +83,7 @@ class EducationLevelController extends Controller
         $fields = HomeController::returnTableColumns('education_levels');
         EducationLevel::create(array_intersect_key($attributes, $fields));
 
-        return redirect("/education/".$attributes['education_level_id']."/edit");
+        return redirect(route('education_levels'));
     }
 
     /**
@@ -156,7 +156,7 @@ class EducationLevelController extends Controller
         $education->save();
 
         Session::flash('update', ['code' => 200, 'message' => 'Education info was updated']);
-        return redirect("/education/$id/edit");
+        return redirect(route('education_levels'));
 
         ///
 

@@ -96,7 +96,7 @@ class DepartmentsController extends Controller
         Department::create(array_intersect_key($attributes, $fields));
 
         Session::flash('update', ['code' => 200, 'message' => 'Department was updated']);
-        return redirect("/departments/".$attributes['department_id']."/edit");
+        return redirect(route('departments'));
     }
 
     /**
@@ -194,8 +194,7 @@ class DepartmentsController extends Controller
         $department->save();
 
         Session::flash('update', ['code' => 200, 'message' => 'Department info was updated']);
-        return redirect("/departments/$id/edit");
-
+        return redirect(route('departments'));
         ///
     }
 

@@ -220,7 +220,7 @@ class CompaniesController extends Controller
         $company->save();
 
         Session::flash('update', ['code' => 200, 'message' => 'Company was updated']);
-        return redirect("/companies/$id/edit");
+        return redirect(route('companies'));
 
         
     

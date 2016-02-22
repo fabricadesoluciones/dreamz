@@ -190,6 +190,7 @@ class DreamsController extends Controller
 
         Session::flash('update', ['code' => 200, 'message' => 'Dream was added']);
         return redirect("/dreams/".$attributes['dreams_id']."/edit");
+        return redirect(route('dreams'));
     
     
     }
@@ -283,6 +284,7 @@ class DreamsController extends Controller
 
         Session::flash('update', ['code' => 200, 'message' => 'Dream was updated']);
         return redirect("/dreams/$id/edit");
+        return redirect(route('dreams'));
     
     }
 
