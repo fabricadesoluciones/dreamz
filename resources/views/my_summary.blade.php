@@ -250,7 +250,8 @@ function renderChart(data){
                     dashStyle: 'shortdash',
                     width: 2,
                     label: {
-                        text: 'Daily red'
+                        text: 'Daily red',
+                        align: 'right',
                     }
                 },{
                     value: objective.weekly_green,
@@ -266,7 +267,8 @@ function renderChart(data){
                     dashStyle: 'shortdash',
                     width: 2,
                     label: {
-                        text: 'Weekly red'
+                        text: 'Weekly red',
+                        align: 'right',
                     }
                 }
             ]
