@@ -99,9 +99,14 @@ function getEmotionsDepartmentSummary(department_id){
 
         var percentage = ((1 / (emotions.total / maximum))  * 100).toFixed(2)
 
-        $('#depto_'+department_id+' .most_emotion').attr('src', '/img/emociones/'+final_emotion+'.svg' );
-        $('#depto_'+department_id+' .most_emotion').attr('title', final_emotion);
-        $('#depto_'+department_id+' .emotions').append('<span class="percentage"> '+percentage+'% </span' );
+        if ( ! isNaN(percentage)) {
+            $('#depto_'+department_id+' .most_emotion').attr('src', '/img/emociones/'+final_emotion+'.svg' );
+            $('#depto_'+department_id+' .most_emotion').attr('title', final_emotion);
+            $('#depto_'+department_id+' .emotions').append('<span class="percentage"> '+percentage+'% </span' );
+        }else{
+            $('#depto_'+department_id+' .most_emotion').detach();
+            $('#depto_'+department_id+' .emotions').append(' <span class="percentage" style="text-align: center; margin-top: 1em; "> Not enough data </span> ');
+        }
     });
 }
 
@@ -139,9 +144,14 @@ function getEmotionsCompanySummary(){
 
         var percentage = ((1 / (emotions.total / maximum))  * 100).toFixed(2)
 
-        $('#company .most_emotion').attr('src', '/img/emociones/'+final_emotion+'.svg' );
-        $('#company .most_emotion').attr('title', final_emotion);
-        $('#company .emotions').append('<span class="percentage"> '+percentage+'% </span' );
+        if ( ! isNaN(percentage)) {
+            $('#company .most_emotion').attr('src', '/img/emociones/'+final_emotion+'.svg' );
+            $('#company .most_emotion').attr('title', final_emotion);
+            $('#company .emotions').append('<span class="percentage"> '+percentage+'% </span' );
+        }else{
+            $('#company .most_emotion').detach();
+            $('#company .emotions').append(' <span class="percentage" style="text-align: center; margin-top: 1em; "> Not enough data </span> ');
+        }
     });
 }
 function getObjectivesDepartmentSummary(department_id){

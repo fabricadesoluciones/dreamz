@@ -316,8 +316,11 @@ class UsersController extends Controller
 
         $user_attributes["user_id"] = $id;
         $user_attributes["active"] = (array_key_exists('active', $user_attributes)) ? intval($user_attributes["active"]) : 0;
+        $champion = (array_key_exists('champion', $user_attributes)) ? intval($user_attributes["champion"]) : 0;
         $user_attributes["high_potential"] = (array_key_exists('high_potential', $user_attributes)) ? intval($user_attributes["high_potential"]) : 0;
         $user_details_attributes = array_diff($attributes, $user_attributes);
+
+        unset($user_attributes['champion']);
 
         $user = User::where('user_id', '=', $id)->first();
         if ($user) {
@@ -331,14 +334,17 @@ class UsersController extends Controller
 
             $user->detachRoles($user->roles);
 
-            if ($position && $position->boss) {
-                $lead = Role::where('name','=','team_lead')->first();
-                $user->attachRole($lead);
-            }else{
-                $employee = Role::where('name','=','employee')->first();
-                $user->attachRole($employee);
+            if ($champion) {
+                $role = Role::where('name','=','champion')->first();
             }
+            else if ($position && $position->boss) {
+                $role = Role::where('name','=','team_lead')->first();
+            }else{
+                $role = Role::where('name','=','employee')->first();
+            }
+                $user->attachRole($role);
         }else{
+
             $whereClause = ['company' => $this->company, 'boss' => 0 ,  'deleted_at' => NULL];
             $position = Position::where($whereClause)->first();
             $user_attributes['password'] = Hash::make(rand());

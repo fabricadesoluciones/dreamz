@@ -102,6 +102,19 @@
                         </div>
                     </div>
                 </div>
+                @if(Auth::user()->hasRole('coach'))
+                <div class="row cells3">
+                    <div class="cell">
+                        <label>{{trans('general.users.champion')}}</label>
+                        <br>
+                        <label class="switch" style="padding: 1.2ex 0; ">
+                            <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="champion" value="" />
+                            <span class="check"></span>
+                        </label>
+                        
+                    </div>
+                </div>
+                @endif
             </div>
 
             <h3>{{trans('general.forms.user_details')}}</h3>

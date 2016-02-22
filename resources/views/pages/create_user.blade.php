@@ -22,6 +22,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="row cells3">
                     <div class="cell">
                         <label>{{trans('general.forms.name')}}</label>
