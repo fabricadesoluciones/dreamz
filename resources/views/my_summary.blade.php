@@ -213,7 +213,7 @@ function renderChart(data){
     $('.needs_chart').highcharts({
         chart: {
             type: 'spline',
-            zoomType: 'x'
+            zoomType: 'xy'
         },
         title: {
             text: objective.name
