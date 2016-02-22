@@ -166,9 +166,36 @@ span.objective_chart_title {
 var days = {{ session('elapsed_days')}};
 var counter_i = 0;
 
+
 function renderChart(data){
 
     var objective  = data;
+
+    objective.daily_green = parseFloat(objective.daily_green);
+    objective.daily_objective = parseFloat(objective.daily_objective);
+    objective.daily_red = parseFloat(objective.daily_red);
+    objective.daily_yellow_ceil = parseFloat(objective.daily_yellow_ceil);
+    objective.daily_yellow_floor = parseFloat(objective.daily_yellow_floor);
+
+    objective.weekly_green = objective.daily_green * 7;
+    objective.weekly_objective = objective.daily_objective * 7;
+    objective.weekly_red = objective.daily_red * 7;
+    objective.weekly_yellow_ceil = objective.daily_yellow_ceil * 7;
+    objective.weekly_yellow_floor = objective.daily_yellow_floor * 7;
+
+    objective.monthly_green = objective.daily_green * 30;
+    objective.monthly_objective = objective.daily_objective * 30;
+    objective.monthly_red = objective.daily_red * 30;
+    objective.monthly_yellow_ceil = objective.daily_yellow_ceil * 30;
+    objective.monthly_yellow_floor = objective.daily_yellow_floor * 30;
+
+    objective.period_green = parseFloat(objective.period_green);
+    objective.period_objective = parseFloat(objective.period_objective);
+    objective.period_red = parseFloat(objective.period_red);
+    objective.period_yellow_ceil = parseFloat(objective.period_yellow_ceil);
+    objective.period_yellow_floor = parseFloat(objective.period_yellow_floor);
+
+    debugger;
     data = objective.results;
     cumulativeData = JSON.parse(JSON.stringify(data));
 
@@ -206,7 +233,43 @@ function renderChart(data){
             title: {
                 text: 'Daily'
             },
-            min:min_of_data - (min_of_data / 10)
+            max:objective.weekly_green,
+            min:min_of_data - (min_of_data / 10),
+            plotLines: [
+                {
+                    value: objective.daily_green,
+                    color: 'green',
+                    dashStyle: 'shortdash',
+                    width: 2,
+                    label: {
+                        text: 'Daily green'
+                    }
+                }, {
+                    value: objective.daily_red,
+                    color: 'red',
+                    dashStyle: 'shortdash',
+                    width: 2,
+                    label: {
+                        text: 'Daily red'
+                    }
+                },{
+                    value: objective.weekly_green,
+                    color: 'green',
+                    dashStyle: 'shortdash',
+                    width: 2,
+                    label: {
+                        text: 'Weekly green'
+                    }
+                }, {
+                    value: objective.weekly_red,
+                    color: 'red',
+                    dashStyle: 'shortdash',
+                    width: 2,
+                    label: {
+                        text: 'Weekly red'
+                    }
+                }
+            ]
         }, { // Secondary yAxis
             title: {
                 text: 'Cumulative'
@@ -293,6 +356,8 @@ function retrieveObjective(objective_id){
             objective.results = newresults;
         }
 
+
+        debugger;
         renderChart(objective);
 
     });
