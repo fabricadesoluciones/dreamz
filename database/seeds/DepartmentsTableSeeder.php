@@ -29,7 +29,7 @@ class DepartmentsTableSeeder extends Seeder
 					'active' => $faker->boolean(70),
 	        	]);
 	        }
-	        foreach (range(1, 4) as $user) {
+	        foreach (range(1, 2) as $user) {
 	        	Department::create([
 					'department_id' => $faker->uuid,
 					'company' => $company->company_id,

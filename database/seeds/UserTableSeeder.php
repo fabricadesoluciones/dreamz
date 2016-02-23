@@ -161,7 +161,7 @@ class UserTableSeeder extends Seeder
             $departments = Department::where('company','=', $company->company_id)->get();
             foreach ($departments as $department) {
             	$i = 0;
-		        foreach (range(1, 10) as $user) {
+		        foreach (range(1, 4) as $user) {
 	            	if(!$i){
 	            		$position = Position::where('name', '=', 'boss')->where('company','=',$company->company_id)->first()->position_id;
 	            	}else{
