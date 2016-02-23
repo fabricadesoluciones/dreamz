@@ -1,12 +1,13 @@
-<!-- resources/views/auth/reset.blade.php -->
-
 @extends('layouts.master')
 
 @section('title', 'Login')
 
 @section('content')
-<div class="row flex-align-center flex-just-center loginForm">
-    <div class="cell size6">
+
+<div class="login">
+
+    <img src="/img/login-logo.svg" hegiht="294" alt="">
+    <div class="relleno">
         <form method="POST" action="/password/reset">
             {!! csrf_field() !!}
             <input type="hidden" name="token" value="{{ $token }}">
@@ -35,10 +36,12 @@
             </div>
 
             <div>
-                <button type="submit">
+                <button type="submit" class="button success">
                     Reset Password
                 </button>
             </div>
         </form>
     </div>
+
 </div>
+@stop

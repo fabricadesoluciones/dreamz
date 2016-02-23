@@ -196,7 +196,7 @@ class TasksController extends Controller
         Task::create(array_intersect_key($attributes, $fields));
 
         Session::flash('update', ['code' => 200, 'message' => 'Task was created']);
-        return redirect("/tasks/".$attributes['task_id']."/edit");
+        return redirect(route('tasks'));
     
     
     }
@@ -283,7 +283,7 @@ class TasksController extends Controller
         $objective->save();
 
         Session::flash('update', ['code' => 200, 'message' => 'Task was updated']);
-        return redirect("/tasks/$id/edit");
+        return redirect(route('tasks'));
     
     }
 
