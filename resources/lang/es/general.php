@@ -176,6 +176,8 @@ return [
         'lesser' => 'Menor a: ',
         'period_target' => 'Semáforos para el período: ',
         'daily_target' => 'Semáforos por día: ',
+        'ignore' => 'Éste objetivo es personal y no está alineado a las metas de mi departamento ni de la empresa.',
+        'inverted_goals' => 'Metas Invertidas (Menor es mejor)',
     ],
 
 ];

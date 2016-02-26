@@ -36,6 +36,17 @@
                     </div>
                 </div>
                 <div class="row cells1">
+                    
+                    <div class="cell">
+                        <label>{{trans('general.objectives.ignore')}}</label>
+                        <br>
+                        <label class="switch" style="padding: 1.2ex 0; ">
+                            <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="ignore" value="" />
+                            <span class="check"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row cells1">
                     <div class="cell">
                         <label for="alergies">{{trans('general.description')}}</label> <br>
                         <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
@@ -77,16 +88,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="cell">
-                        <div class="input-control select">
-                        <label for="type">{{trans_choice('general.types', 1)}}</label>
-                            <select name="type" id="type" >
-                                <option value="EMPRESA">{{trans_choice('general.menu.companies', 1)}}</option>
-                                <option value="DEPARTAMENTO">{{trans_choice('general.menu.departments', 1)}}</option>
-                                <option value="PERSONAL">{{trans('general.personal')}}</option>
-                            </select>
-                        </div>
-                    </div>
+                    
                 </div>
                 
                 
@@ -97,76 +99,83 @@
                 
             </div>
             <div class="grid">
-                <h3>Semáforos para el período</h3>    
+                <h3>{{trans('general.objectives.period_target')}}</h3>    
                 <hr>
                 <br>
-                <div class="row cells1">
+                <div class="row cells2">
+                    <div class="cell">
+                        <div class="">
+                        <label for="department">{{trans('general.objectives.inverted_goals')}}</label>
+                        <br>
+                        <input type="checkbox" onchange="if(this.checked) {this.value=1; KPI.type = 'inverted'}else{this.value=0; KPI.type = 'normal'}" name="type" value="" />
+                        </div>
+                    </div>
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Objetivo</label>
-                            <input type="number" pattern="[0-9.,]+" step="0.01" name="period_objective" id="period_objective"  />
+                        <label for="department">{{trans('general.objectives.target')}}</label>
+                            <input type="number" value="0" pattern="[0-9.,]+" step="0.01" name="period_objective" id="period_objective"  />
                         </div>
                     </div>
                 </div>
                 <div class="row cells3 inlined">
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Verde</label>
-                           Mayor o igual a:  <input   class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="period_green" id="period_green" />
+                        <label for="department">{{trans('general.objectives.green')}}</label>
+                           <input   class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" name="period_green" id="period_green" />
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Rojo</label>
-                           Menor a:   <input  class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="period_red" id="period_red" />
+                        <label for="department">{{trans('general.objectives.red')}}</label>
+                           <input  class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" name="period_red" id="period_red" />
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Amarillo</label> 
-                            <input class="auto" type="number" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="period_yellow_ceil" id="period_yellow_ceil" /> - 
-                            <input class="auto" type="number" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="period_yellow_floor" id="period_yellow_floor" />
+                        <label for="department">{{trans('general.objectives.yellow')}}</label> 
+                            <input class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="period_yellow_ceil" id="period_yellow_ceil" /> - 
+                            <input class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="period_yellow_floor" id="period_yellow_floor" />
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="grid">
-                <h3>Semáforos por día</h3>    
+                <h3>{{trans('general.objectives.daily_target')}}</h3>    
                 <hr>
                 <br>
                 <div class="row cells1">
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Objetivo</label>
-                            <input type="number" pattern="[0-9.,]+" step="0.01" name="daily_objective" id="daily_objective" />
+                        <label for="department">{{trans('general.objectives.target')}}</label>
+                            <input type="number" value="0" pattern="[0-9.,]+" step="0.01" name="daily_objective" id="daily_objective" />
                         </div>
                     </div>
                 </div>
                 <div class="row cells3 inlined">
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Verde</label>
-                           Mayor o igual a:  <input   class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="daily_green" id="daily_green" />
+                        <label for="department">{{trans('general.objectives.green')}}</label>
+                           Mayor o igual a:  <input   class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" name="daily_green" id="daily_green" />
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Rojo</label>
-                           Menor a:   <input  class="auto" type="number" pattern="[0-9.,]+" step="0.01" name="daily_red" id="daily_red" />
+                        <label for="department">{{trans('general.objectives.red')}}</label>
+                           Menor a:   <input  class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" name="daily_red" id="daily_red" />
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control text">
-                        <label for="department">Valor Amarillo</label> 
-                            <input class="auto" type="number" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="daily_yellow_ceil" id="daily_yellow_ceil" /> - 
-                            <input class="auto" type="number" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="daily_yellow_floor" id="daily_yellow_floor" />
+                        <label for="department">{{trans('general.objectives.yellow')}}</label> 
+                            <input class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="daily_yellow_ceil" id="daily_yellow_ceil" /> - 
+                            <input class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" readonly="readonly" name="daily_yellow_floor" id="daily_yellow_floor" />
                         </div>
                     </div>
                 </div>
             </div>
 
-        <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
+        <input type="button" class="success validate" value="{{trans('general.forms.submit')}}">
         <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">{{trans('general.forms.cancel')}}</a>
            
 {!! Form::close() !!}
@@ -185,110 +194,139 @@ function returnNotify(msg, title, type){
     var
     
     KPI = {}
+    KPI.type = 'normal';
     KPI.period = {},
     KPI.daily = {},
-    KPI.period.value = parseFloat($('#period_objective').val()).toFixed(2),
-    KPI.period.green = parseFloat($('#period_green').val()).toFixed(2),
-    KPI.period.red = parseFloat($('#period_red').val()).toFixed(2);
-    KPI.daily.value = parseFloat($('#daily_objective').val()).toFixed(2),
-    KPI.daily.green = parseFloat($('#daily_green').val()).toFixed(2),
-    KPI.daily.red = parseFloat($('#daily_red').val()).toFixed(2);
+    KPI.period.target_value = 0;
+    KPI.period.green = 0;
+    KPI.period.red = 0;
+    KPI.daily.target_value = 0;
+    KPI.daily.green = 0;
+    KPI.daily.red = 0;
 
-    $(document).on('blur','#period_red',function(){
-        var red = parseFloat((parseFloat($(this).val()) + .01).toFixed(2));
-        if (isNaN(red)) { returnNotify('El número es inválido'); $('#period_red').val(KPI.period.red); return false; };
-        if (red >= KPI.period.green) {  
 
-            $.Notify({
-                caption:'Error',
-                type:'alert',
-                content: 'El Valor Rojo debe ser menor que el valor verde',
-            }); 
-            $('#period_red').val(KPI.period.red);
-        }else{
-
-            KPI.period.red = $(this).val();
-            $('#period_yellow_floor').val(red);
+    KPI.green_valid = function(obj){
+        switch(KPI.type) {
+            case 'normal':
+                if ( !!obj.green && ! isNaN(obj.green) &&  obj.green >= obj.red && obj.green <= obj.target_value) return true;
+                break;
+            case 'inverted':
+                if ( !!obj.green && ! isNaN(obj.green) &&  obj.green <= obj.red && obj.green >= obj.target_value) return true;
+                break;
         }
+
+        console.log('INVALID GREEN',obj);
+        return false;
+    }
+
+    KPI.red_valid = function(obj){
+        switch(KPI.type) {
+            case 'normal':
+                if ( !!obj.red && ! isNaN(obj.red) && obj.red <= obj.green) return true;
+                break;
+            case 'inverted':
+                if ( !!obj.red && ! isNaN(obj.red) && obj.red >= obj.green) return true;
+                break;
+        }
+
+        console.log('INVALID RED',obj);
+        return false;
+    }
+
+    KPI.period_valid = function(obj){
+        switch(KPI.type) {
+            case 'normal':
+                if ( !!obj.target_value && ! isNaN(obj.target_value) &&  obj.target_value >= obj.green && obj.target_value >= obj.red) return true;
+                break;
+            case 'inverted':
+                if ( !!obj.target_value && ! isNaN(obj.target_value) &&  obj.target_value <= obj.green && obj.target_value <= obj.red) return true;
+                break;
+        }
+        console.log('INVALID TARGET',obj);
+
+        return false;
+    }
+
+    var validateObjectives = function(){
+
+        if (
+                KPI.green_valid(KPI.daily) &&
+                KPI.red_valid(KPI.daily) &&
+                KPI.period_valid(KPI.daily) &&
+                KPI.green_valid(KPI.period) &&
+                KPI.red_valid(KPI.period) &&
+                KPI.period_valid(KPI.period)
+            ){
+
+            var daily_ceil = KPI.daily.green - .01;
+            var period_ceil = KPI.period.green - .01;
+            var daily_floor = KPI.daily.red + .01;
+            var period_floor = KPI.period.red + .01;
+
+            if (KPI.type == 'inverted') {
+                var daily_floor = KPI.daily.red - .01;
+                var period_floor = KPI.period.red - .01;
+                var daily_ceil = KPI.daily.green + .01;
+                var period_ceil = KPI.period.green + .01;
+            }
+            
+            $('#daily_yellow_floor').val(daily_floor);
+            $('#daily_yellow_ceil').val(daily_ceil);
+            $('#period_yellow_floor').val(period_floor);
+            $('#period_yellow_ceil').val(period_ceil);
+
+            return true;
+        }
+        return false;
+
+    }
+
+    $(document).on('change','#period_red',function(){
+        if ( isNaN( $(this).val() ) ) return false;
+        KPI.period.red = parseFloat($(this).val());
+        KPI.daily.red = KPI.period.red / 90;
+        $('#daily_red').val(KPI.daily.red);
     });
 
-    $(document).on('blur','#period_green',function(){
-        var green = parseFloat((parseFloat($(this).val()) - .01).toFixed(2));
-        if (isNaN(green)) { returnNotify('El número es inválido'); $('#period_green').val(KPI.period.green); return false; };
-        if (green <= KPI.period.red) {  
-
-            returnNotify('El Valor Verde debe ser mayor que el valor rojo')
-            $('#period_green').val(KPI.period.green);
-        }else if(green >= KPI.period.value){
-            returnNotify('El Valor Verde no debe ser mayor que el valor objetivo')
-            $('#period_green').val(KPI.period.green);
-        }else{
-
-            KPI.period.green = $(this).val();
-            $('#period_yellow_ceil').val(green);
-        }
-    });
-    $(document).on('blur','#period_objective',function(){
-        var target_value = parseFloat((parseFloat($(this).val())).toFixed(2));
-        if (isNaN(target_value)) { returnNotify('El número es inválido'); $('#period_objective').val(KPI.period.value); return false; };
-        if (target_value < KPI.period.green) {  
-
-            returnNotify('El Valor Objetivo debe ser mayor o igual que el valor verde')
-            $('#period_objective').val(KPI.period.value);
-        }else if ((target_value / 90) < KPI.daily.green) {  
-
-            returnNotify('El Valor Objetivo diario debe ser mayor o igual que el valor verde diario')
-            $('#period_objective').val(KPI.period.value);
-        }else{
-            KPI.period.value = target_value;
-            KPI.daily.value = parseFloat(parseFloat(target_value / 90).toFixed(2));
-            $('#daily_objective').val(KPI.daily.value );
-        }
+    $(document).on('change','#period_green',function(){
+        if ( isNaN( $(this).val() ) ) return false;
+        KPI.period.green = parseFloat($(this).val());
+        KPI.daily.green = KPI.period.green / 90;
+        $('#daily_green').val(KPI.daily.green);
     });
 
-
-    $(document).on('blur','#daily_red',function(){
-        var red = parseFloat((parseFloat($(this).val()) + .01).toFixed(2));
-        if (isNaN(red)) { returnNotify('El número es inválido'); $('#daily_red').val(KPI.daily.red); return false; };
-        if (red >= KPI.daily.green) {  
-
-            returnNotify('El Valor Rojo debe ser menor que el valor verde')
-            $('#daily_red').val(KPI.daily.red);
-        }else{
-
-            KPI.daily.red = $(this).val();
-            $('#daily_yellow_floor').val(red);
-        }
+    $(document).on('change','#period_objective',function(){
+        if ( isNaN( $(this).val() ) ) return false;
+        KPI.period.target_value = parseFloat($(this).val());
+        KPI.daily.target_value = KPI.period.target_value / 90;
+        $('#daily_objective').val(KPI.daily.target_value);
     });
 
-    $(document).on('blur','#daily_green',function(){
-        var green = parseFloat((parseFloat($(this).val()) - .01).toFixed(2));
-        if (isNaN(green)) { returnNotify('El número es inválido'); $('#daily_green').val(KPI.daily.green); return false; };
-        if (green <= KPI.daily.red) {  
-
-            returnNotify('El Valor Verde debe ser mayor que el valor rojo')
-            $('#daily_green').val(KPI.daily.green);
-        }else if(green >= KPI.daily.value){
-            returnNotify('El Valor Verde no debe ser mayor que el valor objetivo')
-            $('#daily_green').val(KPI.daily.green);
-        }else{
-
-            KPI.daily.green = $(this).val();
-            $('#daily_yellow_ceil').val(green);
-        }
+    $(document).on('change','#daily_red',function(){
+        if ( isNaN( $(this).val() ) ) return false;
+        KPI.daily.red = parseFloat($(this).val());
     });
+
+    $(document).on('change','#daily_green',function(){
+        if ( isNaN( $(this).val() ) ) return false;
+        KPI.daily.green = parseFloat($(this).val());
+    });
+
     $(document).on('blur','#daily_objective',function(){
-        var green = parseFloat((parseFloat($(this).val())).toFixed(2));
-        if (isNaN(green)) { returnNotify('El número es inválido'); $('#daily_objective').val(KPI.daily.value); return false; };
-        if (green < KPI.daily.green) {  
-
-            returnNotify('El Valor Objetivo debe ser mayor o igualque el valor verde')
-            $('#daily_objective').val(KPI.daily.value);
-        }else{
-            KPI.daily.value = $(this).val();
+        if ( isNaN( $(this).val() ) ) return false;
+        KPI.daily.target_value = parseFloat($(this).val());
+    });
+    $(document).on('click','input.validate',function(){
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+        if (! validateObjectives()){
+            returnNotify('Por favor revise los valores para los semáforos de objetivos');
+        }
+        else{
+            document.querySelector('form').submit();
         }
     });
 
+ 
     $(document).on('change','#category',function(){
         $.get('/get_subcategories/'+$(this).val(), function(){},'json')
         .done(function(d){

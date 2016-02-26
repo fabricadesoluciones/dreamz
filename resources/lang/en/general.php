@@ -176,6 +176,8 @@ return [
         'lesser' => 'Less than: ',
         'period_target' => 'Target Values for Period: ',
         'daily_target' => 'Daily Target Values: ',
+        'ignore' => 'This objective is personal and is not aligned to the goals of my department or company.',
+        'inverted_goals' => 'Inverted goals (Lower is better)',
     ]
 
 ];

@@ -34,6 +34,7 @@ class CreateObjectivesTable extends Migration
             $table->float('daily_yellow_floor',16,4);
             $table->float('daily_red',16,4);
             $table->boolean('active');
+            $table->boolean('ignore');
             $table->timestamps();
             $table->softDeletes();
         });

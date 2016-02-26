@@ -52,12 +52,14 @@ class ObjectivesController extends Controller
             return HomeController::returnError(403);
         }
 
+        $whereClause = ['objectives.department' => $this->department, 'objectives.period' => session('period') , 'objectives.deleted_at' => NULL];
+
         $data = DB::table('objectives')
             ->join('users', 'objectives.user', '=', 'users.user_id')
             ->join('periods', 'objectives.period', '=', 'periods.period_id')
             ->join('measuring_units', 'objectives.measuring_unit', '=', 'measuring_units.measuring_unit_id')
             ->select('users.user_id', 'users.name AS user_name', 'measuring_units.name AS measuring_unit_name','periods.name AS period_name' ,'users.lastname AS user_lastname', 'objectives.*')
-            ->where('objectives.department','=', $this->department)
+            ->where($whereClause)
             ->get();
         if (!$data) {
             return HomeController::returnError(404);
@@ -148,7 +150,7 @@ class ObjectivesController extends Controller
             return HomeController::returnError(403);
         }
 
-        $whereClause = ['objectives.user' => Auth::user()->user_id, 'objectives.deleted_at' => NULL];
+        $whereClause = ['objectives.user' => Auth::user()->user_id, 'objectives.period' => session('period') , 'objectives.deleted_at' => NULL];
         $data = DB::table('objectives')
             ->join('users', 'objectives.user', '=', 'users.user_id')
             ->join('periods', 'objectives.period', '=', 'periods.period_id')
@@ -230,7 +232,7 @@ class ObjectivesController extends Controller
     {
 
         $period = Period::where('period_id' ,'=', session('period'))->first();
-        $whereClause = ['objectives.period' => $period->period_id, 'objectives.type' => 'DEPARTAMENTO', 'objectives.department' => $id, 'objectives.deleted_at' => NULL ];
+        $whereClause = ['objectives.period' => $period->period_id, 'objectives.ignore' => 1, 'objectives.department' => $id, 'objectives.deleted_at' => NULL ];
         $objectives = DB::table('objectives')
         ->where($whereClause)
         ->get();
@@ -250,7 +252,7 @@ class ObjectivesController extends Controller
     {
 
         $period = Period::where('period_id' ,'=', session('period'))->first();
-        $whereClause = ['objectives.period' => $period->period_id, 'objectives.type' => 'EMPRESA', 'objectives.deleted_at' => NULL ];
+        $whereClause = ['objectives.period' => $period->period_id, 'objectives.ignore' => 1, 'objectives.deleted_at' => NULL ];
         $objectives = DB::table('objectives')
         ->where($whereClause)
         ->get();
@@ -378,6 +380,10 @@ class ObjectivesController extends Controller
         
         $this->validate($request, $validateto);
         $attributes = $request->all();
+        $attributes["ignore"] = (array_key_exists('ignore', $attributes)) ? intval($attributes["ignore"]) : 0;
+        $attributes["type"] = (array_key_exists('type', $attributes)) ? 'inverted' : 'normal';
+
+        // die(json_encode($attributes));
         
         $fields = DB::table('objectives')->first();
         $fields = (array) $fields;
@@ -475,7 +481,6 @@ class ObjectivesController extends Controller
                 'subcategory' => 'required',
                 'description' => 'required',
                 'measuring_unit' => 'required',
-                'type' => 'required',
                 'period_objective' => 'required',
                 'period_green' => 'required',
                 'period_yellow_ceil' => 'required',
