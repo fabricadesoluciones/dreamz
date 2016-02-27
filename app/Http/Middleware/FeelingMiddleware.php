@@ -43,12 +43,35 @@ class FeelingMiddleware
                 Session::set('company_logo', $company->logo);
                 HomeController::setPeriod($company);
             }
+
             if( ! session('language')){
                 Session::set('language', 'en');
             }
                 App::setLocale( session('language') );
+                
             if ( ! session('feeling') && ! Auth::user()->can("list-companies")  ) {
-                Session::flash('update', ['code' => 200, 'message' => 'Entering IF ']);
+                
+                $whereClause = ['emotion_date' => date('Y-m-d'), 'user' => Auth::user()->user_id];
+                $todays_emotion = DB::table('daily_emotions')
+                ->where($whereClause)
+                ->first();
+                if ( $todays_emotion) {
+                    Session::set('feeling', json_encode($todays_emotion));
+                }else{
+                    $whereClause = ['active' => 1, 'company' => Auth::user()->company];
+
+                    $data = DB::table('active_emotions')
+                    ->join('emotions', 'active_emotions.emotion', '=', 'emotions.emotion_id')
+                    ->select('emotions.*', 'active_emotions.*')
+                    ->where($whereClause)
+                    ->get();
+
+                    if ( count($data) && $request->segments() && $request->segments()[0] != 'home' && $request->segments()[0] != 'set_feeling' && $request->segments()[0] != 'logout' &&  ! Auth::user()->can("list-companies") ){
+                        $errorResponse = ['code'=>403,'title' =>  'No tan pronto', 'message' => 'Antes registra como te sientes hoy '. date('Y-m-d') ,'data' => []];
+                        Session::flash('update', $errorResponse);
+                        return redirect(route('home'));
+                    }
+                }
             }
 
         }

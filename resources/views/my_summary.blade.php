@@ -121,6 +121,9 @@ span.objective_chart_title {
                     <tr>
                         <th>#</th>
                         <th>
+                            {{trans('general.forms.name')}}
+                        </th>
+                        <th>
                             {{trans('general.description')}}
                         </th>
                         <th>
@@ -199,7 +202,8 @@ function renderChart(data){
     objective.period_yellow_ceil = parseFloat(objective.period_yellow_ceil);
     objective.period_yellow_floor = parseFloat(objective.period_yellow_floor);
 
-    debugger;
+    var reversed= (objective.type == 'inverted') ? true : false;
+    
     data = objective.results;
     cumulativeData = JSON.parse(JSON.stringify(data));
 
@@ -231,6 +235,7 @@ function renderChart(data){
 
         }],
         yAxis: [{ // Primary yAxis
+            reversed:reversed,
             labels: {
                 format: '{value}'
             },
@@ -253,6 +258,7 @@ function renderChart(data){
                 }
             ]
         }, { // Secondary yAxis
+            reversed:reversed,
             title: {
                 text: 'Cumulative'
             },
@@ -353,15 +359,26 @@ function retrieveObjective(objective_id){
         }
 
 
-        if (cumulative > objective.period_yellow_ceil) { color_class = 'emerald'; }
-        else if (cumulative > objective.period_yellow_floor) { color_class = 'yellow'; }
-        else {color_class = 'darkRed';}
+        if (objective.type == 'normal') {
 
-        if (today_value > objective.daily_yellow_ceil) { daily_color_class = 'emerald'; }
-        else if (today_value > objective.daily_yellow_floor) { daily_color_class = 'yellow'; }
-        else {daily_color_class = 'darkRed';}
+            if (cumulative > objective.period_yellow_ceil) { color_class = 'emerald'; }
+            else if (cumulative > objective.period_yellow_floor) { color_class = 'yellow'; }
+            else {color_class = 'darkRed';}
 
-        var row = '<tr> <td>'+counter_i+'</td> <td>'+objective.description+'</td> <td>'+objective.period_objective+'</td> <td>'+objective.real+'</td> <td width="30" align="center"> <span class="square bg-'+color_class+'" ></span> </td><td width="30" align="center"> <span class="square bg-'+daily_color_class+'" ></span> </td> </tr>' ;
+            if (today_value > objective.daily_yellow_ceil) { daily_color_class = 'emerald'; }
+            else if (today_value > objective.daily_yellow_floor) { daily_color_class = 'yellow'; }
+            else {daily_color_class = 'darkRed';}
+        }else{
+            if (cumulative < objective.period_yellow_ceil) { color_class = 'emerald'; }
+            else if (cumulative < objective.period_yellow_floor) { color_class = 'yellow'; }
+            else {color_class = 'darkRed';}
+
+            if (today_value < objective.daily_yellow_ceil) { daily_color_class = 'emerald'; }
+            else if (today_value < objective.daily_yellow_floor) { daily_color_class = 'yellow'; }
+            else {daily_color_class = 'darkRed';}
+        }
+        var inverted = (objective.type == 'inverted') ? '<':'';
+        var row = '<tr> <td>'+counter_i+'</td><td>'+objective.name+'</td><td>'+objective.description+'</td> <td align="right">'+inverted +' '+parseFloat(objective.period_objective).toFixed(2)+'</td> <td align="right">'+objective.real+'</td> <td width="30" align="center"> <span class="square bg-'+color_class+'" ></span> </td><td width="30" align="center"> <span class="square bg-'+daily_color_class+'" ></span> </td> </tr>' ;
         $('#my-objectives tbody').append(row);
         renderChart(objective);
 

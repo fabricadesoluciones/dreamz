@@ -42,11 +42,16 @@ class ObjectivesProgressTableSeeder extends Seeder
 	        	for ($i=0; $i < $dDiff->days; $i++) {
 
 	        		$this_date = date('Y-m-d', strtotime($periods_array[$objective->period]->start . ' +'.$i.' days'));
+	        		if ($objective->type == 'normal') {
+		        		$value = $faker->numberBetween(($objective->daily_yellow_ceil),$objective->daily_objective + 15);
+	        		}else{
+	        			$value = $faker->numberBetween(($objective->daily_objective),$objective->daily_yellow_ceil);
+	        		}
 		    		ObjectiveProgress::create([
 						'objectives_progress_id' => $faker->uuid,
 						'progress_date' => $this_date,
 						'objective' => $objective->objective_id,
-						'value' => $faker->numberBetween(($objective->daily_yellow_ceil),$objective->daily_objective + 15),
+						'value' => $value,
 						'company' => $company->company_id,
 						'department' => $objective->department,
 						

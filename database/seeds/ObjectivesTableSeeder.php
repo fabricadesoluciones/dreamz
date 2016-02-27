@@ -43,13 +43,27 @@ class ObjectivesTableSeeder extends Seeder
 
 	        		foreach (range(1, 4) as $x) {
 
+	        			$type = $faker->randomElement(['inverted','normal']);
+
 		        		$target = (int) $faker->numberBetween($min = 1000, $max = 100000);
-		        		$green_percentage = (int) $faker->numberBetween($min = 70, $max = 95);
-		        		$red_percentage = (int) $faker->numberBetween($min = 20, $max = 60);
-		        		$green_value = $target * ( $green_percentage / 100 );
-		        		$red_value = $target * ( $red_percentage / 100 );
-		        		$yellow_ceil = $green_value - 0.01;
-		        		$yellow_floor = $red_value + 0.01;
+
+		        		if ($type == 'normal') {
+			        		$green_percentage = (int) $faker->numberBetween($min = 70, $max = 95);
+			        		$red_percentage = (int) $faker->numberBetween($min = 20, $max = 60);
+			        		$green_value = $target * ( $green_percentage / 100 );
+			        		$red_value = $target * ( $red_percentage / 100 );
+			        		$yellow_ceil = $green_value - 0.01;
+			        		$yellow_floor = $red_value + 0.01;
+		        		}else{
+		        			$green_percentage = (int) $faker->numberBetween($min = 100, $max = 120);
+			        		$red_percentage = (int) $faker->numberBetween($min = 121, $max = 180);
+			        		$green_value = $target * ( $green_percentage / 100 );
+			        		$red_value = $target * ( $red_percentage / 100 );
+			        		$yellow_ceil = $green_value + 0.01;
+			        		$yellow_floor = $red_value - 0.01;
+		        		}
+
+
 
 		        		Objective::create([
 							'objective_id' => $faker->uuid,
@@ -61,7 +75,7 @@ class ObjectivesTableSeeder extends Seeder
 							'description' => $faker->sentence($nbWords = 4),
 							'measuring_unit' => $faker->randomElement($flat_munits),
 							'user' => $user->user_id,
-							'type' => $faker->randomElement(['PERSONAL','DEPARTAMENTO','EMPRESA']),
+							'type' => $type,
 							'period_objective' => $target,
 							'period_green' => $green_value,
 							'period_yellow_ceil' => $yellow_ceil,
@@ -73,6 +87,7 @@ class ObjectivesTableSeeder extends Seeder
 							'daily_yellow_floor' => $yellow_floor / 90,
 							'daily_red' => $red_value / 90,
 							'active' => $faker->boolean(70),
+							'ignore' => $faker->boolean(70),
 						]);
 	        		}
 

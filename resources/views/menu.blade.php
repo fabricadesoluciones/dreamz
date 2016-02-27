@@ -67,6 +67,13 @@
                         {{ trans_choice('general.menu.assesments', 2) }}
                     </a>
                 </li>
+                 @if(Auth::user()->hasRole('super-admin'))
+                    <li>
+                        <a class="menu_link" href="/coaches" title="Coaches">
+                            Coaches
+                        </a>
+                    </li>
+                @endif
         @endif
                 <li>
                     <a href="/other_users" title="{{trans_choice('general.others', 2)}} {{ trans_choice('general.menu.users', 2) }}">
@@ -103,17 +110,10 @@
         </li>
         @endif
         <li class="menu_link">
-            <a href="/objectives" title="KPIs">
+            @if(! Session::has('original_user'))
+            <a href="/objectives/progress" title="KPIs">
                 <?php include base_path('resources/svg/kpis.svg'); ?>
             </a>
-            @if(! Session::has('original_user'))
-            <ul>
-                <li>
-                    <a href="/objectives/progress" title="{{ trans('general.register_progress') }}">
-                        {{trans('general.register_progress')}}
-                    </a>
-                </li>
-            </ul>
             @endif
         </li>
 
