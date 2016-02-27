@@ -17,8 +17,8 @@
 
             d.done = false;
             if (d.status == 'TERMINADO') {
-                d.text_due = 'fg-grayDark';
                 d.done =  moment(d.updated_at).format("DD/MM/YYYY");
+                d.text_due = ( moment(d.updated_at).isSameOrBefore(d.due_date) ) ? 'fg-emerald' : 'fg-darkRed';
 
             }else{
                 if(moment(d.due_date).isBefore(moment())){
@@ -50,6 +50,7 @@ getInitialState: function() {
     };
   },
     render: function(){
+
         return (
             <tr>
                 <td>{this.props.index + 1}</td>
