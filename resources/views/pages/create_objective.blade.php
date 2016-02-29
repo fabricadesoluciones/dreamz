@@ -156,13 +156,13 @@
                     <div class="cell">
                         <div class="input-control text">
                         <label for="department">{{trans('general.objectives.green')}}</label>
-                           Mayor o igual a:  <input   class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" name="daily_green" id="daily_green" />
+                           <input   class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" name="daily_green" id="daily_green" />
                         </div>
                     </div>
                     <div class="cell">
                         <div class="input-control text">
                         <label for="department">{{trans('general.objectives.red')}}</label>
-                           Menor a:   <input  class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" name="daily_red" id="daily_red" />
+                           <input  class="auto" type="number" value="0" pattern="[0-9.,]+" step="0.01" name="daily_red" id="daily_red" />
                         </div>
                     </div>
                     <div class="cell">

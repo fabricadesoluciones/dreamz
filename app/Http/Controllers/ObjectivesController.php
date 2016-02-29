@@ -140,7 +140,7 @@ class ObjectivesController extends Controller
 
 
         Session::flash('update', ['code' => 200, 'message' => 'Progress was added']);
-        return redirect('/objectives/');
+        return redirect('/objectives/progress/');
 
     }
 
@@ -232,7 +232,7 @@ class ObjectivesController extends Controller
     {
 
         $period = Period::where('period_id' ,'=', session('period'))->first();
-        $whereClause = ['objectives.period' => $period->period_id, 'objectives.ignore' => 1, 'objectives.department' => $id, 'objectives.deleted_at' => NULL ];
+        $whereClause = ['objectives.period' => $period->period_id, 'objectives.ignore' => false, 'objectives.department' => $id, 'objectives.deleted_at' => NULL ];
         $objectives = DB::table('objectives')
         ->where($whereClause)
         ->get();
@@ -364,7 +364,6 @@ class ObjectivesController extends Controller
                 'subcategory' => 'required',
                 'description' => 'required',
                 'measuring_unit' => 'required',
-                'type' => 'required',
                 'period_objective' => 'required',
                 'period_green' => 'required',
                 'period_yellow_ceil' => 'required',
@@ -497,6 +496,7 @@ class ObjectivesController extends Controller
         $this->validate($request, $validateto);
         $attributes = $request->all();
         $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
+        $attributes["ignore"] = (array_key_exists('ignore', $attributes)) ? intval($attributes["ignore"]) : 0;
 
         $objective = Objective::where('objective_id', '=', $id)->first();
         $objective->fill($attributes);

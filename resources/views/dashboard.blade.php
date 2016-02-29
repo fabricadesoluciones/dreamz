@@ -173,7 +173,6 @@ function getObjectivesDepartmentSummary(department_id){
         if (sem_dept == 3) {
             sem_dept = 4;
         }
-        console.log(sem_dept);
         var rotateto = 'rotate( '+angles[Math.ceil(sem_dept)]+' 200 217)';
         $('#depto_'+department_id+' .objectives #Layer_4').attr('transform', rotateto )
         

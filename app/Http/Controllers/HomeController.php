@@ -189,7 +189,7 @@ class HomeController extends Controller
             return $this->returnError(403, trans('general.http.select_department'), route('departments'));
         }
 
-        return view('pages.show_objectives');
+        return redirect(route('objectives.progress'));
     }
 
     public function tasks()
