@@ -151,6 +151,12 @@
                 <?php include base_path('resources/svg/mi-perfil.svg'); ?>
                 </a>
             </li>
+        @else
+            <li class="menu_link">
+                <a href="/login_original" title='Regresar a mi Perfil'>
+                <?php include base_path('resources/svg/mi-perfil.svg'); ?>
+                </a>
+            </li>
         @endif
 		<li class="menu_link"><a href="/logout" title="Cerrar Sesión">
                 <?php include base_path('resources/svg/cerrar-sesion.svg'); ?>

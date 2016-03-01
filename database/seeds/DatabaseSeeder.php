@@ -51,32 +51,32 @@ class DatabaseSeeder extends Seeder
                 DB::table($table)->truncate();
         }
 
+        
         $this->call(CountriesTableSeeder::class);
         $this->call(IndustriesTableSeeder::class);
-        $this->call(CompanyTableSeeder::class);
+        // $this->call(CompanyTableSeeder::class);
         $this->call(EmotionsTableSeeder::class);
-        $this->call(ActiveEmotionsTableSeeder::class);
-        $this->call(DepartmentsTableSeeder::class);
-        $this->call(PeriodsTableSeeder::class);
-        $this->call(PositionTableSeeder::class);
-        $this->call(Education_levelsTableSeeder::class);
-        $this->call(MeasuringUnitsTableSeeder::class);
-        // $this->call(DefatultUserTableSeeder::class);
-        // $this->call(DefaultEntrustTablesSeeder::class);
-        $this->call(UserTableSeeder::class);
-        $this->call(UserDetailsTableSeeder::class);
-        $this->call(PrioritiesTableSeeder::class);
-        $this->call(TasksTableSeeder::class);
-        $this->call(EntrustTablesSeeder::class);
-        $this->call(DailyEmotionsTableSeeder::class);
-        $this->call(ObjectiveCategoriesTableSeeder::class);
-        $this->call(ObjectiveSubcategoriesTableSeeder::class);
-        $this->call(DreamCategoriesTableSeeder::class);
-        $this->call(DreamSubcategoriesTableSeeder::class);
-        $this->call(DreamsTableSeeder::class);
-        $this->call(ObjectivesTableSeeder::class);
-        $this->call(ObjectivesProgressTableSeeder::class);
-        
+        // $this->call(ActiveEmotionsTableSeeder::class);
+        // $this->call(DepartmentsTableSeeder::class);
+        // $this->call(PeriodsTableSeeder::class);
+        // $this->call(PositionTableSeeder::class);
+        // $this->call(Education_levelsTableSeeder::class);
+        // $this->call(MeasuringUnitsTableSeeder::class);
+        $this->call(DefatultUserTableSeeder::class);
+        $this->call(DefaultEntrustTablesSeeder::class);
+        // $this->call(UserTableSeeder::class);
+        // $this->call(UserDetailsTableSeeder::class);
+        // $this->call(PrioritiesTableSeeder::class);
+        // $this->call(TasksTableSeeder::class);
+        // $this->call(EntrustTablesSeeder::class);
+        // $this->call(DailyEmotionsTableSeeder::class);
+        // $this->call(ObjectiveCategoriesTableSeeder::class);
+        // $this->call(ObjectiveSubcategoriesTableSeeder::class);
+        // $this->call(DreamCategoriesTableSeeder::class);
+        // $this->call(DreamSubcategoriesTableSeeder::class);
+        // $this->call(DreamsTableSeeder::class);
+        // $this->call(ObjectivesTableSeeder::class);
+        // $this->call(ObjectivesProgressTableSeeder::class);
         
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

@@ -61,6 +61,23 @@ class UsersController extends Controller
         return redirect('/home');
     }
 
+    public function loginOriginal()
+    {
+        if( Session::get('original_user') ){
+            $olduser = User::find( Session::pull('original_user') );
+            if ( ! $olduser) {
+                return HomeController::returnError(404);
+            }
+
+            Auth::login($olduser);
+            Session::flash('update', ['code' => 200, 'message' => 'Welcome back '.$olduser->name.' '.$olduser->lastname]);
+            return redirect('/home');
+            
+        }else{
+            return redirect('/logout');
+        }
+    }
+
     public function otherUsers()
     {
         

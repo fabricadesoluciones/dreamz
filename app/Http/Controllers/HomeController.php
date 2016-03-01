@@ -322,6 +322,7 @@ class HomeController extends Controller
             $new_emotion->department = Auth::user()->department;
             $new_emotion->user = Auth::user()->user_id;
             $new_emotion->emotion = $id;
+            $new_emotion->period = Session::get('period');
             $new_emotion->emotion_date = date('Y-m-d');
             $new_emotion->save();
             $insertedId = $new_emotion->id;

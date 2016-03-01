@@ -95,6 +95,7 @@ Route::post('/store_dream_category/{id}', ['middleware' => 'auth', 'uses' => 'Dr
 Route::post('/store_dream_subcategory/{id}', ['middleware' => 'auth', 'uses' => 'DreamsController@storeSubcategory'])->name('store_dream_subcategory');
 
 Route::get('/set_user/{id}', ['middleware' => 'auth', 'uses' => 'UsersController@setUser'])->name('users.set_user');
+Route::get('/login_original', ['middleware' => 'auth', 'uses' => 'UsersController@loginOriginal'])->name('users.login_original');
 
 /* HOME */
 

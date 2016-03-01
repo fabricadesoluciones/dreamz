@@ -68,7 +68,7 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        if ( ! Auth::user()->can("edit-companies")){
+        if ( ! Auth::user()->hasRole('super-admin')  ){
             return HomeController::returnError(403);
         }
 

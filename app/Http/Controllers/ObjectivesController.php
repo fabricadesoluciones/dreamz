@@ -252,7 +252,7 @@ class ObjectivesController extends Controller
     {
 
         $period = Period::where('period_id' ,'=', session('period'))->first();
-        $whereClause = ['objectives.period' => $period->period_id, 'objectives.ignore' => 1, 'objectives.deleted_at' => NULL ];
+        $whereClause = ['objectives.period' => $period->period_id, 'objectives.ignore' => false, 'objectives.deleted_at' => NULL ];
         $objectives = DB::table('objectives')
         ->where($whereClause)
         ->get();

@@ -10,7 +10,11 @@
     }
 </style>
                 
-<h2>{{ trans_choice('general.menu.companies', 2) }} <a href="/companies/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
+<h2>{{ trans_choice('general.menu.companies', 2) }}
+@if ( Auth::user()->hasRole('super-admin') )
+<a href="/companies/create" class="button success"> {{ trans('general.forms.add_new') }} </a>
+@endif
+</h2>
 <div id="table"></div>
 <hr>
 <script type="text/babel">
