@@ -65,6 +65,51 @@
 <script>
 var companies_objectives = [];
 var angles = [-60,0,70,140,140].reverse()
+function getEmotionsSubordinateSummary(user_id){
+
+    $.get('/get_emotion_summary_subordinate/'+user_id, function(){},'json')
+    .done(function(d){
+        var rawactive = d.active
+        var emotions = {}
+        emotions.counts = {};
+        emotions.names = {};
+        for (var i = 0; i < rawactive.length; i++) {
+            emotions.names[rawactive[i].active_emotion_id] = rawactive[i].name;
+            emotions.counts[rawactive[i].active_emotion_id] = 0;
+            emotions.total = 0;
+        };
+        var all_emotions = d.data;
+
+        all_emotions.forEach(function(d){
+            this.counts[d.emotion]++;
+            this.total++;
+        },emotions)
+
+        var ids = Object.keys(emotions.counts);
+        var current = 0; var maximum = 0;
+
+        for (var i = 0; i < ids.length; i++) {
+            if (emotions.counts[ids[i]] > maximum){
+                current = ids[i];
+                maximum = emotions.counts[ids[i]];
+            }
+        };
+
+        var final_emotion = emotions.names[current];
+
+        var percentage = ((1 / (emotions.total / maximum))  * 100).toFixed(2)
+
+        if ( ! isNaN(percentage)) {
+            $('#subordinate_'+user_id+' .most_emotion').attr('src', '/img/emociones/'+final_emotion+'.svg' );
+            $('#subordinate_'+user_id+' .most_emotion').attr('title', final_emotion);
+            $('#subordinate_'+user_id+' .emotions').append('<span class="percentage"> '+percentage+'% </span' );
+        }else{
+            $('#subordinate_'+user_id+' .most_emotion').detach();
+            $('#subordinate_'+user_id+' .emotions').append(' <span class="percentage" style="text-align: center; margin-top: 1em; "> Not enough data </span> ');
+        }
+    });
+}
+
 function getEmotionsDepartmentSummary(department_id){
 
     $.get('/get_emotion_summary_department/'+department_id, function(){},'json')
@@ -154,27 +199,63 @@ function getEmotionsCompanySummary(){
         }
     });
 }
+function priorityHUD(priorities,hud){
+    var sem_priorities = [];
+    priorities.forEach(function(d){
+        var weeks = [d.w1, d.w2, d.w3, d.w4, d.w5, d.w6, d.w7, d.w8, d.w9, d.w10, d.w11, d.w12, d.w13];
+
+        var sem_priority = weeks.reduce(function(p,c){ return parseFloat(p)+parseFloat(c)}) / weeks.length;
+
+        sem_priorities.push(sem_priority);
+    });
+
+    var sem_priority = sem_priorities.reduce(function(p,c){ return parseFloat(p)+parseFloat(c)}) / sem_priorities.length;
+    var rotateto = 'rotate( '+angles[Math.ceil(sem_priority)]+' 200 217)';
+    
+    $(hud+' .priorities #Layer_4').attr('transform', rotateto )
+
+}
+
+function objectiveHUD(objectives,hud){
+    if ( ! objectives.length ) return;
+
+    objectives.forEach(function(d){
+        var cumulative = parseFloat(d.real)/d.days
+        if (cumulative > d.daily_yellow_ceil) { d.semaf = 3; return;}
+        if (cumulative > d.daily_yellow_floor) { d.semaf = 2; return;}
+        d.semaf = 1;
+        
+    });
+    var sem_dept = objectives.map(function(d){
+        return d.semaf
+    }).reduce(function(p,c){return p + c}) / objectives.length ;
+    if (sem_dept == 3) {
+        sem_dept = 4;
+    }
+    var rotateto = 'rotate( '+angles[Math.ceil(sem_dept)]+' 200 217)';
+    $(hud+' .objectives #Layer_4').attr('transform', rotateto )
+
+}
+
+function getObjectivesSubordinateSummary(user_id){
+
+    $.get('/get_objective_summary_subordinate/'+user_id, function(){},'json')
+    .done(function(d){
+
+        if (d.code == 200) {
+            objectiveHUD(d.data,'#subordinate_'+user_id);
+        }
+        
+    });
+}
 function getObjectivesDepartmentSummary(department_id){
 
     $.get('/get_objective_summary_department/'+department_id, function(){},'json')
     .done(function(d){
-        var objectives = d.data;
 
-        objectives.forEach(function(d){
-            var cumulative = parseFloat(d.real)/d.days
-            if (cumulative > d.daily_yellow_ceil) { d.semaf = 3; return;}
-            if (cumulative > d.daily_yellow_floor) { d.semaf = 2; return;}
-            d.semaf = 1;
-            
-        });
-        var sem_dept = objectives.map(function(d){
-            return d.semaf
-        }).reduce(function(p,c){return p + c}) / objectives.length ;
-        if (sem_dept == 3) {
-            sem_dept = 4;
+        if (d.code == 200) {
+            objectiveHUD(d.data,'#depto_'+department_id);
         }
-        var rotateto = 'rotate( '+angles[Math.ceil(sem_dept)]+' 200 217)';
-        $('#depto_'+department_id+' .objectives #Layer_4').attr('transform', rotateto )
         
     });
 }
@@ -183,69 +264,41 @@ function getObjectivesCompanySummary(){
 
     $.get('/get_objective_summary_company/', function(){},'json')
     .done(function(d){
-        var objectives = d.data;
 
-        objectives.forEach(function(d){
-            var cumulative = parseFloat(d.real)/d.days
-            if (cumulative > d.daily_yellow_ceil) { d.semaf = 3; return;}
-            if (cumulative > d.daily_yellow_floor) { d.semaf = 2; return;}
-            d.semaf = 1;
-            
-        });
-        var sem_dept = objectives.map(function(d){
-            return d.semaf
-        }).reduce(function(p,c){return p + c}) / objectives.length ;
-        if (sem_dept == 3) {
-            sem_dept = 4;
+        if (d.code == 200) {
+            objectiveHUD(d.data,'#company');
         }
-        console.log(sem_dept);
-        var rotateto = 'rotate( '+angles[Math.ceil(sem_dept)]+' 200 217)';
-        $('#company .objectives #Layer_4').attr('transform', rotateto )
         
     });
 }
+
+function getPrioritiesSubordinateSummary(user_id){
+
+    $.get('/get_priority_summary_subordinate/'+user_id, function(){},'json')
+    .done(function(d){
+        if (d.code == 200) {
+            priorityHUD(d.data,'#subordinate_'+user_id)
+        }
+    });
+}
+
 function getPrioritiesDepartmentSummary(department_id){
 
     $.get('/get_priority_summary_department/'+department_id, function(){},'json')
     .done(function(d){
-        var priorities = d.data;
-
-        var sem_priorities = [];
-        priorities.forEach(function(d){
-            var weeks = [d.w1, d.w2, d.w3, d.w4, d.w5, d.w6, d.w7, d.w8, d.w9, d.w10, d.w11, d.w12, d.w13];
-
-            var sem_priority = weeks.reduce(function(p,c){ return parseFloat(p)+parseFloat(c)}) / weeks.length;
-
-            sem_priorities.push(sem_priority);
-        });
-
-        var sem_priority = sem_priorities.reduce(function(p,c){ return parseFloat(p)+parseFloat(c)}) / sem_priorities.length;
-        var rotateto = 'rotate( '+angles[Math.ceil(sem_priority)]+' 200 217)';
-        
-        $('#depto_'+department_id+' .priorities #Layer_4').attr('transform', rotateto )
-        
+        if (d.code == 200) {
+            priorityHUD(d.data,'#depto_'+department_id)
+        }
     });
 }
+
 function getPrioritiesCompanySummary(){
 
     $.get('/get_priority_summary_company/', function(){},'json')
     .done(function(d){
-        var priorities = d.data;
-
-        var sem_priorities = [];
-        priorities.forEach(function(d){
-            var weeks = [d.w1, d.w2, d.w3, d.w4, d.w5, d.w6, d.w7, d.w8, d.w9, d.w10, d.w11, d.w12, d.w13];
-
-            var sem_priority = weeks.reduce(function(p,c){ return parseFloat(p)+parseFloat(c)}) / weeks.length;
-
-            sem_priorities.push(sem_priority);
-        });
-
-        var sem_priority = sem_priorities.reduce(function(p,c){ return parseFloat(p)+parseFloat(c)}) / sem_priorities.length;
-        var rotateto = 'rotate( '+angles[Math.ceil(sem_priority)]+' 200 217)';
-        
-        $('#company .priorities #Layer_4').attr('transform', rotateto )
-        
+        if (d.code == 200) {
+            priorityHUD(d.data,'#company')
+        }
     });
 }
 
@@ -299,6 +352,10 @@ function getPrioritiesCompanySummary(){
 
     @foreach ($departments as $department)
         @include('dashboard_item', array('department' => $department)) 
+    @endforeach
+
+    @foreach ($users as $user)
+        @include('dashboard_subordinate', array('user' => $user)) 
     @endforeach
 
     <div>

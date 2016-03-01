@@ -248,6 +248,26 @@ class ObjectivesController extends Controller
         return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objectives] , 200);
     }
 
+    public function getSubordinateSummary($id)
+    {
+
+        $period = Period::where('period_id' ,'=', session('period'))->first();
+        $whereClause = ['objectives.period' => $period->period_id, 'objectives.user' => $id, 'objectives.deleted_at' => NULL ];
+        $objectives = DB::table('objectives')
+        ->where($whereClause)
+        ->get();
+
+        foreach ($objectives as $objective) {
+            $whereClause = ['objectives_progress.objective' => $objective->objective_id, 'objectives_progress.deleted_at' => NULL ];
+            $objective->real = DB::table('objectives_progress')
+            ->where($whereClause)
+            ->sum('objectives_progress.value');
+            $objective->days = session('elapsed_days') ? session('elapsed_days')  : 0;
+        }
+
+        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objectives] , 200);
+    }
+
     public function getCompanySummary()
     {
 

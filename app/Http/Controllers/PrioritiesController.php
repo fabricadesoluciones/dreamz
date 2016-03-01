@@ -82,6 +82,20 @@ class PrioritiesController extends Controller
         return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $priorities] , 200);
     }
 
+    public function getSubordinateSummary($id)
+    {
+
+        $period = Period::where('period_id' ,'=', session('period'))->first();
+        $whereClause = ['priorities.period' => $period->period_id, 'priorities.type' => 'PERSONAL', 'priorities.user' => $id , 'priorities.deleted_at' => NULL];
+        $priorities = DB::table('priorities')
+        ->where($whereClause)
+        ->get();
+
+        
+
+        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $priorities] , 200);
+    }
+
     public function getCompanySummary()
     {
 

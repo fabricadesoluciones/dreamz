@@ -73,6 +73,10 @@ class HomeController extends Controller
                     $departments = Department::where('department_id','=', Auth::user()->department)->get();
                 }
 
+                $users = [];
+                if (Auth::user()->hasRole('team_lead')) {
+                    $users = User::where('department','=', Auth::user()->department)->get();
+                }
 
                 $whereClause = ['user' => Auth::user()->user_id, 'period' => session('period'), 'dreams.deleted_at' => NULL];
                 
@@ -81,7 +85,7 @@ class HomeController extends Controller
                 $whereClause = ['objectives.user' => Auth::user()->user_id, 'period' => session('period'), 'objectives.deleted_at' => NULL];
                 
                 $user_objectives = Objective::where($whereClause)->get();
-                return view('dashboard', ['user' => Auth::user(), 'departments' => $departments,'user_objectives' => $user_objectives, 'dreams' => $dreams ]);
+                return view('dashboard', ['user' => Auth::user(), 'users' => $users, 'departments' => $departments,'user_objectives' => $user_objectives, 'dreams' => $dreams ]);
             }
 
         }else{
