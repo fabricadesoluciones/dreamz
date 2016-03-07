@@ -45,7 +45,7 @@ class AssessmentsController extends Controller
             return HomeController::returnError(403);
         }
 
-        $whereClause = ['assessments.department' => $this->department, 'assessments.deleted_at' => NULL];
+        $whereClause = ['assessments.department' => session('department')];
 
         $data = DB::table('assessments')
             ->join('users', 'assessments.user', '=', 'users.user_id')
