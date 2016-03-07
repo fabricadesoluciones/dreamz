@@ -32,6 +32,7 @@ Route::get('/measuring_units/create', ['middleware' => 'auth', 'uses' => 'Measur
 Route::get('/tasks/create', ['middleware' => 'auth', 'uses' => 'TasksController@create']);
 Route::get('/dreams/create', ['middleware' => 'auth', 'uses' => 'DreamsController@create']);
 Route::get('/coaches/create', ['middleware' => 'auth', 'uses' => 'UsersController@createCoach']);
+Route::get('/assessments/create', ['middleware' => 'auth', 'uses' => 'AssessmentsController@create']);
 
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
