@@ -32,7 +32,7 @@ class AssessmentsTableSeeder extends Seeder
 					'user' => $user->user_id,
 					'name' => $assessments[$i-1],
 					'submit_date' => $faker->dateTimeBetween($startDate = '-1 years', $endDate = '+1 years'), 
-					'filename' => 'file.txt'
+					'file' => 'abcd'
 
 	        	]);
 	        }
