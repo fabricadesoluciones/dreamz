@@ -65,6 +65,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(DefaultEntrustTablesSeeder::class);
         $this->call(UserTableSeeder::class);
         $this->call(UserDetailsTableSeeder::class);
+        $this->call(AssessmentsTableSeeder::class);
         $this->call(PrioritiesTableSeeder::class);
         $this->call(TasksTableSeeder::class);
         $this->call(EntrustTablesSeeder::class);

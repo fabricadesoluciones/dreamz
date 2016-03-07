@@ -7,6 +7,7 @@ use App\Company;
 use App\Objective;
 use App\Period;
 use App\Dream;
+use App\Assessment;
 use App;
 use App\Department;
 use App\DailyEmotion;
@@ -103,6 +104,19 @@ class HomeController extends Controller
         }
 
         return view('pages.show_users');
+    }
+
+    public function assessments()
+    {
+        if ( ! Auth::user()->can("list-assessments")){
+            return $this->returnError(403);
+        }
+        
+        if( ! session('department')){
+            return $this->returnError(403, trans('general.http.select_department'), route('departments'));
+        }
+
+        return view('pages.show_assessments');
     }
 
     public function coaches()

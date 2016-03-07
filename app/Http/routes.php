@@ -45,6 +45,8 @@ Route::get('/education', ['middleware' => 'auth', 'uses' => 'HomeController@educ
 Route::get('/measuring_units', ['middleware' => 'auth', 'uses' => 'HomeController@measuring_units'])->name('measuring_units');
 Route::get('/dreams', ['middleware' => 'auth', 'uses' => 'HomeController@dreams'])->name('dreams');
 Route::get('/coaches', ['middleware' => 'auth', 'uses' => 'HomeController@coaches'])->name('coaches');
+Route::get('/assessments', ['middleware' => 'auth', 'uses' => 'HomeController@assessments'])->name('assessments');
+
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setCompany']);
 Route::get('/set_department/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setDepartment']);
@@ -99,6 +101,10 @@ Route::post('/store_dream_subcategory/{id}', ['middleware' => 'auth', 'uses' => 
 
 Route::get('/set_user/{id}', ['middleware' => 'auth', 'uses' => 'UsersController@setUser'])->name('users.set_user');
 Route::get('/login_original', ['middleware' => 'auth', 'uses' => 'UsersController@loginOriginal'])->name('users.login_original');
+
+Route::get('/save', ['middleware' => 'auth', 'uses' => 'UsersController@save'])->name('users.save');
+
+Route::get('/download/{id}', ['middleware' => 'auth', 'uses' => 'FileController@downloadFile'])->name('download');
 
 /* HOME */
 
@@ -248,6 +254,30 @@ Route::group(['middleware' => 'auth','prefix' => 'api/v1.0'], function ()
 'update' => 'dreams.update',
 'show' => 'dreams.show',
 'edit' => 'dreams.edit',
+        
+    ]]);
+
+    Route::resource('assessments', 'AssessmentsController', ['names' => [
+
+'store' => 'assessments.store',
+'index' => 'assessments.index',
+'create' => 'assessments.create',
+'destroy' => 'assessments.destroy',
+'update' => 'assessments.update',
+'show' => 'assessments.show',
+'edit' => 'assessments.edit',
+        
+    ]]);
+
+    Route::resource('files', 'FileController', ['names' => [
+
+'store' => 'files.store',
+'index' => 'files.index',
+'create' => 'files.create',
+'destroy' => 'files.destroy',
+'update' => 'files.update',
+'show' => 'files.show',
+'edit' => 'files.edit',
         
     ]]);
 

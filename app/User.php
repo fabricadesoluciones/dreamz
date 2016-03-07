@@ -82,4 +82,9 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Task','user','user_id');
     }
 
+    public function files()
+    {
+        return $this->hasMany('App\File','user','user_id');
+    }
+
 }

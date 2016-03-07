@@ -10,7 +10,8 @@
         "webpatser/laravel-uuid": "2.*",
         "zizaco/entrust": "dev-laravel-5",
         "laravelcollective/html": "~5.0",
-        "webpatser/laravel-uuid": "2.*"
+        "webpatser/laravel-uuid": "2.*",
+        "league/flysystem-aws-s3-v3": "^1.0"
 
     },
     "require-dev": {

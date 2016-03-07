@@ -62,8 +62,8 @@
                         {{ trans_choice('general.menu.dreams', 2) }}
                     </a>
                 </li>
-                <li class="disabled">
-                    <a href="/assesments" title="{{ trans_choice('general.menu.assesments', 2) }}">
+                <li>
+                    <a href="/assessments" title="{{ trans_choice('general.menu.assesments', 2) }}">
                         {{ trans_choice('general.menu.assesments', 2) }}
                     </a>
                 </li>
