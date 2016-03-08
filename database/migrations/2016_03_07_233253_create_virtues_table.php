@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFilesTable extends Migration
+class CreateVirtuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,15 @@ class CreateFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
-            $table->string('file_id')->unique();
+        Schema::create('virtues', function (Blueprint $table) {
+            $table->string('virtue_id')->unique();
             $table->string('company');
-            $table->string('department');
-            $table->string('user');
-            $table->string('type');
             $table->string('name');
-            $table->string('path');
+            $table->text('description');
+            $table->string('type');
+            $table->string('file');
+            $table->float('weight',16,4);
+            $table->boolean('active');
             $table->timestamps();
         });
     }
@@ -31,7 +32,6 @@ class CreateFilesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('files');
-
+        Schema::drop('virtues');
     }
 }

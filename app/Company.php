@@ -50,4 +50,8 @@ class Company extends Model
         return $this->hasMany('App\Position','company','company_id');
     }
 
+    public function virtues()
+    {
+        return $this->hasMany('App\Virtue','company','company_id');
+    }
 }
