@@ -22,6 +22,7 @@ use Hash;
 use Auth; 
 use Input;
 use Storage; 
+use Config; 
 use File as FFile; 
 
 class AssessmentsController extends Controller
@@ -96,6 +97,10 @@ class AssessmentsController extends Controller
             return HomeController::returnError(403);
         }
 
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
+        }
+
         $validateto = [
                 'assessment_id' => 'required|unique:assessments',
                 'name' => 'required',
@@ -116,7 +121,7 @@ class AssessmentsController extends Controller
 		$extension = $file->getClientOriginalExtension();
 		$uuid = Uuid::generate(4);
 		$filename = $uuid.'.'.$extension;
-		$path = 'assessments/'.$filename;
+		$path = session('company').'/assessments/'.$filename;
 
 		$savelocal = Storage::disk('local')->put($path,  FFile::get($file));
 		if (!$savelocal) {
@@ -125,7 +130,10 @@ class AssessmentsController extends Controller
 		$contents = Storage::disk('local')->read($path);
 		$save = Storage::disk('s3')->put($path, $contents);
 		if ($save) {
+			Storage::disk('local')->delete($path);
 			Session::flash('update', ['code' => 200, 'message' => 'File was uploaded']);
+
+
 			File::create([
 
 				'file_id' => $uuid,
@@ -133,7 +141,7 @@ class AssessmentsController extends Controller
 				'department' => $user->department,
 				'user' => $user->user_id,
 				'type' => 'assessments',
-				'filename' => $filename,
+				'path' => $path,
 				'name' => $filename,
 
 			]);

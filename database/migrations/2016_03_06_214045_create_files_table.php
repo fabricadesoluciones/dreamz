@@ -19,7 +19,7 @@ class CreateFilesTable extends Migration
             $table->string('user');
             $table->string('type');
             $table->string('name');
-            $table->string('filename');
+            $table->text('path');
             $table->timestamps();
             $table->softDeletes();
         });

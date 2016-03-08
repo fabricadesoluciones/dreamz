@@ -17,6 +17,8 @@ use Session;
 use Uuid; 
 use Hash; 
 use Auth; 
+use Storage;
+
 class UsersController extends Controller
 {
     private $company;
@@ -48,6 +50,20 @@ class UsersController extends Controller
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
 
+    public function save(){
+        $disk = Storage::disk('s3')->exists('5d8f91c6-8009-3dc7-b163-e9362e299a36/assessments/aa7bb5f7-df55-468d-9f00-12db20446cce.pdf');
+        // $filename = 'DB-Dreamz.pdf';
+        // $contents = Storage::disk('local')->read($filename);
+        // $disk = Storage::disk('s3')->put('DB-Dreamz.pdf', $contents);
+        // $exists = Storage::disk('s3')->exists($filename);
+
+        // header("Content-type:application/octet-stream");
+        // header("Content-Disposition:attachment;filename=".$filename);
+
+        var_dump($disk);
+        // return $file;
+
+    }
     public function setUser($id)
     {
         $newuser = User::find($id);

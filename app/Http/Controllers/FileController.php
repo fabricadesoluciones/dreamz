@@ -16,15 +16,21 @@ class FileController extends Controller
     public function downloadFile($id){
 
     	$file = File::find($id);
-
+        $filename = $file->name;
         if (!$file) {
 			return HomeController::returnError(404);
         }
-        $filename = $file->filename;
+        $path = $file->path;
 
-        $file = Storage::disk('s3')->get($file->type.'/'.$filename);
-        if (!$file) {
+        $exists = Storage::disk('s3')->exists($path);
+
+        if (!$exists) {
 			return HomeController::returnError(404);
+        }
+
+        $file = Storage::disk('s3')->get($path);
+        if (!$file) {
+            return HomeController::returnError(404);
         }
 
         header("Content-type:application/octet-stream");
@@ -68,6 +74,16 @@ class FileController extends Controller
         $file = Storage::disk('s3')->get($filename);
         header("Content-type:application/octet-stream");
         header("Content-Disposition:attachment;filename=".$filename);
+
+        /** GET PUBLIC URL
+
+        Storage::disk('s3')->setVisibility( $path , 'public');
+        $bucket = Config::get('filesystems.disks.s3.bucket');
+        $s3 = Storage::disk('s3');
+        $url = $s3->getDriver()->getAdapter()->getClient()->getObjectUrl($bucket, $path);
+        die(json_encode($url));
+
+        **/
 
         return $file;
     }
