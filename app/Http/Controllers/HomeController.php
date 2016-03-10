@@ -119,6 +119,19 @@ class HomeController extends Controller
         return view('pages.show_assessments');
     }
 
+    public function virtues()
+    {
+        if ( ! Auth::user()->can("list-virtues")){
+            return $this->returnError(403);
+        }
+        
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_department'), route('departments'));
+        }
+
+        return view('pages.show_virtues');
+    }
+
     public function coaches()
     {
         if ( ! Auth::user()->hasRole("super-admin")){

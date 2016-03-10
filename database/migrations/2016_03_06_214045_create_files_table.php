@@ -20,6 +20,7 @@ class CreateFilesTable extends Migration
             $table->string('type');
             $table->string('name');
             $table->string('path');
+            $table->string('public_url');
             $table->timestamps();
         });
     }

@@ -40,6 +40,7 @@ return [
         'education' => 'Education',
         'industries' => 'Industry|Industries',
         'coaches' => 'Coach|Coaches',
+        'virtues' => 'Virtue|Virtues',
     ],
 
 

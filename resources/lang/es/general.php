@@ -39,6 +39,8 @@ return [
         'assesments' => 'Assesment|Assesments',
         'education' => 'Educación',
         'industries' => 'Industria|Industrias',
+        'coaches' => 'Coach|Coaches',
+        'virtues' => 'Valor|Valores',
 
     ],
 

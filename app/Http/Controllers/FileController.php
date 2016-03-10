@@ -46,8 +46,8 @@ class FileController extends Controller
         if (!$file) {
 			return HomeController::returnError(404);
         }
-        $filename = $file->filename;
-        $path = $file->type.'/'.$filename;
+
+        $path = $file->path;
 
         $exists = Storage::disk('s3')->exists($path);
 
@@ -60,6 +60,9 @@ class FileController extends Controller
         if (!$file) {
 			return HomeController::returnError(404);
         }
+
+        $dbfile = File::find($id);
+        $dbfile->delete();
 
         Session::flash('update', ['code' => 200, 'message' => 'File was deleted']);
         return redirect(route('assessments'));
