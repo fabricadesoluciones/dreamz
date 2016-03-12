@@ -101,6 +101,13 @@ class VirtuesController extends Controller
             return $this->returnError(403, trans('general.http.select_company'), route('companies'));
         }
 
+        $totalVirtues = Virtue::where('company','=',session('company'))->get();
+
+        if (count($totalVirtues) > 5) {
+            Session::flash('update', ['code' => 500, 'title' => 'Hierarchy constraint violation', 'message' => "Trying to add too many virtues, max number is 6. "]);
+            return redirect(route('virtues'));
+        }
+
         $validateto = [
                 'virtue_id' => 'required|unique:virtues',
                 'name' => 'required',
@@ -151,7 +158,7 @@ class VirtuesController extends Controller
 
                 'virtue_id' => $attributes['virtue_id'],
                 'company' => session('company'),
-                'name' => $attributes['weight'],
+                'name' => $attributes['name'],
                 'description' => $attributes['description'],
                 'type' => $attributes['type'],
                 'file' => $uuid,
