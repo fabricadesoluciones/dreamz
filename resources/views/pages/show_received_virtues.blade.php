@@ -22,7 +22,7 @@
                     @foreach ($received_virtues as $virtue)
                         <tr>
                             <td>
-                                <img src="{{$virtue->public_url}}" alt="{{$virtue->virtue_name}}" height="80" />
+                                <img src="{{$virtue->public_url}}" alt="{{$virtue->virtue_name}}" style="max-height: 80px;max-width: 80px;" />
                             </td>
                             <td>{{$virtue->virtue_type}}
                             </td>
