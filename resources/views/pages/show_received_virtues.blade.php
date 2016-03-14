@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
-@section('title', 'Assessments')
+@section('title', trans_choice('general.menu.virtues',2))
 
 @section('content')
 
                 
-<h2>{{ 'Assessments' }} <a href="/assessments/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
+<h2>{{ trans_choice('general.menu.virtues',2) }} <a href="/assessments/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
 <div id="table">
     
 <table id="datatable" class="table striped hovered cell-hovered border bordered">
@@ -22,7 +22,7 @@
                     @foreach ($received_virtues as $virtue)
                         <tr>
                             <td>
-                                <img src="{{$virtue->public_url}}" alt="{{$virtue->virtue_name}}">
+                                <img src="{{$virtue->public_url}}" alt="{{$virtue->virtue_name}}" height="80" />
                             </td>
                             <td>{{$virtue->virtue_type}}
                             </td>
