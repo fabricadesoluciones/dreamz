@@ -20,6 +20,7 @@ class CreateGivenVirtuesTable extends Migration
             $table->string('virtue');
             $table->string('giver');
             $table->string('receiver');
+            $table->string('story');
             $table->timestamps();
         });
     }

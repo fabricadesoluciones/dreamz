@@ -207,21 +207,12 @@ class VirtuesController extends Controller
             return HomeController::returnError(403);
         }
 
-        $user = Auth::user();
-        $position = Position::where('position_id', '=', $user->position)->first();
-        $periods = Period::where('company','LIKE',"%".$this->company."%")->get();
-        if($position->boss){
-            $users = User::where('department', '=', $user->department)->get();
-        }else{
-            $users = [$user];
-        }
-
-        $data = Priority::where('priority_id', '=', $id)->first();
+        $data = Virtue::find($id);
         if (!$data) {
             return HomeController::returnError(404);
         }
 
-        return view('pages.edit_priority', ['id' => $id, 'priority' => $data, 'user' => $user, 'periods' => $periods, 'users' => $users]);
+        return view('pages.edit_virtue', ['id' => $id, 'virtue' => $data]);
     }
 
     /**
@@ -237,44 +228,29 @@ class VirtuesController extends Controller
             return HomeController::returnError(403);
         }
 
-        
-        $attributes = $request->all();
+        $virtue = Virtue::find($id);
 
-        $attributes["company"] = $this->company;
-        $attributes["department"] = $this->department;
-
-        $priority = Priority::where('priority_id', '=', $id)->first();
-        if (array_key_exists('progress', $attributes) && $priority) {
-            unset($attributes['progress']);
-
-            $attributes = $attributes['data'];
-            $attributes["progress"] = (array_key_exists('progress', $attributes)) ? intval($attributes["progress"]) : 0;
-            $attributes = [$attributes['week'] => $attributes['progress']];
-            
-            $priority->fill($attributes);
-            $priority->save();
-
-            // Session::flash('update', ['code' => 200, 'message' => 'Position info was updated']);
-            return Response::json(['code'=>200,'message' => 'OK' , 'data' => 'Saved'], 200);
-        }else{
-            if ($priority) {
-                $priority->fill($attributes);
-                Session::flash('update', ['code' => 200, 'message' => 'Priority info was updated']);
-                $priority->save();
-            }else{
-                $attributes["priority_id"] = $id;
-                $fields = HomeController::returnTableColumns('priorities');
-                Priority::create(array_intersect_key($attributes, $fields));
-                Session::flash('update', ['code' => 200, 'message' => 'Priority was added']);
-            }
-
-            return redirect("/priorities/");
+        if ( ! $virtue ) {
+            return HomeController::returnError(404);
         }
 
+        $validateto = [
+                'virtue_id' => 'required',
+                'name' => 'required',
+                'type' => 'required',
+                'weight' => 'required',
+        ];
 
+        $this->validate($request, $validateto);
+        $attributes = $request->all();
+        $attributes["active"] = (array_key_exists('active', $attributes)) ? intval($attributes["active"]) : 0;
 
-        
-    
+        $virtue->fill($attributes);
+        $virtue->save();
+
+        Session::flash('update', ['code' => 200, 'message' => 'Company was updated']);
+        return redirect(route('virtues'));
+
     }
 
     /**

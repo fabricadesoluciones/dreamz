@@ -15,4 +15,9 @@ class Virtue extends Model
         return $this->belongsTo('App\Company','company_id','company');
 
     }
+
+    public function virtue_givers()
+    {
+        return $this->hasMany('App\VirtueGiver', 'virtue','virtue_id');
+    }
 }

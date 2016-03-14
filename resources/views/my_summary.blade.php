@@ -51,6 +51,14 @@ span.objective_chart_title {
     font-weight: bolder;
 }
 
+table.virtues{
+    text-align: center;
+}
+
+table.virtues .values{
+    font-weight: bolder;
+    font-size: 1.2em;
+}
 </style>
 <br><br>
 <h2>{{trans_choice('general.mine',2)}} {{trans_choice('general.menu.priorities',2)}}</h2>
@@ -146,6 +154,47 @@ span.objective_chart_title {
                 </tbody>
         </table>
 </div>
+
+
+<div>
+    <br><br>
+    <h2>{{trans_choice('general.mine',2)}} {{trans_choice('general.menu.virtues',2)}}</h2>
+    <hr>
+        <table class="table striped  border bordered autowidth virtues">
+                
+                <tbody>
+                    <tr>
+                @foreach ($virtues as $virtue)
+                        <td><img src="{{$virtue->public_url}}" alt="{{$virtue->name}}" width="80" /></td>
+                @endforeach
+                    </tr>
+                    <tr>
+                @foreach ($virtues as $virtue)
+                        <td>{{$virtue->name}}</td>
+                @endforeach
+                    </tr>
+                    <tr>
+                @foreach ($virtues as $virtue)
+                    <?php $empty = true;?>
+                    <td>
+                        
+                    @foreach ($virtues_received as $virtue_received)
+                        
+                        @if( $virtue->virtue_id == $virtue_received->virtue )
+                            <?php $empty = false;?>
+                            <strong class="values">{{$virtue_received->virtue_count}}</strong>
+                        @endif
+                    @endforeach
+                    @if(  $empty )
+                        <strong class="values">0</strong>
+                    @endif
+                    </td>
+                @endforeach
+                    </tr>
+                </tbody>
+        </table>
+</div>
+
 <div>
     <br><br>
     <h2>{{trans_choice('general.mine',2)}} {{trans_choice('general.menu.dreams',2)}}</h2>

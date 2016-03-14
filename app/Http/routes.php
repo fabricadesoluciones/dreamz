@@ -67,6 +67,7 @@ Route::get('/get_emotion_summary_company', ['middleware' => 'auth', 'uses' => 'E
 Route::get('/get_objective_summary/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getObjectiveSummary']);
 Route::get('/companies/{id}/departments', ['middleware' => 'auth', 'uses' => 'CompaniesController@departments']);
 Route::get('/companies/{id}/positions', ['middleware' => 'auth', 'uses' => 'CompaniesController@positions']);
+
 Route::get('/users/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@edit']);
 Route::get('/companies/{id}/edit', ['middleware' => 'auth', 'uses' => 'CompaniesController@edit']);
 Route::get('/departments/{id}/edit', ['middleware' => 'auth', 'uses' => 'DepartmentsController@edit']);
@@ -79,6 +80,8 @@ Route::get('/measuring_units/{id}/edit', ['middleware' => 'auth', 'uses' => 'Mea
 Route::get('/tasks/{id}/edit', ['middleware' => 'auth', 'uses' => 'TasksController@edit']);
 Route::get('/dreams/{id}/edit', ['middleware' => 'auth', 'uses' => 'DreamsController@edit']);
 Route::get('/coaches/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@editcoach']);
+Route::get('/virtues/{id}/edit', ['middleware' => 'auth', 'uses' => 'VirtuesController@edit']);
+
 Route::get('/priorities/team', ['middleware' => 'auth', 'uses' => 'PrioritiesController@team'])->name('priorities.team');
 
 Route::get('/objective_category/create', ['middleware' => 'auth', 'uses' => 'ObjectivesController@createCategory']);

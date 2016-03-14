@@ -7,6 +7,7 @@ use App\Company;
 use App\Objective;
 use App\Period;
 use App\Dream;
+use App\Virtue;
 use App\Assessment;
 use App;
 use App\Department;
@@ -80,13 +81,38 @@ class HomeController extends Controller
                 }
 
                 $whereClause = ['user' => Auth::user()->user_id, 'period' => session('period'), 'dreams.deleted_at' => NULL];
-                
                 $dreams = Dream::where($whereClause)->get();
 
                 $whereClause = ['objectives.user' => Auth::user()->user_id, 'period' => session('period'), 'objectives.deleted_at' => NULL];
-                
                 $user_objectives = Objective::where($whereClause)->get();
-                return view('dashboard', ['user' => Auth::user(), 'users' => $users, 'departments' => $departments,'user_objectives' => $user_objectives, 'dreams' => $dreams ]);
+
+                $whereClause = ['receiver' => Auth::user()->user_id, 'period' => session('period')];
+
+                $given_virtues = DB::table('given_virtues')
+                ->join('virtues', 'given_virtues.virtue', '=', 'virtues.virtue_id')
+                ->join('files', 'virtues.file', '=', 'files.file_id')
+                ->select('virtues.name AS virtue_name', 'files.public_url','given_virtues.virtue')
+                ->where($whereClause)
+                ->get();
+
+                // SELECT * FROM `given_virtues` WHERE `receiver`='f0b74da6-363e-34fa-8c6c-9e0c0283043a' AND `period`='745a380c-986c-3380-8a65-64dc71add1a2'GROUP BY 'virtue';
+                // SELECT `virtue`, COUNT(*) AS `count` FROM given_virtues GROUP BY `virtue` WHERE `receiver`='f0b74da6-363e-34fa-8c6c-9e0c0283043a' AND `period`='745a380c-986c-3380-8a65-64dc71add1a2'
+
+                $whereClause = ['virtues.company' => session('company'),'virtues.active' => TRUE];
+                $virtues = DB::table('virtues')
+                    ->join('files', 'virtues.file', '=', 'files.file_id')
+                    ->select('files.public_url','virtues.*')
+                    ->where($whereClause)
+                    ->get();
+
+                $whereClause = ['receiver' => Auth::user()->user_id,'period' => session('period')];
+                $virtues_received = DB::table('given_virtues')
+                     ->select(DB::raw('virtue, count(*) as virtue_count'))
+                     ->groupBy('virtue')
+                     ->where($whereClause)
+                     ->get();
+
+                return view('dashboard', ['user' => Auth::user(), 'users' => $users, 'departments' => $departments,'user_objectives' => $user_objectives, 'dreams' => $dreams, 'virtues' => $virtues, 'virtues_received' => $virtues_received ]);
             }
 
         }else{
