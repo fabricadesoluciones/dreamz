@@ -112,6 +112,8 @@ Route::get('/save', ['middleware' => 'auth', 'uses' => 'UsersController@save'])-
 
 Route::get('/download/{id}', ['middleware' => 'auth', 'uses' => 'FileController@downloadFile'])->name('download');
 
+Route::get('/received_virtues/', ['middleware' => 'auth', 'uses' => 'VirtuesController@received']);
+
 /* HOME */
 
 /* API */

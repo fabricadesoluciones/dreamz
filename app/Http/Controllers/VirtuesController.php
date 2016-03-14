@@ -215,6 +215,24 @@ class VirtuesController extends Controller
         return view('pages.edit_virtue', ['id' => $id, 'virtue' => $data]);
     }
 
+    public function received()
+    {
+        $whereClause = ['given_virtues.receiver' => Auth::user()->user_id, 'given_virtues.period' => session('period'), 'virtues.active' => TRUE ];
+        $data = DB::table('given_virtues')
+            ->join('users', 'given_virtues.giver', '=', 'users.user_id')
+            ->join('virtues', 'given_virtues.virtue', '=', 'virtues.virtue_id')
+            ->join('files', 'virtues.file', '=', 'files.file_id')
+            ->select('files.public_url', 'virtues.type AS virtue_type', 'virtues.name AS virtue_name', 'users.lastname AS user_lastname', 'users.name AS user_name', 'given_virtues.*')
+            ->where($whereClause)
+            ->get();
+        if (!$data) {
+            return HomeController::returnError(404);
+        }
+
+        return view('pages.show_received_virtues', [ 'received_virtues' => $data]);
+        // echo json_encode($data);
+    }
+
     /**
      * Update the specified resource in storage.
      *

@@ -193,6 +193,10 @@ table.virtues .values{
                     </tr>
                 </tbody>
         </table>
+
+        @if(count($virtues_received))
+        <a href="/received_virtues/" class="button success"> Ver historias de valores recibidos</a>
+        @endif
 </div>
 
 <div>
