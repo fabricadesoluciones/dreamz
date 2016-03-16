@@ -5,6 +5,7 @@ use App\User;
 use App\Company;
 use App\UserDetail;
 use App\Position;
+use App\Virtue;
 use App\EducationLevel;
 use App\Role;
 use Illuminate\Http\Request;
@@ -98,13 +99,15 @@ class UsersController extends Controller
     {
         
         $data = User::where('departmen','=', Auth::user()->department );
+        $whereClause = ['company' => session('company'), 'active' => TRUE];
+        $virtues = Virtue::where($whereClause)->get();
 
         if (!$data) {
             return HomeController::returnError(404);
         }
 
         
-        return view('pages.other_users', ['users' => $data] );
+        return view('pages.other_users', ['users' => $data , 'virtues' => $virtues] );
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\File;
 use App\Virtue;
+use App\VirtueGiver;
 use App\User;
 use App\Company;
 use Illuminate\Http\Request;
@@ -215,6 +216,35 @@ class VirtuesController extends Controller
         return view('pages.edit_virtue', ['id' => $id, 'virtue' => $data]);
     }
 
+    public function give(Request $request){
+
+        $validateto = [
+                'user' => 'required',
+                'story' => 'required',
+                'virtue' => 'required',
+        ];
+
+        $this->validate($request, $validateto);
+        $attributes = $request->all();
+        $virtue = VirtueGiver::create([
+            'given_virtue_id' => Uuid::generate(4),
+            'company' => session('company'),
+            'department' => session('department'),
+            'period' => session('period'),
+            'virtue' => $attributes['virtue'],
+            'giver' => Auth::user()->user_id,
+            'receiver' => $attributes['user'],
+            'story' => $attributes['story'],
+        ]);
+
+
+        if ($virtue) {
+            return Response::json(['code'=>200,'message' => 'Added virtue' , 'data' => $this->transformCollection($virtue)], 200);
+        }else{
+            return HomeController::returnError(404);
+        }
+    }
+
     public function received()
     {
         $whereClause = ['given_virtues.receiver' => Auth::user()->user_id, 'given_virtues.period' => session('period'), 'virtues.active' => TRUE ];
@@ -277,6 +307,8 @@ class VirtuesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function destroy($id)
     {
         if ( ! Auth::user()->can("edit-virtues")){

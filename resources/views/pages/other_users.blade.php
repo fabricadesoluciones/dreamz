@@ -10,6 +10,91 @@
 <hr>
 
 
+<div data-role="dialog" data-type="info" id="dialog" data-close-button="true" data-overlay="true" data-overlay-color="black" class="padding10">
+    <h1>{{trans('general.register_progress')}}:</h1>
+    <h4 id="priority_name"></h4>
+    <div class="grid">
+        <div class="row ">
+                    <div class="margin10">
+                        <div class="input-control select">
+                        <label for="department">{{trans_choice('general.menu.virtues',1)}}</label>
+                            <select name="virtue" id="virtue">
+                                @foreach($virtues as $virtue)
+                                <option value="{{$virtue->virtue_id}}">{{$virtue->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" id="user" name="user">
+                </div>
+        <div class="row ">
+                    <div class="margin10">
+                        <label>Story</label>
+                        <div class="input-control textarea full-size">
+                            <textarea name="story" id="story" cols="30" rows="5" placeholder="Why are you givin this virtue away?"></textarea>
+                        </div>
+                    </div>
+                    </div>
+                {{ csrf_field() }}
+                <button class="button success save_progress margin10" style="display: inline-block; margin:  0 1em; ">{{trans('general.forms.submit')}}</button>
+                <button class="button danger cancel_progress">{{trans('general.forms.cancel')}}</button>
+    </div>
+</div>
+<script>
+    function showDialog(id){
+        var dialog = $(id).data('dialog');
+        dialog.open();
+    }
+    $(document).on('click','.give_virtue', function (event) {
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+        var this_val = $(this).attr('data-user');
+        $('#user').val(this_val);
+        $('#story').val('');
+        $('#virtue').select2("val", '{{$virtues[0]->virtue_id}}');
+        showDialog('#dialog')
+
+    });
+
+    $(document).on("click",".cancel_progress",function(event) {
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+        $('.dialog-close-button').click();
+    });
+
+    $(document).on("click",".save_progress",function(event) {
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+        var data = {};
+        var token = $('input[name="_token"]').val();
+        var user = $('#user').val();
+        var story = $('#story').val();
+        var virtue = $('#virtue').val();
+        $.ajax({
+            type: 'POST',
+            url: '{!! route('give_virtue') !!}',
+            data: {
+                "_token": token,
+                "user": user,
+                "story": story,
+                "virtue": virtue
+            },
+            success: function(data) {
+                console.log(data);
+                $.Notify({
+                    caption: data.message,
+                    type: 'success',
+                    content: data.data,
+                    keepOpen: false,
+                }); 
+                $('.dialog-close-button').click();
+
+            },
+            error: function() {
+
+            }
+        });
+    });
+      
+</script>
+
 <script type="text/babel">
 
     $.get('{!! route('users.index') !!}', function(){},'json')
@@ -32,6 +117,8 @@ var UserTr = React.createClass({
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox" checked={Boolean(JSON.parse(this.props.data.active))} /> <span className="check"></span> </label> </td> 
                     <td> 
                         <a href={"/set_user/"+this.props.data.user_id} className="button success">Ver Perfil</a>
+                        &nbsp;
+                        <button data-user={this.props.data.user_id} className="give_virtue button info">Give virtue</button>
                     </td>
 
 
