@@ -55,6 +55,14 @@ class HomeController extends Controller
         }
 
 
+        $whereClause = ['virtues.company' => session('company'),'virtues.active' => TRUE];
+                $virtues = DB::table('virtues')
+                    ->join('files', 'virtues.file', '=', 'files.file_id')
+                    ->select('files.public_url','virtues.*')
+                    ->where($whereClause)
+                    ->get();
+
+
         if ( ! Auth::user()->can("list-companies")){
             if ( ! session('feeling')) {
                 $whereClause = ['active' => 1, 'company' => Auth::user()->company];
@@ -94,16 +102,6 @@ class HomeController extends Controller
                 ->select('virtues.name AS virtue_name', 'files.public_url','given_virtues.virtue')
                 ->where($whereClause)
                 ->get();
-
-                // SELECT * FROM `given_virtues` WHERE `receiver`='f0b74da6-363e-34fa-8c6c-9e0c0283043a' AND `period`='745a380c-986c-3380-8a65-64dc71add1a2'GROUP BY 'virtue';
-                // SELECT `virtue`, COUNT(*) AS `count` FROM given_virtues GROUP BY `virtue` WHERE `receiver`='f0b74da6-363e-34fa-8c6c-9e0c0283043a' AND `period`='745a380c-986c-3380-8a65-64dc71add1a2'
-
-                $whereClause = ['virtues.company' => session('company'),'virtues.active' => TRUE];
-                $virtues = DB::table('virtues')
-                    ->join('files', 'virtues.file', '=', 'files.file_id')
-                    ->select('files.public_url','virtues.*')
-                    ->where($whereClause)
-                    ->get();
 
                 $whereClause = ['receiver' => Auth::user()->user_id,'period' => session('period')];
                 $virtues_received = DB::table('given_virtues')

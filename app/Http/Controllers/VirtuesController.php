@@ -263,6 +263,32 @@ class VirtuesController extends Controller
         // echo json_encode($data);
     }
 
+    public function getDepartmentSummary($id)
+    {
+        $whereClause = ['given_virtues.department' => session('department'),'period' => session('period')];
+        $virtues_received = DB::table('given_virtues')
+             ->select(DB::raw('given_virtues.virtue, count(*) as virtue_count'))
+             ->join('virtues', 'given_virtues.virtue', '=', 'virtues.virtue_id')
+             ->groupBy('virtue')
+             ->where($whereClause)
+             ->get();
+
+        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $virtues_received] , 200);
+    }
+
+    public function getCompanySummary()
+    {
+        $whereClause = ['given_virtues.company' => session('company'),'period' => session('period')];
+        $virtues_received = DB::table('given_virtues')
+             ->select(DB::raw('given_virtues.virtue, count(*) as virtue_count'))
+             ->join('virtues', 'given_virtues.virtue', '=', 'virtues.virtue_id')
+             ->groupBy('virtue')
+             ->where($whereClause)
+             ->get();
+
+        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $virtues_received] , 200);
+    }
+
     /**
      * Update the specified resource in storage.
      *
