@@ -199,7 +199,7 @@ table.virtues .values{
         @endif
 </div>
 
-<div>
+<div style="width: 50%; float: left;">
     <br><br>
     <h2>{{trans_choice('general.mine',2)}} {{trans_choice('general.menu.dreams',2)}}</h2>
     <hr>
@@ -221,6 +221,30 @@ table.virtues .values{
                 @endforeach
                 </tbody>
         </table>
+</div>
+<div style="width: 50%; float: left;" >
+    <br><br>
+    <h2>{{trans_choice('general.mine',2)}} {{trans_choice('general.menu.assessments',2)}}</h2>
+    <hr>
+    <table class="table striped border bordered autowidth">
+
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>{{trans_choice('general.menu.assessments',1)}}</th>
+            </tr>
+        </thead>
+        <tbody>
+                <?php $i = 0; ?>
+                @foreach ($assessments as $assessment)
+                    <?php $i++; ?>
+                    <tr>
+                        <td> <?php echo $i; ?> </td>
+                        <td><a class="button info" href="/download/{{$assessment->file}}">{{$assessment->name}}</a></td>
+                    </tr>
+                @endforeach
+                </tbody>
+    </table>
 </div>
 <script>
 var days = {{ session('elapsed_days')}};

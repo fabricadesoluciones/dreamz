@@ -37,6 +37,7 @@ return [
         'virtues' => 'Valor|Valores',
         'dreams' => 'Sueño|Sueños',
         'assesments' => 'Assesment|Assesments',
+        'assessments' => 'Assesment|Assesments',
         'education' => 'Educación',
         'industries' => 'Industria|Industrias',
         'coaches' => 'Coach|Coaches',

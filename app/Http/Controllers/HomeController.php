@@ -112,7 +112,10 @@ class HomeController extends Controller
                      ->where($whereClause)
                      ->get();
 
-                return view('dashboard', ['user' => Auth::user(), 'users' => $users, 'departments' => $departments,'user_objectives' => $user_objectives, 'dreams' => $dreams, 'virtues' => $virtues, 'virtues_received' => $virtues_received ]);
+                $whereClause = ['assessments.user' => Auth::user()->user_id];
+                $assessments = Assessment::where($whereClause)->get();
+
+                return view('dashboard', ['user' => Auth::user(), 'users' => $users, 'departments' => $departments,'user_objectives' => $user_objectives, 'dreams' => $dreams, 'virtues' => $virtues, 'virtues_received' => $virtues_received, 'assessments' => $assessments ]);
             }
 
         }else{

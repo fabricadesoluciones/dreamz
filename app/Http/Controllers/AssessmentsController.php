@@ -64,6 +64,21 @@ class AssessmentsController extends Controller
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
 
+    public function my_assessments($user_id)
+    {
+        $whereClause = ['assessments.user' => Auth::user()->user_id];
+
+        $data = DB::table('assessments')
+            ->join('users', 'assessments.user', '=', Auth::user()->user_id)
+            ->select('users.user_id', 'users.name AS user_name', 'users.lastname AS user_lastname', 'assessments.*')
+            ->where($whereClause)
+            ->get();
+        if (!$data) {
+            return HomeController::returnError(404);
+        }
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
+    }
+
     
 
     /**
