@@ -5,7 +5,11 @@
 @section('content')
 
                 
-<h2>{{ trans_choice('general.menu.virtues',2) }} <a href="/virtues/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
+<h2>{{ trans_choice('general.menu.virtues',2) }} <a href="/virtues/create" class="button success"> {{ trans('general.forms.add_new') }} </a>
+@if ( Auth::user()->hasRole('super-admin') || Auth::user()->hasRole('coach') || Auth::user()->hasRole('champion') )
+<a href="/review_virtues/" class="button success"> {{ trans('general.review') }} {{trans_choice('general.menu.virtues',2)}} </a>
+@endif
+</h2>
 <div id="table">
     
 <table id="datatable" class="table striped hovered cell-hovered border bordered">

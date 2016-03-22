@@ -5,7 +5,7 @@
 @section('content')
 
                 
-<h2>{{ trans_choice('general.menu.virtues',2) }} <a href="/assessments/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
+<h2>{{ trans_choice('general.menu.virtues',2) }}</h2>
 <div id="table">
     
 <table id="datatable" class="table striped hovered cell-hovered border bordered">

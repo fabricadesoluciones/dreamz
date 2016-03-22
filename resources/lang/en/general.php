@@ -139,6 +139,7 @@ return [
     'values' => 'Value|Values',
     'others' => 'Other|Others',
     'females' => 'Female|Females',
+    'review' => 'Review',
     'users' => [
         'super_admin' => 'Super Admin',
         'ceo' => 'CEO',

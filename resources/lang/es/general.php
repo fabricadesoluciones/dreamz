@@ -141,6 +141,7 @@ return [
     'dates' => 'Fecha|Fechas',
     'values' => 'Valor|Valores',
     'others' => 'Otro|Otros',
+    'review' => 'Revisar',
     'users' => [
         'super_admin' => 'Super Administrador',
         'ceo' => 'CEO',

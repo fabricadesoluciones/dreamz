@@ -300,6 +300,55 @@ class VirtuesController extends Controller
         return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $virtues_received] , 200);
     }
 
+    public function reviewVirtue(Request $request)
+    {
+
+        $validateto = [
+                'given_virtue_id' => 'required|unique:virtues',
+                'comments' => 'required',
+                'approved' => 'required',
+        ];
+
+        $attributes = $request->all();
+        $attributes['approved'] = filter_var($attributes['approved'], FILTER_VALIDATE_BOOLEAN); 
+        $given_virtue = VirtueGiver::find($attributes['given_virtue_id']);
+        if ( ! $given_virtue ) {
+            return HomeController::returnError(404);
+        }
+        if ( ! $attributes['approved'] ) {
+            $given_virtue->delete();
+            Session::flash('update', ['code' => 200, 'message' => 'Core Value assignment was rejected']);
+            return Response::json(['code'=>200,'message' => 'Rejected & Deleted' , 'data' => ''], 200);
+        }
+        
+        $given_virtue->coach_comments = $attributes['comments'];
+        $given_virtue->approved = $attributes['approved'];
+        $given_virtue->save();
+
+        Session::flash('update', ['code' => 200, 'message' => 'Core Value assignment was approved']);
+        return Response::json(['code'=>200,'message' => 'Approved' , 'data' => ''], 200);
+    }
+
+    public function reviewVirtues()
+    {
+        $whereClause = ['given_virtues.company' => session('company'),'period' => session('period'),'given_virtues.approved' => false];
+        $virtues_received = DB::table('given_virtues')
+            ->join('virtues', 'given_virtues.virtue', '=', 'virtues.virtue_id')
+            ->join('files', 'virtues.file', '=', 'files.file_id')
+            ->select('files.public_url', 'given_virtues.is_value AS virtue_is_value', 'virtues.name AS virtue_name', 'given_virtues.*')
+            ->where($whereClause)
+            ->get();
+
+        foreach($virtues_received as $virtue){
+            $receiver = User::find($virtue->receiver);
+            $giver = User::find($virtue->giver);
+            $virtue->receiver_name = $receiver->name.' '.$receiver->lastname;
+            $virtue->giver_name = $giver->name.' '.$giver->lastname;
+        }
+        // return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $virtues_received] , 200);
+        return view('pages.show_reviewed_virtues', [ 'received_virtues' => $virtues_received]);
+    }
+
     /**
      * Update the specified resource in storage.
      *
