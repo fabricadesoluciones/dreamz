@@ -103,7 +103,7 @@ class HomeController extends Controller
                 ->where($whereClause)
                 ->get();
 
-                $whereClause = ['receiver' => Auth::user()->user_id,'period' => session('period')];
+                $whereClause = ['receiver' => Auth::user()->user_id,'period' => session('period'),'given_virtues.approved' => true];
                 $virtues_received = DB::table('given_virtues')
                      ->select(DB::raw('virtue, count(*) as virtue_count'))
                      ->groupBy('virtue')

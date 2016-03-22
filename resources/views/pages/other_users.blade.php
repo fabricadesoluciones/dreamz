@@ -27,6 +27,18 @@
                     </div>
                     <input type="hidden" id="user" name="user">
                 </div>
+                <div class="row ">
+                    <div class="margin10">
+                        <div class="input-control select">
+                        <label for="department">{{trans_choice('general.types',1)}}</label>
+                            <select name="type" id="type" data-selected="valor">
+                                <option value="valor">{{trans_choice('general.menu.virtues',1)}}</option>
+                                <option value="anti">Anti - {{trans_choice('general.menu.virtues',1)}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" id="user" name="user">
+                </div>
         <div class="row ">
                     <div class="margin10">
                         <label>Story</label>
@@ -67,6 +79,7 @@
         var user = $('#user').val();
         var story = $('#story').val();
         var virtue = $('#virtue').val();
+        var value_type = $('#type').val();
         $.ajax({
             type: 'POST',
             url: '{!! route('give_virtue') !!}',
@@ -74,7 +87,8 @@
                 "_token": token,
                 "user": user,
                 "story": story,
-                "virtue": virtue
+                "virtue": virtue,
+                "type": value_type,
             },
             success: function(data) {
                 console.log(data);

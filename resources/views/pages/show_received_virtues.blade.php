@@ -24,7 +24,11 @@
                             <td>
                                 <img src="{{$virtue->public_url}}" alt="{{$virtue->virtue_name}}" style="max-height: 80px;max-width: 80px;" />
                             </td>
-                            <td>{{$virtue->virtue_type}}
+                            <td>
+                            @if(! $virtue->is_value)
+                                Anti -
+                            @endif
+                                 {{ trans_choice('general.menu.virtues',1)}} 
                             </td>
                             <td>
                                 {{$virtue->story}}

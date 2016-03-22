@@ -29,7 +29,6 @@ class VirtuesTableSeeder extends Seeder
 					'company' => $company->company_id,
 					'name' => $faker->word,
 					'description' => $faker->sentence($nbWords = 4),
-					'type' => $faker->randomElement(['valor','antivalor']),
 					'file' => 'abcde',
 					'weight' =>  $faker->randomFloat(2,0,10),
 					'active' => $faker->boolean(70),

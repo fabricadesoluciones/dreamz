@@ -17,7 +17,6 @@ class CreateVirtuesTable extends Migration
             $table->string('company');
             $table->string('name');
             $table->text('description');
-            $table->string('type');
             $table->string('file');
             $table->float('weight',16,4);
             $table->boolean('active');

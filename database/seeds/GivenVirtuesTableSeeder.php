@@ -23,18 +23,21 @@ class GivenVirtuesTableSeeder extends Seeder
 
         foreach ($users as $user) {
 	        foreach ($virtues as $virtue) {
-	        	$receiver = User::orderByRaw("RAND()")->first();
+	        	$giver = User::orderByRaw("RAND()")->first();
 	        	$periods = Period::where('company', $user->company)->get();
 		        foreach ($periods as $period) {
 		        	foreach (range(1, 4) as $x) {
+		        		$is_value = $faker->boolean(70);
 			        	VirtueGiver::create([
 							'given_virtue_id' => $faker->uuid,
 							'company' => $user->company,
 							'department' => $user->department,
 							'period' => $period->period_id,
 							'virtue' => $virtue->virtue_id,
-							'giver' => $user->user_id,
-							'receiver' => $receiver->user_id,
+							'is_value' => $is_value,
+							'approved' => true,
+							'giver' => $giver->user_id,
+							'receiver' => $user->user_id,
 							'story' => $faker->realText($maxNbChars = 200, $indexSize = 2)
 			        	]);
 		        	}

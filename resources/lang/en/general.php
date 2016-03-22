@@ -41,7 +41,7 @@ return [
         'education' => 'Education',
         'industries' => 'Industry|Industries',
         'coaches' => 'Coach|Coaches',
-        'virtues' => 'Virtue|Virtues',
+        'virtues' => 'Core Value|Core Values',
     ],
 
 

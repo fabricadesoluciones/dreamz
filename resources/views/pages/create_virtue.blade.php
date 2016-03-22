@@ -21,17 +21,6 @@
                             <input size="65" name="name" type="text" value=""  required="required" />
                         </div>
                     </div>
-                    
-                    <div class="cell">
-                        <br>
-                        <div class="input-control select">
-                        <label for="department"> Type</label>
-                            <select name="type" id="type" >
-                                <option value="valor">Valor</option>
-                                <option value="antivalor">Anti Valor</option>
-                            </select>
-                        </div>
-                    </div>
                     <div class="cell">
                         <label>Weight</label>
                         <div class="input-control text full-size">

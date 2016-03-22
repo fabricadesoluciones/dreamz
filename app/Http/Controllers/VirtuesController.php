@@ -112,7 +112,6 @@ class VirtuesController extends Controller
         $validateto = [
                 'virtue_id' => 'required|unique:virtues',
                 'name' => 'required',
-                'type' => 'required',
                 'weight' => 'required',
                 'attachment' => 'required|mimes:jpeg,jpg,png,gif,svg|max:10000',
         ];
@@ -161,13 +160,12 @@ class VirtuesController extends Controller
                 'company' => session('company'),
                 'name' => $attributes['name'],
                 'description' => $attributes['description'],
-                'type' => $attributes['type'],
                 'file' => $uuid,
                 'weight' => $attributes['weight'],
                 'active' => $attributes["active"],
         	]);
 
-        	Session::flash('update', ['code' => 200, 'message' => 'Assessment was added']);
+        	Session::flash('update', ['code' => 200, 'message' => 'Core Value was added']);
 		}else{
     	   return HomeController::returnError(404);
 		}
@@ -222,21 +220,34 @@ class VirtuesController extends Controller
                 'user' => 'required',
                 'story' => 'required',
                 'virtue' => 'required',
+                'type' => 'required',
         ];
 
         $this->validate($request, $validateto);
         $attributes = $request->all();
+
+        $approved = true;
+        $is_value = true;
+        if ($attributes['type'] == 'anti') {
+            $approved = false;
+            $is_value = false;
+        }
+
+
+
+        $virtue = ['true'];
         $virtue = VirtueGiver::create([
             'given_virtue_id' => Uuid::generate(4),
             'company' => session('company'),
             'department' => session('department'),
             'period' => session('period'),
             'virtue' => $attributes['virtue'],
+            'is_value' => $is_value,
+            'approved' => $approved,
             'giver' => Auth::user()->user_id,
             'receiver' => $attributes['user'],
             'story' => $attributes['story'],
         ]);
-
 
         if ($virtue) {
             return Response::json(['code'=>200,'message' => 'Added virtue' , 'data' => $this->transformCollection($virtue)], 200);
@@ -247,12 +258,12 @@ class VirtuesController extends Controller
 
     public function received()
     {
-        $whereClause = ['given_virtues.receiver' => Auth::user()->user_id, 'given_virtues.period' => session('period'), 'virtues.active' => TRUE ];
+        $whereClause = ['given_virtues.receiver' => Auth::user()->user_id, 'given_virtues.period' => session('period'), 'virtues.active' => TRUE ,'given_virtues.approved' => true ];
         $data = DB::table('given_virtues')
             ->join('users', 'given_virtues.giver', '=', 'users.user_id')
             ->join('virtues', 'given_virtues.virtue', '=', 'virtues.virtue_id')
             ->join('files', 'virtues.file', '=', 'files.file_id')
-            ->select('files.public_url', 'virtues.type AS virtue_type', 'virtues.name AS virtue_name', 'users.lastname AS user_lastname', 'users.name AS user_name', 'given_virtues.*')
+            ->select('files.public_url', 'given_virtues.is_value AS virtue_is_value', 'virtues.name AS virtue_name', 'users.lastname AS user_lastname', 'users.name AS user_name', 'given_virtues.*')
             ->where($whereClause)
             ->get();
         if (!$data) {
@@ -265,7 +276,7 @@ class VirtuesController extends Controller
 
     public function getDepartmentSummary($id)
     {
-        $whereClause = ['given_virtues.department' => session('department'),'period' => session('period')];
+        $whereClause = ['given_virtues.department' => $id, 'period' => session('period'),'given_virtues.approved' => true];
         $virtues_received = DB::table('given_virtues')
              ->select(DB::raw('given_virtues.virtue, count(*) as virtue_count'))
              ->join('virtues', 'given_virtues.virtue', '=', 'virtues.virtue_id')
@@ -278,7 +289,7 @@ class VirtuesController extends Controller
 
     public function getCompanySummary()
     {
-        $whereClause = ['given_virtues.company' => session('company'),'period' => session('period')];
+        $whereClause = ['given_virtues.company' => session('company'),'period' => session('period'),'given_virtues.approved' => true];
         $virtues_received = DB::table('given_virtues')
              ->select(DB::raw('given_virtues.virtue, count(*) as virtue_count'))
              ->join('virtues', 'given_virtues.virtue', '=', 'virtues.virtue_id')
@@ -311,7 +322,6 @@ class VirtuesController extends Controller
         $validateto = [
                 'virtue_id' => 'required',
                 'name' => 'required',
-                'type' => 'required',
                 'weight' => 'required',
         ];
 
@@ -322,7 +332,7 @@ class VirtuesController extends Controller
         $virtue->fill($attributes);
         $virtue->save();
 
-        Session::flash('update', ['code' => 200, 'message' => 'Company was updated']);
+        Session::flash('update', ['code' => 200, 'message' => 'Core Value was updated']);
         return redirect(route('virtues'));
 
     }

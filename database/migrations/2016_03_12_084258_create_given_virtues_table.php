@@ -18,9 +18,12 @@ class CreateGivenVirtuesTable extends Migration
             $table->string('department');
             $table->string('period');
             $table->string('virtue');
+            $table->boolean('is_value');
+            $table->boolean('approved');
             $table->string('giver');
             $table->string('receiver');
-            $table->string('story');
+            $table->text('story');
+            $table->text('coach_comments');
             $table->timestamps();
         });
     }

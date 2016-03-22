@@ -13,7 +13,6 @@
                     <tr>
                         <th> {{ trans('general.forms.name')}} </th>
                         <th> {{ trans('general.description')}} </th>
-                        <th> {{ trans_choice('general.types',1)}} </th>
                         <th width="32"> Ícono </th>
                         <th> {{ trans_choice('general.actions',2)}} </th>
 
@@ -39,7 +38,7 @@
             if (virtue.public_url) {
                 image_tag = '<img src="'+virtue.public_url+'" widht="45" />'
             }
-            rows += '<tr> <td>'+virtue.name+'</td> <td>'+virtue.description+'</td> <td>'+virtue.type+'</td> <td>'+image_tag+'</td> <td> <a href="/virtues/'+virtue.virtue_id+'/edit" class="button success">{{trans('general.modify')}}</a> &nbsp;<button class="button danger delete_item" data-type="virtues" data-id="'+virtue.virtue_id+'">{{trans('general.delete')}}</button> </td> </tr>';
+            rows += '<tr> <td>'+virtue.name+'</td> <td>'+virtue.description+'</td>  <td>'+image_tag+'</td> <td> <a href="/virtues/'+virtue.virtue_id+'/edit" class="button success">{{trans('general.modify')}}</a> &nbsp;<button class="button danger delete_item" data-type="virtues" data-id="'+virtue.virtue_id+'">{{trans('general.delete')}}</button> </td> </tr>';
 
         }
 

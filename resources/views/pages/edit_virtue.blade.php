@@ -26,16 +26,6 @@
                     </div>
                     
                     <div class="cell">
-                        <br>
-                        <div class="input-control select">
-                        <label for="department"> Type</label>
-                            <select name="type" id="type" data-selected="{{$virtue->type}}">
-                                <option value="valor">Valor</option>
-                                <option value="antivalor">Anti Valor</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="cell">
                         <label>Weight</label>
                         <div class="input-control text full-size">
                             <input size="65" name="weight" type="number" step="0.01" value="{{$virtue->weight}}"  required="required" />
