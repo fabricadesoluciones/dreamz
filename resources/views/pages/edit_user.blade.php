@@ -102,7 +102,7 @@
                         </div>
                     </div>
                 </div>
-                @if(Auth::user()->hasRole('coach'))
+                @if(Auth::user()->hasRole('coach') || Auth::user()->hasRole('super-admin') )
                 <div class="row cells3">
                     <div class="cell">
                         <label>{{trans('general.users.champion')}}</label>
