@@ -47,6 +47,14 @@
                         
                     </div>
                 </div>
+                <div class="row cells1">
+                    <div class="cell">
+                    <label for="description">{{trans('general.description')}}</label> <br>
+                    <div class="input-control textarea"data-role="input" data-text-auto-resize="true">
+                        <textarea cols="80" name="description">{{$department->description}}</textarea>
+                    </div>
+                </div>
+                </div>
                 
                 
                 
