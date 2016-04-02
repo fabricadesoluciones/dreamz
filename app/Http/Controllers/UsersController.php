@@ -325,6 +325,7 @@ class UsersController extends Controller
         
         if (!$user_details) {
             $validateto['email'] = 'required|email|unique:users';
+            $validateto['employee_number'] = 'required|unique:users';
         }
 
         $this->validate($request, $validateto);
