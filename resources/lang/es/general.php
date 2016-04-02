@@ -37,8 +37,11 @@ return [
         'virtues' => 'Valor|Valores',
         'dreams' => 'Sueño|Sueños',
         'assesments' => 'Assesment|Assesments',
+        'assessments' => 'Assesment|Assesments',
         'education' => 'Educación',
         'industries' => 'Industria|Industrias',
+        'coaches' => 'Coach|Coaches',
+        'virtues' => 'Valor|Valores',
 
     ],
 
@@ -138,6 +141,7 @@ return [
     'dates' => 'Fecha|Fechas',
     'values' => 'Valor|Valores',
     'others' => 'Otro|Otros',
+    'review' => 'Revisar',
     'users' => [
         'super_admin' => 'Super Administrador',
         'ceo' => 'CEO',

@@ -56,5 +56,10 @@
 {!! Form::close() !!}
 
 </div>
-
+<script>
+    $(document).on('change','input[name="start"]', function (event) {
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+        $('input[name="end"]').val(moment($('input[name="start"]').val()).add(3,'months').format('YYYY-MM-DD'));
+       });
+</script>
 @stop

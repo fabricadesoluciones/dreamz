@@ -34,7 +34,10 @@ class DatabaseSeeder extends Seeder
         'objectives_progress',
         'emotions',
         'active_emotions',
-        'daily_emotions'
+        'daily_emotions',
+        'assessments',
+        'virtues',
+        'given_virtues'
     ];
     /**
      * Run the database seeds.
@@ -65,7 +68,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(DefaultEntrustTablesSeeder::class);
         $this->call(UserTableSeeder::class);
         $this->call(UserDetailsTableSeeder::class);
-        $this->call(AssessmentsTableSeeder::class);
         $this->call(PrioritiesTableSeeder::class);
         $this->call(TasksTableSeeder::class);
         $this->call(EntrustTablesSeeder::class);

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Priority;
+use App\File;
 use App\Period;
 use App\Position;
 use App\Assessment;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as FRequest;
+
 use App\Http\Requests;
 use Response;
 use App\Http\Controllers\Controller;
@@ -18,6 +20,10 @@ use Session;
 use Uuid; 
 use Hash; 
 use Auth; 
+use Input;
+use Storage; 
+use Config; 
+use File as FFile; 
 
 class AssessmentsController extends Controller
 {
@@ -45,10 +51,25 @@ class AssessmentsController extends Controller
             return HomeController::returnError(403);
         }
 
-        $whereClause = ['assessments.department' => $this->department, 'assessments.deleted_at' => NULL];
+        $whereClause = ['assessments.department' => session('department')];
 
         $data = DB::table('assessments')
             ->join('users', 'assessments.user', '=', 'users.user_id')
+            ->select('users.user_id', 'users.name AS user_name', 'users.lastname AS user_lastname', 'assessments.*')
+            ->where($whereClause)
+            ->get();
+        if (!$data) {
+            return HomeController::returnError(404);
+        }
+        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
+    }
+
+    public function my_assessments($user_id)
+    {
+        $whereClause = ['assessments.user' => Auth::user()->user_id];
+
+        $data = DB::table('assessments')
+            ->join('users', 'assessments.user', '=', Auth::user()->user_id)
             ->select('users.user_id', 'users.name AS user_name', 'users.lastname AS user_lastname', 'assessments.*')
             ->where($whereClause)
             ->get();
@@ -71,16 +92,12 @@ class AssessmentsController extends Controller
             return HomeController::returnError(403);
         }
 
-        $user = Auth::user();
-        $position = Position::where('position_id', '=', $user->position)->first();
-        $periods = Period::where('company','LIKE',"%".$this->company."%")->get();
-        if(Auth::user()->hasRole('champion') || Auth::user()->hasRole('super-admin' ) || Auth::user()->hasRole('team_lead' )){
-            $users = User::where('department', '=', $this->department)->get();
-        }else{
-            $users = [$user];
+        if( ! session('department')){
+            return $this->returnError(403, trans('general.http.select_department'), route('departments'));
         }
-        return view('pages.create_priority', ['id' => Uuid::generate(4), 'user' => Auth::user(), 'periods' => $periods, 'users' => $users ]);
 
+        $users = User::where('department','=', session('department'))->get();
+        return view('pages.create_assessment', ['id' => Uuid::generate(4), 'users' => $users]);
     }
 
     /**
@@ -95,7 +112,73 @@ class AssessmentsController extends Controller
             return HomeController::returnError(403);
         }
 
-        //
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
+        }
+
+        $validateto = [
+                'assessment_id' => 'required|unique:assessments',
+                'name' => 'required',
+                'submit_date' => 'required',
+                'user' => 'required',
+                'attachment' => 'required|max:10000',
+        ];
+
+        $this->validate($request, $validateto);
+        $attributes = $request->all();
+
+        $user = User::find($attributes['user']);
+        if (!$user) {
+    	   return HomeController::returnError(404);
+        }
+
+		$file = FRequest::file('attachment');
+		$extension = $file->getClientOriginalExtension();
+		$uuid = Uuid::generate(4);
+		$filename = $uuid.'.'.$extension;
+		$path = session('company').'/assessments/'.$filename;
+
+		$savelocal = Storage::disk('local')->put($path,  FFile::get($file));
+		if (!$savelocal) {
+			return HomeController::returnError(404);
+		}
+		$contents = Storage::disk('local')->read($path);
+		$save = Storage::disk('s3')->put($path, $contents);
+		if ($save) {
+			Storage::disk('local')->delete($path);
+			Session::flash('update', ['code' => 200, 'message' => 'File was uploaded']);
+
+
+			File::create([
+
+				'file_id' => $uuid,
+				'company' => $user->company,
+				'department' => $user->department,
+				'user' => $user->user_id,
+				'type' => 'assessments',
+				'path' => $path,
+				'name' => $filename,
+
+			]);
+			Assessment::create([
+
+				'assessment_id' => $attributes['assessment_id'],
+				'company' => $user->company,
+				'department' => $user->department,
+				'user' => $user->user_id,
+				
+				'name' => $attributes['name'],
+				'submit_date' => $attributes['submit_date'], 
+				'file' => $uuid,
+
+        	]);
+        	Session::flash('update', ['code' => 200, 'message' => 'Assessment was added']);
+		}else{
+    	   return HomeController::returnError(404);
+		}
+
+
+		return redirect(route('assessments'));
     }
 
     /**

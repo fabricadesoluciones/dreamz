@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'ageofzetta@gmail.com', 'name' => 'Alejandro Tapia'],
+    'from' => ['address' => 'dreamzadaptable@gmail.com', 'name' => 'Dreamz, Profit & Happiness'],
 
     /*
     |--------------------------------------------------------------------------

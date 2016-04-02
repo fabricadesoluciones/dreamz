@@ -75,7 +75,6 @@ class CompaniesController extends Controller
         $required = [
             "company_id" => 'required|unique:companies',
             "commercial_name" => 'required',
-            "rfc" => 'required',
             "slogan" => 'required',
             "logo" => 'required',
             "country" => 'required',

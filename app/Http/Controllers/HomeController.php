@@ -7,6 +7,7 @@ use App\Company;
 use App\Objective;
 use App\Period;
 use App\Dream;
+use App\Virtue;
 use App\Assessment;
 use App;
 use App\Department;
@@ -54,6 +55,14 @@ class HomeController extends Controller
         }
 
 
+        $whereClause = ['virtues.company' => session('company'),'virtues.active' => TRUE];
+                $virtues = DB::table('virtues')
+                    ->join('files', 'virtues.file', '=', 'files.file_id')
+                    ->select('files.public_url','virtues.*')
+                    ->where($whereClause)
+                    ->get();
+
+
         if ( ! Auth::user()->can("list-companies")){
             if ( ! session('feeling')) {
                 $whereClause = ['active' => 1, 'company' => Auth::user()->company];
@@ -80,13 +89,31 @@ class HomeController extends Controller
                 }
 
                 $whereClause = ['user' => Auth::user()->user_id, 'period' => session('period'), 'dreams.deleted_at' => NULL];
-                
                 $dreams = Dream::where($whereClause)->get();
 
                 $whereClause = ['objectives.user' => Auth::user()->user_id, 'period' => session('period'), 'objectives.deleted_at' => NULL];
-                
                 $user_objectives = Objective::where($whereClause)->get();
-                return view('dashboard', ['user' => Auth::user(), 'users' => $users, 'departments' => $departments,'user_objectives' => $user_objectives, 'dreams' => $dreams ]);
+
+                $whereClause = ['receiver' => Auth::user()->user_id, 'period' => session('period')];
+
+                $given_virtues = DB::table('given_virtues')
+                ->join('virtues', 'given_virtues.virtue', '=', 'virtues.virtue_id')
+                ->join('files', 'virtues.file', '=', 'files.file_id')
+                ->select('virtues.name AS virtue_name', 'files.public_url','given_virtues.virtue')
+                ->where($whereClause)
+                ->get();
+
+                $whereClause = ['receiver' => Auth::user()->user_id,'period' => session('period'),'given_virtues.approved' => true];
+                $virtues_received = DB::table('given_virtues')
+                     ->select(DB::raw('virtue, count(*) as virtue_count'))
+                     ->groupBy('virtue')
+                     ->where($whereClause)
+                     ->get();
+
+                $whereClause = ['assessments.user' => Auth::user()->user_id];
+                $assessments = Assessment::where($whereClause)->get();
+
+                return view('dashboard', ['user' => Auth::user(), 'users' => $users, 'departments' => $departments,'user_objectives' => $user_objectives, 'dreams' => $dreams, 'virtues' => $virtues, 'virtues_received' => $virtues_received, 'assessments' => $assessments ]);
             }
 
         }else{
@@ -117,6 +144,19 @@ class HomeController extends Controller
         }
 
         return view('pages.show_assessments');
+    }
+
+    public function virtues()
+    {
+        if ( ! Auth::user()->can("list-virtues")){
+            return $this->returnError(403);
+        }
+        
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_department'), route('departments'));
+        }
+
+        return view('pages.show_virtues');
     }
 
     public function coaches()

@@ -38,7 +38,7 @@
                         {{ trans_choice('general.menu.emotions', 2) }}
                     </a>
                 </li>
-                <li class="disabled">
+                <li>
                     <a href="/virtues" title="{{ trans_choice('general.menu.virtues', 2) }}">
                         {{ trans_choice('general.menu.virtues', 2) }}
                     </a>

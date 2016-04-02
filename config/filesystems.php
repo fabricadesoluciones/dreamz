@@ -66,8 +66,8 @@ return [
             'driver' => 's3',
             'key'    => getenv('AWS_KEY'),
             'secret' => getenv('AWS_SECRET'),
-            'region' => 'us-east-1',
-            'bucket' => 'dreams-adaptable',
+            'region' => getenv('AWS_REGION'),
+            'bucket' => getenv('AWS_BUCKET')
         ],
 
         'rackspace' => [

@@ -41,7 +41,6 @@ class UserTableSeeder extends Seeder
     		'position' => $position2->position_id,
     		'password' => Hash::make('admin'),
 			'active' => 1,
-			'company' => $karla_company->company_id,
 			'user_id' => $faker->uuid,
 			'employee_number' => $faker->uuid,
 			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/95.jpg'
@@ -110,7 +109,6 @@ class UserTableSeeder extends Seeder
     		'position' => $position2->position_id,
     		'password' => Hash::make('admin'),
 			'active' => 1,
-			'company' => $karla_company->company_id,
 			'user_id' => $faker->uuid,
 			'employee_number' => $faker->uuid,
 			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/93.jpg'
@@ -127,7 +125,6 @@ class UserTableSeeder extends Seeder
     		'position' => $position2->position_id,
     		'password' => Hash::make('admin'),
 			'active' => 1,
-			'company' => $karla_company->company_id,
 			'user_id' => $faker->uuid,
 			'employee_number' => $faker->uuid,
 			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/92.jpg'
@@ -144,7 +141,6 @@ class UserTableSeeder extends Seeder
     		'position' => $position2->position_id,
     		'password' => Hash::make('admin'),
 			'active' => 1,
-			'company' => $karla_company->company_id,
 			'user_id' => $faker->uuid,
 			'employee_number' => $faker->uuid,
 			'thumbnail' => 'https://randomuser.me/api/portraits/thumb/men/91.jpg'

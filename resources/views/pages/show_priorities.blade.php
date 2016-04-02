@@ -64,10 +64,7 @@
     </div>
 </div>
 <script>
-    function showDialog(id){
-        var dialog = $(id).data('dialog');
-        dialog.open();
-    }
+    
     $(document).on("click",".register_progress",function(event) {
         event.preventDefault ? event.preventDefault() : event.returnValue = false;
         $('#progress option:eq(1)').attr('selected','selected');

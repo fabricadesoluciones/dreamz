@@ -5,6 +5,7 @@ use App\User;
 use App\Company;
 use App\UserDetail;
 use App\Position;
+use App\Virtue;
 use App\EducationLevel;
 use App\Role;
 use Illuminate\Http\Request;
@@ -17,6 +18,8 @@ use Session;
 use Uuid; 
 use Hash; 
 use Auth; 
+use Storage;
+
 class UsersController extends Controller
 {
     private $company;
@@ -48,6 +51,20 @@ class UsersController extends Controller
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
     }
 
+    public function save(){
+        $disk = Storage::disk('s3')->exists('5d8f91c6-8009-3dc7-b163-e9362e299a36/assessments/aa7bb5f7-df55-468d-9f00-12db20446cce.pdf');
+        // $filename = 'DB-Dreamz.pdf';
+        // $contents = Storage::disk('local')->read($filename);
+        // $disk = Storage::disk('s3')->put('DB-Dreamz.pdf', $contents);
+        // $exists = Storage::disk('s3')->exists($filename);
+
+        // header("Content-type:application/octet-stream");
+        // header("Content-Disposition:attachment;filename=".$filename);
+
+        var_dump($disk);
+        // return $file;
+
+    }
     public function setUser($id)
     {
         $newuser = User::find($id);
@@ -81,14 +98,23 @@ class UsersController extends Controller
     public function otherUsers()
     {
         
-        $data = User::where('departmen','=', Auth::user()->department );
+        $data = User::where('department','=', Auth::user()->department )->get();
+        $whereClause = ['virtues.company' => session('company'), 'active' => TRUE];
+        $virtues = DB::table('virtues')
+            ->select('virtues.*')
+            ->where($whereClause)
+            ->get();
 
         if (!$data) {
             return HomeController::returnError(404);
         }
 
+        if (!$virtues) {
+            $virtues = false;
+        }
+
         
-        return view('pages.other_users', ['users' => $data] );
+        return view('pages.other_users', ['users' => $data , 'virtues' => $virtues] );
     }
 
     /**
@@ -299,6 +325,7 @@ class UsersController extends Controller
         
         if (!$user_details) {
             $validateto['email'] = 'required|email|unique:users';
+            $validateto['employee_number'] = 'required|unique:users';
         }
 
         $this->validate($request, $validateto);

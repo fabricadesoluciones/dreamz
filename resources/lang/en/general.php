@@ -37,9 +37,11 @@ return [
         'virtues' => 'Value|Values',
         'dreams' => 'Dream|Dreams',
         'assesments' => 'Assesment|Assesments',
+        'assessments' => 'Assesment|Assesments',
         'education' => 'Education',
         'industries' => 'Industry|Industries',
         'coaches' => 'Coach|Coaches',
+        'virtues' => 'Core Value|Core Values',
     ],
 
 
@@ -137,6 +139,7 @@ return [
     'values' => 'Value|Values',
     'others' => 'Other|Others',
     'females' => 'Female|Females',
+    'review' => 'Review',
     'users' => [
         'super_admin' => 'Super Admin',
         'ceo' => 'CEO',

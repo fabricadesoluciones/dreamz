@@ -110,6 +110,24 @@ function getEmotionsSubordinateSummary(user_id){
     });
 }
 
+function getVirtuesDepartmentSummary(department_id){
+    $.get('/get_virtues_summary_department/'+department_id, function(){},'json')
+    .done(function(d){
+
+        if (d.code == 200) {
+
+            var virtues = d.data;
+
+            for (var i = 0; i < virtues.length; i++) {
+                
+                $('#depto_'+department_id+' #virtue_'+virtues[i].virtue).text(virtues[i].virtue_count);
+            }
+
+        }
+
+    });
+}
+
 function getEmotionsDepartmentSummary(department_id){
 
     $.get('/get_emotion_summary_department/'+department_id, function(){},'json')
@@ -155,6 +173,22 @@ function getEmotionsDepartmentSummary(department_id){
     });
 }
 
+function getVirtuesCompanySummary(){
+    $.get('/get_virtues_summary_company/', function(){},'json')
+    .done(function(d){
+        if (d.code == 200) {
+
+            var virtues = d.data;
+
+            for (var i = 0; i < virtues.length; i++) {
+                
+                $('#company #virtue_'+virtues[i].virtue).text(virtues[i].virtue_count);
+            }
+
+        }
+
+    });
+}
 function getEmotionsCompanySummary(){
 
     $.get('/get_emotion_summary_company/', function(){},'json')
@@ -340,12 +374,32 @@ function getPrioritiesCompanySummary(){
             <img title="" class="most_emotion" src="/img/emociones/none.svg" alt="">
         </div>
     </div>
+    <div class="dash_section">
+        <div class="dash_title">
+            {{trans_choice('general.menu.virtues',2)}}
+        </div>
+        <div class="virtues">
+            <table>
+                <tbody>
+                    @foreach ($virtues as $virtue)
+                        <tr>
+                        <td><img src="{{$virtue->public_url}}" alt="{{$virtue->name}}" style="margin:1ex;  width: 3em; margin:1ex;  height: 3em" alt=""> </td>
+                        <td width="200" style="font-weight: bolder">{{$virtue->name}}</td>
+                        <td><strong style="font-weight: bolder" class="count" id="virtue_{{$virtue->virtue_id}}"></strong></td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script>
     getObjectivesCompanySummary();
     getPrioritiesCompanySummary();
     getEmotionsCompanySummary();
+    getVirtuesCompanySummary();
 </script>
 
 <!-- ITEM -->
@@ -366,7 +420,7 @@ function getPrioritiesCompanySummary(){
     </div>
 </div>
 <div class="my_summary">
-    @include('my_summary', array('objectives' => $user_objectives , 'priorities' => Auth::user()->priorities , 'dreams' => $dreams )) 
+    @include('my_summary', array('objectives' => $user_objectives , 'priorities' => Auth::user()->priorities ,'virtues' => $virtues , 'dreams' => $dreams )) 
 </div>
 
 @stop

@@ -32,6 +32,8 @@ Route::get('/measuring_units/create', ['middleware' => 'auth', 'uses' => 'Measur
 Route::get('/tasks/create', ['middleware' => 'auth', 'uses' => 'TasksController@create']);
 Route::get('/dreams/create', ['middleware' => 'auth', 'uses' => 'DreamsController@create']);
 Route::get('/coaches/create', ['middleware' => 'auth', 'uses' => 'UsersController@createCoach']);
+Route::get('/assessments/create', ['middleware' => 'auth', 'uses' => 'AssessmentsController@create']);
+Route::get('/virtues/create', ['middleware' => 'auth', 'uses' => 'VirtuesController@create']);
 
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
@@ -46,12 +48,14 @@ Route::get('/measuring_units', ['middleware' => 'auth', 'uses' => 'HomeControlle
 Route::get('/dreams', ['middleware' => 'auth', 'uses' => 'HomeController@dreams'])->name('dreams');
 Route::get('/coaches', ['middleware' => 'auth', 'uses' => 'HomeController@coaches'])->name('coaches');
 Route::get('/assessments', ['middleware' => 'auth', 'uses' => 'HomeController@assessments'])->name('assessments');
+Route::get('/virtues', ['middleware' => 'auth', 'uses' => 'HomeController@virtues'])->name('virtues');
 
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setCompany']);
 Route::get('/set_department/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setDepartment']);
 Route::get('/set_feeling/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setFeeling']);
 Route::get('/set_lang/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setLang']);
+Route::get('/get_objective_summary/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getObjectiveSummary']);
 Route::get('/get_objective_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getDepartmentSummary']);
 Route::get('/get_objective_summary_subordinate/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getSubordinateSummary']);
 Route::get('/get_objective_summary_company', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getCompanySummary']);
@@ -61,9 +65,13 @@ Route::get('/get_priority_summary_company', ['middleware' => 'auth', 'uses' => '
 Route::get('/get_emotion_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'EmotionsController@getDepartmentSummary']);
 Route::get('/get_emotion_summary_subordinate/{id}', ['middleware' => 'auth', 'uses' => 'EmotionsController@getSubordinateSummary']);
 Route::get('/get_emotion_summary_company', ['middleware' => 'auth', 'uses' => 'EmotionsController@getCompanySummary']);
-Route::get('/get_objective_summary/{id}', ['middleware' => 'auth', 'uses' => 'ObjectivesController@getObjectiveSummary']);
+
+Route::get('/get_virtues_summary_company', ['middleware' => 'auth', 'uses' => 'VirtuesController@getCompanySummary']);
+Route::get('/get_virtues_summary_department/{id}', ['middleware' => 'auth', 'uses' => 'VirtuesController@getDepartmentSummary']);
+
 Route::get('/companies/{id}/departments', ['middleware' => 'auth', 'uses' => 'CompaniesController@departments']);
 Route::get('/companies/{id}/positions', ['middleware' => 'auth', 'uses' => 'CompaniesController@positions']);
+
 Route::get('/users/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@edit']);
 Route::get('/companies/{id}/edit', ['middleware' => 'auth', 'uses' => 'CompaniesController@edit']);
 Route::get('/departments/{id}/edit', ['middleware' => 'auth', 'uses' => 'DepartmentsController@edit']);
@@ -76,6 +84,8 @@ Route::get('/measuring_units/{id}/edit', ['middleware' => 'auth', 'uses' => 'Mea
 Route::get('/tasks/{id}/edit', ['middleware' => 'auth', 'uses' => 'TasksController@edit']);
 Route::get('/dreams/{id}/edit', ['middleware' => 'auth', 'uses' => 'DreamsController@edit']);
 Route::get('/coaches/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@editcoach']);
+Route::get('/virtues/{id}/edit', ['middleware' => 'auth', 'uses' => 'VirtuesController@edit']);
+
 Route::get('/priorities/team', ['middleware' => 'auth', 'uses' => 'PrioritiesController@team'])->name('priorities.team');
 
 Route::get('/objective_category/create', ['middleware' => 'auth', 'uses' => 'ObjectivesController@createCategory']);
@@ -105,6 +115,11 @@ Route::get('/login_original', ['middleware' => 'auth', 'uses' => 'UsersControlle
 Route::get('/save', ['middleware' => 'auth', 'uses' => 'UsersController@save'])->name('users.save');
 
 Route::get('/download/{id}', ['middleware' => 'auth', 'uses' => 'FileController@downloadFile'])->name('download');
+
+Route::get('/received_virtues/', ['middleware' => 'auth', 'uses' => 'VirtuesController@received']);
+Route::get('/review_virtues/', ['middleware' => 'auth', 'uses' => 'VirtuesController@reviewVirtues']);
+Route::post('/review_virtue/', ['middleware' => 'auth', 'uses' => 'VirtuesController@reviewVirtue'])->name('review_virtue');
+Route::post('/give_virtue/', ['middleware' => 'auth', 'uses' => 'VirtuesController@give'])->name('give_virtue');
 
 /* HOME */
 
@@ -278,6 +293,18 @@ Route::group(['middleware' => 'auth','prefix' => 'api/v1.0'], function ()
 'update' => 'files.update',
 'show' => 'files.show',
 'edit' => 'files.edit',
+        
+    ]]);
+
+    Route::resource('virtues', 'VirtuesController', ['names' => [
+
+'store' => 'virtues.store',
+'index' => 'virtues.index',
+'create' => 'virtues.create',
+'destroy' => 'virtues.destroy',
+'update' => 'virtues.update',
+'show' => 'virtues.show',
+'edit' => 'virtues.edit',
         
     ]]);
 
