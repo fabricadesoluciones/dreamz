@@ -34,7 +34,10 @@ class DatabaseSeeder extends Seeder
         'objectives_progress',
         'emotions',
         'active_emotions',
-        'daily_emotions'
+        'daily_emotions',
+        'assessments',
+        'virtues',
+        'given_virtues'
     ];
     /**
      * Run the database seeds.
