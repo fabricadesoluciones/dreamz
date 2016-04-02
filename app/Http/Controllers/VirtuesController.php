@@ -51,7 +51,7 @@ class VirtuesController extends Controller
             return HomeController::returnError(403);
         }
 
-        $whereClause = ['virtues.company' => session('company')];
+        $whereClause = ['virtues.company' => session('company'), 'active' => TRUE];
 
         $data = DB::table('virtues')
             ->join('files', 'virtues.file', '=', 'files.file_id')

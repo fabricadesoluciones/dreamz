@@ -9,7 +9,7 @@
 <div id="table"></div>
 <hr>
 
-
+@if($virtues)
 <div data-role="dialog" data-type="info" id="dialog" data-close-button="true" data-overlay="true" data-overlay-color="black" class="padding10">
     <h1>{{trans('general.register_progress')}}:</h1>
     <h4 id="priority_name"></h4>
@@ -108,7 +108,15 @@
     });
       
 </script>
-
+@else
+<script>
+    $.Notify({
+        content:'No hay valores para la empresa',
+        caption:'Error',
+        type: 'alert',
+    }); 
+</script>
+@endif
 <script type="text/babel">
 
     $.get('{!! route('users.index') !!}', function(){},'json')
@@ -131,8 +139,10 @@ var UserTr = React.createClass({
                 <td className="center"> <label className="input-control checkbox"> <input type="checkbox" checked={Boolean(JSON.parse(this.props.data.active))} /> <span className="check"></span> </label> </td> 
                     <td> 
                         <a href={"/set_user/"+this.props.data.user_id} className="button success">Ver Perfil</a>
+                        @if($virtues)
                         &nbsp;
                         <button data-user={this.props.data.user_id} className="give_virtue button info">Give virtue</button>
+                        @endif
                     </td>
 
 

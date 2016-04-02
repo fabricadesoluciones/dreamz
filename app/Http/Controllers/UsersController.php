@@ -98,12 +98,19 @@ class UsersController extends Controller
     public function otherUsers()
     {
         
-        $data = User::where('departmen','=', Auth::user()->department );
-        $whereClause = ['company' => session('company'), 'active' => TRUE];
-        $virtues = Virtue::where($whereClause)->get();
+        $data = User::where('department','=', Auth::user()->department )->get();
+        $whereClause = ['virtues.company' => session('company'), 'active' => TRUE];
+        $virtues = DB::table('virtues')
+            ->select('virtues.*')
+            ->where($whereClause)
+            ->get();
 
         if (!$data) {
             return HomeController::returnError(404);
+        }
+
+        if (!$virtues) {
+            $virtues = false;
         }
 
         
