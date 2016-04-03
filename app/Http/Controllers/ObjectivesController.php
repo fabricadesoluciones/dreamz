@@ -173,9 +173,6 @@ class ObjectivesController extends Controller
      */
     public function team()
     {
-        if ( ! Auth::user()->can("edit-objectives")){
-            return HomeController::returnError(403);
-        }
 
 
         $user = Auth::user();
@@ -426,9 +423,6 @@ class ObjectivesController extends Controller
      */
     public function show($id)
     {
-        if ( ! Auth::user()->can("edit-objectives")){
-            return HomeController::returnError(403);
-        }
 
         $data = Priority::where('priority_id', '=', $id)->first();
 
@@ -485,11 +479,6 @@ class ObjectivesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ( ! Auth::user()->can("edit-objectives")){
-            return HomeController::returnError(403);
-        }
-
-        
 
         $validateto = [
                 'period' => 'required',
