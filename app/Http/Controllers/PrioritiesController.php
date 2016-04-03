@@ -85,8 +85,7 @@ class PrioritiesController extends Controller
     public function getSubordinateSummary($id)
     {
 
-        $period = Period::where('period_id' ,'=', session('period'))->first();
-        $whereClause = ['priorities.period' => $period->period_id, 'priorities.type' => 'PERSONAL', 'priorities.user' => $id , 'priorities.deleted_at' => NULL];
+        $whereClause = ['priorities.period' => session('period'), 'priorities.type' => 'PERSONAL', 'priorities.user' => $id , 'priorities.deleted_at' => NULL];
         $priorities = DB::table('priorities')
         ->where($whereClause)
         ->get();
@@ -99,8 +98,7 @@ class PrioritiesController extends Controller
     public function getCompanySummary()
     {
 
-        $period = Period::where('period_id' ,'=', session('period'))->first();
-        $whereClause = ['priorities.period' => $period->period_id, 'priorities.type' => 'EMPRESA', 'priorities.deleted_at' => NULL];
+        $whereClause = ['priorities.period' => session('period'), 'priorities.type' => 'EMPRESA', 'priorities.deleted_at' => NULL];
         $priorities = DB::table('priorities')
         ->where($whereClause)
         ->get();
@@ -134,6 +132,7 @@ class PrioritiesController extends Controller
         if (!empty($position) && $position->boss || Auth::user()->can("edit-companies")) {
             $users = User::where('department', '=', $this->department)->get(['user_id']);
 
+            $whereClause = ['priorities.period' => session('period'), 'priorities.active' => TRUE];
             $data = DB::table('priorities')
                 ->leftJoin('users', 'priorities.user', '=', 'users.user_id')
                 ->leftJoin('periods', 'priorities.period', '=', 'periods.period_id')

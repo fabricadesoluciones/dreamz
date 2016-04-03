@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Company;
+use App\Priority;
 use App\Objective;
 use App\Period;
 use App\Dream;
@@ -94,6 +95,9 @@ class HomeController extends Controller
                 $whereClause = ['objectives.user' => Auth::user()->user_id, 'period' => session('period'), 'objectives.deleted_at' => NULL];
                 $user_objectives = Objective::where($whereClause)->get();
 
+                $whereClause = ['priorities.user' => Auth::user()->user_id,'priorities.period' => session('period'), 'priorities.active' => TRUE];
+                $user_priorities = Priority::where($whereClause)->get();
+
                 $whereClause = ['receiver' => Auth::user()->user_id, 'period' => session('period')];
 
                 $given_virtues = DB::table('given_virtues')
@@ -113,7 +117,7 @@ class HomeController extends Controller
                 $whereClause = ['assessments.user' => Auth::user()->user_id];
                 $assessments = Assessment::where($whereClause)->get();
 
-                return view('dashboard', ['user' => Auth::user(), 'users' => $users, 'departments' => $departments,'user_objectives' => $user_objectives, 'dreams' => $dreams, 'virtues' => $virtues, 'virtues_received' => $virtues_received, 'assessments' => $assessments ]);
+                return view('dashboard', ['user' => Auth::user(), 'users' => $users, 'departments' => $departments,'user_priorities' => $user_priorities,'user_objectives' => $user_objectives, 'dreams' => $dreams, 'virtues' => $virtues, 'virtues_received' => $virtues_received, 'assessments' => $assessments ]);
             }
 
         }else{
@@ -398,41 +402,31 @@ class HomeController extends Controller
             $period = Period::where('period_id','=',$period_id)->first();
             if ($period) {
                 $current_period = Period::where('period_id', $period_id)->first();
-                $dStart = new \DateTime(date('Y-m-d',strtotime(date($current_period->start))));
-                $dEnd  = new \DateTime();
-                $dDiff = $dStart->diff($dEnd);
-
-                Session::set('period', $company->current_period);
-                Session::set('elapsed_days', $dDiff->days);
             }
         }else{
 
-            if ($company->current_period) {
-                $current_period = Period::where('period_id', $company->current_period)->first();
-                $dStart = new \DateTime(date('Y-m-d',strtotime(date($current_period->start))));
-                $dEnd  = new \DateTime();
-                $dDiff = $dStart->diff($dEnd);
 
-                Session::set('period', $company->current_period);
-                Session::set('elapsed_days', $dDiff->days);
+            $periods = Period::where('company','=', $company->company_id)->get();
+            $today = (int) date('U');
 
-            }else{
-
-                $periods = Period::where('company','=', $company->company_id)->get();
-                $today = (int) date('U');
-
-                foreach ($periods as $period) {
-                    $start = strtotime($period->start);
-                    $end = strtotime($period->end);
-                    if ( ($today >= $start) && ($today <= $end) ) {
-                        Session::set('period', $period->period_id);
-                        Company::where('company_id', $company->company_id)->update(['current_period' => $period->period_id]);
-                        break;
-                    }
+            foreach ($periods as $period) {
+                $start = strtotime($period->start);
+                $end = strtotime($period->end);
+                if ( ($today >= $start) && ($today <= $end) ) {
+                    Session::set('period', $period->period_id);
+                    Company::where('company_id', $company->company_id)->update(['current_period' => $period->period_id]);
+                    $current_period = $period;
+                    break;
                 }
             }
-
+            
         }
+        $dStart = new \DateTime(date('Y-m-d',strtotime(date($current_period->start))));
+        $dEnd  = new \DateTime();
+        $dDiff = $dStart->diff($dEnd);
+
+        Session::set('period', $current_period->period_id);
+        Session::set('elapsed_days', $dDiff->days);
 
 
     }
