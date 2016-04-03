@@ -414,7 +414,7 @@ class ObjectivesController extends Controller
         $fields = HomeController::returnTableColumns('objectives');
         Objective::create(array_intersect_key($attributes, $fields));
 
-        return redirect("/objectives/".$attributes['objective_id']."/edit");
+        return redirect(route('objectives'));
     
     }
 
@@ -523,7 +523,7 @@ class ObjectivesController extends Controller
         $objective->save();
 
         Session::flash('update', ['code' => 200, 'message' => 'Objective was updated']);
-        return redirect("/objectives/$id/edit");
+        return redirect(route('objectives'));
     
     }
 
