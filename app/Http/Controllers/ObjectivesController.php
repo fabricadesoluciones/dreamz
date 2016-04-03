@@ -446,9 +446,6 @@ class ObjectivesController extends Controller
      */
     public function get_subcategories($id)
     {
-        if ( ! Auth::user()->can("edit-objectives")){
-            return HomeController::returnError(403);
-        }
         $data = ObjectiveSubcategory::where('parent', '=', $id)->get();
         if (!$data) {
             return HomeController::returnError(404);
