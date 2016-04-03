@@ -535,11 +535,8 @@ class ObjectivesController extends Controller
      */
     public function destroy($id)
     {
-        if ( ! Auth::user()->can("edit-objectives")){
-            return HomeController::returnError(403);
-        }
-
-        $objective = Objective::where('objective_id', '=', $id);
+        $whereClause = [ 'objective_id' => $id,  'objectives.user' =>  Auth::user()->user_id];
+        $objective = Objective::where($whereClause);
         if (!$objective) {
             return HomeController::returnError(404);
         }
