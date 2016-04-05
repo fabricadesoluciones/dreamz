@@ -65,7 +65,7 @@ table.virtues .values{
 <hr>
 
 <div>
-    <table class="table striped hovered cell-hovered border bordered autowidth">
+    <table class="table striped hovered cell-hovered border bordered autowidth priorities-table">
             <thead>
                 <tr>
                     <th>#</th>
@@ -97,7 +97,8 @@ table.virtues .values{
                 <tr>
                     <td> <?php echo $i; ?> </td>
                     <td>{{$priority->description}}</td>
-                    <td width="30" align="center"> <span style=" display:inline-block;height:1.2em;width:1.2em; background:#E9CD42" ></span></td>
+                    <td width="30" align="center" class="level">
+                    </td>
                     <td width="42" class="week" data-week="{{$priority->w1}}"></td>
                     <td width="42" class="week" data-week="{{$priority->w2}}"></td>
                     <td width="42" class="week" data-week="{{$priority->w3}}"></td>
@@ -462,19 +463,41 @@ function retrieveObjective(objective_id){
     });
 }
 
+function prioritiesCalcs() {
+    $('.priorities-table tbody tr').each(function(){
 
-$('.week').each(function(){
-    var this_priority_value = $(this).data('week');
-    if (this_priority_value == 3) { $(this).addClass('bg-lightGreen'); return true; }
-    else if (this_priority_value == 2) { $(this).addClass('bg-yellow'); return true; }
-    else if (this_priority_value == 1) { $(this).addClass('bg-red'); return true; }
-    $(this).addClass('bg-white'); return true; 
+        window.active_cells = 0;
+        window.total = 0;
+        $(this).find('.week').each(function(){
+        // debugger;
+            var this_priority_value = $(this).data('week');
+            if (this_priority_value > 3) { $(this).addClass('ribbed-blue');  }
+            else if (this_priority_value > 2) { $(this).addClass('bg-lightGreen'); }
+            else if (this_priority_value > 1) { $(this).addClass('bg-yellow'); }
+            else if (this_priority_value > 0) { $(this).addClass('bg-red'); }
+            console.log(this_priority_value);
+            if (this_priority_value > 0) {
+                window.active_cells++;
+                window.total += this_priority_value;
 
-});
+            }
+            $(this).addClass('bg-white'); return true; 
+        });
+
+        if (!window.total) return;
+        this_total_priority_values = window.total / window.active_cells;
+        debugger;
+        if (this_total_priority_values > 3) { $(this).find('.level').addClass('ribbed-blue');  }
+        else if (this_total_priority_values > 2) { $(this).find('.level').addClass('bg-lightGreen');  }
+        else if (this_total_priority_values > 1) { $(this).find('.level').addClass('bg-yellow');  }
+        else if (this_total_priority_values > 0) { $(this).find('.level').addClass('bg-red');  }
+    });
+    
+}
 
 @foreach ($objectives as $objective)
     retrieveObjective('{{$objective->objective_id}}');
 @endforeach
-
+prioritiesCalcs();
 </script>
 
