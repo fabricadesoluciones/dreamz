@@ -92,6 +92,21 @@
                 <hr>
                 <div class="row cells2">
                     <div class="cell">
+                        <label>{{trans('general.objectives.month_target')}}</label>
+                        <div class="input-control text full-size">
+                            <input size="65" type="text" value="{!! $objective->period_objective/3 !!}" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <label>{{trans('general.objectives.day_target')}}</label>
+                        <div class="input-control text full-size">
+                            <input size="65" type="text" value="{!! $objective->period_objective/90 !!}" readonly="readonly">
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row cells">
+                    <div class="cell">
                         <label>{{trans('general.register_progress')}}</label>
                         <div class="input-control text full-size">
                             <input size="65" type="number" name="value" />

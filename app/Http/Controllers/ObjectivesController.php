@@ -173,6 +173,9 @@ class ObjectivesController extends Controller
      */
     public function team()
     {
+        if (Session::has('original_user')){
+            return HomeController::returnError(403);
+        }
 
 
         $user = Auth::user();
@@ -423,6 +426,9 @@ class ObjectivesController extends Controller
      */
     public function show($id)
     {
+        if (Session::has('original_user')){
+            return HomeController::returnError(403);
+        }
 
         $data = Priority::where('priority_id', '=', $id)->first();
 
@@ -479,6 +485,11 @@ class ObjectivesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (Session::has('original_user')){
+            return HomeController::returnError(403);
+        }
+
+        
 
         $validateto = [
                 'period' => 'required',
@@ -521,6 +532,10 @@ class ObjectivesController extends Controller
      */
     public function destroy($id)
     {
+        if (Session::has('original_user')){
+            return HomeController::returnError(403);
+        }
+        
         $whereClause = [ 'objective_id' => $id,  'objectives.user' =>  Auth::user()->user_id];
         $objective = Objective::where($whereClause);
         if (!$objective) {
