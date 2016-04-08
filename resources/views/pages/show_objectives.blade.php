@@ -35,7 +35,7 @@ var Tr = React.createClass({
                 <td>{this.props.data.user_name} {this.props.data.user_lastname}</td>
                 
                 @if(Auth::user()->can('edit-objectives'))
-                    <td> 
+                    <td width="300"> 
                         <a href={"/objectives/"+this.props.data.objective_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
                         &nbsp;
                         <button className="button danger delete_item" data-type="objectives" data-id={this.props.data.objective_id}>{{trans('general.delete')}}</button>

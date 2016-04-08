@@ -37,14 +37,13 @@ var Tr = React.createClass({
                 <td>{this.props.data.description}</td>
                 <td>{this.props.data.measuring_unit_name}</td>
                 <td>{this.props.data.user_name} {this.props.data.user_lastname}</td>
-                
-                    <td> 
-                        <a href={"/objectives/progress/"+this.props.data.objective_id} className="button success register_progress" data-id={this.props.data.priority_id}>{{trans('general.register_progress')}}</a>
-                        &nbsp;
-                        <a href={"/objectives/"+this.props.data.objective_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
-                        &nbsp;
-                        <button className="button danger delete_item" data-type="objectives" data-id={this.props.data.objective_id}>{{trans('general.delete')}}</button>
-                    </td>
+                <td width="350"> 
+                    <a href={"/objectives/progress/"+this.props.data.objective_id} className="button success register_progress" data-id={this.props.data.priority_id}>{{trans('general.register_progress')}}</a>
+                    &nbsp;
+                    <a href={"/objectives/"+this.props.data.objective_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
+                    &nbsp;
+                    <button className="button danger delete_item" data-type="objectives" data-id={this.props.data.objective_id}>{{trans('general.delete')}}</button>
+                </td>
 
             </tr>
 
@@ -65,7 +64,7 @@ var CompanyTable = React.createClass({
     },
     render: function() {
         return (
-            <table id="datatable" className="table striped hovered cell-hovered border bordered">
+            <table id="datatable" className="table striped hovered cell-hovered border bordered" width="1250">
                 <thead>
                     <tr>
                         <th>{{ trans_choice('general.menu.periods', 1) }}</th>
