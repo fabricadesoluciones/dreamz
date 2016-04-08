@@ -102,6 +102,16 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="cell">
+                        <label for="description">{{trans('general.description')}}</label> <br>
+                        <div class="input-control textarea" data-role="input" data-text-auto-resize="true">
+                            <textarea cols="80" name="description">{{ $user->description }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                
                 @if(Auth::user()->hasRole('coach') || Auth::user()->hasRole('super-admin') )
                 <div class="row cells3">
                     <div class="cell">

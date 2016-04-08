@@ -469,7 +469,6 @@ function prioritiesCalcs() {
         window.active_cells = 0;
         window.total = 0;
         $(this).find('.week').each(function(){
-        // debugger;
             var this_priority_value = $(this).data('week');
             if (this_priority_value > 3) { $(this).addClass('ribbed-blue');  }
             else if (this_priority_value > 2) { $(this).addClass('bg-lightGreen'); }
@@ -486,7 +485,6 @@ function prioritiesCalcs() {
 
         if (!window.total) return;
         this_total_priority_values = window.total / window.active_cells;
-        debugger;
         if (this_total_priority_values > 3) { $(this).find('.level').addClass('ribbed-blue');  }
         else if (this_total_priority_values > 2) { $(this).find('.level').addClass('bg-lightGreen');  }
         else if (this_total_priority_values > 1) { $(this).find('.level').addClass('bg-yellow');  }

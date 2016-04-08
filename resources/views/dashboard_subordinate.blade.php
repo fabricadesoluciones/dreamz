@@ -7,7 +7,7 @@
         </div>
         <div class="sub">
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis molestias distinctio animi velit sed earum aliquid dicta libero consequuntur laudantium corrupti iure nisi quae, delectus quis repudiandae enim porro dolor.
+                 {{$user->description}}
             </p>
         </div>
     </div>
