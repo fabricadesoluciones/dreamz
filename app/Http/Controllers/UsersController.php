@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\TrueAssessment;
 use App\Company;
 use App\UserDetail;
 use App\Position;
@@ -288,7 +289,8 @@ class UsersController extends Controller
                 ->leftJoin('positions', 'users.position', '=', 'positions.position_id')
                 ->leftJoin('departments', 'users.department', '=', 'departments.department_id')
                 ->leftJoin('user_details', 'users.user_id', '=', 'user_details.user')
-                ->select('users.*', 'user_details.*', 'positions.name AS position_name', 'departments.name AS department_name')
+                ->leftJoin('true_assessments', 'users.user_id', '=', 'true_assessments.user')
+                ->select('users.*', 'user_details.*', 'positions.name AS position_name', 'departments.name AS department_name','true_assessments.*')
                 ->where('user_id', '=', $id)
                 ->first();
             if (!$data) {
@@ -296,6 +298,7 @@ class UsersController extends Controller
             }
             $education_levels = EducationLevel::where('company','=', $this->company)->get();
             return view('pages.edit_user', ['user' => $data, 'education_levels' => $education_levels]);
+            // echo json_encode(['user' => $data, 'education_levels' => $education_levels]);
         } else {
         return HomeController::returnError(403);
         }
@@ -331,6 +334,36 @@ class UsersController extends Controller
         $this->validate($request, $validateto);
 
         $attributes = $request->all();
+        $user_assessments = array(
+            'disc_d' => $attributes['disc_d'],
+            'disc_i' => $attributes['disc_i'],
+            'disc_s' => $attributes['disc_s'],
+            'disc_c' => $attributes['disc_c'],
+            'adapted_disc_d' => $attributes['adapted_disc_d'],
+            'adapted_disc_i' => $attributes['adapted_disc_i'],
+            'adapted_disc_s' => $attributes['adapted_disc_s'],
+            'adapted_disc_c' => $attributes['adapted_disc_c'],
+            'welth_dynamics' => $attributes['welth_dynamics'],
+            'strengths_finder_1' => $attributes['strengths_finder_1'],
+            'strengths_finder_2' => $attributes['strengths_finder_2'],
+            'strengths_finder_3' => $attributes['strengths_finder_3'],
+            'strengths_finder_4' => $attributes['strengths_finder_4']
+        );
+
+        unset($attributes['disc_d']);
+        unset($attributes['disc_i']);
+        unset($attributes['disc_s']);
+        unset($attributes['disc_c']);
+        unset($attributes['adapted_disc_d']);
+        unset($attributes['adapted_disc_i']);
+        unset($attributes['adapted_disc_s']);
+        unset($attributes['adapted_disc_c']);
+        unset($attributes['welth_dynamics']);
+        unset($attributes['strengths_finder_1']);
+        unset($attributes['strengths_finder_2']);
+        unset($attributes['strengths_finder_3']);
+        unset($attributes['strengths_finder_4']);
+
         $user_attributes = $attributes;
 
         if ( ! Auth::user()->can("edit-users") && Auth::user()->user_id == $id){
@@ -342,6 +375,7 @@ class UsersController extends Controller
             $user_attributes['admission_date'] = $user_details->admission_date;
             
         }
+
 
         unset($user_attributes['user']);
         unset($user_attributes['mobile']);
@@ -399,8 +433,36 @@ class UsersController extends Controller
         }
         $user->save();
 
-        $user_details2 = UserDetail::first();
+        $user_true_assessment = TrueAssessment::where('user', '=', $id)->first();
         $user_details = UserDetail::where('user', '=', $id)->first();
+        $user_true_assessment_create = array(
+            'true_assessment_id' => Uuid::generate(4),
+            'user' => $attributes['user_id'],
+            'disc_d' => (isset($user_assessments['disc_d'])) ? $user_assessments['disc_d'] : 0,
+            'disc_i' => (isset($user_assessments['disc_i'])) ? $user_assessments['disc_i'] : 0,
+            'disc_s' => (isset($user_assessments['disc_s'])) ? $user_assessments['disc_s'] : 0,
+            'disc_c' => (isset($user_assessments['disc_c'])) ? $user_assessments['disc_c'] : 0,
+            'adapted_disc_d' => (isset($user_assessments['adapted_disc_d'])) ? $user_assessments['adapted_disc_d'] : "",
+            'adapted_disc_i' => (isset($user_assessments['adapted_disc_i'])) ? $user_assessments['adapted_disc_i'] : "",
+            'adapted_disc_s' => (isset($user_assessments['adapted_disc_s'])) ? $user_assessments['adapted_disc_s'] : "",
+            'adapted_disc_c' => (isset($user_assessments['adapted_disc_c'])) ? $user_assessments['adapted_disc_c'] : "",
+            'welth_dynamics' => (isset($user_assessments['welth_dynamics'])) ? $user_assessments['welth_dynamics'] : "",
+            'strengths_finder_1' => (isset($user_assessments['strengths_finder_1'])) ? $user_assessments['strengths_finder_1'] : "",
+            'strengths_finder_2' => (isset($user_assessments['strengths_finder_2'])) ? $user_assessments['strengths_finder_2'] : "",
+            'strengths_finder_3' => (isset($user_assessments['strengths_finder_3'])) ? $user_assessments['strengths_finder_3'] : "",
+            'strengths_finder_4' => (isset($user_assessments['strengths_finder_4'])) ? $user_assessments['strengths_finder_4'] : "",
+            'strengths_finder_5' => (isset($user_assessments['strengths_finder_5'])) ? $user_assessments['strengths_finder_5'] : "",
+        );
+
+        if ($user_true_assessment) {
+            $user_true_assessment->fill($user_true_assessment_create);
+            Session::flash('update', ['code' => 200, 'message' => trans('general.http.200u')]);
+            $user_true_assessment->save();
+        }else{
+
+            TrueAssessment::create($user_true_assessment_create);
+
+        }
         if ($user_details) {
             $user_details->fill($user_details_attributes);
             Session::flash('update', ['code' => 200, 'message' => trans('general.http.200u')]);

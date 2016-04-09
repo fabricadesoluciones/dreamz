@@ -87,9 +87,9 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\File','user','user_id');
     }
 
-    public function virtues()
+    public function true_assessments()
     {
-        return $this->belongsTo('App\VirtueGiver','user_id','receiver');
+        return $this->hasMany('App\TrueAssessment','user','user_id');
 
     }
 

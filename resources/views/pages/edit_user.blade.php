@@ -111,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 @if(Auth::user()->hasRole('coach') || Auth::user()->hasRole('super-admin') )
                 <div class="row cells3">
                     <div class="cell">
@@ -127,9 +127,9 @@
                 @endif
             </div>
 
-            <h3>{{trans('general.forms.user_details')}}</h3>
-            <hr>
-<div class="grid">
+<h3>{{trans('general.forms.user_details')}}</h3>
+<hr>
+    <div class="grid">
         <div class="row cells2">
 
             <div class="row cells2">
@@ -237,6 +237,117 @@
                 </div>
             </div>
 
+            
+        </div>
+    </div>
+
+<h3>{{trans_choice('general.menu.assessments',2)}}</h3>
+<hr>
+    <div class="grid">
+        <div class="row cells">
+            <strong>DISC</strong>
+        </div>
+        <div class="row cells4">
+            <div class="cell">
+                <div class="input-control text full-size">
+                    <label>D</label>
+                    <input size="65" name="disc_d" value="{{$user->disc_d}}" type="text" />
+                </div>
+            </div>
+            <div class="cell">
+                <div class="input-control text full-size">
+                    <label>I</label>
+                    <input size="65" name="disc_i" value="{{$user->disc_i}}" type="text" />
+                </div>
+            </div>
+            <div class="cell">
+                <div class="input-control text full-size">
+                    <label>S</label>
+                    <input size="65" name="disc_s" value="{{$user->disc_s}}" type="text" />
+                </div>
+            </div>
+            <div class="cell">
+                <div class="input-control text full-size">
+                    <label>C</label>
+                    <input size="65" name="disc_c" value="{{$user->disc_c}}" type="text" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid" @if( ! Auth::user()->can('edit-users')) style="display:none;" @endif>
+        <div class="row cells">
+            <strong>DISC Adaptado</strong>
+        </div>
+        <div class="row cells4">
+            <div class="cell">
+                <div class="input-control text full-size">
+                    <label>D</label>
+                    <input size="65" name="adapted_disc_d" value="{{$user->adapted_disc_d}}" type="text" />
+                </div>
+            </div>
+            <div class="cell">
+                <div class="input-control text full-size">
+                    <label>I</label>
+                    <input size="65" name="adapted_disc_i" value="{{$user->adapted_disc_i}}" type="text" />
+                </div>
+            </div>
+            <div class="cell">
+                <div class="input-control text full-size">
+                    <label>S</label>
+                    <input size="65" name="adapted_disc_s" value="{{$user->adapted_disc_s}}" type="text" />
+                </div>
+            </div>
+            <div class="cell">
+                <div class="input-control text full-size">
+                    <label>C</label>
+                    <input size="65" name="adapted_disc_c" value="{{$user->adapted_disc_c}}" type="text" />
+                </div>
+            </div>
+        </div>
+        <div class="row cells2">
+            <div class="cell">
+                <div class="input-control select">
+                <label for="welth_dynamics">Welth Dynamics</label>
+                
+                    <!-- $user->welth_dynamics -->
+                <select name="welth_dynamics" value="{{$user->welth_dynamics}}" id="welth_dynamics" data-selected="0">
+                    <option value="0">Creator</option>
+                    <option value="1">Star</option>
+                    <option value="2">Supporter</option>
+                    <option value="3">Deal Maker</option>
+                    <option value="4">Trader</option>
+                    <option value="5">Accumulator</option>
+                    <option value="6">Lord</option>
+                    <option value="7">Mechanic </option>
+                </select>
+                </div>
+            </div>
+        </div>
+        <div class="row cells4">
+            <div class="cell">
+                <label>STRENGTHS FINDER 1</label>
+                <div class="input-control text full-size">
+                    <input size="65" name="strengths_finder_1" value="{{$user->strengths_finder_1}}" type="text" />
+                </div>
+            </div>
+            <div class="cell">
+                <label>STRENGTHS FINDER 2</label>
+                <div class="input-control text full-size">
+                    <input size="65" name="strengths_finder_2" value="{{$user->strengths_finder_2}}" type="text" />
+                </div>
+            </div>
+            <div class="cell">
+                <label>STRENGTHS FINDER 3</label>
+                <div class="input-control text full-size">
+                    <input size="65" name="strengths_finder_3" value="{{$user->strengths_finder_3}}" type="text" />
+                </div>
+            </div>
+            <div class="cell">
+                <label>STRENGTHS FINDER 4</label>
+                <div class="input-control text full-size">
+                    <input size="65" name="strengths_finder_4" value="{{$user->strengths_finder_4}}" type="text" />
+                </div>
+            </div>
             
         </div>
     </div>
