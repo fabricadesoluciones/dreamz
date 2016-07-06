@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Onepage;
 
 use App\OnePageTarget;
+use App\OneCriticalNumber;
 use App\OnePageInfo;
 use App\OnePageAction;
 use App\OneProfitX;
@@ -173,32 +174,26 @@ class OnepagesController extends Controller
                 'one_page_id' => 'required|unique:one_page',
                 'period' => 'required',
                 'one_page_date' => 'date_format:Y-m-d|after:yesterday',
-                // 'name' => 'required',
-                // 'owner' => 'required',
-                // 'status' => 'required',
-                // 'due_date' => 'date_format:Y-m-d|after:yesterday',
         ];
         
         $this->validate($request, $validateto);
         $attributes = $request->all();
-        // $attributes['company'] = $this->company;
-        // $attributes['department'] = $this->department;
 
-        // $fields = HomeController::returnTableColumns('tasks');
+        if($this->addOnePageInfo($attributes)){
+            return redirect(route('onepages'));
+        }
+        
+    
+    }
 
-        // Task::create(array_intersect_key($attributes, $fields));
-
-        // Session::flash('update', ['code' => 200, 'message' => 'Task was created']);
-        // return redirect(route('tasks'));
-
-        // DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
-
-        // return Response::json(['code'=>200,'message' => 'OK' , 'data' => $attributes], 200);
-
+    function addOnePageInfo($attributes, $update = false)
+    {
         $attributes['company'] = $this->company;
 
-        $fields = HomeController::returnTableColumns('one_page');
-        Onepage::create(array_intersect_key($attributes, $fields));
+        if (!$update) {
+            $fields = HomeController::returnTableColumns('one_page');
+            Onepage::create(array_intersect_key($attributes, $fields));
+        }
         
         foreach ($attributes['one_page_actions'] as $action) {
             if (!$action) continue;
@@ -306,6 +301,121 @@ class OnepagesController extends Controller
                 )
             );
         }
+
+
+        OneCriticalNumber::create(
+            array(
+
+                'one_page_key_criticals_id' => Uuid::generate(4),
+                'company' => $attributes['company'],
+                'one_page_id' => $attributes['one_page_id'],
+                'description' => $attributes['one_page_critical_people_ggren'],
+                'level' => 0,
+                'number_type' => 'people', // people | process
+                'critical_type' => 'company', // company | period | personal
+                'period' => $attributes['period'],
+
+            )
+        );
+        OneCriticalNumber::create(
+            array(
+
+                'one_page_key_criticals_id' => Uuid::generate(4),
+                'company' => $attributes['company'],
+                'one_page_id' => $attributes['one_page_id'],
+                'description' => $attributes['one_page_critical_people_lgreen'],
+                'level' => 1,
+                'number_type' => 'people', // people | process
+                'critical_type' => 'company', // company | period | personal
+                'period' => $attributes['period'],
+
+            )
+        );
+        OneCriticalNumber::create(
+            array(
+
+                'one_page_key_criticals_id' => Uuid::generate(4),
+                'company' => $attributes['company'],
+                'one_page_id' => $attributes['one_page_id'],
+                'description' => $attributes['one_page_critical_people_yellow'],
+                'level' => 2,
+                'number_type' => 'people', // people | process
+                'critical_type' => 'company', // company | period | personal
+                'period' => $attributes['period'],
+
+            )
+        );
+        OneCriticalNumber::create(
+            array(
+
+                'one_page_key_criticals_id' => Uuid::generate(4),
+                'company' => $attributes['company'],
+                'one_page_id' => $attributes['one_page_id'],
+                'description' => $attributes['one_page_critical_people_red'],
+                'level' => 3,
+                'number_type' => 'people', // people | process
+                'critical_type' => 'company', // company | period | personal
+                'period' => $attributes['period'],
+
+            )
+        );
+        OneCriticalNumber::create(
+            array(
+
+                'one_page_key_criticals_id' => Uuid::generate(4),
+                'company' => $attributes['company'],
+                'one_page_id' => $attributes['one_page_id'],
+                'description' => $attributes['one_page_critical_process_ggren'],
+                'level' => 0,
+                'number_type' => 'process', // people | process
+                'critical_type' => 'company', // company | period | personal
+                'period' => $attributes['period'],
+
+            )
+        );
+        OneCriticalNumber::create(
+            array(
+
+                'one_page_key_criticals_id' => Uuid::generate(4),
+                'company' => $attributes['company'],
+                'one_page_id' => $attributes['one_page_id'],
+                'description' => $attributes['one_page_critical_process_lgreen'],
+                'level' => 1,
+                'number_type' => 'process', // people | process
+                'critical_type' => 'company', // company | period | personal
+                'period' => $attributes['period'],
+
+            )
+        );
+        OneCriticalNumber::create(
+            array(
+
+                'one_page_key_criticals_id' => Uuid::generate(4),
+                'company' => $attributes['company'],
+                'one_page_id' => $attributes['one_page_id'],
+                'description' => $attributes['one_page_critical_process_yellow'],
+                'level' => 2,
+                'number_type' => 'process', // people | process
+                'critical_type' => 'company', // company | period | personal
+                'period' => $attributes['period'],
+
+            )
+        );
+        OneCriticalNumber::create(
+            array(
+
+                'one_page_key_criticals_id' => Uuid::generate(4),
+                'company' => $attributes['company'],
+                'one_page_id' => $attributes['one_page_id'],
+                'description' => $attributes['one_page_critical_process_red'],
+                'level' => 3,
+                'number_type' => 'process', // people | process
+                'critical_type' => 'company', // company | period | personal
+                'period' => $attributes['period'],
+
+            )
+        );
+
         foreach ($attributes['one_page_make_buy'] as $make_buy) {
             if (!$make_buy) continue;
             OnePageMakeBuy::create(
@@ -372,7 +482,8 @@ class OnepagesController extends Controller
                 )
             );
         }
-    
+
+        return true;
     }
 
     /**
@@ -403,30 +514,61 @@ class OnepagesController extends Controller
      */
     public function edit($id)
     {
-        if( ! session('department')){
-            return HomeController::returnError(403, trans('general.http.select_department'), route('departments'));
-        }
-        $user = Auth::user();
-        $all_dept_users = User::where('department','=',$this->department)->get();
-        $participants = DB::table('task_participants')
-                ->leftJoin('users', 'task_participants.user', '=', 'users.user_id')
-                ->select('task_participants.*', 'users.name AS user_name', 'users.lastname AS user_lastname')
-                ->where('user_id', '=', $id)
-                ->get();
-
-        $task = Task::where('task_id','=',$id)->first();
-        if (Auth::user()->hasRole('coach') || Auth::user()->hasRole('champion') || Auth::user()->hasRole('team_lead')) {
-            $owners = $all_dept_users;
-        }else{
-            $owners = [$user];
-            $whereClause = ['tasks.owner' => Auth::user()->user_id];
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
         }
 
-        if ($owners && $task) {
-            return view('pages.edit_task', ['task'=>$task, 'owners' => $owners, 'participants'=> $participants, 'all_dept_users' => $all_dept_users ]);
-        }else{
-            return HomeController::returnError(403);
-        }
+
+        $onepagetargets = OnePageTarget::where('one_page_id','=',$id)->get();
+        $matchThese = ['one_page_id' => $id, 'number_type' => 'people', 'critical_type' => 'company'];
+        $onecritical_people_company_numbers = OneCriticalNumber::where($matchThese)->orderBy('level', 'asc')->get();
+        $matchThese = ['one_page_id' => $id, 'number_type' => 'process', 'critical_type' => 'company'];
+        $onecritical_process_company_numbers = OneCriticalNumber::where($matchThese)->orderBy('level', 'asc')->get();
+        $onepageinfo = OnePageInfo::where('one_page_id','=',$id)->first();
+        $onepageactions = OnePageAction::where('one_page_id','=',$id)->get();
+        $oneprofitxs = OneProfitX::where('one_page_id','=',$id)->get();
+        $onebhags = OneBHAG::where('one_page_id','=',$id)->get();
+        $onepagekeythrusts = OnePageKeyThrust::where('one_page_id','=',$id)->get();
+        $onepagebrandpromisekpis = OnePageBrandPromiseKPI::where('one_page_id','=',$id)->get();
+        $onepagegoals = OnePageGoal::where('one_page_id','=',$id)->get();
+        $onepagekeyinitiatives = OnePageKeyInitiative::where('one_page_id','=',$id)->get();
+        $onepagemakebuys = OnePageMakeBuy::where('one_page_id','=',$id)->get();
+        $onepagesells = OnePageSell::where('one_page_id','=',$id)->get();
+        $onepagerecordkeepings = OnePageRecordKeeping::where('one_page_id','=',$id)->get();
+        $onepageemployees = OnePageEmployee::where('one_page_id','=',$id)->get();
+        $onepageclients = OnePageClient::where('one_page_id','=',$id)->get();
+        $onepagecolaborators = OnePageColaborator::where('one_page_id','=',$id)->get();
+        $onepagevirtues = OnePageVirtue::where('one_page_id','=',$id)->get();
+
+
+
+        $periods = Period::where('company','=',$this->company)->get();
+        $virtues = OnePageVirtue::where('company','=',$this->company)->get();
+        $params = array(
+            'id' => $id,
+            'periods' => $periods,
+            'virtues' => $virtues,
+            'onepagetargets' => $onepagetargets,
+            'onecritical_people_company_numbers' => $onecritical_people_company_numbers,
+            'onecritical_process_company_numbers' => $onecritical_process_company_numbers,
+            'onepageinfo' => $onepageinfo,
+            'onepageactions' => $onepageactions,
+            'oneprofitxs' => $oneprofitxs,
+            'onebhags' => $onebhags,
+            'onepagekeythrusts' => $onepagekeythrusts,
+            'onepagebrandpromisekpis' => $onepagebrandpromisekpis,
+            'onepagegoals' => $onepagegoals,
+            'onepagekeyinitiatives' => $onepagekeyinitiatives,
+            'onepagemakebuys' => $onepagemakebuys,
+            'onepagesells' => $onepagesells,
+            'onepagerecordkeepings' => $onepagerecordkeepings,
+            'onepageemployees' => $onepageemployees,
+            'onepageclients' => $onepageclients,
+            'onepagecolaborators' => $onepagecolaborators,
+            'onepagevirtues' => $onepagevirtues
+        );
+        return view('pages.edit_one_page', $params);
+        // var_dump($onepageinfo->period);
 
     }
 
@@ -439,26 +581,41 @@ class OnepagesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $validateto = [
-                'name' => 'required',
-                'owner' => 'required',
-                'status' => 'required',
-                'priority' => 'required',
-                'due_date' => 'date_format:Y-m-d',
+                'one_page_id' => 'required',
+                'period' => 'required',
+                'one_page_date' => 'date_format:Y-m-d',
         ];
         
         $this->validate($request, $validateto);
         $attributes = $request->all();
-        $attributes['company'] = $this->company;
-        $attributes['department'] = $this->department;
 
-        $objective = Task::where('task_id', '=', $id)->first();
-        $objective->fill($attributes);
-        $objective->save();
+        $onepagetargets = OnePageTarget::where('one_page_id','=',$id)->delete();
+        $matchThese = ['one_page_id' => $id, 'number_type' => 'people', 'critical_type' => 'company'];
+        $onecritical_people_company_numbers = OneCriticalNumber::where($matchThese)->delete();
+        $matchThese = ['one_page_id' => $id, 'number_type' => 'process', 'critical_type' => 'company'];
+        $onecritical_process_company_numbers = OneCriticalNumber::where($matchThese)->delete();
+        $onepageinfo = OnePageInfo::where('one_page_id','=',$id)->first();
+        $onepageactions = OnePageAction::where('one_page_id','=',$id)->delete();
+        $oneprofitxs = OneProfitX::where('one_page_id','=',$id)->delete();
+        $onebhags = OneBHAG::where('one_page_id','=',$id)->delete();
+        $onepagekeythrusts = OnePageKeyThrust::where('one_page_id','=',$id)->delete();
+        $onepagebrandpromisekpis = OnePageBrandPromiseKPI::where('one_page_id','=',$id)->delete();
+        $onepagegoals = OnePageGoal::where('one_page_id','=',$id)->delete();
+        $onepagekeyinitiatives = OnePageKeyInitiative::where('one_page_id','=',$id)->delete();
+        $onepagemakebuys = OnePageMakeBuy::where('one_page_id','=',$id)->delete();
+        $onepagesells = OnePageSell::where('one_page_id','=',$id)->delete();
+        $onepagerecordkeepings = OnePageRecordKeeping::where('one_page_id','=',$id)->delete();
+        $onepageemployees = OnePageEmployee::where('one_page_id','=',$id)->delete();
+        $onepageclients = OnePageClient::where('one_page_id','=',$id)->delete();
+        $onepagecolaborators = OnePageColaborator::where('one_page_id','=',$id)->delete();
+        $onepagevirtues = OnePageVirtue::where('one_page_id','=',$id)->delete();
 
-        Session::flash('update', ['code' => 200, 'message' => 'Task was updated']);
-        return redirect(route('tasks'));
-    
+        if($this->addOnePageInfo($attributes, true)){
+            return redirect(route('onepages'));
+        }
+
     }
 
     /**

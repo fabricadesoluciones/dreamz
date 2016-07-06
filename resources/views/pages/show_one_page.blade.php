@@ -16,15 +16,17 @@
 
 </style>
 <hr>
+
+
 <script type="text/babel">
 
     $.get('{!! route('onepages.index') !!}', function(){},'json')
     .done(function(d){
         console.log(d);
-        {{-- React.render(
-            <EmotionsTable list={d.data} />,
+        React.render(
+            <OnePageTable list={d.data} />,
             document.getElementById('table')
-        ); --}}
+        );
     });
     
 
@@ -34,10 +36,11 @@ var Tr = React.createClass({
         return (
             <tr>
                 <td>{this.props.index + 1}</td>
-                <td><span className="name">{this.props.data.name}</span></td>
-                <td> <img className="emotion_list_img" src={'/img/emociones/'+this.props.data.name+'.svg'} height="25" /></td>
-                <td className="center"> <label className="input-control checkbox"> <input type="checkbox" className="activeitem" data-id={this.props.data.active_emotion_id} checked={Boolean(JSON.parse(this.props.data.active))} /> <span className="check"></span> </label> </td> 
-
+                <td> 
+                    <a href={"/one_page/"+this.props.data.one_page_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
+                    &nbsp;
+                    <button className="button danger delete_item" data-type="one_pages" data-id={this.props.data.user_id}>{{trans('general.delete')}}</button>
+                </td>
             </tr>
 
 
@@ -45,7 +48,7 @@ var Tr = React.createClass({
     }
 });
 
-var EmotionsTable = React.createClass({
+var OnePageTable = React.createClass({
     getInitialState: function() {
         return {
             data: this.props.data
@@ -61,9 +64,7 @@ var EmotionsTable = React.createClass({
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>{{trans('general.forms.name')}}</th>
-                        <th>Ícono</th>
-                        <th>{{trans('general.forms.active')}}</th>
+                        <th> {{ trans_choice('general.actions',2)}} </th>
                     </tr>
                 </thead>
                 <tbody>

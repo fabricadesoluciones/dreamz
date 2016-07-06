@@ -124,7 +124,7 @@ class CreateOnePageTable extends Migration
             $table->string('number_type');
             $table->string('critical_type');
             $table->string('period');
-            $table->string('user');
+            $table->string('level');
             $table->timestamps();
             $table->softDeletes();
         });

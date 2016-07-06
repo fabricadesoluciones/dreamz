@@ -50,7 +50,7 @@ Route::get('/dreams', ['middleware' => 'auth', 'uses' => 'HomeController@dreams'
 Route::get('/coaches', ['middleware' => 'auth', 'uses' => 'HomeController@coaches'])->name('coaches');
 Route::get('/assessments', ['middleware' => 'auth', 'uses' => 'HomeController@assessments'])->name('assessments');
 Route::get('/virtues', ['middleware' => 'auth', 'uses' => 'HomeController@virtues'])->name('virtues');
-Route::get('/one_page', ['middleware' => 'auth', 'uses' => 'HomeController@one_page'])->name('virtues');
+Route::get('/one_page', ['middleware' => 'auth', 'uses' => 'HomeController@one_page'])->name('onepages');
 
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setCompany']);
@@ -87,6 +87,7 @@ Route::get('/tasks/{id}/edit', ['middleware' => 'auth', 'uses' => 'TasksControll
 Route::get('/dreams/{id}/edit', ['middleware' => 'auth', 'uses' => 'DreamsController@edit']);
 Route::get('/coaches/{id}/edit', ['middleware' => 'auth', 'uses' => 'UsersController@editcoach']);
 Route::get('/virtues/{id}/edit', ['middleware' => 'auth', 'uses' => 'VirtuesController@edit']);
+Route::get('/one_page/{id}/edit', ['middleware' => 'auth', 'uses' => 'OnepagesController@edit']);
 
 Route::get('/priorities/team', ['middleware' => 'auth', 'uses' => 'PrioritiesController@team'])->name('priorities.team');
 
