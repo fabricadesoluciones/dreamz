@@ -14,10 +14,14 @@
         width: 40% !important;
     }
     .company_logo{
-        background-repeat: no-repeat; background-size: 100% 100%;
+        background-size: contain;
         display: flex;
         justify-content: flex-end;
         align-items: flex-end;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-color: gray;
+
     }
     .company_logo label{
         display: block;

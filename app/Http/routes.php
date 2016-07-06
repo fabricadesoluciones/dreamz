@@ -34,6 +34,7 @@ Route::get('/dreams/create', ['middleware' => 'auth', 'uses' => 'DreamsControlle
 Route::get('/coaches/create', ['middleware' => 'auth', 'uses' => 'UsersController@createCoach']);
 Route::get('/assessments/create', ['middleware' => 'auth', 'uses' => 'AssessmentsController@create']);
 Route::get('/virtues/create', ['middleware' => 'auth', 'uses' => 'VirtuesController@create']);
+Route::get('/one_page/create', ['middleware' => 'auth', 'uses' => 'OnepagesController@create']);
 
 Route::get('/companies', ['middleware' => 'auth', 'uses' => 'HomeController@companies'])->name('companies');
 Route::get('/departments', ['middleware' => 'auth', 'uses' => 'HomeController@departments'])->name('departments');
@@ -49,6 +50,7 @@ Route::get('/dreams', ['middleware' => 'auth', 'uses' => 'HomeController@dreams'
 Route::get('/coaches', ['middleware' => 'auth', 'uses' => 'HomeController@coaches'])->name('coaches');
 Route::get('/assessments', ['middleware' => 'auth', 'uses' => 'HomeController@assessments'])->name('assessments');
 Route::get('/virtues', ['middleware' => 'auth', 'uses' => 'HomeController@virtues'])->name('virtues');
+Route::get('/one_page', ['middleware' => 'auth', 'uses' => 'HomeController@one_page'])->name('virtues');
 
 Route::get('/companies/{id}/users', ['middleware' => 'auth', 'uses' => 'CompaniesController@users']);
 Route::get('/set_company/{id}', ['middleware' => 'auth', 'uses' => 'HomeController@setCompany']);
@@ -305,6 +307,18 @@ Route::group(['middleware' => 'auth','prefix' => 'api/v1.0'], function ()
 'update' => 'virtues.update',
 'show' => 'virtues.show',
 'edit' => 'virtues.edit',
+        
+    ]]);
+
+    Route::resource('onepages', 'OnepagesController', ['names' => [
+
+'store' => 'onepages.store',
+'index' => 'onepages.index',
+'create' => 'onepages.create',
+'destroy' => 'onepages.destroy',
+'update' => 'onepages.update',
+'show' => 'onepages.show',
+'edit' => 'onepages.edit',
         
     ]]);
 

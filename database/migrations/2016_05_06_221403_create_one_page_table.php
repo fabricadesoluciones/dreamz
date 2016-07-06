@@ -15,199 +15,250 @@ class CreateOnePageTable extends Migration
         
         Schema::create('one_page', function (Blueprint $table) {
             $table->string('one_page_id')->unique();
-            $table->string('company_id');
-
+            $table->string('company');
+            $table->timestamps();
+            $table->softDeletes();
         });
 
-        Schema::create('one_pages_virtues', function (Blueprint $table) {
-            $table->string('one_pages_virtue_id')->unique();
+        Schema::create('one_page_virtues', function (Blueprint $table) {
+            $table->string('one_page_virtue_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('name');
             $table->string('active');
             $table->date('date');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_general_info', function (Blueprint $table) {
             $table->string('one_page_general_info_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('purpose');
             $table->string('sandbox');
-
+            $table->string('period');
+            $table->string('date');
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_actions', function (Blueprint $table) {
             $table->string('one_page_action_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_profit_x', function (Blueprint $table) {
             $table->string('one_page_profit_x_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_bhag', function (Blueprint $table) {
             $table->string('one_page_bhag_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
-        Schema::create('one_pages_targets', function (Blueprint $table) {
-            $table->string('one_pages_target_id')->unique();
+        Schema::create('one_page_targets', function (Blueprint $table) {
+            $table->string('one_page_target_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('name');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_key_thursts', function (Blueprint $table) {
             $table->string('one_page_key_thursts_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_bp_kpis', function (Blueprint $table) {
             $table->string('one_page_bp_kpis_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_goals', function (Blueprint $table) {
             $table->string('one_page_goals_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_key_initiatives', function (Blueprint $table) {
             $table->string('one_page_key_initiatives_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_critical_numbers', function (Blueprint $table) {
             $table->string('one_page_key_criticals_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
             $table->string('number_type');
             $table->string('critical_type');
             $table->string('period');
             $table->string('user');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_make_buy', function (Blueprint $table) {
             $table->string('one_page_make_buy_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_sell', function (Blueprint $table) {
             $table->string('one_page_sell_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
-        Schema::create('one_page_recrod_keeping', function (Blueprint $table) {
+        Schema::create('one_page_record_keeping', function (Blueprint $table) {
             $table->string('one_page_recrod_keeping_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_employees', function (Blueprint $table) {
             $table->string('one_page_employees_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_customers', function (Blueprint $table) {
             $table->string('one_page_customers_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_colaborators', function (Blueprint $table) {
             $table->string('one_page_colaborators_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_objectives', function (Blueprint $table) {
             $table->string('one_page_objectives_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('period');
             $table->string('description');
             $table->string('active');
             $table->date('date');
             $table->string('user');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_priorities', function (Blueprint $table) {
             $table->string('one_page_priorities_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('period');
             $table->string('description');
             $table->string('active');
             $table->date('date');
             $table->string('user');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_theme', function (Blueprint $table) {
             $table->string('one_page_theme_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('period');
             $table->string('description');
             $table->string('dead_line');
             $table->string('critical_number');
 
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_celebration', function (Blueprint $table) {
             $table->string('one_page_celebration_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('period');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_strengths', function (Blueprint $table) {
             $table->string('one_page_strengths_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('period');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_weaknesses', function (Blueprint $table) {
             $table->string('one_page_weaknesses_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('period');
             $table->string('description');
-
+            $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('one_page_trends', function (Blueprint $table) {
             $table->string('one_page_trends_id')->unique();
             $table->string('one_page_id');
+            $table->string('company');
             $table->string('period');
-            $table->string('description');
+            $table->timestamps();
+            $table->softDeletes();
         });
 
     }
@@ -220,12 +271,12 @@ class CreateOnePageTable extends Migration
     public function down()
     {
         Schema::drop('one_page');
-        Schema::drop('one_pages_virtues');
+        Schema::drop('one_page_virtues');
         Schema::drop('one_page_general_info');
         Schema::drop('one_page_actions');
         Schema::drop('one_page_profit_x');
         Schema::drop('one_page_bhag');
-        Schema::drop('one_pages_targets');
+        Schema::drop('one_page_targets');
         Schema::drop('one_page_key_thursts');
         Schema::drop('one_page_bp_kpis');
         Schema::drop('one_page_goals');
@@ -233,7 +284,7 @@ class CreateOnePageTable extends Migration
         Schema::drop('one_page_critical_numbers');
         Schema::drop('one_page_make_buy');
         Schema::drop('one_page_sell');
-        Schema::drop('one_page_recrod_keeping');
+        Schema::drop('one_page_record_keeping');
         Schema::drop('one_page_employees');
         Schema::drop('one_page_customers');
         Schema::drop('one_page_colaborators');

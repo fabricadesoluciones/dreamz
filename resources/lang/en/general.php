@@ -95,6 +95,7 @@ return [
     ],
 
     'new' => 'New',
+    'purpose' => 'Purpose',
     'login' => 'Login',
     'entries' => 'Entries',
     'modify' => 'Modify',

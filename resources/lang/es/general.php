@@ -97,6 +97,7 @@ return [
     ],
 
     'new' => 'Nuevo',
+    'purpose' => 'Propósito',
     'login' => 'Entrar',
     'entries' => 'Registros',
     'modify' => 'Modificar',

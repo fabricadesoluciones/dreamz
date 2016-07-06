@@ -163,6 +163,14 @@ class HomeController extends Controller
         return view('pages.show_virtues');
     }
 
+    public function one_page()
+    {
+        if( ! session('company')){
+            return $this->returnError(403, trans('general.http.select_company'), route('companies'));
+        }
+        return view('pages.show_one_page');
+    }
+
     public function coaches()
     {
         if ( ! Auth::user()->hasRole("super-admin")){
