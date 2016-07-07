@@ -256,7 +256,7 @@ class CreateOnePageTable extends Migration
             $table->string('one_page_trends_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
-            $table->string('period');
+            $table->string('description');
             $table->timestamps();
             $table->softDeletes();
         });

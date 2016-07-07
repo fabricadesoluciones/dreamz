@@ -5,7 +5,12 @@
 @section('content')
 
                 
-<h2>One Page <a href="/one_page/create" class="button success"> {{ trans('general.forms.add_new') }} </a></h2>
+<h2>One Page
+    @if(Auth::user()->can('edit-one_page'))
+        <a href="/one_page/create" class="button success"> {{ trans('general.forms.add_new') }} </a>
+    @endif
+</h2>
+
 <div id="table"></div>
 <br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
 <br style="display:block;clear: both;height: 1px;margin: 1px;width: 1px;">
@@ -36,11 +41,17 @@ var Tr = React.createClass({
         return (
             <tr>
                 <td>{this.props.index + 1}</td>
-                <td> 
-                    <a href={"/one_page/"+this.props.data.one_page_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
-                    &nbsp;
-                    <button className="button danger delete_item" data-type="one_pages" data-id={this.props.data.user_id}>{{trans('general.delete')}}</button>
-                </td>
+                @if(Auth::user()->can('edit-one_page'))
+                    <td> 
+                        <a href={"/one_page/"+this.props.data.one_page_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
+                        &nbsp;
+                        <button className="button danger delete_item" data-type="one_pages" data-id={this.props.data.user_id}>{{trans('general.delete')}}</button>
+                    </td>
+                @else
+                    <td> 
+                        <a href={"/one_page/"+this.props.data.one_page_id+"/edit"} className="button success">{{trans('general.modify')}} {{trans_choice('general.mine',1)}} One Page</a>
+                    </td>
+                @endif
             </tr>
 
 

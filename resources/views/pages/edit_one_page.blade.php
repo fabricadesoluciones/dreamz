@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', trans('general.new').' '.' One Page')
+@section('title', trans('general.edit').' '.' One Page')
 
 @section('content')
 <style>
@@ -20,15 +20,15 @@
         margin-left: 1ex;
     }
 </style>
-<h2>{{ trans('general.new')}}  One Page</h2>
+<h2>{{ trans('general.edit')}}  One Page</h2>
 <hr>
 <div>
-    @if(Auth::user()->can('edit-one_page'))
-        can edit one page
-    @endif
-{!! Form::model(null, array('route' => array('onepages.update', $id), 'method' => 'PUT')) !!}
+
+    
     <div class="grid">
-                <input type="hidden" name="one_page_id" value="{{ $id }}" />
+{!! Form::model(null, array('route' => array('onepages.update', $id), 'method' => 'PUT')) !!}
+
+        <input type="hidden" name="one_page_id" value="{{ $id }}" />
         <div class="row cells3">
             <div class="cell">
                 <label for="blood_type">{{trans_choice('general.menu.companies',1)}}</label>
@@ -219,19 +219,19 @@
                     <label>Critical number People or B/S Company</label>
                     <div class="input-control text full-size">
                         <div class="color" style="background-color:#265303"></div>
-                        <input size="65" name="one_page_critical_people_ggren" type="text" value="{{ $onecritical_people_company_numbers[0]->description }}">
+                        <input size="65" name="one_page_critical_people_company_ggren" type="text" value="{{ $onecritical_people_company_numbers[0]->description }}">
                     </div>
                     <div class="input-control text full-size">
                         <div class="color" style="background-color:#468b13"></div>
-                        <input size="65" name="one_page_critical_people_lgreen" type="text" value="{{ $onecritical_people_company_numbers[1]->description }}">
+                        <input size="65" name="one_page_critical_people_company_lgreen" type="text" value="{{ $onecritical_people_company_numbers[1]->description }}">
                     </div>
                     <div class="input-control text full-size">
                         <div class="color" style="background-color:#edce13"></div>
-                        <input size="65" name="one_page_critical_people_yellow" type="text" value="{{ $onecritical_people_company_numbers[2]->description }}">
+                        <input size="65" name="one_page_critical_people_company_yellow" type="text" value="{{ $onecritical_people_company_numbers[2]->description }}">
                     </div>
                     <div class="input-control text full-size">
                         <div class="color" style="background-color:#bc0709"></div>
-                        <input size="65" name="one_page_critical_people_red" type="text" value="{{ $onecritical_people_company_numbers[3]->description }}">
+                        <input size="65" name="one_page_critical_people_company_red" type="text" value="{{ $onecritical_people_company_numbers[3]->description }}">
                     </div>
                 </div>
             </div>
@@ -240,19 +240,19 @@
                     <label>Critical number Process or B/S Company</label>
                     <div class="input-control text full-size">
                         <div class="color" style="background-color:#265303"></div>
-                        <input size="65" name="one_page_critical_process_ggren" type="text" value="{{ $onecritical_process_company_numbers[0]->description }}">
+                        <input size="65" name="one_page_critical_process_company_ggren" type="text" value="{{ $onecritical_process_company_numbers[0]->description }}">
                     </div>
                     <div class="input-control text full-size">
                         <div class="color" style="background-color:#468b13"></div>
-                        <input size="65" name="one_page_critical_process_lgreen" type="text" value="{{ $onecritical_process_company_numbers[1]->description }}">
+                        <input size="65" name="one_page_critical_process_company_lgreen" type="text" value="{{ $onecritical_process_company_numbers[1]->description }}">
                     </div>
                     <div class="input-control text full-size">
                         <div class="color" style="background-color:#edce13"></div>
-                        <input size="65" name="one_page_critical_process_yellow" type="text" value="{{ $onecritical_process_company_numbers[2]->description }}">
+                        <input size="65" name="one_page_critical_process_company_yellow" type="text" value="{{ $onecritical_process_company_numbers[2]->description }}">
                     </div>
                     <div class="input-control text full-size">
                         <div class="color" style="background-color:#bc0709"></div>
-                        <input size="65" name="one_page_critical_process_red" type="text" value="{{ $onecritical_process_company_numbers[3]->description }}">
+                        <input size="65" name="one_page_critical_process_company_red" type="text" value="{{ $onecritical_process_company_numbers[3]->description }}">
                     </div>
                 </div>
             </div>
@@ -347,11 +347,260 @@
                 </div>
             </div>
         </div>
+        <div class="row cells1">
+            <div class="cell">
+                <div>
+                    <label> Fuerzas</label>
+                    @foreach ($onepagestrengths as $onepagestrength)
+                    <div class="input-control text full-size one_page_action dup">
+                        <input size="65" name="one_page_strengths[]" type="text" value="{{$onepagestrength->description}}" />
+                    </div>
+                    @endforeach
+                        <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
+                        <a href="#" class="hide button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row cells1">
+            <div class="cell">
+                <div>
+                    <label> Debilidades</label>
+                    @foreach ($onepageweaknesses as $onepageweakness)
+                    <div class="input-control text full-size one_page_action dup">
+                        <input size="65" name="one_page_weaknesses[]" type="text" value="{{$onepageweakness->description}}" />
+                    </div>
+                    @endforeach
+                        <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
+                        <a href="#" class="hide button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row cells1">
+            <div class="cell">
+                <div>
+                    <label> Tendencias </label>
+                    @foreach ($onepagetrends as $onepagetrend)
+                    <div class="input-control text full-size one_page_action dup">
+                        <input size="65" name="one_page_trends[]" type="text" value="{{$onepagetrend->description}}" />
+                    </div>
+                    @endforeach
+                        <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
+                        <a href="#" class="hide button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
+
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
+        <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">{{trans('general.forms.cancel')}}</a>
+        {!! Form::close() !!}
+
+        <hr>
+        <h3> {{trans_choice('general.menu.companies',1)}} </h3>
+        <br>
+        <div class="row cells4">
+            <div class="cell">
+                <div class="input-control select" style="height:auto">
+                <label for="user"> {{trans_choice('general.menu.objectives', 2)}}</label>
+                    <select multiple name="one_page_virtues[]">
+                    @foreach ($virtues as $virtue)
+                        <option value="{{$virtue->virtue_id}}">{{$virtue->name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                        <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a> 
+
+
+            </div>
+            <div class="cell">
+                <div class="input-control select" style="height:auto">
+                <label for="user"> {{trans_choice('general.menu.priorities', 2)}}</label>
+                    <select multiple name="one_page_virtues[]">
+                    @foreach ($virtues as $virtue)
+                        <option value="{{$virtue->virtue_id}}">{{$virtue->name}}</option>
+                    @endforeach
+                    </select>
+                </div>
+                        <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a> 
+
+
+            </div>
+        </div>
+        <div class="row cells2 one_page_critical">
+            <div class="cell">
+                <div >
+                    <label>Critical number People or B/S Company Trimestral</label>
+                    <div class="input-control text full-size">
+                        <div class="color" style="background-color:#265303"></div>
+                        <input size="65" name="one_page_critical_people_company_period_ggren" type="text">
+                    </div>
+                    <div class="input-control text full-size">
+                        <div class="color" style="background-color:#468b13"></div>
+                        <input size="65" name="one_page_critical_people_company_period_lgreen" type="text">
+                    </div>
+                    <div class="input-control text full-size">
+                        <div class="color" style="background-color:#edce13"></div>
+                        <input size="65" name="one_page_critical_people_company_period_yellow" type="text">
+                    </div>
+                    <div class="input-control text full-size">
+                        <div class="color" style="background-color:#bc0709"></div>
+                        <input size="65" name="one_page_critical_people_company_period_red" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="cell">
+                <div >
+                    <label>Critical number Process or B/S Company Trimestral</label>
+                    <div class="input-control text full-size">
+                        <div class="color" style="background-color:#265303"></div>
+                        <input size="65" name="one_page_critical_process_company_period_ggren" type="text">
+                    </div>
+                    <div class="input-control text full-size">
+                        <div class="color" style="background-color:#468b13"></div>
+                        <input size="65" name="one_page_critical_process_company_period_lgreen" type="text">
+                    </div>
+                    <div class="input-control text full-size">
+                        <div class="color" style="background-color:#edce13"></div>
+                        <input size="65" name="one_page_critical_process_company_period_yellow" type="text">
+                    </div>
+                    <div class="input-control text full-size">
+                        <div class="color" style="background-color:#bc0709"></div>
+                        <input size="65" name="one_page_critical_process_company_period_red" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row cells1" style="margin-bottom: 0; ">
+            <div class="cell">
+                <div>
+                    <label>Tema</label>
+                    <div class="input-control text full-size dup">
+                        <input size="65" name="one_page_colaborators[]" type="text" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row cells1">
+            <div class="cell">
+                <div>
+                    <div class="input-control text" style="width: 49.91%; ">
+                        <input name="one_page_colaborators[]" placeholder="Deadline" type="text" style="width: 100%; ">
+                    </div>
+                    <div class="input-control text" style="width: 49.66%; ">
+                        <input name="one_page_colaborators[]" placeholder="Número Crítico" type="text" style="width: 100%; ">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row cells1">
+            <div class="cell">
+                <div>
+                    <label>Celebration</label>
+                    <div class="input-control text full-size dup">
+                        <input size="65" name="one_page_colaborators[]" type="text" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row cells1">
+            <div class="cell">
+                <div>
+                    <label>Reward</label>
+                    <div class="input-control text full-size dup">
+                        <input size="65" name="one_page_colaborators[]" type="text" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <h3> {{trans_choice('general.mine',1)}} One Page </h3>
+        <br>
+
+        <div class="personals">
+            
+            <div class="row cells4">
+                <div class="cell">
+                    <div class="input-control select" style="height:auto">
+                    <label for="user"> {{trans_choice('general.menu.objectives', 2)}}</label>
+                        <select multiple name="one_page_virtues[]">
+                        @foreach ($virtues as $virtue)
+                            <option value="{{$virtue->virtue_id}}">{{$virtue->name}}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                            <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a> 
+
+
+                </div>
+                <div class="cell">
+                    <div class="input-control select" style="height:auto">
+                    <label for="user"> {{trans_choice('general.menu.priorities', 2)}}</label>
+                        <select multiple name="one_page_virtues[]">
+                        @foreach ($virtues as $virtue)
+                            <option value="{{$virtue->virtue_id}}">{{$virtue->name}}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                            <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a> 
+
+
+                </div>
+            </div>
+            <div class="row cells2 one_page_critical">
+                <div class="cell">
+                    <div >
+                        <label>Critical number People or B/S Personal Trimestral</label>
+                        <div class="input-control text full-size">
+                            <div class="color" style="background-color:#265303"></div>
+                            <input size="65" name="one_page_critical_people_personal_period_ggren" type="text">
+                        </div>
+                        <div class="input-control text full-size">
+                            <div class="color" style="background-color:#468b13"></div>
+                            <input size="65" name="one_page_critical_people_personal_period_lgreen" type="text">
+                        </div>
+                        <div class="input-control text full-size">
+                            <div class="color" style="background-color:#edce13"></div>
+                            <input size="65" name="one_page_critical_people_personal_period_yellow" type="text">
+                        </div>
+                        <div class="input-control text full-size">
+                            <div class="color" style="background-color:#bc0709"></div>
+                            <input size="65" name="one_page_critical_people_personal_period_red" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div >
+                        <label>Critical number Process or B/S Personal Trimestral</label>
+                        <div class="input-control text full-size">
+                            <div class="color" style="background-color:#265303"></div>
+                            <input size="65" name="one_page_critical_process_personal_period_ggren" type="text">
+                        </div>
+                        <div class="input-control text full-size">
+                            <div class="color" style="background-color:#468b13"></div>
+                            <input size="65" name="one_page_critical_process_personal_period_lgreen" type="text">
+                        </div>
+                        <div class="input-control text full-size">
+                            <div class="color" style="background-color:#edce13"></div>
+                            <input size="65" name="one_page_critical_process_personal_period_yellow" type="text">
+                        </div>
+                        <div class="input-control text full-size">
+                            <div class="color" style="background-color:#bc0709"></div>
+                            <input size="65" name="one_page_critical_process_personal_period_red" type="text">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     
-    <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
-    <a href="" onclick="event.preventDefault();location.href = '/'+location.pathname.split('/')[1]" class="button danger">{{trans('general.forms.cancel')}}</a>
-{!! Form::close() !!}
 
 </div>
 
@@ -405,15 +654,14 @@
         </div>
 
     </div>
-    --}}
     <div>
     <hr>
         <h3>4a Sección</h3>
         <ul>
             <li>Agregar objetivos del trimestre de la empresa.</li>
             <li>Agregar prioridades del trimestre de la empresa</li>
-            <li>Critical number People</li>
-            <li>Critical number Process</li>
+            <li>Critical number People Trimestral</li>
+            <li>Critical number Process Trimestral</li>
             <li>Tema</li>
             <li>Deadline</li>
             <li>Número critico</li>
@@ -421,20 +669,12 @@
             <li>Reward</li>
         </ul>
     </div>
-
     <div>
     <hr>
         <h3>5a Sección</h3>
         <ul>
-            <li>Agregar objetivos del trimestre de la empresa.</li>
-            <li>Agregar prioridades del trimestre de la empresa</li>
-            <li>Critical number People</li>
-            <li>Critical number Process</li>
-            <li>Tema</li>
-            <li>Deadline</li>
-            <li>Número critico</li>
-            <li>Celebration</li>
-            <li>Reward</li>
+            <li>Agregar objetivos del trimestre personales</li>
+            <li>Agregar Prioridades Trimestrales Personales</li>
         </ul>
     </div>
 
@@ -442,24 +682,23 @@
     <hr>
         <h3>6a Sección</h3>
         <ul>
-            <li>Agregar objetivos del trimestre personales</li>
-            <li>Agregar Prioridades Trimestrales Personales</li>
-        </ul>
-    </div>
-    <div>
-    <hr>
-        <h3>7a Sección</h3>
-        <ul>
             <li>Fuerzas</li>
             <li>Debilidades</li>
             <li>Tendencias</li>
-            <li>Process</li>
-            <li>Make/ Buy</li>
-            <li>Sell</li>
         </ul>
     </div>
 
+    --}}
+
+
 <script>
+    
+    $('[rel="in_period"]').html('{{$periods[0]->name}}');
+    $(document).on('change','select#period', function (event) {
+        event.preventDefault ? event.preventDefault() : event.returnValue = false;
+        $('[rel="in_period"]').html( this.selectedOptions[0].text )        
+       });
+      
 
 function demo(){
 
@@ -544,5 +783,14 @@ function demo(){
     });
 
 </script>
-
+@if(! Auth::user()->can('edit-one_page'))
+<script>
+$(document).ready(function (d) {
+    // body...
+    $( "input" ).not( $( "div.personals input, [name='_method' ], [name='_token' ], [name='one_page_id' ]" ) ).attr('disabled','disabled').removeAttr('name');
+    $( "select" ).not( $( "div.personals select, [name='_method' ], [name='_token' ], [name='one_page_id' ]" ) ).attr('disabled','disabled').removeAttr('name');
+    $( "textarea" ).not( $( "div.personals textarea, [name='_method' ], [name='_token' ], [name='one_page_id' ]" ) ).attr('disabled','disabled').removeAttr('name');
+});
+</script>        
+    @endif
 @stop

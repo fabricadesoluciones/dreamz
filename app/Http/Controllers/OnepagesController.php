@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Onepage;
 
+use App\OnePageStrength;
+use App\OnePageWeakness;
+use App\OnePageTrend;
+
 use App\OnePageTarget;
 use App\OneCriticalNumber;
 use App\OnePageInfo;
@@ -309,7 +313,7 @@ class OnepagesController extends Controller
                 'one_page_key_criticals_id' => Uuid::generate(4),
                 'company' => $attributes['company'],
                 'one_page_id' => $attributes['one_page_id'],
-                'description' => $attributes['one_page_critical_people_ggren'],
+                'description' => $attributes['one_page_critical_people_company_ggren'],
                 'level' => 0,
                 'number_type' => 'people', // people | process
                 'critical_type' => 'company', // company | period | personal
@@ -323,7 +327,7 @@ class OnepagesController extends Controller
                 'one_page_key_criticals_id' => Uuid::generate(4),
                 'company' => $attributes['company'],
                 'one_page_id' => $attributes['one_page_id'],
-                'description' => $attributes['one_page_critical_people_lgreen'],
+                'description' => $attributes['one_page_critical_people_company_lgreen'],
                 'level' => 1,
                 'number_type' => 'people', // people | process
                 'critical_type' => 'company', // company | period | personal
@@ -337,7 +341,7 @@ class OnepagesController extends Controller
                 'one_page_key_criticals_id' => Uuid::generate(4),
                 'company' => $attributes['company'],
                 'one_page_id' => $attributes['one_page_id'],
-                'description' => $attributes['one_page_critical_people_yellow'],
+                'description' => $attributes['one_page_critical_people_company_yellow'],
                 'level' => 2,
                 'number_type' => 'people', // people | process
                 'critical_type' => 'company', // company | period | personal
@@ -351,7 +355,7 @@ class OnepagesController extends Controller
                 'one_page_key_criticals_id' => Uuid::generate(4),
                 'company' => $attributes['company'],
                 'one_page_id' => $attributes['one_page_id'],
-                'description' => $attributes['one_page_critical_people_red'],
+                'description' => $attributes['one_page_critical_people_company_red'],
                 'level' => 3,
                 'number_type' => 'people', // people | process
                 'critical_type' => 'company', // company | period | personal
@@ -365,7 +369,7 @@ class OnepagesController extends Controller
                 'one_page_key_criticals_id' => Uuid::generate(4),
                 'company' => $attributes['company'],
                 'one_page_id' => $attributes['one_page_id'],
-                'description' => $attributes['one_page_critical_process_ggren'],
+                'description' => $attributes['one_page_critical_process_company_ggren'],
                 'level' => 0,
                 'number_type' => 'process', // people | process
                 'critical_type' => 'company', // company | period | personal
@@ -379,7 +383,7 @@ class OnepagesController extends Controller
                 'one_page_key_criticals_id' => Uuid::generate(4),
                 'company' => $attributes['company'],
                 'one_page_id' => $attributes['one_page_id'],
-                'description' => $attributes['one_page_critical_process_lgreen'],
+                'description' => $attributes['one_page_critical_process_company_lgreen'],
                 'level' => 1,
                 'number_type' => 'process', // people | process
                 'critical_type' => 'company', // company | period | personal
@@ -393,7 +397,7 @@ class OnepagesController extends Controller
                 'one_page_key_criticals_id' => Uuid::generate(4),
                 'company' => $attributes['company'],
                 'one_page_id' => $attributes['one_page_id'],
-                'description' => $attributes['one_page_critical_process_yellow'],
+                'description' => $attributes['one_page_critical_process_company_yellow'],
                 'level' => 2,
                 'number_type' => 'process', // people | process
                 'critical_type' => 'company', // company | period | personal
@@ -407,7 +411,7 @@ class OnepagesController extends Controller
                 'one_page_key_criticals_id' => Uuid::generate(4),
                 'company' => $attributes['company'],
                 'one_page_id' => $attributes['one_page_id'],
-                'description' => $attributes['one_page_critical_process_red'],
+                'description' => $attributes['one_page_critical_process_company_red'],
                 'level' => 3,
                 'number_type' => 'process', // people | process
                 'critical_type' => 'company', // company | period | personal
@@ -483,6 +487,40 @@ class OnepagesController extends Controller
             );
         }
 
+        foreach ($attributes['one_page_strengths'] as $strength) {
+            if (!$strength) continue;
+            OnePageStrength::create(
+                array(
+                    'one_page_strengths_id' => Uuid::generate(4),
+                    'company' => $attributes['company'],
+                    'one_page_id' => $attributes['one_page_id'],
+                    'description' => $strength,
+                )
+            );
+        }
+        foreach ($attributes['one_page_weaknesses'] as $weakness) {
+            if (!$weakness) continue;
+            OnePageWeakness::create(
+                array(
+                    'one_page_weaknesses_id' => Uuid::generate(4),
+                    'company' => $attributes['company'],
+                    'one_page_id' => $attributes['one_page_id'],
+                    'description' => $weakness,
+                )
+            );
+        }
+        foreach ($attributes['one_page_trends'] as $trend) {
+            if (!$trend) continue;
+            OnePageTrend::create(
+                array(
+                    'one_page_trends_id' => Uuid::generate(4),
+                    'company' => $attributes['company'],
+                    'one_page_id' => $attributes['one_page_id'],
+                    'description' => $trend,
+                )
+            );
+        }
+
         return true;
     }
 
@@ -540,6 +578,10 @@ class OnepagesController extends Controller
         $onepagecolaborators = OnePageColaborator::where('one_page_id','=',$id)->get();
         $onepagevirtues = OnePageVirtue::where('one_page_id','=',$id)->get();
 
+        $onepagestrengths = OnePageStrength::where('one_page_id','=',$id)->get();
+        $onepageweaknesses = OnePageWeakness::where('one_page_id','=',$id)->get();
+        $onepagetrends = OnePageTrend::where('one_page_id','=',$id)->get();
+
 
 
         $periods = Period::where('company','=',$this->company)->get();
@@ -565,7 +607,10 @@ class OnepagesController extends Controller
             'onepageemployees' => $onepageemployees,
             'onepageclients' => $onepageclients,
             'onepagecolaborators' => $onepagecolaborators,
-            'onepagevirtues' => $onepagevirtues
+            'onepagevirtues' => $onepagevirtues,
+            'onepagestrengths' => $onepagestrengths,
+            'onepageweaknesses' => $onepageweaknesses,
+            'onepagetrends' => $onepagetrends
         );
         return view('pages.edit_one_page', $params);
         // var_dump($onepageinfo->period);
@@ -591,29 +636,34 @@ class OnepagesController extends Controller
         $this->validate($request, $validateto);
         $attributes = $request->all();
 
-        $onepagetargets = OnePageTarget::where('one_page_id','=',$id)->delete();
-        $matchThese = ['one_page_id' => $id, 'number_type' => 'people', 'critical_type' => 'company'];
-        $onecritical_people_company_numbers = OneCriticalNumber::where($matchThese)->delete();
-        $matchThese = ['one_page_id' => $id, 'number_type' => 'process', 'critical_type' => 'company'];
-        $onecritical_process_company_numbers = OneCriticalNumber::where($matchThese)->delete();
-        $onepageinfo = OnePageInfo::where('one_page_id','=',$id)->first();
-        $onepageactions = OnePageAction::where('one_page_id','=',$id)->delete();
-        $oneprofitxs = OneProfitX::where('one_page_id','=',$id)->delete();
-        $onebhags = OneBHAG::where('one_page_id','=',$id)->delete();
-        $onepagekeythrusts = OnePageKeyThrust::where('one_page_id','=',$id)->delete();
-        $onepagebrandpromisekpis = OnePageBrandPromiseKPI::where('one_page_id','=',$id)->delete();
-        $onepagegoals = OnePageGoal::where('one_page_id','=',$id)->delete();
-        $onepagekeyinitiatives = OnePageKeyInitiative::where('one_page_id','=',$id)->delete();
-        $onepagemakebuys = OnePageMakeBuy::where('one_page_id','=',$id)->delete();
-        $onepagesells = OnePageSell::where('one_page_id','=',$id)->delete();
-        $onepagerecordkeepings = OnePageRecordKeeping::where('one_page_id','=',$id)->delete();
-        $onepageemployees = OnePageEmployee::where('one_page_id','=',$id)->delete();
-        $onepageclients = OnePageClient::where('one_page_id','=',$id)->delete();
-        $onepagecolaborators = OnePageColaborator::where('one_page_id','=',$id)->delete();
-        $onepagevirtues = OnePageVirtue::where('one_page_id','=',$id)->delete();
+        if ( Auth::user()->can('edit-one_page') ) {
+            $onepagetargets = OnePageTarget::where('one_page_id','=',$id)->delete();
+            $matchThese = ['one_page_id' => $id, 'number_type' => 'people', 'critical_type' => 'company'];
+            $onecritical_people_company_numbers = OneCriticalNumber::where($matchThese)->delete();
+            $matchThese = ['one_page_id' => $id, 'number_type' => 'process', 'critical_type' => 'company'];
+            $onecritical_process_company_numbers = OneCriticalNumber::where($matchThese)->delete();
+            $onepageinfo = OnePageInfo::where('one_page_id','=',$id)->first();
+            $onepageactions = OnePageAction::where('one_page_id','=',$id)->delete();
+            $oneprofitxs = OneProfitX::where('one_page_id','=',$id)->delete();
+            $onebhags = OneBHAG::where('one_page_id','=',$id)->delete();
+            $onepagekeythrusts = OnePageKeyThrust::where('one_page_id','=',$id)->delete();
+            $onepagebrandpromisekpis = OnePageBrandPromiseKPI::where('one_page_id','=',$id)->delete();
+            $onepagegoals = OnePageGoal::where('one_page_id','=',$id)->delete();
+            $onepagekeyinitiatives = OnePageKeyInitiative::where('one_page_id','=',$id)->delete();
+            $onepagemakebuys = OnePageMakeBuy::where('one_page_id','=',$id)->delete();
+            $onepagesells = OnePageSell::where('one_page_id','=',$id)->delete();
+            $onepagerecordkeepings = OnePageRecordKeeping::where('one_page_id','=',$id)->delete();
+            $onepageemployees = OnePageEmployee::where('one_page_id','=',$id)->delete();
+            $onepageclients = OnePageClient::where('one_page_id','=',$id)->delete();
+            $onepagecolaborators = OnePageColaborator::where('one_page_id','=',$id)->delete();
+            $onepagevirtues = OnePageVirtue::where('one_page_id','=',$id)->delete();
+            $onepagestrengths = OnePageStrength::where('one_page_id','=',$id)->delete();
+            $onepageweaknesses = OnePageWeakness::where('one_page_id','=',$id)->delete();
+            $onepagetrends = OnePageTrend::where('one_page_id','=',$id)->delete();
 
-        if($this->addOnePageInfo($attributes, true)){
-            return redirect(route('onepages'));
+            if($this->addOnePageInfo($attributes, true)){
+                return redirect(route('onepages'));
+            }
         }
 
     }
