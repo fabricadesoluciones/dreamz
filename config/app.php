@@ -153,7 +153,11 @@ return [
 
         Collective\Html\HtmlServiceProvider::class,
 
+        /*
+        * PHP STORM
+        */
 
+        'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider', 
 
     ],
 

@@ -7,6 +7,9 @@ use App\Onepage;
 use App\OnePageStrength;
 use App\OnePageWeakness;
 use App\OnePageTrend;
+use App\OnePageTheme;
+use App\OnePageCelebration;
+use App\OnePageReward;
 
 use App\OnePageTarget;
 use App\OneCriticalNumber;
@@ -73,44 +76,6 @@ class OnepagesController extends Controller
         return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
 
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function team()
-    {
-        if ( ! Auth::user()->can("edit-objectives")){
-            return HomeController::returnError(403);
-        }
-
-
-        $user = Auth::user();
-        
-        $data = $user->priorities;
-        
-        
-        $position = Position::where('position_id', '=', $user->position)->first();
-
-        $users = [];
-
-        if (!empty($position) && $position->boss || Auth::user()->can("edit-companies")) {
-            $users = User::where('department', '=', $this->department)->get(['user_id']);
-
-            $data = DB::table('priorities')
-                ->leftJoin('users', 'priorities.user', '=', 'users.user_id')
-                ->leftJoin('periods', 'priorities.period', '=', 'periods.period_id')
-                ->select('priorities.*', 'users.name AS user_name','periods.name AS period_name', 'users.lastname AS user_lastname')
-                ->where('users.department','=', $this->department)
-                ->get();
-
-        }
-
-        if (!$data) {
-            return HomeController::returnError(404);
-        }
-        return Response::json(['code'=>200,'message' => 'OK' , 'data' => $this->transformCollection($data)], 200);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -128,42 +93,6 @@ class OnepagesController extends Controller
         return view('pages.create_one_page', ['id' => Uuid::generate(4), 'periods' => $periods, 'virtues' => $virtues]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getDepartmentSummary($id)
-    {
-
-        $period = Period::where('company', '=', $this->company)->first();
-        $whereClause = ['objectives.period' => $period->period_id, 'objectives.type' => 'DEPARTAMENTO', 'objectives.department' => $id];
-        $objectives = DB::table('objectives')
-        ->where($whereClause)
-        ->get();
-
-        foreach ($objectives as $objective) {
-            $whereClause = ['objectives_progress.objective' => $objective->objective_id];
-            $objective->real = DB::table('objectives_progress')
-            ->where($whereClause)
-            ->sum('objectives_progress.value');
-        }
-
-        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objectives] , 200);
-    }
-
-    public function getObjectiveSummary($id)
-    {
-
-        $objective = Objective::where('objective_id','=',$id)->first();
-        
-        $whereClause = ['objectives_progress.objective' => $objective->objective_id];
-        $objective->real = DB::table('objectives_progress')
-        ->where($whereClause)
-        ->sum('objectives_progress.value');
-
-        return Response::json(['code'=>200, 'message' => 'OK' , 'data' => $objective] , 200);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -188,6 +117,127 @@ class OnepagesController extends Controller
         }
         
     
+    }
+
+    function updateCriticalNumber($one_page_id, $description, $level, $number_type, $critical_type, $period){
+        OneCriticalNumber::create(
+            array(
+                'one_page_key_criticals_id' => Uuid::generate(4),
+                'company' => $this->company,
+                'one_page_id' => $one_page_id,
+                'description' => $description,
+                'level' => $level,
+                'number_type' => $number_type,
+                'critical_type' => $critical_type,
+                'period' => $period
+            )
+        );
+    }
+
+
+    function updateMyOnePage($attributes){
+
+        OneCriticalNumber::where( ['one_page_id' => $attributes['one_page_id'], 'critical_type' => 'personal'] )->delete();
+
+        if ($attributes['one_page_critical_people_personal_period_ggren']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_people_personal_period_ggren'], 0, 'people', 'personal', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_people_personal_period_lgreen']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_people_personal_period_lgreen'], 1, 'people', 'personal', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_people_personal_period_yellow']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_people_personal_period_yellow'], 2, 'people', 'personal', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_people_personal_period_red']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_people_personal_period_red'], 3, 'people', 'personal', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_process_personal_period_ggren']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_process_personal_period_ggren'], 0, 'process', 'personal', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_process_personal_period_lgreen']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_process_personal_period_lgreen'], 1, 'process', 'personal', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_process_personal_period_yellow']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_process_personal_period_yellow'], 2, 'process', 'personal', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_process_personal_period_red']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_process_personal_period_red'], 3, 'process', 'personal', $attributes['period'] );
+        }
+
+        return true;
+    }
+
+    function updateCompanyPeriod($attributes){
+
+        OneCriticalNumber::where( ['one_page_id' => $attributes['one_page_id'], 'critical_type' => 'company_period'] )->delete();
+
+        OnePageTheme::where( ['one_page_id' => $attributes['one_page_id']] )->delete();
+        OnePageCelebration::where( ['one_page_id' => $attributes['one_page_id']] )->delete();
+
+
+        OnePageTheme::create(
+
+            array(
+                'one_page_theme_id' => Uuid::generate(4),
+                'company' => $this->company,
+                'one_page_id' => $attributes['one_page_id'],
+                'description' => $attributes['one_page_company_period_tema'],
+                'dead_line' => $attributes['one_page_company_period_deadline'],
+                'critical_number' => $attributes['one_page_company_period_numero_critico']
+            )
+        );
+
+        OnePageCelebration::create(
+
+            array(
+                'one_page_celebration_id' => Uuid::generate(4),
+                'company' => $this->company,
+                'one_page_id' => $attributes['one_page_id'],
+                'period' => $attributes['period'],
+                'description' => $attributes['one_page_company_period_celebration']
+            )
+        );
+
+        if ($attributes['one_page_critical_people_company_period_ggren']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_people_company_period_ggren'], 0, 'people', 'company_period', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_people_company_period_lgreen']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_people_company_period_lgreen'], 1, 'people', 'company_period', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_people_company_period_yellow']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_people_company_period_yellow'], 2, 'people', 'company_period', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_people_company_period_red']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_people_company_period_red'], 3, 'people', 'company_period', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_process_company_period_ggren']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_process_company_period_ggren'], 0, 'process', 'company_period', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_process_company_period_lgreen']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_process_company_period_lgreen'], 1, 'process', 'company_period', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_process_company_period_yellow']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_process_company_period_yellow'], 2, 'process', 'company_period', $attributes['period'] );
+        }
+
+        if ($attributes['one_page_critical_process_company_period_red']) {
+                $this->updateCriticalNumber($attributes['one_page_id'], $attributes['one_page_critical_process_company_period_red'], 3, 'process', 'company_period', $attributes['period'] );
+        }
+
+        return true;
     }
 
     function addOnePageInfo($attributes, $update = false)
@@ -562,6 +612,17 @@ class OnepagesController extends Controller
         $onecritical_people_company_numbers = OneCriticalNumber::where($matchThese)->orderBy('level', 'asc')->get();
         $matchThese = ['one_page_id' => $id, 'number_type' => 'process', 'critical_type' => 'company'];
         $onecritical_process_company_numbers = OneCriticalNumber::where($matchThese)->orderBy('level', 'asc')->get();
+
+        $matchThese = ['one_page_id' => $id, 'number_type' => 'people', 'critical_type' => 'company_period'];
+        $onecritical_people_company_period_numbers = OneCriticalNumber::where($matchThese)->orderBy('level', 'asc')->get();
+        $matchThese = ['one_page_id' => $id, 'number_type' => 'process', 'critical_type' => 'company_period'];
+        $onecritical_process_company_period_numbers = OneCriticalNumber::where($matchThese)->orderBy('level', 'asc')->get();
+
+        $matchThese = ['one_page_id' => $id, 'number_type' => 'people', 'critical_type' => 'personal'];
+        $onecritical_people_personal_numbers = OneCriticalNumber::where($matchThese)->orderBy('level', 'asc')->get();
+        $matchThese = ['one_page_id' => $id, 'number_type' => 'process', 'critical_type' => 'personal'];
+        $onecritical_process_personal_numbers = OneCriticalNumber::where($matchThese)->orderBy('level', 'asc')->get();
+        
         $onepageinfo = OnePageInfo::where('one_page_id','=',$id)->first();
         $onepageactions = OnePageAction::where('one_page_id','=',$id)->get();
         $oneprofitxs = OneProfitX::where('one_page_id','=',$id)->get();
@@ -581,6 +642,9 @@ class OnepagesController extends Controller
         $onepagestrengths = OnePageStrength::where('one_page_id','=',$id)->get();
         $onepageweaknesses = OnePageWeakness::where('one_page_id','=',$id)->get();
         $onepagetrends = OnePageTrend::where('one_page_id','=',$id)->get();
+        $onepagecelebration = OnePageCelebration::where('one_page_id','=',$id)->first();
+        $onepagetheme = OnePageTheme::where('one_page_id','=',$id)->first();
+        $onepagereward = OnePageReward::where('one_page_id','=',$id)->first();
 
 
 
@@ -592,7 +656,11 @@ class OnepagesController extends Controller
             'virtues' => $virtues,
             'onepagetargets' => $onepagetargets,
             'onecritical_people_company_numbers' => $onecritical_people_company_numbers,
+            'onecritical_people_company_period_numbers' => $onecritical_people_company_period_numbers,
+            'onecritical_people_personal_numbers' => $onecritical_people_personal_numbers,
             'onecritical_process_company_numbers' => $onecritical_process_company_numbers,
+            'onecritical_process_company_period_numbers' => $onecritical_process_company_period_numbers,
+            'onecritical_process_personal_numbers' => $onecritical_process_personal_numbers,
             'onepageinfo' => $onepageinfo,
             'onepageactions' => $onepageactions,
             'oneprofitxs' => $oneprofitxs,
@@ -610,9 +678,13 @@ class OnepagesController extends Controller
             'onepagevirtues' => $onepagevirtues,
             'onepagestrengths' => $onepagestrengths,
             'onepageweaknesses' => $onepageweaknesses,
-            'onepagetrends' => $onepagetrends
+            'onepagetrends' => $onepagetrends,
+            'onepagetheme' => $onepagetheme,
+            'onepagecelebration' => $onepagecelebration,
+            'onepagereward' => $onepagereward
         );
-        return view('pages.edit_one_page', $params);
+        // echo json_encode($params);
+        return view('onepage.edit', $params);
         // var_dump($onepageinfo->period);
 
     }
@@ -626,17 +698,35 @@ class OnepagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $validateto = [
+                'onepage_type' => 'required',
                 'one_page_id' => 'required',
-                'period' => 'required',
                 'one_page_date' => 'date_format:Y-m-d',
         ];
         
         $this->validate($request, $validateto);
         $attributes = $request->all();
 
+        if ($attributes['onepage_type'] == 'company') {
+            if ($this->updateSummary($attributes, $id)) return redirect(route('onepages'));
+
+        }
+
+        if ($attributes['onepage_type'] == 'company_period'){
+            if ($this->updateCompanyPeriod($attributes, $id)) return redirect(route('onepages'));
+        }
+
+        if ($attributes['onepage_type'] == 'my_one_page'){
+            if ($this->updateMyOnePage($attributes, $id)) return redirect(route('onepages'));
+        }
+
+
+    }
+
+    public function updateSummary($attributes, $id)
+    {
         if ( Auth::user()->can('edit-one_page') ) {
+
             $onepagetargets = OnePageTarget::where('one_page_id','=',$id)->delete();
             $matchThese = ['one_page_id' => $id, 'number_type' => 'people', 'critical_type' => 'company'];
             $onecritical_people_company_numbers = OneCriticalNumber::where($matchThese)->delete();
@@ -662,10 +752,11 @@ class OnepagesController extends Controller
             $onepagetrends = OnePageTrend::where('one_page_id','=',$id)->delete();
 
             if($this->addOnePageInfo($attributes, true)){
-                return redirect(route('onepages'));
+                return true;
             }
+        }else{
+            return HomeController::returnError(403);
         }
-
     }
 
     /**
@@ -676,19 +767,39 @@ class OnepagesController extends Controller
      */
     public function destroy($id)
     {
-        if ( ! Auth::user()->can("edit-objectives")){
+
+        if ( Auth::user()->can('edit-one_page') ) {
+
+            Onepage::where(['one_page_id' => $id])->delete();
+            OnePageStrength::where(['one_page_id' => $id])->delete();
+            OnePageWeakness::where(['one_page_id' => $id])->delete();
+            OnePageTrend::where(['one_page_id' => $id])->delete();
+            OnePageTheme::where(['one_page_id' => $id])->delete();
+            OnePageCelebration::where(['one_page_id' => $id])->delete();
+            OnePageReward::where(['one_page_id' => $id])->delete();
+            OnePageTarget::where(['one_page_id' => $id])->delete();
+            OneCriticalNumber::where(['one_page_id' => $id])->delete();
+            OnePageInfo::where(['one_page_id' => $id])->delete();
+            OnePageAction::where(['one_page_id' => $id])->delete();
+            OneProfitX::where(['one_page_id' => $id])->delete();
+            OneBHAG::where(['one_page_id' => $id])->delete();
+            OnePageKeyThrust::where(['one_page_id' => $id])->delete();
+            OnePageBrandPromiseKPI::where(['one_page_id' => $id])->delete();
+            OnePageGoal::where(['one_page_id' => $id])->delete();
+            OnePageKeyInitiative::where(['one_page_id' => $id])->delete();
+            OnePageMakeBuy::where(['one_page_id' => $id])->delete();
+            OnePageSell::where(['one_page_id' => $id])->delete();
+            OnePageRecordKeeping::where(['one_page_id' => $id])->delete();
+            OnePageEmployee::where(['one_page_id' => $id])->delete();
+            OnePageClient::where(['one_page_id' => $id])->delete();
+            OnePageColaborator::where(['one_page_id' => $id])->delete();
+            OnePageVirtue::where(['one_page_id' => $id])->delete();
+
+            return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204')] , 204);
+        }else{
             return HomeController::returnError(403);
         }
 
-        $objective = Task::where('task_id', '=', $id);
-        if (!$objective) {
-            return HomeController::returnError(404);
-        }
-
-        $objective->delete();
-
-        return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204')] , 204);
-        
     }
 
     public function transformCollection($positions)

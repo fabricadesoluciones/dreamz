@@ -45,7 +45,7 @@ var Tr = React.createClass({
                     <td> 
                         <a href={"/one_page/"+this.props.data.one_page_id+"/edit"} className="button success">{{trans('general.modify')}}</a>
                         &nbsp;
-                        <button className="button danger delete_item" data-type="one_pages" data-id={this.props.data.user_id}>{{trans('general.delete')}}</button>
+                        <button className="button danger delete_item" data-type="onepages" data-id={this.props.data.one_page_id}>{{trans('general.delete')}}</button>
                     </td>
                 @else
                     <td> 
