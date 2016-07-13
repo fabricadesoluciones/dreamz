@@ -32,8 +32,8 @@
         <div class="input-control select" style="height:auto">
         <label for="user">{{ trans_choice('general.menu.virtues', 2) }}</label>
             <select multiple name="one_page_virtues[]">
-            @foreach ($virtues as $virtue)
-                <option value="{{$virtue->virtue_id}}">{{$virtue->name}}</option>
+            @foreach ($core_values as $core_value)
+                <option @if($core_value->selected) selected @endif value="{{$core_value->one_page_core_values_id}}">{{$core_value->description}}</option>
             @endforeach
             </select>
         </div>

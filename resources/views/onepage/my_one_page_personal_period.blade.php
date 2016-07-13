@@ -3,33 +3,31 @@
 <input type="hidden" name="period" value="{{$onepageinfo->period}}">
 
 <div class="personals">
-    
+
     <div class="row cells4">
         <div class="cell">
             <div class="input-control select" style="height:auto">
-            <label for="user"> {{trans_choice('general.menu.objectives', 2)}}</label>
-                <select multiple name="one_page_virtues[]">
-                @foreach ($virtues as $virtue)
-                    <option value="{{$virtue->virtue_id}}">{{$virtue->name}}</option>
-                @endforeach
+                <label for="user"> {{trans_choice('general.menu.objectives', 2)}}</label>
+                <select multiple name="one_page_user_objectives[]">
+                    @foreach ($user_objectives as $user_objective)
+                        <option @if($user_objective->selected) selected @endif value="{{$user_objective->one_page_objectives_id}}">{{$user_objective->description}}</option>
+                    @endforeach
                 </select>
             </div>
-                    <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a> 
+            <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a>
 
 
         </div>
         <div class="cell">
             <div class="input-control select" style="height:auto">
-            <label for="user"> {{trans_choice('general.menu.priorities', 2)}}</label>
-                <select multiple name="one_page_virtues[]">
-                @foreach ($virtues as $virtue)
-                    <option value="{{$virtue->virtue_id}}">{{$virtue->name}}</option>
-                @endforeach
+                <label for="user"> {{trans_choice('general.menu.priorities', 2)}}</label>
+                <select multiple name="one_page_user_priorities[]">
+                    @foreach ($user_priorities as $user_priority)
+                        <option @if($user_priority->selected) selected @endif value="{{$user_priority->one_page_priorities_id}}">{{$user_priority->description}}</option>
+                    @endforeach
                 </select>
             </div>
-                    <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a> 
-
-
+            <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a>
         </div>
     </div>
     <div class="row cells2 one_page_critical">

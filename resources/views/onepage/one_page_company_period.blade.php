@@ -6,9 +6,9 @@
     <div class="cell">
         <div class="input-control select" style="height:auto">
         <label for="user"> {{trans_choice('general.menu.objectives', 2)}}</label>
-            <select multiple name="one_page_company_virtues[]">
-            @foreach ($virtues as $virtue)
-                <option value="{{$virtue->virtue_id}}">{{$virtue->name}}</option>
+            <select multiple name="one_page_company_objectives[]">
+            @foreach ($company_objectives as $company_objective)
+                <option @if($company_objective->selected) selected @endif value="{{$company_objective->one_page_objectives_id}}">{{$company_objective->description}}</option>
             @endforeach
             </select>
         </div>
@@ -20,14 +20,12 @@
         <div class="input-control select" style="height:auto">
         <label for="user"> {{trans_choice('general.menu.priorities', 2)}}</label>
             <select multiple name="one_page_company_priorities[]">
-            @foreach ($virtues as $virtue)
-                <option value="{{$virtue->virtue_id}}">{{$virtue->name}}</option>
-            @endforeach
+                @foreach ($company_priorities as $company_priority)
+                    <option @if($company_priority->selected) selected @endif value="{{$company_priority->one_page_priorities_id}}">{{$company_priority->description}}</option>
+                @endforeach
             </select>
         </div>
                 <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a> 
-
-
     </div>
 </div>
 <div class="row cells2 one_page_critical">

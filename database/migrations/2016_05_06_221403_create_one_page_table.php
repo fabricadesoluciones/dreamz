@@ -24,8 +24,8 @@ class CreateOnePageTable extends Migration
             $table->string('one_page_virtue_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
-            $table->string('name');
-            $table->string('active');
+            $table->boolean('name')->default(0);
+            $table->boolean('active')->default(0);
             $table->date('date');
             $table->timestamps();
             $table->softDeletes();
@@ -187,24 +187,12 @@ class CreateOnePageTable extends Migration
             $table->string('one_page_objectives_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
-            $table->string('period');
             $table->string('description');
-            $table->string('active');
-            $table->date('date');
+            $table->string('type');
             $table->string('user');
-            $table->timestamps();
-            $table->softDeletes();
-        });
-
-        Schema::create('one_page_priorities', function (Blueprint $table) {
-            $table->string('one_page_priorities_id')->unique();
-            $table->string('one_page_id');
-            $table->string('company');
-            $table->string('period');
-            $table->string('description');
-            $table->string('active');
-            $table->date('date');
-            $table->string('user');
+            $table->boolean('selected')->default(0);
+            $table->boolean('active')->default(0);
+            $table->date('target_date');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -261,6 +249,33 @@ class CreateOnePageTable extends Migration
             $table->softDeletes();
         });
 
+
+        Schema::create('one_page_priorities', function (Blueprint $table) {
+            $table->string('one_page_priorities_id')->unique();
+            $table->string('one_page_id');
+            $table->string('company');
+            $table->string('description');
+            $table->string('type');
+            $table->string('user');
+            $table->boolean('selected')->default(0);
+            $table->boolean('active')->default(0);
+            $table->date('target_date');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('one_page_core_values', function (Blueprint $table) {
+            $table->string('one_page_core_values_id')->unique();
+            $table->string('one_page_id');
+            $table->string('company');
+            $table->string('description');
+            $table->boolean('selected')->default(0);
+            $table->boolean('active')->default(0);
+            $table->date('target_date');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
     }
 
     /**
@@ -295,5 +310,7 @@ class CreateOnePageTable extends Migration
         Schema::drop('one_page_strengths');
         Schema::drop('one_page_weaknesses');
         Schema::drop('one_page_trends');
+        Schema::drop('one_page_core_values');
+
     }
 }

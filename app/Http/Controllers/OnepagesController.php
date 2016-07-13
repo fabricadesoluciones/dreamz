@@ -135,7 +135,22 @@ class OnepagesController extends Controller
     }
 
 
-    function updateMyOnePage($attributes){
+    function updateMyOnePage($attributes, $id){
+
+        DB::table('one_page_objectives')->where(['one_page_id' => $id, 'type' => 'user'])->update(array('selected' => FALSE));
+        DB::table('one_page_priorities')->where(['one_page_id' => $id, 'type' => 'user'])->update(array('selected' => FALSE));
+
+        if (isset($attributes['one_page_user_priorities']) ){
+            DB::table('one_page_priorities')
+                ->whereIn('one_page_priorities_id', $attributes['one_page_user_priorities'])
+                ->update(array('selected' => TRUE));
+        }
+
+        if (isset($attributes['one_page_user_objectives']) ){
+            DB::table('one_page_objectives')
+                ->whereIn('one_page_objectives_id', $attributes['one_page_user_objectives'])
+                ->update(array('selected' => TRUE));
+        }
 
         OneCriticalNumber::where( ['one_page_id' => $attributes['one_page_id'], 'critical_type' => 'personal'] )->delete();
 
@@ -174,8 +189,21 @@ class OnepagesController extends Controller
         return true;
     }
 
-    function updateCompanyPeriod($attributes){
+    function updateCompanyPeriod($attributes, $id){
 
+        DB::table('one_page_objectives')->where(['one_page_id' => $id, 'type' => 'company'])->update(array('selected' => FALSE));
+        DB::table('one_page_priorities')->where(['one_page_id' => $id, 'type' => 'company'])->update(array('selected' => FALSE));
+        if (isset($attributes['one_page_company_priorities']) ){
+            DB::table('one_page_priorities')
+                ->whereIn('one_page_priorities_id', $attributes['one_page_company_priorities'])
+                ->update(array('selected' => TRUE));
+        }
+
+        if (isset($attributes['one_page_company_objectives']) ){
+            DB::table('one_page_objectives')
+                ->whereIn('one_page_objectives_id', $attributes['one_page_company_objectives'])
+                ->update(array('selected' => TRUE));
+        }
         OneCriticalNumber::where( ['one_page_id' => $attributes['one_page_id'], 'critical_type' => 'company_period'] )->delete();
 
         OnePageTheme::where( ['one_page_id' => $attributes['one_page_id']] )->delete();
@@ -238,6 +266,8 @@ class OnepagesController extends Controller
         }
 
         return true;
+
+
     }
 
     function addOnePageInfo($attributes, $update = false)
@@ -646,7 +676,41 @@ class OnepagesController extends Controller
         $onepagetheme = OnePageTheme::where('one_page_id','=',$id)->first();
         $onepagereward = OnePageReward::where('one_page_id','=',$id)->first();
 
+        $core_values = DB::table('one_page_core_values')
+            ->where('company','=', $this->company)
+            ->get();
 
+        $company_objectives = DB::table('one_page_objectives')
+            ->where([
+                    'one_page_id' => $id,
+                    'type' => 'company',
+                    'active' => TRUE
+                ])
+            ->get();
+
+        $company_priorities= DB::table('one_page_priorities')
+            ->where([
+                    'one_page_id' => $id,
+                    'type' => 'company',
+                    'active' => TRUE
+                ])
+            ->get();
+
+        $user_objectives = DB::table('one_page_objectives')
+            ->where([
+                    'one_page_id' => $id,
+                    'type' => 'user',
+                    'active' => TRUE
+                ])
+            ->get();
+
+        $user_priorities= DB::table('one_page_priorities')
+            ->where([
+                    'one_page_id' => $id,
+                    'type' => 'user',
+                    'active' => TRUE
+                ])
+            ->get();
 
         $periods = Period::where('company','=',$this->company)->get();
         $virtues = OnePageVirtue::where('company','=',$this->company)->get();
@@ -681,11 +745,15 @@ class OnepagesController extends Controller
             'onepagetrends' => $onepagetrends,
             'onepagetheme' => $onepagetheme,
             'onepagecelebration' => $onepagecelebration,
-            'onepagereward' => $onepagereward
+            'onepagereward' => $onepagereward,
+            'core_values' => $core_values,
+            'company_objectives' => $company_objectives,
+            'company_priorities' => $company_priorities,
+            'user_objectives' => $user_objectives,
+            'user_priorities' => $user_priorities,
         );
-        // echo json_encode($params);
+
         return view('onepage.edit', $params);
-        // var_dump($onepageinfo->period);
 
     }
 
@@ -706,7 +774,6 @@ class OnepagesController extends Controller
         
         $this->validate($request, $validateto);
         $attributes = $request->all();
-
         if ($attributes['onepage_type'] == 'company') {
             if ($this->updateSummary($attributes, $id)) return redirect(route('onepages'));
 
@@ -726,6 +793,17 @@ class OnepagesController extends Controller
     public function updateSummary($attributes, $id)
     {
         if ( Auth::user()->can('edit-one_page') ) {
+
+//            DB::table('one_page_objectives')->where('one_page_id','=', $id)->update(array('selected' => FALSE));
+//            DB::table('one_page_priorities')->where('one_page_id','=', $id)->update(array('selected' => FALSE));
+//
+//            DB::table('one_page_objectives')
+//                ->whereIn('one_page_objectives_id', $attributes['one_page_company_objectives'])
+//                ->update(array('selected' => TRUE));
+//
+//            DB::table('one_page_priorities')
+//                ->whereIn('one_page_priorities_id', $attributes['one_page_company_priorities'])
+//                ->update(array('selected' => TRUE));
 
             $onepagetargets = OnePageTarget::where('one_page_id','=',$id)->delete();
             $matchThese = ['one_page_id' => $id, 'number_type' => 'people', 'critical_type' => 'company'];
