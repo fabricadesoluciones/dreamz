@@ -652,7 +652,7 @@ class OnepagesController extends Controller
         $onecritical_people_personal_numbers = OneCriticalNumber::where($matchThese)->orderBy('level', 'asc')->get();
         $matchThese = ['one_page_id' => $id, 'number_type' => 'process', 'critical_type' => 'personal'];
         $onecritical_process_personal_numbers = OneCriticalNumber::where($matchThese)->orderBy('level', 'asc')->get();
-        
+
         $onepageinfo = OnePageInfo::where('one_page_id','=',$id)->first();
         $onepageactions = OnePageAction::where('one_page_id','=',$id)->get();
         $oneprofitxs = OneProfitX::where('one_page_id','=',$id)->get();
@@ -667,8 +667,6 @@ class OnepagesController extends Controller
         $onepageemployees = OnePageEmployee::where('one_page_id','=',$id)->get();
         $onepageclients = OnePageClient::where('one_page_id','=',$id)->get();
         $onepagecolaborators = OnePageColaborator::where('one_page_id','=',$id)->get();
-        $onepagevirtues = OnePageVirtue::where('one_page_id','=',$id)->get();
-
         $onepagestrengths = OnePageStrength::where('one_page_id','=',$id)->get();
         $onepageweaknesses = OnePageWeakness::where('one_page_id','=',$id)->get();
         $onepagetrends = OnePageTrend::where('one_page_id','=',$id)->get();
@@ -676,6 +674,18 @@ class OnepagesController extends Controller
         $onepagetheme = OnePageTheme::where('one_page_id','=',$id)->first();
         $onepagereward = OnePageReward::where('one_page_id','=',$id)->first();
 
+        $onepagevirtues = DB::table('one_page_virtues')
+            ->leftJoin('one_page_core_values', 'one_page_virtues.one_page_virtues_id', '=', 'one_page_core_values.one_page_virtues_id')
+            ->select('one_page_virtues.*','one_page_core_values.one_page_id')
+            ->where('one_page_virtues.company','=', $this->company)
+            ->get();
+
+        foreach ($onepagevirtues as $item) {
+            $item->selected = FALSE;
+            if ($item->one_page_id === $id){
+                $item->selected = TRUE;
+            }
+        }
         $core_values = DB::table('one_page_core_values')
             ->where('company','=', $this->company)
             ->get();
@@ -771,7 +781,7 @@ class OnepagesController extends Controller
                 'one_page_id' => 'required',
                 'one_page_date' => 'date_format:Y-m-d',
         ];
-        
+
         $this->validate($request, $validateto);
         $attributes = $request->all();
         if ($attributes['onepage_type'] == 'company') {
@@ -794,16 +804,23 @@ class OnepagesController extends Controller
     {
         if ( Auth::user()->can('edit-one_page') ) {
 
-//            DB::table('one_page_objectives')->where('one_page_id','=', $id)->update(array('selected' => FALSE));
-//            DB::table('one_page_priorities')->where('one_page_id','=', $id)->update(array('selected' => FALSE));
-//
-//            DB::table('one_page_objectives')
-//                ->whereIn('one_page_objectives_id', $attributes['one_page_company_objectives'])
-//                ->update(array('selected' => TRUE));
-//
-//            DB::table('one_page_priorities')
-//                ->whereIn('one_page_priorities_id', $attributes['one_page_company_priorities'])
-//                ->update(array('selected' => TRUE));
+            DB::table('one_page_core_values')->where('one_page_id','=', $id)->delete();
+
+            if (isset($attributes['one_page_virtues'])){
+
+                foreach ($attributes['one_page_virtues'] as $one_page_virtue) {
+
+                    DB::table('one_page_core_values')->insert(
+                        array(
+                            'one_page_core_values_id' => Uuid::generate(4),
+                            'one_page_id' => $id,
+                            'company' => $this->company,
+                            'one_page_virtues_id' => $one_page_virtue
+                        )
+                    );
+                }
+            }
+
 
             $onepagetargets = OnePageTarget::where('one_page_id','=',$id)->delete();
             $matchThese = ['one_page_id' => $id, 'number_type' => 'people', 'critical_type' => 'company'];
@@ -824,7 +841,7 @@ class OnepagesController extends Controller
             $onepageemployees = OnePageEmployee::where('one_page_id','=',$id)->delete();
             $onepageclients = OnePageClient::where('one_page_id','=',$id)->delete();
             $onepagecolaborators = OnePageColaborator::where('one_page_id','=',$id)->delete();
-            $onepagevirtues = OnePageVirtue::where('one_page_id','=',$id)->delete();
+//            $onepagevirtues = OnePageVirtue::where('one_page_id','=',$id)->delete();
             $onepagestrengths = OnePageStrength::where('one_page_id','=',$id)->delete();
             $onepageweaknesses = OnePageWeakness::where('one_page_id','=',$id)->delete();
             $onepagetrends = OnePageTrend::where('one_page_id','=',$id)->delete();

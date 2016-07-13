@@ -5,6 +5,8 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateOnePageTable extends Migration
 {
+    
+}
     /**
      * Run the migrations.
      *
@@ -13,7 +15,10 @@ class CreateOnePageTable extends Migration
     public function up()
     {
         
+    }
+        
         Schema::create('one_page', function (Blueprint $table) {
+            
             $table->string('one_page_id')->unique();
             $table->string('company');
             $table->timestamps();
@@ -21,17 +26,18 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_virtues', function (Blueprint $table) {
-            $table->string('one_page_virtue_id')->unique();
-            $table->string('one_page_id');
+            
+            $table->string('one_page_virtues_id')->unique();
             $table->string('company');
-            $table->boolean('name')->default(0);
+            $table->string('description');
             $table->boolean('active')->default(0);
-            $table->date('date');
+            $table->date('target_date');
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::create('one_page_general_info', function (Blueprint $table) {
+            
             $table->string('one_page_general_info_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -44,6 +50,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_actions', function (Blueprint $table) {
+            
             $table->string('one_page_action_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -53,6 +60,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_profit_x', function (Blueprint $table) {
+            
             $table->string('one_page_profit_x_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -62,6 +70,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_bhag', function (Blueprint $table) {
+            
             $table->string('one_page_bhag_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -71,6 +80,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_targets', function (Blueprint $table) {
+            
             $table->string('one_page_target_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -81,6 +91,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_key_thursts', function (Blueprint $table) {
+            
             $table->string('one_page_key_thursts_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -90,6 +101,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_bp_kpis', function (Blueprint $table) {
+            
             $table->string('one_page_bp_kpis_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -99,6 +111,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_goals', function (Blueprint $table) {
+            
             $table->string('one_page_goals_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -108,6 +121,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_key_initiatives', function (Blueprint $table) {
+            
             $table->string('one_page_key_initiatives_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -117,6 +131,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_critical_numbers', function (Blueprint $table) {
+            
             $table->string('one_page_key_criticals_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -130,6 +145,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_make_buy', function (Blueprint $table) {
+            
             $table->string('one_page_make_buy_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -139,6 +155,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_sell', function (Blueprint $table) {
+            
             $table->string('one_page_sell_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -148,6 +165,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_record_keeping', function (Blueprint $table) {
+            
             $table->string('one_page_recrod_keeping_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -157,6 +175,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_employees', function (Blueprint $table) {
+            
             $table->string('one_page_employees_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -166,6 +185,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_customers', function (Blueprint $table) {
+            
             $table->string('one_page_customers_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -175,6 +195,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_colaborators', function (Blueprint $table) {
+            
             $table->string('one_page_colaborators_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -184,6 +205,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_objectives', function (Blueprint $table) {
+            
             $table->string('one_page_objectives_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -198,6 +220,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_theme', function (Blueprint $table) {
+            
             $table->string('one_page_theme_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -211,6 +234,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_celebration', function (Blueprint $table) {
+            
             $table->string('one_page_celebration_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -221,6 +245,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_strengths', function (Blueprint $table) {
+            
             $table->string('one_page_strengths_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -231,6 +256,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_weaknesses', function (Blueprint $table) {
+            
             $table->string('one_page_weaknesses_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -241,6 +267,7 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_trends', function (Blueprint $table) {
+            
             $table->string('one_page_trends_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -251,6 +278,7 @@ class CreateOnePageTable extends Migration
 
 
         Schema::create('one_page_priorities', function (Blueprint $table) {
+            
             $table->string('one_page_priorities_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
@@ -265,13 +293,11 @@ class CreateOnePageTable extends Migration
         });
 
         Schema::create('one_page_core_values', function (Blueprint $table) {
+            
             $table->string('one_page_core_values_id')->unique();
             $table->string('one_page_id');
             $table->string('company');
-            $table->string('description');
-            $table->boolean('selected')->default(0);
-            $table->boolean('active')->default(0);
-            $table->date('target_date');
+            $table->string('one_page_virtues_id');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -285,6 +311,7 @@ class CreateOnePageTable extends Migration
      */
     public function down()
     {
+        
         Schema::drop('one_page');
         Schema::drop('one_page_virtues');
         Schema::drop('one_page_general_info');
