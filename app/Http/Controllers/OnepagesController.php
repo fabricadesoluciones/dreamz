@@ -119,6 +119,111 @@ class OnepagesController extends Controller
     
     }
 
+    /**
+     * @return Session
+     */
+    public function store_extras(Request $request)
+    {
+
+        $validateto = [
+            'type' => 'required',
+            'new_extra_name' => 'required',
+            'new_extra_date' => 'required|date_format:Y-m-d'
+        ];
+        $this->validate($request, $validateto);
+        $attributes = $request->all();
+        $active = ( isset($attributes['active']) && $attributes['active'] ) ? $attributes['active'] : false;
+        switch( $attributes['type'] ){
+
+            case 'core_value':
+                if ( ! Auth::user()->can('edit-one_page') ) return HomeController::returnError(403);
+                $one_page_virtues_id = Uuid::generate(4);
+                $insert =  array(
+                        'company' => $this->company,
+                        'one_page_virtues_id' => $one_page_virtues_id->string,
+                        'selected' => false,
+                        'active' => $active,
+                        'description' => $attributes['new_extra_name'],
+                        'target_date' => $attributes['new_extra_date']
+
+                    );
+                DB::table('one_page_virtues')->insert($insert);
+                return Response::json([  'data' =>  ['id' => $insert['one_page_virtues_id'], 'name' => $insert['description']]  ] , 200);
+                break;
+            case 'company_objectives':
+                if ( ! Auth::user()->can('edit-one_page') ) return HomeController::returnError(403);
+                $one_page_objectives_id = Uuid::generate(4);
+                $insert =  array(
+                    'company' => $this->company,
+                    'one_page_objectives_id' => $one_page_objectives_id->string,
+                    'one_page_id' => $attributes['one_page_id'],
+                    'selected' => false,
+                    'active' => true,
+                    'type' => 'company',
+                    'description' => $attributes['new_extra_name'],
+                    'target_date' => $attributes['new_extra_date']
+
+                );
+                DB::table('one_page_objectives')->insert($insert);
+                return Response::json([  'data' =>  ['id' => $insert['one_page_objectives_id'], 'name' => $insert['description']]  ] , 200);
+                break;
+            case 'company_priorities':
+                if ( ! Auth::user()->can('edit-one_page') ) return HomeController::returnError(403);
+                $one_page_priorities_id = Uuid::generate(4);
+                $insert =  array(
+                    'company' => $this->company,
+                    'one_page_priorities_id' => $one_page_priorities_id->string,
+                    'one_page_id' => $attributes['one_page_id'],
+                    'selected' => false,
+                    'active' => true,
+                    'type' => 'company',
+                    'description' => $attributes['new_extra_name'],
+                    'target_date' => $attributes['new_extra_date']
+
+                );
+                DB::table('one_page_priorities')->insert($insert);
+                return Response::json([  'data' =>  ['id' => $insert['one_page_priorities_id'], 'name' => $insert['description']]  ] , 200);
+                break;
+            case 'user_objectives':
+                $one_page_objectives_id = Uuid::generate(4);
+                $insert =  array(
+                    'company' => $this->company,
+                    'one_page_objectives_id' => $one_page_objectives_id->string,
+                    'one_page_id' => $attributes['one_page_id'],
+                    'selected' => false,
+                    'active' => true,
+                    'user' => Auth::user()->user_id,
+                    'type' => 'user',
+                    'description' => $attributes['new_extra_name'],
+                    'target_date' => $attributes['new_extra_date']
+
+                );
+                DB::table('one_page_objectives')->insert($insert);
+                return Response::json([  'data' =>  ['id' => $insert['one_page_objectives_id'], 'name' => $insert['description']]  ] , 200);
+                break;
+            case 'user_priorities':
+                $one_page_priorities_id = Uuid::generate(4);
+                $insert =  array(
+                    'company' => $this->company,
+                    'one_page_priorities_id' => $one_page_priorities_id->string,
+                    'one_page_id' => $attributes['one_page_id'],
+                    'selected' => false,
+                    'active' => true,
+                    'user' => Auth::user()->user_id,
+                    'type' => 'user',
+                    'description' => $attributes['new_extra_name'],
+                    'target_date' => $attributes['new_extra_date']
+
+                );
+                DB::table('one_page_priorities')->insert($insert);
+                return Response::json([  'data' =>  ['id' => $insert['one_page_priorities_id'], 'name' => $insert['description']]  ] , 200);
+                break;
+            default:
+                die('error');
+        }
+
+    }
+
     function updateCriticalNumber($one_page_id, $description, $level, $number_type, $critical_type, $period){
         OneCriticalNumber::create(
             array(
@@ -710,6 +815,7 @@ class OnepagesController extends Controller
             ->where([
                     'one_page_id' => $id,
                     'type' => 'user',
+                    'user' => Auth::user()->user_id,
                     'active' => TRUE
                 ])
             ->get();
@@ -718,6 +824,7 @@ class OnepagesController extends Controller
             ->where([
                     'one_page_id' => $id,
                     'type' => 'user',
+                    'user' => Auth::user()->user_id,
                     'active' => TRUE
                 ])
             ->get();

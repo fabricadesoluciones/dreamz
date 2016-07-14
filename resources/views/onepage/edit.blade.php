@@ -102,7 +102,7 @@
         <div class="collapsable">
             @include('onepage.my_one_page_personal_period', $params)
             <hr>
-            <div class="bg-grayLighter padding10">        
+            <div class="bg-grayLighter padding10 personals">
                 <input type="submit" class="success" value="{{trans('general.forms.submit')}}">
                 <a href="#" rel="collapse" class="button primary">  Collapse </a>
             </div>
@@ -229,10 +229,108 @@ function demo(){
 <script>
 $(document).ready(function (d) {
     // body...
-    $( "input" ).not( $( "div.personals input, [name='_method' ], [name='_token' ], [name='one_page_id' ]" ) ).attr('disabled','disabled').removeAttr('name');
-    $( "select" ).not( $( "div.personals select, [name='_method' ], [name='_token' ], [name='one_page_id' ]" ) ).attr('disabled','disabled').removeAttr('name');
-    $( "textarea" ).not( $( "div.personals textarea, [name='_method' ], [name='_token' ], [name='one_page_id' ]" ) ).attr('disabled','disabled').removeAttr('name');
+    $( "input" ).not( $( "div.personals input, #dialog input, [name='_method' ], [name='_token' ], [name='onepage_type' ], [name='one_page_id' ]" ) ).attr('disabled','disabled').removeAttr('name');
+    $( "select" ).not( $( "div.personals select, #dialog select, [name='_method' ], [name='_token' ], [name='onepage_type' ], [name='one_page_id' ]" ) ).attr('disabled','disabled').removeAttr('name');
+    $( "textarea" ).not( $( "div.personals textarea, #dialog textarea, [name='_method' ], [name='_token' ], [name='onepage_type' ], [name='one_page_id' ]" ) ).attr('disabled','disabled').removeAttr('name');
 });
 </script>        
     @endif
+<div data-role="dialog" data-type="info" id="dialog" data-close-button="true" data-overlay="true" data-overlay-color="black" class="padding10">
+    <input type="hidden" name="extra_type">
+    <h1>{{trans('general.forms.add_new')}}:</h1>
+    <h4 id="priority_name"></h4>
+    <div class="grid">
+        <div class="row ">
+            <div class="margin10">
+                <label>{{ trans('general.forms.name') }}</label>
+                <div class="input-control text full-size">
+                    <input id="name" size="65" type="text" name="new_extra_name" />
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="margin10">
+                <div class="input-control text full-size">
+                    <label>{{trans_choice('general.dates',1)}}</label>
+                    <input name='new_extra_date' type="date" value="{{ date('Y-m-d')}}" />
+
+                </div>
+
+            </div>
+            <div class="margin10">
+                <div class="input-control select">
+                    <label style=" margin-top: 1ex; ">Active</label>
+                    <label class="switch" style="padding: 1.2ex 0;clear: left;margin-top: 3ex;">
+                        <input type="checkbox" onchange="if(this.checked) {this.value=1}else{this.value=0}" name="active" value="">
+                        <span class="check"></span>
+                    </label>
+
+                </div>
+            </div>
+        </div>
+        {{ csrf_field() }}
+        <button class="button success save_progress margin10" style="display: inline-block; margin:  0 1em; ">{{trans('general.forms.submit')}}</button>
+        <button class="button danger cancel_progress">{{trans('general.forms.cancel')}}</button>
+    </div>
+</div>
+<script>
+    $(document).on('click','.cancel_progress', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var dialog_obj = $('#dialog').data('dialog');
+        dialog_obj.close();
+    });
+    $(document).on('click','[rel*="new_extra"]', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        $('#dialog input').val('');
+        var type = $(this).data('extra');
+        var target = $(this).data('target');
+        $('.save_progress').attr('data-target',target);
+        $('[name="extra_type"]').val(type);
+        showDialog('#dialog');
+    });
+    $(document).on('click','.save_progress', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        if (
+            ! $('[name="extra_type"]').val() ||
+            ! $('[name="new_extra_date"]').val() ||
+            ! $('[name="new_extra_name"]').val()
+        ){
+            returnNotify('Completa todos los campos','Error','alert')
+            return false;
+        }
+        var target = $(this).attr('data-target');
+        var request = $.post( "{!! route('store_extras') !!}",
+                {
+                    _token:$('[name="_token"]:eq(0)').val(),
+                    one_page_id:$('[name="one_page_id"]').val(),
+                    type: $('[name="extra_type"]').val(),
+                    new_extra_date: $('[name="new_extra_date"]').val(),
+                    new_extra_name: $('[name="new_extra_name"]').val(),
+                    active: $('[name="active"]').val(),
+                }  , function() {}, 'json');
+        request
+            .done(function( response ) {
+                console.log(response);
+                returnNotify('Se añadió el elemento','Success','success');
+                var id = response.data.id;
+                var name = response.data.name;
+                var option = '<option value="'+id+'">'+name+'</option>'
+                $('[name="'+target+'"]').append(option);
+
+            })
+            .fail(function( response ) {
+                console.log( 'fail', response )
+                returnNotify('Ocurrió un error','Error','alert')
+            })
+            .always(function( response ) {
+                var dialog_obj = $('#dialog').data('dialog');
+                dialog_obj.close();
+            });
+    });
+
+</script>
+
 @stop

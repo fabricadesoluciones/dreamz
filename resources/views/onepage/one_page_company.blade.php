@@ -37,7 +37,7 @@
             @endforeach
             </select>
         </div>
-                <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a> 
+                <a href="#" class="button success" rel="new_extra" data-extra="core_value" data-target="one_page_virtues[]"> {{ trans('general.forms.add_new') }}</a>
 
 
     </div>

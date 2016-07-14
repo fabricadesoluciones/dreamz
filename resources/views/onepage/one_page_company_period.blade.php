@@ -12,7 +12,7 @@
             @endforeach
             </select>
         </div>
-                <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a> 
+                <a href="#" class="button success" rel="new_extra" data-extra="company_objectives" data-target="one_page_company_objectives[]"> {{ trans('general.forms.add_new') }}</a>
 
 
     </div>
@@ -25,7 +25,7 @@
                 @endforeach
             </select>
         </div>
-                <a href="#" class="button success"> {{ trans('general.forms.add_new') }}</a> 
+                <a href="#" class="button success" rel="new_extra" data-extra="company_priorities" data-target="one_page_company_priorities[]"> {{ trans('general.forms.add_new') }}</a>
     </div>
 </div>
 <div class="row cells2 one_page_critical">

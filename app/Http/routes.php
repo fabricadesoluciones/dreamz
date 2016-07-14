@@ -123,6 +123,7 @@ Route::get('/received_virtues/', ['middleware' => 'auth', 'uses' => 'VirtuesCont
 Route::get('/review_virtues/', ['middleware' => 'auth', 'uses' => 'VirtuesController@reviewVirtues']);
 Route::post('/review_virtue/', ['middleware' => 'auth', 'uses' => 'VirtuesController@reviewVirtue'])->name('review_virtue');
 Route::post('/give_virtue/', ['middleware' => 'auth', 'uses' => 'VirtuesController@give'])->name('give_virtue');
+Route::post('/store_extras/', ['middleware' => 'auth', 'uses' => 'OnepagesController@store_extras'])->name('store_extras');
 
 /* HOME */
 
