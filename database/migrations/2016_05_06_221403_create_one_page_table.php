@@ -3,10 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOnePageTable extends Migration
-{
-    
-}
+class CreateOnePageTable extends Migration{
+
     /**
      * Run the migrations.
      *
@@ -14,8 +12,6 @@ class CreateOnePageTable extends Migration
      */
     public function up()
     {
-        
-    }
         
         Schema::create('one_page', function (Blueprint $table) {
             
