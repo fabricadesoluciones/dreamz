@@ -140,18 +140,7 @@
         if (this_parent.find('.dup').length == 1) $(this).addClass('hide')
     });
 
-    $.getJSON( "/companies/{{ session('company') }}/departments", function( response ) {
-        if (response.code == 200) {
-            var records = response.data;
 
-            records.forEach(function(d,i,a){
-                $('select#department').append('<option value="'+d.department_id+'">'+d.name+'</option>')
-            });
-
-
-        }
-        
-    });
 
     $(document).on('click','[rel="collapse"]', function (event) {
         event.preventDefault ? event.preventDefault() : event.returnValue = false;
