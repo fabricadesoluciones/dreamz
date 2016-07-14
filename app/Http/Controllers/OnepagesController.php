@@ -141,7 +141,6 @@ class OnepagesController extends Controller
                 $insert =  array(
                         'company' => $this->company,
                         'one_page_virtues_id' => $one_page_virtues_id->string,
-                        'selected' => false,
                         'active' => $active,
                         'description' => $attributes['new_extra_name'],
                         'target_date' => $attributes['new_extra_date']
