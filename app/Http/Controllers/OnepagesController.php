@@ -871,7 +871,7 @@ class OnepagesController extends Controller
         );
 
         return view('onepage.edit', $params);
-
+//        echo json_encode($params);
     }
 
     /**
@@ -995,7 +995,6 @@ class OnepagesController extends Controller
             OnePageEmployee::where(['one_page_id' => $id])->delete();
             OnePageClient::where(['one_page_id' => $id])->delete();
             OnePageColaborator::where(['one_page_id' => $id])->delete();
-            OnePageVirtue::where(['one_page_id' => $id])->delete();
 
             return Response::json(['code'=>204,'message' => 'OK' , 'data' => "$id " . trans('general.http.204')] , 204);
         }else{

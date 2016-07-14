@@ -60,6 +60,9 @@
                 <input size="65" name="one_page_actions[]" type="text" value="{{$onepageaction->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_actions[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
 
@@ -75,6 +78,9 @@
                 <input size="65" name="one_page_profit_x[]" type="text" value="{{$oneprofitx->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_profit_x[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
@@ -89,6 +95,9 @@
                 <input size="65" name="one_page_bhag[]" type="text" value="{{$onebhag->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_bhag[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
@@ -115,6 +124,20 @@
             </div>
         </div>
     @endforeach
+        <div class="one_page_target dup">
+            <div>
+                <label>{{trans('general.forms.name')}}</label>
+                <div class="input-control text full-size">
+                    <input size="65" type="text" name="one_page_targets_name[]" value="{{$onepagetarget->name }}" />
+                </div>
+            </div>
+            <div>
+                <label>{{trans('general.description')}}</label>
+                <div class="input-control text full-size">
+                    <input size="65" type="text" name="one_page_targets_description[]" value="{{$onepagetarget->description }}" />
+                </div>
+            </div>
+        </div>
         <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
         <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
     </div>
@@ -138,6 +161,9 @@
                 <input size="65" name="one_page_key_thrusts[]" type="text" value="{{$onepagekeythrust->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_key_thrusts[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
@@ -152,6 +178,9 @@
                 <input size="65" name="one_page_brand_promise_kpis[]" type="text" value="{{$onepagebrandpromisekpi->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_brand_promise_kpis[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
@@ -166,7 +195,11 @@
                 <input size="65" name="one_page_goals_1_yr[]" type="text" value="{{$onepagegoal->description}}" />
             </div>
             @endforeach
-                <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_goals_1_yr[]" type="text" value="" />
+            </div>
+
+            <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a>
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
     </div>
@@ -180,6 +213,9 @@
                 <input size="65" name="one_page_key_initiatives[]" type="text" value="{{$onepagekeyinitiative->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_key_initiatives[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
@@ -241,6 +277,9 @@
                 <input size="65" name="one_page_make_buy[]" type="text" value="{{$onepagemakebuy->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_make_buy[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
@@ -255,7 +294,11 @@
                 <input size="65" name="one_page_sell[]" type="text" value="{{$onepagesell->description}}" />
             </div>
             @endforeach
-                <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_sell[]" type="text" value="" />
+            </div>
+
+            <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a>
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
     </div>
@@ -269,6 +312,12 @@
                 <input size="65" name="one_page_record_keeping[]" type="text" value="{{$onepagerecordkeeping->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_record_keeping[]" type="text" value="" />
+            </div>
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_record_keeping[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
@@ -286,6 +335,9 @@
                 <input size="65" name="one_page_employees[]" type="text" value="{{$onepageemployee->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_employees[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
@@ -300,6 +352,9 @@
                 <input size="65" name="one_page_clients[]" type="text" value="{{$onepageclient->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_clients[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
@@ -314,6 +369,9 @@
                 <input size="65" name="one_page_colaborators[]" type="text" value="{{$onepagecolaborator->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_colaborators[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
         </div>
@@ -328,6 +386,9 @@
                 <input size="65" name="one_page_strengths[]" type="text" value="{{$onepagestrength->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_strengths[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="hide button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
 
@@ -344,6 +405,9 @@
                 <input size="65" name="one_page_weaknesses[]" type="text" value="{{$onepageweakness->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_weaknesses[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="hide button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
 
@@ -360,6 +424,9 @@
                 <input size="65" name="one_page_trends[]" type="text" value="{{$onepagetrend->description}}" />
             </div>
             @endforeach
+            <div class="input-control text full-size one_page_action dup">
+                <input size="65" name="one_page_trends[]" type="text" value="" />
+            </div>
                 <a href="#" class="button success" rel="one_page_add_actions"> {{ trans('general.forms.add_new') }}</a> 
                 <a href="#" class="hide button danger" rel="one_page_remove_actions">{{trans('general.delete')}}</a>
 
