@@ -127,7 +127,7 @@
                 <?php include base_path('resources/svg/task-manager.svg'); ?>
             </a>
         </li>
-        <li class="menu_link disabled">
+        <li class="menu_link">
             <a href="/one_page" title="{{ trans('general.menu.one_page') }}">
                 <?php include base_path('resources/svg/one-page.svg'); ?>
             </a>
